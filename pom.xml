@@ -32,6 +32,26 @@
 
     </properties>
 
+    <developers>
+        <developer>
+            <id>manbarjim2</id>
+            <name>Barcia</name>
+            <email>manbarjim2@alum.us.es</email>
+            <url>http://www.tmht.com/leo</url>
+            <roles>
+                <role>leader</role>
+            </roles>
+            <properties>
+                <picUrl>
+                    https://pbs.twimg.com/media/Eh4n9GhUMAAdO8x?format=jpg&name
+                    =large
+                </picUrl>
+            </properties>
+        </developer>
+
+        <!-- More developers ...-->
+    </developers>
+
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
         <dependency>
