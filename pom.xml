@@ -31,7 +31,17 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
-
+	<developers>
+		<developer>
+			<id>orlandoLAB</id>
+			<name>Orlando</name>
+			<email>orllabled@alum.us.es</email>
+			<url></url>
+			<roles>
+				<role></role>
+			</roles>
+		</developer>
+	</developers>
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
         <dependency>
