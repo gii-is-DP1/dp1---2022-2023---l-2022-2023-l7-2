@@ -48,7 +48,15 @@
                 </picUrl>
             </properties>
         </developer>
-
+        <developer>
+			    <id>orlandoLAB</id>
+			    <name>Orlando</name>
+			    <email>orllabled@alum.us.es</email>
+			    <url></url>
+			    <roles>
+				    <role></role>
+			    </roles>
+		    </developer>
         <!-- More developers ...-->
     </developers>
 
