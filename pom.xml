@@ -73,8 +73,19 @@
                 </picUrl>
             </properties>
         </developer>
+
+        <developer>
+			    <id>rubcasfer2</id>
+			    <name>Ruben</name>
+			    <email>e.ruben.casal@gmail.com</email>
+			    <url></url>
+			    <roles>
+				    <role></role>
+			    </roles>
+		    </developer>
         <!-- More developers ...-->
     </developers>
+ 
 
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
