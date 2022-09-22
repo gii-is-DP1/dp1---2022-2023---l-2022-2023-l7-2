@@ -31,17 +31,35 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
-	<developers>
-		<developer>
-			<id>orlandoLAB</id>
-			<name>Orlando</name>
-			<email>orllabled@alum.us.es</email>
-			<url></url>
-			<roles>
-				<role></role>
-			</roles>
-		</developer>
-	</developers>
+
+    <developers>
+        <developer>
+            <id>manbarjim2</id>
+            <name>Barcia</name>
+            <email>manbarjim2@alum.us.es</email>
+            <url>http://www.tmht.com/leo</url>
+            <roles>
+                <role>leader</role>
+            </roles>
+            <properties>
+                <picUrl>
+                    https://pbs.twimg.com/media/Eh4n9GhUMAAdO8x?format=jpg&name
+                    =large
+                </picUrl>
+            </properties>
+        </developer>
+        <developer>
+			    <id>orlandoLAB</id>
+			    <name>Orlando</name>
+			    <email>orllabled@alum.us.es</email>
+			    <url></url>
+			    <roles>
+				    <role></role>
+			    </roles>
+		    </developer>
+        <!-- More developers ...-->
+    </developers>
+
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
         <dependency>
