@@ -19,6 +19,10 @@ INSERT INTO authorities(id,username,authority) VALUES (5,'rubcasfer2','owner');
 INSERT INTO users(username,password,enabled) VALUES ('manbarjim2','mbj2',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (6,'manbarjim2','owner');
 
+-- One owner user, named ignplathi with passwor ipt01
+INSERT INTO users(username,password,enabled) VALUES ('ignplathi','ipt01',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (7,'ignplathi','owner');
+
 INSERT INTO vets(id, first_name,last_name) VALUES (1, 'James', 'Carter');
 INSERT INTO vets(id, first_name,last_name) VALUES (2, 'Helen', 'Leary');
 INSERT INTO vets(id, first_name,last_name) VALUES (3, 'Linda', 'Douglas');
@@ -57,6 +61,7 @@ INSERT INTO owners VALUES (10, 'Carlos', 'Estaban', '2335 Independence La.', 'Wa
 INSERT INTO owners VALUES (11, 'Orlando', 'Jose', 'Castillo de Alanis 8 .', 'Sevilla', '697777232', 'orllabled');
 INSERT INTO owners VALUES (12, 'Ruben', 'Casal', 'Calle Doctor Marañón', 'Sevilla', '628776688', 'rubcasfer2');
 INSERT INTO owners VALUES (13, 'Manuel', 'Barcia', '1 Street', 'Sevilla', '2222222222', 'manbarjim2');
+INSERT INTO owners VALUES (14, 'Ignacio', 'Planas', 'Calle Constitucion, 12', 'Mairena Del Aljarafe', '644480511', 'ignplathi');
 
 
 
@@ -76,6 +81,7 @@ INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (13, 'Sly', '2012-0
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (14, 'Dino', '2008-04-08', 3, 11);
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (15, 'Kora', '2019-08-08', 2, 12);
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (16, 'Chuli', '2010-05-01', 2, 13);
+INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (17, 'Ciclon', '2015-11-08', 2, 14);
 
 
 
