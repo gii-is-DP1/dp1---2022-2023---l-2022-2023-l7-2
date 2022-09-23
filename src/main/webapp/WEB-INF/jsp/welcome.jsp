@@ -11,6 +11,13 @@
         <h2>Project ${title}</h2>
         <p><h2>Group ${group}</h2></p>
     </div>
+    
+    <div class="row">
+    	<c:forEach items="${persons}" var="person">
+    		<div class="col-12">${person.firstName}&nbsp;${person.lastName}</div>
+    	</c:forEach>
+    </div>
+    
     <div class="row">
         <div class="col-md-12">
             <spring:url value="/resources/images/pets.png" htmlEscape="true" var="petsImage"/>
