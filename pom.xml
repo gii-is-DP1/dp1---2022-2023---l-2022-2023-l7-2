@@ -90,6 +90,21 @@
 			    </roles>
 		    </developer>
         <!-- More developers ...-->
+
+        <developer>
+            <id>siadan</id>
+            <name>Siamion</name>
+            <email>simeondanko@gmail.com</email>
+            <url>https://github.com/siadan</url>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <properties>
+                <picUrl>
+                  
+                </picUrl>
+            </properties>
+        </developer>
     </developers>
  
 
