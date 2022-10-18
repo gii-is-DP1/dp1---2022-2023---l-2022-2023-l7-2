@@ -7,6 +7,11 @@ import javax.persistence.Table;
 
 import org.springframework.samples.petclinic.ocachis.casillaoca.CasillaOca;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name="fichasoca")
 public class FichaOca extends Ficha {
@@ -16,6 +21,7 @@ public class FichaOca extends Ficha {
 	private CasillaOca casillaOca;
 
     @ManyToOne
-	@JoinColumn(name = "partidaoca_id")
+	@JoinColumn(name = "partidaOca_id")
 	private PartidaOca partidaOca;
+    
 }
