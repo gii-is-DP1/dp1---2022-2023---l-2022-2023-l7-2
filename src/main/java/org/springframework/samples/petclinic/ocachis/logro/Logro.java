@@ -22,11 +22,13 @@ public class Logro {
 	@NotEmpty
 	private String descripcion;
 
-    public String getNombre() {
-		return this.nombre;
-	}
+	@Column(name = "tipoEstadistica")
+	@NotEmpty
+	private TipoEstadistica tipoEstadistica;
 
-	public String getDescripcion() {
-		return this.descripcion;
-	}
+	@Column(name = "valor")
+	@NotEmpty
+	private Integer valor;
+
+    
 }
