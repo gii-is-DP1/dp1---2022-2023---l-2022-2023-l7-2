@@ -17,37 +17,65 @@ import lombok.Getter;
 public class estadisticasGlobales {
     @Column(name = "partidasJugadas")
 	@NotEmpty
-	private Integer partidasJugadas;
+	private Integer parchisPartidasJugadas;
 
 	@Column(name = "promedioJugadores")
 	@NotEmpty
-	private Integer promedioJugadores;
+	private Integer parchisPromedioJugadores;
 
     @Column(name = "duracionMinima")
 	@NotEmpty
-	private Time duracionMinima;
+	private Time parchisDuracionMinima;
 
 	@Column(name = "duracionMaxima")
 	@NotEmpty
-	private Time duracionMaxima;
+	private Time parchisDuracionMaxima;
 
     @Column(name = "duracionMedia")
 	@NotEmpty
-	private Time duracionMedia;
+	private Time parchisDuracionMedia;
 
 	@Column(name = "duracionTotal")
 	@NotEmpty
-	private Time duracionTotal;
+	private Time parchisDuracionTotal;
+
+	@Column(name = "partidasJugadas")
+	@NotEmpty
+	private Integer ocaPartidasJugadas;
+
+	@Column(name = "promedioJugadores")
+	@NotEmpty
+	private Integer ocaPromedioJugadores;
+
+    @Column(name = "duracionMinima")
+	@NotEmpty
+	private Time ocaDuracionMinima;
+
+	@Column(name = "duracionMaxima")
+	@NotEmpty
+	private Time ocaDuracionMaxima;
+
+    @Column(name = "duracionMedia")
+	@NotEmpty
+	private Time ocaDuracionMedia;
+
+	@Column(name = "duracionTotal")
+	@NotEmpty
+	private Time ocaDuracionTotal;
 
 	@Column(name = "rankingFichasComidas")
 	@NotEmpty
-	private List<Jugador> fichasComidas;
+	private List<Jugador> parchisFichasComidas;
 
 	@Column(name = "rankingCaidoEnMuerte")
 	@NotEmpty
-	private List<Jugador> vecesCaidoEnMuerte;
+	private List<Jugador> ocaVecesCaidoEnMuerte;
 
 	@Column(name = "rankingJugadores")
 	@NotEmpty
-	private List<Jugador> rankingJugadores;
+	private List<Jugador> parchisRankingJugadores;
+	
+	@Column(name = "rankingJugadores")
+	@NotEmpty
+	private List<Jugador> ocaRankingJugadores;
 }
