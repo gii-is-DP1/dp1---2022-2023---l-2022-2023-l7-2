@@ -39,6 +39,14 @@ public class estadisticasGlobales {
 	@NotEmpty
 	private Time duracionTotal;
 
+	@Column(name = "rankingFichasComidas")
+	@NotEmpty
+	private List<Jugador> fichasComidas;
+
+	@Column(name = "rankingCaidoEnMuerte")
+	@NotEmpty
+	private List<Jugador> vecesCaidoEnMuerte;
+
 	@Column(name = "rankingJugadores")
 	@NotEmpty
 	private List<Jugador> rankingJugadores;

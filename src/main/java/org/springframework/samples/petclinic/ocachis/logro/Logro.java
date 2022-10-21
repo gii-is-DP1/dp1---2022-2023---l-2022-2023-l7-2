@@ -26,9 +26,5 @@ public class Logro {
 
 	@Column(name = "estadisticasACumplir")
 	@NotEmpty
-	private Map<TipoEstadistica,Integer> tipoEstadistica;
-
-	@Column(name = "valor")
-	@NotEmpty
-	private Integer valor;   
+	private Estadistica estadisticasACumplir;   
 }
