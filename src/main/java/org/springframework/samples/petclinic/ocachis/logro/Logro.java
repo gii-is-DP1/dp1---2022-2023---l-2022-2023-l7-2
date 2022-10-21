@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.ocachis.logro;
 
+import java.util.Map;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -22,13 +24,11 @@ public class Logro {
 	@NotEmpty
 	private String descripcion;
 
-	@Column(name = "tipoEstadistica")
+	@Column(name = "estadisticasACumplir")
 	@NotEmpty
-	private TipoEstadistica tipoEstadistica;
+	private Map<TipoEstadistica,Integer> tipoEstadistica;
 
 	@Column(name = "valor")
 	@NotEmpty
-	private Integer valor;
-
-    
+	private Integer valor;   
 }
