@@ -1,4 +1,4 @@
-package ocachis.Casilla;
+package org.springframework.samples.petclinic.ocachis.casilla;
 
 public enum TipoCasillaParchis {
 normal,

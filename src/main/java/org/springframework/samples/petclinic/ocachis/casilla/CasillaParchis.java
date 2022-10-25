@@ -1,4 +1,4 @@
-package ocachis.Casilla;
+package org.springframework.samples.petclinic.ocachis.casilla;
 
 import java.util.List;
 
@@ -7,8 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-
-import ocachis.ficha.FichaParchis;
+import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 
 @Entity
 //@Table(name="casillaParchis")

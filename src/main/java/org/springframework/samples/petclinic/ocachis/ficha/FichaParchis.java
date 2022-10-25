@@ -1,4 +1,4 @@
-package ocachis.ficha;
+package org.springframework.samples.petclinic.ocachis.ficha;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import org.springframework.jmx.export.annotation.ManagedAttribute;
 
 @Entity
 //@Table(name="FichaParchis")
-public class FichaParchis extends ficha{
+public class FichaParchis extends Ficha{
 	
 
 	@Column(name="estaEnCasa")

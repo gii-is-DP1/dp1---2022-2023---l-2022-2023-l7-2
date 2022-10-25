@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.ocachis.estadisticasGlobales;
 
 import java.sql.Time;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -8,9 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-
-import org.springframework.samples.petclinic.ocachis.Estadisticas;
-import org.springframework.samples.petclinic.ocachis.Jugador.Jugador;
+import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
+import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 
 import lombok.Getter;
 
@@ -24,17 +24,17 @@ public class estadisticasGlobales {
 
 	@Column(name = "rankingFichasComidas")
 	@NotEmpty
-	private List<Jugador> parchisFichasComidas;
+	private Collection<Jugador> parchisFichasComidas;
 
 	@Column(name = "rankingCaidoEnMuerte")
 	@NotEmpty
-	private List<Jugador> ocaVecesCaidoEnMuerte;
+	private Collection<Jugador> ocaVecesCaidoEnMuerte;
 
 	@Column(name = "rankingJugadores")
 	@NotEmpty
-	private List<Jugador> parchisRankingJugadores;
+	private Collection<Jugador> parchisRankingJugadores;
 	
 	@Column(name = "rankingJugadores")
 	@NotEmpty
-	private List<Jugador> ocaRankingJugadores;
+	private Collection<Jugador> ocaRankingJugadores;
 }

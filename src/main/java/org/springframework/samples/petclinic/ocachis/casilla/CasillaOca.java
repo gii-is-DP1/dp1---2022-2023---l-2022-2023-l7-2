@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.ocachis.casillaoca;
+package org.springframework.samples.petclinic.ocachis.casilla;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 import javax.validation.constraints.NotBlank;
 
-import org.springframework.samples.petclinic.ocachis.fichaoca.FichaOca;
+import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.ocachis;
+package org.springframework.samples.petclinic.ocachis.estadisticas;
 
 import java.sql.Time;
 

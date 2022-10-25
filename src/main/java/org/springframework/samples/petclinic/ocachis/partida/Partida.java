@@ -1,7 +1,5 @@
-package ocachis.partida;
+package org.springframework.samples.petclinic.ocachis.partida;
 import java.util.Date;
-import ocachis.model.BaseEntity;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +8,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import org.springframework.samples.petclinic.model.BaseEntity;
+
 @Entity
 @Table(name="partida")
 public class Partida extends BaseEntity{

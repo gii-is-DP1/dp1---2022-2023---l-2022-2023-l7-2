@@ -6,7 +6,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.samples.petclinic.model.BaseEntity;
-import org.springframework.samples.petclinic.ocachis.Estadisticas;
+import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
 
 import lombok.Getter;
 import lombok.Setter;

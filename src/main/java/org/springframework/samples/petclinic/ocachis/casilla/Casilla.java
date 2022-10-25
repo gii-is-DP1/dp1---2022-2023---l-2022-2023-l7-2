@@ -1,4 +1,6 @@
-package org.springframework.samples.petclinic.ocachis;
+package org.springframework.samples.petclinic.ocachis.casilla;
+
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
+import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
+import org.springframework.samples.petclinic.ocachis.partida.Partida;
 
 import antlr.collections.List;
 import lombok.Getter;
@@ -31,9 +36,9 @@ public class Casilla extends BaseEntity {
 	private Partida partida;
 
     @OneToMany
-    private List<FichaParchis> FichaParchis;
+    private Collection<FichaParchis> fichaParchis;
 
     @OneToMany
-    private List<FichaOCa> FichaOCa;
+    private Collection<FichaOca> fichaOCa;
 
 }
