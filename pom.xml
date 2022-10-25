@@ -31,17 +31,83 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
-	<developers>
-		<developer>
-			<id>orlandoLAB</id>
-			<name>Orlando</name>
-			<email>orllabled@alum.us.es</email>
-			<url></url>
-			<roles>
-				<role></role>
-			</roles>
-		</developer>
-	</developers>
+    
+     <developers>
+		 <developer>
+		 <id>Ignacio</id>
+		 <name>Ignacio Planas Thiriet</name>
+		 <email>ignplathi@alum.us.es</email>
+		 <roles>
+			 <role>developer</role>
+		 </roles>
+		 </developer>
+        <developer>
+            <id>manbarjim2</id>
+            <name>Barcia</name>
+            <email>manbarjim2@alum.us.es</email>
+            <url>http://www.tmht.com/leo</url>
+            <roles>
+                <role>leader</role>
+            </roles>
+            <properties>
+                <picUrl>
+                    
+                </picUrl>
+            </properties>
+        </developer>
+        <developer>
+			    <id>orlandoLAB</id>
+			    <name>Orlando</name>
+			    <email>orllabled@alum.us.es</email>
+			    <url></url>
+			    <roles>
+				    <role></role>
+			    </roles>
+		    </developer>
+
+        <developer>
+            <id>ernrivper</id>
+            <name>Ernesto</name>
+            <email>ernrivper@alum.us.es</email>
+            <url>https://github.com/ernrivper</url>
+            <roles>
+                <role>dev</role>
+            </roles>
+            <properties>
+                <picUrl>
+                  
+                </picUrl>
+            </properties>
+        </developer>
+
+        <developer>
+			    <id>rubcasfer2</id>
+			    <name>Ruben</name>
+			    <email>e.ruben.casal@gmail.com</email>
+			    <url></url>
+			    <roles>
+				    <role></role>
+			    </roles>
+		    </developer>
+        <!-- More developers ...-->
+
+        <developer>
+            <id>siadan</id>
+            <name>Siamion</name>
+            <email>simeondanko@gmail.com</email>
+            <url>https://github.com/siadan</url>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <properties>
+                <picUrl>
+                  
+                </picUrl>
+            </properties>
+        </developer>
+    </developers>
+ 
+
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
         <dependency>

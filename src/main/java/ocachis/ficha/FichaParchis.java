@@ -36,4 +36,5 @@ public class FichaParchis extends ficha{
 	public void setestaEnLaMeta(boolean estaEnLaMeta) {
 		this.estaEnLaMeta = estaEnLaMeta;
 	}
+
 }
