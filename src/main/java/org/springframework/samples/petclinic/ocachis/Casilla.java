@@ -8,6 +8,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import org.springframework.samples.petclinic.model.BaseEntity;
+
 import antlr.collections.List;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,24 +19,21 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "Casilla")
-public class Casilla extends Partida {
+public class Casilla extends BaseEntity {
     
-    @Column(name = "numero")
     @NotEmpty
     private Integer numero;
 
-    public Integer getNumero(){
-        return this.numero;
-    }
+    @NotEmpty
+    private boolean fichas;
     
     @ManyToOne
-	@JoinColumn(name = "partida_id")
 	private Partida partida;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "casilla")
+    @OneToMany
     private List<FichaParchis> FichaParchis;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "casilla")
+    @OneToMany
     private List<FichaOCa> FichaOCa;
 
 }

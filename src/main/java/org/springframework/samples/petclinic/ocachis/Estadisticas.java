@@ -1,18 +1,56 @@
 package org.springframework.samples.petclinic.ocachis;
 
-import java.util.Map;
+import java.sql.Time;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotEmpty;
 
 import lombok.Getter;
 
+
 @Getter
 @Entity
-@Table(name = "estadisticas")
 public class Estadisticas {
-    @Column(name = "estadisticas")
+
+	@NotEmpty
+	private Integer parchisPartidasJugadas;
+
     @NotEmpty
-    private Map<TipoEstadistica, valor> estadisticas;
+	private Integer parchisPartidasGanadas;
+
+	@NotEmpty
+	private Time parchisDuracionTotal;
+
+	@NotEmpty
+	private Time parchisDuracionMinima;
+
+	@NotEmpty
+	private Time parchisDuracionMaxima;
+
+	@NotEmpty
+	private Time parchisDuracionMedia;
+
+    @NotEmpty
+	private Integer parchisFichasComidas;
+
+    @NotEmpty
+	private Integer ocaPartidasJugadas;
+
+    @NotEmpty
+	private Integer ocaPartidasGanadas;
+
+	@NotEmpty
+	private Time ocaDuracionTotal;
+
+	@NotEmpty
+	private Time ocaDuracionMinima;
+
+	@NotEmpty
+	private Time ocaDuracionMaxima;
+
+	@NotEmpty
+	private Time ocaDuracionMedia;
+
+	@NotEmpty
+	private Integer ocaVecesCaidoEnMuerte;
 }

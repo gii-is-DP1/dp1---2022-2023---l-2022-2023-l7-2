@@ -1,34 +1,49 @@
 package org.springframework.samples.petclinic.ocachis;
 
-import javax.persistence.Column;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.swing.ImageIcon;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.samples.petclinic.model.BaseEntity;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name="usuario")
 public class Usuario extends BaseEntity {
-    
-    @Column(name = "nombre")
-    @NotBlank
+
+    @NotEmpty
     private String nombre;
 
-    @Column(name = "apellido")
-    @NotBlank
+    @NotEmpty
     private String apellido;
 
-    @Column(name = "avatar")
     private ImageIcon avatar;
 
-    @Column(name = "tipoUsuario")
-    @NotBlank
+    @NotEmpty
     private TipoUsuario tipoUsuario;
 
     public TipoUsuario getTipoUsuario(){
         return tipoUsuario;
     }
+
+    @NotEmpty
+    private Estadisticas estadisticas;
+
+    @NotEmpty
+    private List<Logro> logros;
+
+    private List<Solicitud> solicitudesEnvidas;
+
+    private List<Solicitud> solicitudesRecibidas;
+
+    @NotEmpty
+    private List<Jugador> partidasJugadas;
+
 }
