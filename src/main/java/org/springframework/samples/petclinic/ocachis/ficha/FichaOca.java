@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
+import org.springframework.samples.petclinic.ocachis.partida.PartidaOca;
 
 import lombok.Getter;
 import lombok.Setter;

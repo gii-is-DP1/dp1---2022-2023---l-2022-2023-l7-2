@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.swing.ImageIcon;
 import javax.validation.constraints.NotEmpty;
@@ -44,17 +45,17 @@ public class Usuario extends BaseEntity {
     @NotEmpty
     private Estadisticas estadisticas;
 
-    @NotEmpty
+    @OneToMany
     private Collection<Logro> logros;
 
     private Collection<Solicitud> solicitudesEnvidas;
 
     private Collection<Solicitud> solicitudesRecibidas;
 
-    @NotEmpty
+    @OneToMany
     private Collection<Jugador> partidasJugadas;
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
 

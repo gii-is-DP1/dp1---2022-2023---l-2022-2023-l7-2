@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.ocachis.Usuario.Usuario;
 import org.springframework.samples.petclinic.ocachis.ficha.Color;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
@@ -25,7 +26,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name="jugador")
-public class Jugador { 
+public class Jugador  extends BaseEntity{ 
     
 @Column(name="color")
 @NotBlank
