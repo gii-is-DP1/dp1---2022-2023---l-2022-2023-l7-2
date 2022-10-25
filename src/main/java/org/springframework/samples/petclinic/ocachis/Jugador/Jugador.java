@@ -1,4 +1,4 @@
-package  org.springframework.samples.petclinic.ocachis.jugador;
+package  org.springframework.samples.petclinic.ocachis.Jugador;
 
 import java.util.Collection;
 import java.util.List;

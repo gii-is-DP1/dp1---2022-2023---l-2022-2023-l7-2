@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
-import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
+import org.springframework.samples.petclinic.ocachis.Jugador.Jugador;
 
 import lombok.Getter;
 
