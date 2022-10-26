@@ -6,21 +6,21 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
+import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
-public class CasillaOca extends Casilla{
-    
-    @NotBlank
-    private TipoCasillaOca tipoCasillaOca;
+public class CasillaParchis extends BaseEntity{
+
+	@NotBlank
+    private TipoCasillaParchis tipoCasillaparchis;
 
     @OneToMany(mappedBy="casillaActual")
-    private List<FichaOca> fichas;
-    
-    
-    
+    private List<FichaParchis> fichas;
 }
