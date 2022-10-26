@@ -7,7 +7,6 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.samples.petclinic.model.BaseEntity;
-import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 
 import lombok.Getter;

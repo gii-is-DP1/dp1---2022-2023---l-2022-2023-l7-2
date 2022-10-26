@@ -39,7 +39,6 @@ public class Usuario extends BaseEntity {
     @NotEmpty
     private TipoUsuario tipoUsuario;
 
-    @OneToOne
     private Estadisticas estadisticas;
 
     @ManyToMany

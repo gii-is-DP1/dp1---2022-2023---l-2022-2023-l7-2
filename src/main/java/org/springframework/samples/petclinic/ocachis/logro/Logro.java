@@ -21,6 +21,5 @@ public class Logro extends BaseEntity{
 	@NotEmpty
 	private String descripcion;
 
-	@OneToOne
 	private Estadisticas estadisticasACumplir;   
 }

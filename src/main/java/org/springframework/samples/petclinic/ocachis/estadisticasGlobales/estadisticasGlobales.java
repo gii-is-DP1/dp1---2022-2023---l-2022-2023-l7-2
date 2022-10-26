@@ -24,7 +24,7 @@ import lombok.Getter;
 //Scope("Singleton") le dice a Spring que es un Singleton y que siempre inyecte la misma instancia
 @Scope("singleton")
 public class estadisticasGlobales extends BaseEntity{
-	@OneToOne
+	
 	private Estadisticas estadisticasGlobales;
 
 	@Column(name = "rankingFichasComidas")

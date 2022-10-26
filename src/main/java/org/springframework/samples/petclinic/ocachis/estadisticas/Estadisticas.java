@@ -2,57 +2,61 @@ package org.springframework.samples.petclinic.ocachis.estadisticas;
 
 import java.sql.Time;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.samples.petclinic.model.BaseEntity;
 
 import lombok.Getter;
+import lombok.Setter;
 
 
 @Getter
-@Entity
-public class Estadisticas extends BaseEntity{
+@Setter
+@Embeddable
+public class Estadisticas{
 
-	@NotEmpty
+	@Column
 	private Integer parchisPartidasJugadas;
 
-    @NotEmpty
+	@Column
 	private Integer parchisPartidasGanadas;
 
-	@NotEmpty
+	@Column
 	private Time parchisDuracionTotal;
 
-	@NotEmpty
+	@Column
 	private Time parchisDuracionMinima;
 
-	@NotEmpty
+	@Column
 	private Time parchisDuracionMaxima;
 
-	@NotEmpty
+	@Column
 	private Time parchisDuracionMedia;
 
-    @NotEmpty
+	@Column
 	private Integer parchisFichasComidas;
 
-    @NotEmpty
+	@Column
 	private Integer ocaPartidasJugadas;
 
-    @NotEmpty
+	@Column
 	private Integer ocaPartidasGanadas;
 
-	@NotEmpty
+	@Column
 	private Time ocaDuracionTotal;
 
-	@NotEmpty
+	@Column
 	private Time ocaDuracionMinima;
 
-	@NotEmpty
+	@Column
 	private Time ocaDuracionMaxima;
 
-	@NotEmpty
+	@Column
 	private Time ocaDuracionMedia; 
 
-	@NotEmpty
+	@Column
 	private Integer ocaVecesCaidoEnMuerte;
 }
