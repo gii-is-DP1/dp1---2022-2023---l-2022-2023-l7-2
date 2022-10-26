@@ -23,6 +23,17 @@ INSERT INTO authorities(id,username,authority) VALUES (6,'manbarjim2','owner');
 INSERT INTO users(username,password,enabled) VALUES ('ignplathi','ipt01',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (7,'ignplathi','owner');
 
+<<<<<<< Updated upstream
+=======
+-- One owner user, named ernrivper with passwor ernrivper
+INSERT INTO users(username,password,enabled) VALUES ('ernrivper','ernrivper',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (8,'ernrivper','owner');
+
+-- One owner user, named siadan with passwor s14d4n
+INSERT INTO users(username,password,enabled) VALUES ('siadan','s14d4n',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (9,'siadan','owner');
+
+>>>>>>> Stashed changes
 INSERT INTO vets(id, first_name,last_name) VALUES (1, 'James', 'Carter');
 INSERT INTO vets(id, first_name,last_name) VALUES (2, 'Helen', 'Leary');
 INSERT INTO vets(id, first_name,last_name) VALUES (3, 'Linda', 'Douglas');
