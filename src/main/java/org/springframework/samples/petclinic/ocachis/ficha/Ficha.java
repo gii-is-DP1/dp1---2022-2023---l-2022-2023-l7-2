@@ -9,7 +9,6 @@ import org.springframework.samples.petclinic.model.Color;
 import lombok.Getter;
 
 @Getter
-
 @MappedSuperclass
 public class Ficha extends BaseEntity {
 	@NotEmpty
