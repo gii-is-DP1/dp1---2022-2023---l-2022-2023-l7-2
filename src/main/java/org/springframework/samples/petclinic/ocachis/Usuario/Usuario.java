@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.ocachis.usuario;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -36,9 +37,9 @@ public class Usuario extends BaseEntity {
     
     private ImageIcon avatar;
 
-    @NotEmpty
-    private TipoUsuario tipoUsuario;
 
+
+	@Embedded
     private Estadisticas estadisticas;
 
     @ManyToMany
@@ -50,7 +51,7 @@ public class Usuario extends BaseEntity {
     @OneToMany
     private Collection<Solicitud> solicitudesRecibidas;
 
-    @OneToMany
+    @OneToMany(mappedBy="usuario")
     private Collection<Jugador> partidasJugadas;
 
     @OneToOne

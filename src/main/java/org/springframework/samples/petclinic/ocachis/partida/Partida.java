@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,14 +34,8 @@ public class Partida extends BaseEntity{
 	@NotEmpty
 	private Date fechaCreacion;
 	
-	private Boolean haEmpezado;
-	
-	private Boolean enPartida;
-	
-	private Boolean haTerminado;
-
-	private Boolean cancelada;
-	
+	@NotEmpty
+	private TipoEstadoPartida estado;
 	/*
 	 * La duracion de la partida en mintuos. Se computa al final de la partida*/
 	private Integer duracion;
@@ -48,7 +43,7 @@ public class Partida extends BaseEntity{
 	@OneToOne
 	private Usuario ganador;
 	
-	private Integer numeroTurnos;
+	private Integer numeroTurnos=0;
 	
 	@Min(value=2)
 	@Max(value=4)
@@ -59,8 +54,6 @@ public class Partida extends BaseEntity{
 	private Collection<Usuario> usuariosObservadores;
 	
 	
-	@OneToMany
-	private Collection<Jugador> jugadores;
 	
 }
 

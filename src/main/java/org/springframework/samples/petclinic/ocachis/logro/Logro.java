@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.ocachis.logro;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
@@ -12,7 +13,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-
 @Entity
 public class Logro extends BaseEntity{
 	@NotEmpty
@@ -21,5 +21,6 @@ public class Logro extends BaseEntity{
 	@NotEmpty
 	private String descripcion;
 
+	@Embedded
 	private Estadisticas estadisticasACumplir;   
 }

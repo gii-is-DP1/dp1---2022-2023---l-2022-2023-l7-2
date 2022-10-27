@@ -18,45 +18,31 @@ import lombok.Setter;
 @Embeddable
 public class Estadisticas{
 
-	@Column
 	private Integer parchisPartidasJugadas;
 
-	@Column
 	private Integer parchisPartidasGanadas;
 
-	@Column
 	private Time parchisDuracionTotal;
 
-	@Column
 	private Time parchisDuracionMinima;
 
-	@Column
 	private Time parchisDuracionMaxima;
 
-	@Column
 	private Time parchisDuracionMedia;
 
-	@Column
 	private Integer parchisFichasComidas;
 
-	@Column
 	private Integer ocaPartidasJugadas;
 
-	@Column
 	private Integer ocaPartidasGanadas;
 
-	@Column
 	private Time ocaDuracionTotal;
 
-	@Column
 	private Time ocaDuracionMinima;
 
-	@Column
 	private Time ocaDuracionMaxima;
 
-	@Column
 	private Time ocaDuracionMedia; 
 
-	@Column
 	private Integer ocaVecesCaidoEnMuerte;
 }
