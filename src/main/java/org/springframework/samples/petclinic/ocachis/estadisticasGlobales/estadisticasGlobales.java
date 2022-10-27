@@ -1,5 +1,4 @@
 package org.springframework.samples.petclinic.ocachis.estadisticasGlobales;
-
 import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -38,4 +37,5 @@ public class estadisticasGlobales extends BaseEntity{
 	@Column(name = "rankingJugadoresOca")
 	@OneToMany
 	private Collection<Usuario> ocaRankingJugadores;
+
 }

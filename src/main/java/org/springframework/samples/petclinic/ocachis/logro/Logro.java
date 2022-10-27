@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.ocachis.logro;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.samples.petclinic.model.BaseEntity;
@@ -22,5 +23,6 @@ public class Logro extends BaseEntity{
 	private String descripcion;
 
 	@Embedded
+
 	private Estadisticas estadisticasACumplir;   
 }

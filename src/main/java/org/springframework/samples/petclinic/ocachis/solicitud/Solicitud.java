@@ -2,7 +2,10 @@ package org.springframework.samples.petclinic.ocachis.solicitud;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+
 import org.springframework.samples.petclinic.model.BaseEntity;
+
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,5 +27,6 @@ private TipoEstadoSolicitud tipoEstado;
 //
 //@OneToOne
 //private Usuario usuarioSolicitud;
+
 
 }
