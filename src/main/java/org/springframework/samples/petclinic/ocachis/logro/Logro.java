@@ -1,13 +1,12 @@
 package org.springframework.samples.petclinic.ocachis.logro;
 
-import java.util.Map;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,5 +27,5 @@ public class Logro extends BaseEntity{
 
 	@Column(name = "estadisticasACumplir")
 	@NotEmpty
-	private Estadistica estadisticasACumplir;   
+	private Estadisticas estadisticasACumplir;   
 }
