@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.ocachis.Usuario;
+package org.springframework.samples.petclinic.ocachis.usuario;
 
 public enum TipoUsuario {
 
