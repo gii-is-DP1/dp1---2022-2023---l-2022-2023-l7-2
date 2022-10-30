@@ -113,3 +113,17 @@ INSERT INTO authorities(id,username,authority) VALUES (11,'usuario2','usuario');
 
 INSERT INTO usuario(id,nombre,apellido,username) VALUES (1,'Pepe','Gonzalez','usuario1');
 INSERT INTO usuario(id,nombre,apellido,username) VALUES (2,'Maria','Gonzalez','usuario2');
+
+
+INSERT INTO partida_parchis(id,codigo_partida,fecha_creacion,estado,max_jugadores) VALUES (1,1,'2022-07-22',2,2);
+
+INSERT INTO partida_parchis(id,codigo_partida,fecha_creacion,estado,max_jugadores) VALUES (2,2,'2022-07-23',2,2);
+
+INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (1,0,1,1);
+INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (2,2,2,1);
+INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (5,2,2,1);
+
+INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (3,0,1,2);
+INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (4,1,2,2);
+
+

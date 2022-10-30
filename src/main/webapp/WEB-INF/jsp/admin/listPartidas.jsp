@@ -1,3 +1,5 @@
+<%@ page import="org.springframework.samples.petclinic.model.Color"%>
+
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -11,46 +13,44 @@
     <table id="partidasTable" class="table table-striped">
         <thead>
         <tr>
-            <th style="width: 150px;">Name</th>
-            <th style="width: 200px;">Creador</th>
-            <th>City</th>
-            <th style="width: 120px">Telephone</th>
-            <th>Pets</th>
+            <th style="width: 50px;">Id Partida</th>
+            <th style="width: 100px;">Creador (Jugador Rojo)</th>
+            <th style="width: 200px">Jugadores</th>
+            <th style="width: 100px">Tipo Partida</th>
+            <th style="width: 100px">Estado</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${selections}" var="owner">
+        <c:forEach items="${parchis}" var="parchis">
             <tr>
                 <td>
-                    <spring:url value="/owners/{ownerId}" var="ownerUrl">
-                        <spring:param name="ownerId" value="${owner.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(ownerUrl)}"><c:out value="${owner.firstName} ${owner.lastName}"/></a>
+                  <c:out value="${parchis.id}"></c:out>
                 </td>
                 <td>
-                    <c:out value="${owner.address}"/>
-                </td>
-                <td>
-                    <c:out value="${owner.city}"/>
-                </td>
-                <td>
-                    <c:out value="${owner.telephone}"/>
-                </td>
-                <td>
-                    <c:forEach var="pet" items="${owner.pets}">
-                        <c:out value="${pet.name} "/>
+                    <c:forEach items="${parchis.jugadores}" var="jugador">
+                        <c:if test="${jugador.color eq Color.ROJO}">
+                            <c:out value="${jugador.usuario.user.username}"/>
+                        </c:if>
                     </c:forEach>
+                    
+
                 </td>
-                
-      
-<!--
-                <td> 
-                    <c:out value="${owner.user.username}"/> 
+                <td>
+                    <c:forEach items="${parchis.jugadores}" var="jugador">
+                        <c:if test="${jugador.color != Color.ROJO}">
+                            <c:out value="${jugador.usuario.user.username} "/>
+                        </c:if>
+                    </c:forEach>
+                    
+
                 </td>
-                <td> 
-                   <c:out value="${owner.user.password}"/> 
-                </td> 
--->
+                <td>
+                    <c:out value="Parchis"></c:out>
+                </td>
+                <td>
+                    <c:out value="${parchis.estado}"></c:out>
+
+                </td>
                 
             </tr>
         </c:forEach>

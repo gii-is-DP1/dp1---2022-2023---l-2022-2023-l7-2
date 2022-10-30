@@ -1,6 +1,8 @@
 package org.springframework.samples.petclinic.ocachis.admin;
 import org.springframework.ui.ModelMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.ocachis.partida.PartidaOca;
+import org.springframework.samples.petclinic.ocachis.partida.PartidaParchis;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaService;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.samples.petclinic.ocachis.usuario.UsuarioService;
@@ -18,12 +20,12 @@ import java.util.Map;
 @RequestMapping("/admin")
 public class AdminController {
 
-    //private final PartidaService partidaService;
+    private final PartidaService partidaService;
     private final UsuarioService usuarioService;
 
     @Autowired
-    public AdminController(UsuarioService usuarioService){
-        //this.partidaService = partidaService;
+    public AdminController(UsuarioService usuarioService, PartidaService partidaService){
+        this.partidaService = partidaService;
         this.usuarioService = usuarioService;
     }
 
@@ -63,5 +65,13 @@ public class AdminController {
 		return "admin/listUsuarios";
 	}
     
+    @GetMapping(value="/listPartidas")
+    public String listarPartidas(Map<String,Object> model){
+		Collection<PartidaOca> results1 = this.partidaService.findAllOca();
+		model.put("oca", results1);
+        Collection<PartidaParchis> results2 = this.partidaService.findAllParchis();
+		model.put("parchis", results2);
+		return "admin/listPartidas";
+	}
 
 }

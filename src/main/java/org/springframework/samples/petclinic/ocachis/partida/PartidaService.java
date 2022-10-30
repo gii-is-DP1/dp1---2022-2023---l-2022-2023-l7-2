@@ -6,27 +6,25 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collection;
 @Service
 public class PartidaService {
-    /* 
-    private PartidaRepository partidaRepository;
+    
+    private PartidaOcaRepository partidaOcaRepository;
+	private PartidaParchisRepository partidaParchisRepository;
     
     @Autowired
-	public PartidaService(PartidaRepository partidaRepo){
-		this.partidaRepository = partidaRepo;
+	public PartidaService(PartidaOcaRepository partidaOcaRepository, PartidaParchisRepository partidaParchisRepository){
+		this.partidaOcaRepository = partidaOcaRepository;
+		this.partidaParchisRepository = partidaParchisRepository;
+	}
+   
+
+	@Transactional(readOnly = true)
+	public Collection<PartidaOca> findAllOca(){
+		return this.partidaOcaRepository.findAll();
 	}
 
-    @Transactional(readOnly = true)
-	public Collection<Partida> findAll(){
-		return partidaRepository.findAll();
-	}
-    
-    @Transactional(readOnly = true)
-	public Collection<Partida> findPartidasJugadas(){
-		return partidaRepository.buscarPartidaTerminada();
+	@Transactional(readOnly = true)
+	public Collection<PartidaParchis> findAllParchis(){
+		return this.partidaParchisRepository.findAll();
 	}
 
-    @Transactional(readOnly = true)
-	public Collection<Partida> findPartidasEnJuego(){
-		return partidaRepository.buscarPartidaEnJuego();
-	}
-    */
 }
