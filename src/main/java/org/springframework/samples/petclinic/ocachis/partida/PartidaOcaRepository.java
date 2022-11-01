@@ -6,8 +6,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 @Repository
 public interface PartidaOcaRepository extends CrudRepository<PartidaOca,Integer>{
-    
+
     Collection<PartidaOca> findAll();
+   PartidaOca findById(int id);
     
 
 }

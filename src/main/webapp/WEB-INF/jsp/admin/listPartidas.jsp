@@ -18,6 +18,7 @@
             <th style="width: 200px">Jugadores</th>
             <th style="width: 100px">Tipo Partida</th>
             <th style="width: 100px">Estado</th>
+            <th style="width: 50px"></th>
         </tr>
         </thead>
         <tbody>
@@ -51,6 +52,52 @@
                     <c:out value="${parchis.estado}"></c:out>
 
                 </td>
+                <td>
+                <spring:url value="listPartidas/partidaParchis/{partidaParchisId}/delete" var="partidaParchisDeleteUrl">
+                        <spring:param name="partidaParchisId" value="${parchis.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(partidaParchisDeleteUrl)}">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                </td>
+            </tr>
+        </c:forEach>
+        <c:forEach items="${oca}" var="oca">
+            <tr>
+                <td>
+                  <c:out value="${oca.id}"></c:out>
+                </td>
+                <td>
+                    <c:forEach items="${oca.jugadores}" var="jugador">
+                        <c:if test="${jugador.color eq Color.ROJO}">
+                            <c:out value="${jugador.usuario.user.username}"/>
+                        </c:if>
+                    </c:forEach>
+                    
+
+                </td>
+                <td>
+                    <c:forEach items="${oca.jugadores}" var="jugador">
+                        <c:if test="${jugador.color != Color.ROJO}">
+                            <c:out value="${jugador.usuario.user.username} "/>
+                        </c:if>
+                    </c:forEach>
+                    
+
+                </td>
+                <td>
+                    <c:out value="Oca"></c:out>
+                </td>
+                <td>
+                    <c:out value="${oca.estado}"></c:out>
+
+                </td>
+                <td>
+                    <spring:url value="listPartidas/partidaOca/{partidaOcaId}/delete" var="partidaOcaDeleteUrl">
+                            <spring:param name="partidaOcaId" value="${oca.id}"/>
+                        </spring:url>
+                        <a href="${fn:escapeXml(partidaOcaDeleteUrl)}">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                    </td>
                 
             </tr>
         </c:forEach>

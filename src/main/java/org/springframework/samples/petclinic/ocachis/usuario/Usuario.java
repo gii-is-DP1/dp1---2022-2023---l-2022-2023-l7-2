@@ -51,7 +51,7 @@ public class Usuario extends BaseEntity {
     @OneToMany
     private Collection<Solicitud> solicitudesRecibidas;
 
-    @OneToMany(mappedBy="usuario")
+    @OneToMany(mappedBy="usuario", cascade = CascadeType.ALL)
     private Collection<Jugador> partidasJugadas;
 
     @OneToOne(cascade = CascadeType.ALL)

@@ -20,4 +20,13 @@ public class UsuarioService{
     public Collection<Usuario> findAll(){
         return this.usuarioRepository.findAll();
     }
+    @Transactional
+    public void deleteUsuarioById(int id){
+        usuarioRepository.deleteById(id);
+    }
+
+    @Transactional
+    public Usuario findUsuarioById(int id){
+        return this.usuarioRepository.findById(id);
+    }
 }

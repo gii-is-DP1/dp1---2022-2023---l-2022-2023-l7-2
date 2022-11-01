@@ -9,5 +9,7 @@ public interface UsuarioRepository extends CrudRepository<Usuario,Integer> {
     
     Collection<Usuario> findAll();
 
+    Usuario findById(int id);
+
     
 }

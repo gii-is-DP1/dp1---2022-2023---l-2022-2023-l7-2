@@ -14,6 +14,7 @@
             <th style="width: 150px;">Apodo</th>
             <th style="width: 200px;">Nombre</th>
             <th style="width: 120px">Apellido</th>
+            <th style="width: 50px"></th>
         </tr>
         </thead>
         <tbody>
@@ -23,13 +24,21 @@
                     <spring:url value="/usuario/{usuarioId}" var="usuarioUrl">
                         <spring:param name="usuarioId" value="${usuario.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(usuarioUrl)}"><c:out value="${usuario.user.username}"/></a>
+                    <!--<a href="${fn:escapeXml(usuarioUrl)}">--><c:out value="${usuario.user.username}"/></a>
                 </td>
                 <td>
                     <c:out value="${usuario.nombre}"/>
                 </td>
                 <td>
                     <c:out value="${usuario.apellido}"/>
+                </td>
+                <td>
+                    <spring:url value="listUsuarios/{usuarioId}/delete" var="usuarioDeleteUrl">
+                        <spring:param name="usuarioId" value="${usuario.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(usuarioDeleteUrl)}">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                </a>
                 </td>
       
 <!--

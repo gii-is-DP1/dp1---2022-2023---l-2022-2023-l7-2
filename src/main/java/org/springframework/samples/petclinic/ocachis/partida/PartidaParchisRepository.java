@@ -10,6 +10,8 @@ public interface PartidaParchisRepository extends CrudRepository<PartidaParchis,
     
     
     Collection<PartidaParchis> findAll();
+
+    PartidaParchis findById(int id);
     
     /*
     @Query("SELECT partida FROM Partida partida WHERE partida.estado = 'JUGANDO'")

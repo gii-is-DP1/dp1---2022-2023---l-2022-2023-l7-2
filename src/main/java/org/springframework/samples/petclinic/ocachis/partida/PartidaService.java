@@ -26,5 +26,24 @@ public class PartidaService {
 	public Collection<PartidaParchis> findAllParchis(){
 		return this.partidaParchisRepository.findAll();
 	}
+	
+	@Transactional
+	public void borrarPartidaOca(int id){
+		this.partidaOcaRepository.deleteById(id);
+	}
 
+	@Transactional
+	public void borrarPartidaParchis(int id){
+		this.partidaParchisRepository.deleteById(id);
+	}
+	
+	@Transactional(readOnly = true)
+	public PartidaOca findPartidaOcaById(int id){
+		return this.partidaOcaRepository.findById(id);
+	}
+	
+	@Transactional(readOnly = true)
+	public PartidaParchis findPartidaParchisById(int id){
+		return this.partidaParchisRepository.findById(id);
+	}
 }
