@@ -31,8 +31,16 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
-
-    <developers>
+    
+     <developers>
+		 <developer>
+		 <id>Ignacio</id>
+		 <name>Ignacio Planas Thiriet</name>
+		 <email>ignplathi@alum.us.es</email>
+		 <roles>
+			 <role>developer</role>
+		 </roles>
+		 </developer>
         <developer>
             <id>manbarjim2</id>
             <name>Barcia</name>
@@ -82,6 +90,21 @@
 			    </roles>
 		    </developer>
         <!-- More developers ...-->
+
+        <developer>
+            <id>siadan</id>
+            <name>Siamion</name>
+            <email>simeondanko@gmail.com</email>
+            <url>https://github.com/siadan</url>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <properties>
+                <picUrl>
+                  
+                </picUrl>
+            </properties>
+        </developer>
     </developers>
  
 
