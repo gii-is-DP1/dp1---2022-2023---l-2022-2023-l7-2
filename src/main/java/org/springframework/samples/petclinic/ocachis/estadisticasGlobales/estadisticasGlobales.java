@@ -1,40 +1,41 @@
 package org.springframework.samples.petclinic.ocachis.estadisticasGlobales;
-
-import java.sql.Time;
 import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
+import javax.persistence.OneToMany;
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
-import org.springframework.samples.petclinic.ocachis.Jugador.Jugador;
+import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
+import org.springframework.context.annotation.Scope;
+import org.springframework.samples.petclinic.model.BaseEntity;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
-@Table(name = "estadisticasGlobales")
-public class estadisticasGlobales {
-    @Column(name = "estadisticasGlobales")
-	@NotEmpty
+
+//Scope("Singleton") le dice a Spring que es un Singleton y que siempre inyecte la misma instancia
+@Scope("singleton")
+public class estadisticasGlobales extends BaseEntity{
+	@Embedded
 	private Estadisticas estadisticasGlobales;
 
 	@Column(name = "rankingFichasComidas")
-	@NotEmpty
-	private Collection<Jugador> parchisFichasComidas;
+	@OneToMany
+	private Collection<Usuario> parchisFichasComidas;
 
 	@Column(name = "rankingCaidoEnMuerte")
-	@NotEmpty
-	private Collection<Jugador> ocaVecesCaidoEnMuerte;
+	@OneToMany
+	private Collection<Usuario> ocaVecesCaidoEnMuerte;
 
-	@Column(name = "rankingJugadores")
-	@NotEmpty
-	private Collection<Jugador> parchisRankingJugadores;
+	@Column(name = "rankingJugadoresParchis")
+	@OneToMany
+	private Collection<Usuario> parchisRankingJugadores;
 	
-	@Column(name = "rankingJugadores")
-	@NotEmpty
-	private Collection<Jugador> ocaRankingJugadores;
+	@Column(name = "rankingJugadoresOca")
+	@OneToMany
+	private Collection<Usuario> ocaRankingJugadores;
+
 }
