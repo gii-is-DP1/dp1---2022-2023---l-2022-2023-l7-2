@@ -23,6 +23,7 @@ import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import lombok.Getter;
 import lombok.Setter;
+
 @Getter
 @Setter
 @MappedSuperclass
@@ -51,5 +52,7 @@ public class Partida extends BaseEntity{
   
 	@ManyToMany
 	private Collection<Usuario> usuariosObservadores;
+
+	private List<Jugador> jugadores;
 }
 

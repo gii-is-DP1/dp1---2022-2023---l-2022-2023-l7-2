@@ -17,7 +17,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-
 @Entity
 public class PartidaOca extends Partida{
 
@@ -25,6 +24,6 @@ public class PartidaOca extends Partida{
 	private List<CasillaOca> casillas;
 	
 	@OneToMany(mappedBy="partidaOca")
-	private Collection<Jugador> jugadores;
+	private Collection<Jugador> jugador;
 
 }
