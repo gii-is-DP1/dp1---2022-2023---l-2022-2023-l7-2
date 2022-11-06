@@ -35,7 +35,6 @@ public class Estadisticas{
 
 	private Integer parchisFichasComidas;
 
-	@Positive
 	private Integer ocaPartidasJugadas;
 
 	private Integer ocaPartidasGanadas;
