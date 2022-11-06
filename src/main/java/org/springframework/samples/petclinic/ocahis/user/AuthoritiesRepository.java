@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.user;
+package org.springframework.samples.petclinic.ocahis.user;
 
 import org.springframework.data.repository.CrudRepository;
 

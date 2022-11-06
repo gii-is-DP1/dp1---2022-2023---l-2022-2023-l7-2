@@ -5,7 +5,7 @@ package org.springframework.samples.petclinic.ocachis.usuario;
 import java.util.Collection;
 import java.util.List;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -22,7 +22,7 @@ import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.logro.Logro;
 import org.springframework.samples.petclinic.ocachis.solicitud.Solicitud;
-import org.springframework.samples.petclinic.user.User;
+import org.springframework.samples.petclinic.ocahis.user.User;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,14 +31,12 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Usuario extends BaseEntity {
-
-    @NotEmpty
+	
+	@NotEmpty
     private String nombre;
 
-    @NotEmpty
+//  @NotEmpty
     private String apellido;
-    
-    private ImageIcon avatar;
 
 	@Embedded
     private Estadisticas estadisticas;
@@ -55,8 +53,13 @@ public class Usuario extends BaseEntity {
     @OneToMany(mappedBy="usuario")
     private Collection<Jugador> partidasJugadas;
 
-    @OneToOne
-//    @JoinColumn(name = "username", referencedColumnName = "username")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
+
+	@Override
+	public String toString() {
+		return "Usuario [nombre=" + nombre + ", apellido=" + apellido + ", estadisticas=" + estadisticas.toString() + ", user=" + user.getUsername() + " | " + user.getPassword() + "]";
+	}
 
 }

@@ -19,6 +19,23 @@ import lombok.Setter;
 @Embeddable
 public class Estadisticas{
 
+	public Estadisticas() {
+		this.parchisPartidasJugadas = 0;
+		this.parchisPartidasGanadas = 0;
+		this.parchisFichasComidas = 0;
+		this.ocaPartidasJugadas = 0;
+		this.ocaPartidasGanadas = 0;
+		this.ocaVecesCaidoEnMuerte = 0;
+		this.parchisDuracionTotal = new Time(0) ;
+		this.parchisDuracionMinima = new Time(0);
+		this.parchisDuracionMaxima = new Time(0);
+		this.parchisDuracionMedia = new Time(0);
+		this.ocaDuracionTotal = new Time(0);
+		this.ocaDuracionMinima = new Time(0);
+		this.ocaDuracionMaxima = new Time(0);
+		this.ocaDuracionMedia = new Time(0);
+	}
+
 	private Integer parchisPartidasJugadas;
 
 	private Integer parchisPartidasGanadas;
@@ -46,4 +63,18 @@ public class Estadisticas{
 	private Time ocaDuracionMedia; 
 
 	private Integer ocaVecesCaidoEnMuerte;
+	
+	
+	
+	@Override
+	public String toString() {
+		return "Estadisticas [parchisPartidasJugadas=" + parchisPartidasJugadas + ", parchisPartidasGanadas="
+				+ parchisPartidasGanadas + ", parchisDuracionTotal=" + parchisDuracionTotal + ", parchisDuracionMinima="
+				+ parchisDuracionMinima + ", parchisDuracionMaxima=" + parchisDuracionMaxima + ", parchisDuracionMedia="
+				+ parchisDuracionMedia + ", parchisFichasComidas=" + parchisFichasComidas + ", ocaPartidasJugadas="
+				+ ocaPartidasJugadas + ", ocaPartidasGanadas=" + ocaPartidasGanadas + ", ocaDuracionTotal="
+				+ ocaDuracionTotal + ", ocaDuracionMinima=" + ocaDuracionMinima + ", ocaDuracionMaxima="
+				+ ocaDuracionMaxima + ", ocaDuracionMedia=" + ocaDuracionMedia + ", ocaVecesCaidoEnMuerte="
+				+ ocaVecesCaidoEnMuerte + "]";
+	}
 }
