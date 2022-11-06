@@ -127,3 +127,5 @@ INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (3,0,1,2);
 INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (4,1,2,2);
 
 
+
+INSERT INTO logro(id,nombre,descripcion,oca_partidas_jugadas) VALUES (1,'Jugador Oca Junior','Juega 10 partidas de la Oca',10); 

@@ -6,7 +6,9 @@ import java.sql.Time;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
 
 import org.springframework.samples.petclinic.model.BaseEntity;
 
@@ -33,6 +35,7 @@ public class Estadisticas{
 
 	private Integer parchisFichasComidas;
 
+	@Positive
 	private Integer ocaPartidasJugadas;
 
 	private Integer ocaPartidasGanadas;
