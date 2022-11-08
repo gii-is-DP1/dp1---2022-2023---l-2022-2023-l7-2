@@ -27,6 +27,10 @@
                 <td>
                     <c:out value="${partida.maxJugadores}"/>
                 </td>
+                <form: form modelAttribute="partida"
+                class="form-horizontal">
+                    <button class="btn btn-default" type="submit">Unirse a Sala</button>
+                </form>
             </tr>
         </c:forEach>
         </tbody>
