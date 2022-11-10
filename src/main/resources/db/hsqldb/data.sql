@@ -100,3 +100,9 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (1, 7, '2013-01-01',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02', 'rabies shot');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
+
+INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, numero_turnos) VALUES
+(1, 22, 3, 2, null, 3, 0);
+
+INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, numero_turnos) VALUES
+(2, 27, 5, 1, null, 3, 0);

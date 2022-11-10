@@ -9,11 +9,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PartidaRepository extends CrudRepository<Partida, Integer> {
+public interface PartidaParchisRepository extends CrudRepository<PartidaParchis, Integer> {
 
-    Collection<Partida> findAll();
+    Collection<PartidaParchis> findAll();
     Partida findById(int id);
-    @Query("SELECT p FROM Partida p WHERE p.estado = :estado")
-    List<Partida> getPartidas(@Param("estado") TipoEstadoPartida estado);
+    @Query("SELECT pP FROM PartidaParchis pP WHERE pP.estado = :estado")
+    List<PartidaParchis> getPartidas(@Param("estado") TipoEstadoPartida estado);
     Partida save(Partida p);
 }

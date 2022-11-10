@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/partida")
+@RequestMapping("/sala")
 public class PartidaController {
     
     private PartidaService partidaService;
@@ -29,10 +29,11 @@ public class PartidaController {
     private static final String VIEWS_SALAS = "partidas/salaList";
     private static final String VIEWS_SALAS_CREATE_FORM = "partidas/createPartidaForm";
 	
-    @GetMapping
+    @GetMapping("/")
     public ModelAndView showSalaList() {
         ModelAndView mav = new ModelAndView(VIEWS_SALAS);
-        mav.addObject("partidas", partidaService.findAll());
+        mav.addObject("partidaOca", partidaService.findAllOca());
+		mav.addObject("partidaParchis", partidaService.findAllParchis());
         return mav;
     }
 
@@ -40,22 +41,24 @@ public class PartidaController {
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-
-	@GetMapping(value = "/partida/new")
-	public String initCreationForm(Map<String, Object> model) {
-		Partida p = new Partida();
-		model.put("partida", p);
-		return VIEWS_SALAS_CREATE_FORM;
-	}
+ 
+/*	@GetMapping(value = "/list")
+	public String verSalas(Map<String, Object> model) {
+		PartidaOca pO = new PartidaOca();
+		PartidaParchis pP = new PartidaParchis();
+		model.put("partidaoca", pO);
+		model.put("partidaparchis", pP);
+		return VIEWS_SALAS;
+	}*/
 
     @PostMapping(value = "/create")
-	public String processCreationForm(@Valid Partida partida, BindingResult result, ModelMap model) {
+	public String processCreationForm(@Valid PartidaOca partida, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
-			return "partida/createPartidaForm";
+			return VIEWS_SALAS_CREATE_FORM;
 		}
 		else {
-			this.partidaService.save(partida);
-			return "welcome";
+			this.partidaService.saveOca(partida);
+			return VIEWS_SALAS_CREATE_FORM;
 		}
 	}   
 }
