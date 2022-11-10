@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class DicesOnSessionController {
 
-    public static int NUM_DICES=5;
+    public static int NUM_DICES=1;
     public static int NUM_DICES_SIDES=6;
 
     @GetMapping("/session/rolldices")
