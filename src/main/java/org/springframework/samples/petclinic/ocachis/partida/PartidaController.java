@@ -12,18 +12,22 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("/partida")
 public class PartidaController {
+    
     private PartidaService partidaService;
 
-    private static final String VIEWS_SALAS = "partidas/salaList";
-	
-	@Autowired
+    @Autowired
 	public PartidaController(PartidaService partidaService) {
 		this.partidaService=partidaService;
 	}
+
+    private static final String VIEWS_SALAS = "partidas/salaList";
+    private static final String VIEWS_SALAS_CREATE_FORM = "partidas/createPartidaForm";
 	
     @GetMapping
     public ModelAndView showSalaList() {
@@ -32,19 +36,19 @@ public class PartidaController {
         return mav;
     }
 
-	@InitBinder
-    public void setAllowedFields(WebDataBinder dataBinder) {
-        dataBinder.setDisallowedFields("id");
-    }
-
-    @GetMapping(value = "/partida/create")
-	public String initCreationForm(Map<String, Object> model) {
-		Partida product = new Partida();
-		model.put("partida", product);
-		return "partida/salaList";
+    @InitBinder
+	public void setAllowedFields(WebDataBinder dataBinder) {
+		dataBinder.setDisallowedFields("id");
 	}
 
-    @PostMapping(value = "/partida/create")
+	@GetMapping(value = "/partida/new")
+	public String initCreationForm(Map<String, Object> model) {
+		Partida p = new Partida();
+		model.put("partida", p);
+		return VIEWS_SALAS_CREATE_FORM;
+	}
+
+    @PostMapping(value = "/create")
 	public String processCreationForm(@Valid Partida partida, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
 			return "partida/createPartidaForm";
