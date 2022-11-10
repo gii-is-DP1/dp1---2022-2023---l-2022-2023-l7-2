@@ -58,11 +58,23 @@ public class UsuarioController {
 			return VIEWS_USUARIO_CREATE_OR_UPDATE_FORM;
 		}
 		else {
+			Boolean errorPresent = false;
+			
+			List<String> errors = new ArrayList<>();
 			//verificar que el username no existe todavia
+			
 			Optional<User> user = userService.findUser(usuario.getUser().getUsername());
 			if(user.isPresent()) {
-				List<String> errors = new ArrayList<>();
-				errors.add("The username	 already exists");
+				errors.add("The username already exists");
+				errorPresent=true;
+				
+			}
+			if(usuario.getUser().getPassword().length()<3) {
+				errors.add("The password must be at least 3 characters long");
+				errorPresent=true;
+			}
+			
+			if(errorPresent) {
 				model.put("errors", errors);
 				return VIEWS_USUARIO_CREATE_OR_UPDATE_FORM;
 			}

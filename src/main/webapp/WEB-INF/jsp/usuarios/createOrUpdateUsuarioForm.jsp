@@ -8,7 +8,7 @@
 
 <petclinic:layout pageName="usuarios">
     <h2>
-        <c:if test="${usuario['new']}">Nuevo </c:if> Usuario	 asdawd
+        <c:if test="${usuario['new']}">Nuevo </c:if> Usuario
     </h2>
    
    
