@@ -23,9 +23,10 @@ import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import lombok.Getter;
 import lombok.Setter;
+
 @Getter
 @Setter
-@MappedSuperclass
+@Entity
 public class Partida extends BaseEntity{
 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
