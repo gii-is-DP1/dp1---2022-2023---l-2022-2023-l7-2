@@ -15,7 +15,14 @@
         <div class="form-group has-feedback">
             <petclinic:inputField label="Nombre" name="nombre"/>
             <petclinic:inputField label="Descripción" name="descripcion"/>
+            <petclinic:inputField label="Partida Jugadas Parchís" name="estadisticasACumplir.parchisPartidasJugadas"/>
+            <petclinic:inputField label="Partidas Ganadas Parchís" name="estadisticasACumplir.parchisPartidasGanadas"/>
+            <petclinic:inputField label="Tiempo Jugando al Parchís" name="estadisticasACumplir.parchisDuracionTotal"/>
+            <petclinic:inputField label="Fichas Comidas Parchís" name="estadisticasACumplir.parchisFichasComidas"/>
             <petclinic:inputField label="Partidas Jugadas Oca" name="estadisticasACumplir.ocaPartidasJugadas"/>
+            <petclinic:inputField label="Partidas Ganadas Oca" name="estadisticasACumplir.ocaPartidasGanadas"/>
+            <petclinic:inputField label="Tiempo Jugando a la Oca" name="estadisticasACumplir.ocaDuracionTotal"/>
+            <petclinic:inputField label="Caidas en Muerte Oca" name="estadisticasACumplir.ocaVecesCaidoEnMuerte"/>
            
         </div>
         <div class="form-group">

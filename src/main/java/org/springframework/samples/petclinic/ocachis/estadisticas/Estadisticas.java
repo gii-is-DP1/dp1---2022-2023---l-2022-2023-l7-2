@@ -25,13 +25,13 @@ public class Estadisticas{
 
 	private Integer parchisPartidasGanadas;
 
-	private Time parchisDuracionTotal;
+	private Integer parchisDuracionTotal;
 
-	private Time parchisDuracionMinima;
+	private Integer parchisDuracionMinima;
 
-	private Time parchisDuracionMaxima;
+	private Integer parchisDuracionMaxima;
 
-	private Time parchisDuracionMedia;
+	private Integer parchisDuracionMedia;
 
 	private Integer parchisFichasComidas;
 
@@ -39,13 +39,13 @@ public class Estadisticas{
 
 	private Integer ocaPartidasGanadas;
 
-	private Time ocaDuracionTotal;
+	private Integer ocaDuracionTotal;
 
-	private Time ocaDuracionMinima;
+	private Integer ocaDuracionMinima;
 
-	private Time ocaDuracionMaxima;
+	private Integer ocaDuracionMaxima;
 
-	private Time ocaDuracionMedia; 
+	private Integer ocaDuracionMedia; 
 
 	private Integer ocaVecesCaidoEnMuerte;
 }
