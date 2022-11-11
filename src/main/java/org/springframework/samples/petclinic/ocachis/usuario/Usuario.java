@@ -59,7 +59,11 @@ public class Usuario extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "Usuario [nombre=" + nombre + ", apellido=" + apellido + ", estadisticas=" + estadisticas.toString() + ", user=" + user.getUsername() + " | " + user.getPassword() + "]";
+		return "Usuario [nombre=" + nombre +
+				", apellido=" + apellido +
+//				", estadisticas=" + estadisticas.toString() +
+				", user=" + user.getUsername() + " | " + user.getPassword() +
+			"]";
 	}
 
 }

@@ -32,6 +32,11 @@ INSERT INTO users(username,password,enabled) VALUES ('siadan','s14d4n',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (9,'siadan','owner');
 
 
+-- One usuario user, maned usuario with password usuario
+INSERT INTO users(username,password,enabled) VALUES ('usuario','usuario',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (10,'usuario','jugador');
+INSERT INTO Usuario(id,nombre,apellido,username) VALUES(1,'nombreUsuario','apellidoUsuario','usuario');
+
 INSERT INTO vets(id, first_name,last_name) VALUES (1, 'James', 'Carter');
 INSERT INTO vets(id, first_name,last_name) VALUES (2, 'Helen', 'Leary');
 INSERT INTO vets(id, first_name,last_name) VALUES (3, 'Linda', 'Douglas');

@@ -11,13 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.ocahis.user.AuthoritiesService;
 import org.springframework.samples.petclinic.ocahis.user.User;
 import org.springframework.samples.petclinic.ocahis.user.UserService;
-import org.springframework.samples.petclinic.owner.Owner;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -47,8 +44,7 @@ public class UsuarioController {
 	public String initCreationForm(Map<String, Object> model) {
 		Usuario usuario = new Usuario();
 		model.put("usuario", usuario);
-		List<String> errors = new ArrayList<>();
-		model.put("errors", errors);
+		model.put("edit", false);
 		return VIEWS_USUARIO_CREATE_OR_UPDATE_FORM;
 	}
 	
@@ -59,23 +55,20 @@ public class UsuarioController {
 		}
 		else {
 			Boolean errorPresent = false;
-			
-			List<String> errors = new ArrayList<>();
 			//verificar que el username no existe todavia
-			
 			Optional<User> user = userService.findUser(usuario.getUser().getUsername());
 			if(user.isPresent()) {
-				errors.add("The username already exists");
+				result.rejectValue("user.username", "duplicate", "is already in use");
 				errorPresent=true;
 				
 			}
 			if(usuario.getUser().getPassword().length()<3) {
-				errors.add("The password must be at least 3 characters long");
+				result.rejectValue("user.password", "short", "La longitud mínima de la contraseña es de caracteres");
 				errorPresent=true;
 			}
 			
 			if(errorPresent) {
-				model.put("errors", errors);
+				model.put("edit", false);
 				return VIEWS_USUARIO_CREATE_OR_UPDATE_FORM;
 			}
 			//creacion del usuario, user and authorities
@@ -89,47 +82,90 @@ public class UsuarioController {
 	@GetMapping(value = "/usuario/{usuarioId}/edit")
 	public String initUpdateusuarioForm(@PathVariable("usuarioId") int usuarioId, Map<String, Object> model) {
 		
-		//fetch information about logged user and demanded user
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
-		User currentUser = userService.findUser(user.getUsername()).get();
+		//Obtener la autenticación del usuario
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				org.springframework.security.core.userdetails.User loggedUser =null;
+				
+				
+				//si el usuario está autenticado, obtenemos sus credenciales
+				if(auth.isAuthenticated())	loggedUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
+				
+				//si no devolvemos un error de que no hay nadie autenticado
+				else return "redirect:/noAccess";
+				
+				//inicializamos las variables:
+				//currentUser es el user que está autenticado
+				//requestedUser es el user que se está intentando modificar
+				//usuario es el usuario que se va a modificar
+				User currentUser=null;
+				User requestedUser=null;
+				Usuario requestedUsuario =null;
+				if(loggedUser!=null) currentUser = userService.findUser(loggedUser.getUsername()).get();
+				
+				//Obtener el user que se está intentando modificar si existe en la bd
+				if(usuarioService.existsUsuarioById(usuarioId)) {
+					requestedUsuario = this.usuarioService.findUsuarioById(usuarioId);
+					requestedUser = this.usuarioService.findUsuarioById(usuarioId).getUser();
+				}
+				
+				//Se rechaza el acceso si no es el mismo user
+				if(!currentUser.equals(requestedUser) && currentUser != null && requestedUser != null) {
+					return "redirect:/noAccess";
+				}
 		
-		Usuario usuario = this.usuarioService.findUsuarioById(usuarioId);
-		User requestedUser = usuario.getUser();
 		
 		
-		List<String> errors = new ArrayList<>();
 		
-		//if they are not the same user access is denied
-		if(!currentUser.equals(requestedUser)) {
-			return "redirect:/noAccess";
-		}
 		
 		//else the user is loaded and the view is shown to edit it 
-		model.put("usuario",usuario);
-		model.put("errors", errors);
+		model.put("usuario",requestedUsuario);
+		
+		//la variable edit sirve para mostrar o no el username y la contraseña, ya que estas no pueden ser actualizadas
+		model.put("edit", true);
 		return VIEWS_USUARIO_CREATE_OR_UPDATE_FORM;
 	}
 	
 	@PostMapping(value = "/usuario/{usuarioId}/edit")
 	public String processUpdateUsuarioForm(@Valid Usuario usuario, BindingResult result,
 			@PathVariable("usuarioId") int usuarioId, Map<String, Object> model) {
+		
+		//Obtener la autenticación del usuario
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		org.springframework.security.core.userdetails.User loggedUser =null;
+		
+		
+		//si el usuario está autenticado, obtenemos sus credenciales
+		if(auth.isAuthenticated())	loggedUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
+		
+		//si no devolvemos un error de que no hay nadie autenticado
+		else return "redirect:/noAccess";
+		
+		//inicializamos las variables:
+		//currentUser es el user que está autenticado
+		//requestedUser es el user que se está intentando modificar
+		User currentUser=null;
+		User requestedUser=null;
+		
+		if(loggedUser!=null) currentUser = userService.findUser(loggedUser.getUsername()).get();
+		
+		//Obtener el user que se está intentando modificar si existe en la bd
+		if(usuarioService.existsUsuarioById(usuarioId)) requestedUser = this.usuarioService.findUsuarioById(usuarioId).getUser();
+		
+		//Se rechaza el acceso si no es el mismo user
+		if(!currentUser.equals(requestedUser) && currentUser != null && requestedUser != null) {
+			return "redirect:/noAccess";
+		}
+		
+		
 		if (result.hasErrors()) {
 			return VIEWS_USUARIO_CREATE_OR_UPDATE_FORM;
-		}
-		else {
-			Optional<User> user = userService.findUser(usuario.getUser().getUsername());
-			if(user.isPresent()) {
-				List<String> errors = new ArrayList<>();
-				errors.add("The username already exists");
-				model.put("errors", errors);
-				return VIEWS_USUARIO_CREATE_OR_UPDATE_FORM;
-			}
-			
-			usuario.setId(usuarioId);	
-			this.usuarioService.saveUsuario(usuario);
-			return "redirect:/usuario/{usuarioId}";
-		}
+		}	
+		
+		//si todo funciona correctamente se actualiza el usuario		
+		usuario.setId(usuarioId);
+		this.usuarioService.updateUsuario(usuario);
+		return "redirect:/usuario/{usuarioId}/edit";
+	
 	}
 	
 }

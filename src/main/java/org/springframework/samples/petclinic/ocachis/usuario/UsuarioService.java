@@ -29,7 +29,6 @@ public class UsuarioService {
 	@Transactional
 	public void saveUsuario(@Valid Usuario usuario) {
 		if(usuario.getEstadisticas()==null)usuario.setEstadisticas(new Estadisticas());
-//		usuario.setIconIfDefault();
 		
 		// creamos el usuario
 		usuarioRepository.save(usuario);
@@ -44,6 +43,17 @@ public class UsuarioService {
 	@Transactional(readOnly = true)
 	public Usuario findUsuarioById(int id) throws DataAccessException {
 		return usuarioRepository.findById(id);
+	}
+
+	
+	@Transactional
+	public void updateUsuario(@Valid Usuario usuario) {
+		usuarioRepository.updateUsuario(usuario.getId(), usuario.getNombre(), usuario.getApellido());
+		
+	}
+
+	public boolean existsUsuarioById(int usuarioId) {
+		return usuarioRepository.existsById(usuarioId);
 	}
 
 }
