@@ -27,8 +27,8 @@ public class PartidaController {
 	}
 
     private static final String VIEWS_SALAS = "partidas/salaList";
-    private static final String VIEWS_SALAS_CREATE_FORM = "partidas/createPartidaForm";
-	
+    private static final String CREATE_SALAS = "partidas/createPartidaForm";
+
     @GetMapping("/")
     public ModelAndView showSalaList() {
         ModelAndView mav = new ModelAndView(VIEWS_SALAS);
@@ -41,24 +41,22 @@ public class PartidaController {
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
- 
-/*	@GetMapping(value = "/list")
-	public String verSalas(Map<String, Object> model) {
-		PartidaOca pO = new PartidaOca();
-		PartidaParchis pP = new PartidaParchis();
-		model.put("partidaoca", pO);
-		model.put("partidaparchis", pP);
-		return VIEWS_SALAS;
-	}*/
+
+	@GetMapping(value = "/create")
+	public ModelAndView showPartidaCreate(){
+		ModelAndView mav = new ModelAndView(CREATE_SALAS);
+		mav.addObject("partida", new PartidaOca());
+		return mav;
+	}
 
     @PostMapping(value = "/create")
-	public String processCreationForm(@Valid PartidaOca partida, BindingResult result, ModelMap model) {
+	public String processCreationForm(@Valid PartidaOca partidaOca, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
-			return VIEWS_SALAS_CREATE_FORM;
+			return "welcome";
 		}
 		else {
-			this.partidaService.saveOca(partida);
-			return VIEWS_SALAS_CREATE_FORM;
+			this.partidaService.saveOca(partidaOca);
+			return CREATE_SALAS;
 		}
 	}   
 }

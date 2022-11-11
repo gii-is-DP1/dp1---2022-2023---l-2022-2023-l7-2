@@ -10,8 +10,7 @@
     <table id="partidasTable" class="table table-striped">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Codigo Partida</th>
+            <th>Salas</th>
             <th>Maximo Jugadores</th>
             <th>Estado</th>
             <th>Fecha Creacion</th>
@@ -21,33 +20,29 @@
         <c:forEach items="${partidaOca}" var="partidaOca">
             <tr>
                 <td>
-                    <c:out value="${partidaOca.id}"/>
-                </td>
-                <td>
-                    <c:out value="${partidaOca.codigoPartida}"/>
+                    <c:out value="Sala ${partidaOca.codigoPartida}"/>
                 </td>
                 <td>
                     <c:out value="${partidaOca.maxJugadores}"/>
                 </td>
                 <td>
-                    <c:out value="${patidaOca.estado}"/>
+                    <c:out value="${partidaOca.estado}"/>
                 </td>
                 <td>
-                    <c:out value="${patidaOca.fechaCreacion}"/>
+                    <c:out value="${partidaOca.fechaCreacion}"/>
                 </td>
-                <form: form modelAttribute="partidaOca"
-                class="form-horizontal">
-                    <button class="btn btn-default" type="submit">Unirse a Sala de Oca</button>
-                </form>
+                <td>
+                    <form: form modelAttribute="partidaOca"
+                        class="form-horizontal">
+                        <button class="btn btn-default" type="submit">Unirse</button>
+                    </form>
+                </td>
             </tr>
         </c:forEach>
         <c:forEach items="${partidaParchis}" var="partidaParchis">
             <tr>
                 <td>
-                    <c:out value="${partidaParchis.id}"/>
-                </td>
-                <td>
-                    <c:out value="${partidaParchis.codigoPartida}"/>
+                    <c:out value="Sala ${partidaParchis.codigoPartida}"/>
                 </td>
                 <td>
                     <c:out value="${partidaParchis.maxJugadores}"/>
@@ -58,10 +53,12 @@
                 <td>
                     <c:out value="${partidaParchis.fechaCreacion}"/>
                 </td>
-                <form: form modelAttribute="partidaParchis"
-                class="form-horizontal">
-                    <button class="btn btn-default" type="submit">Unirse a Sala de Parchis</button>
-                </form>
+                <td>
+                    <form: form modelAttribute="partidaParchis"
+                        class="form-horizontal">
+                        <button class="btn btn-default" type="submit">Unirse</button>
+                    </form>
+                </td>
             </tr>
         </c:forEach>
         </tbody>

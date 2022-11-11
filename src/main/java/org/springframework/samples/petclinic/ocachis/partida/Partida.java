@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.ocachis.partida;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,7 +41,7 @@ public class Partida extends BaseEntity{
 	
 	@Min(value=2)
 	@Max(value=4)
-	private Integer maxJugadores;	
+	private Integer maxJugadores;
 
 	@ManyToMany
 	private Collection<Usuario> usuariosObservadores;
