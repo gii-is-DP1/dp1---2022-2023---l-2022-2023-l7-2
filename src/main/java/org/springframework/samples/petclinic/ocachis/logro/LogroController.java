@@ -41,11 +41,14 @@ public class LogroController {
     }
 
     @PostMapping("/new")
-    public String processCrearLogro(@Valid Logro logro, BindingResult result, ModelMap model){
+    public String processCrearLogro(@Valid Logro logro, BindingResult result, ModelMap model) throws IllegalAccessException{
         if (result.hasErrors()) {
 			model.put("logro", logro);
 			return "logro/createOrUpdateLogroForm";
-		}else{
+		}else if(!(this.logroService.unaMetaDefinida(logro))){
+            model.put("message","Solo se debe establecer una única meta");
+            return "logro/createOrUpdateLogroForm";
+        }else{
             this.logroService.saveLogro(logro);
             return "redirect:/logro/listLogros";
         }
