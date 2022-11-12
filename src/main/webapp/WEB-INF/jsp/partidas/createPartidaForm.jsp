@@ -16,15 +16,15 @@
             </div>
         </c:if>
         <form:form modelAttribute="partida" class="form-vertical">
-            
+
+            <label for="tipe">Juego:</label>
             <select name="tipo">
-                <option value="0">Selecciona un tipo</option>
                 <option value="parchis">Parchis</option>
                 <option value="oca">Oca</option>
             </select>
 
+            <label for="maxJugadores">Num Jugadores:</label>
             <select name="maxJugadores">
-                <option value="0">Selecciona un num</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>

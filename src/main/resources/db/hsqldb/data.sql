@@ -108,3 +108,10 @@ INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, ma
 
 INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, numero_turnos) VALUES
 (1, 27, 5, 1, '2013-01-03', 4, 0);
+
+
+
+INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
+(1, 1, FALSE, 0, 0, null, 1, null, null);
+INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
+(2, 1, FALSE, 0, 0, null, null, 1, null);

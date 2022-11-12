@@ -37,6 +37,8 @@ public class PartidaController {
         return mav;
     }
 
+	
+
     @InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
