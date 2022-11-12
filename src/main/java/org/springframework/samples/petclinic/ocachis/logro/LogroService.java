@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.ocachis.logro.exceptions.MetaNegativaException;
+import org.springframework.samples.petclinic.ocachis.logro.exceptions.MultiplesMetasDefinidasException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,10 +24,10 @@ public class LogroService {
         return this.logroRepository.findAll();
     }
 
-    @Transactional
-    public void saveLogro(Logro l){
-        
-         this.logroRepository.save(l);
+    @Transactional(rollbackFor = {MultiplesMetasDefinidasException.class, MetaNegativaException.class})
+    public void saveLogro(Logro l)throws IllegalAccessException, MultiplesMetasDefinidasException, MetaNegativaException{
+        validarLogro(l);
+        this.logroRepository.save(l);
     }
 
     @Transactional(readOnly=true)
@@ -33,54 +35,28 @@ public class LogroService {
         return this.logroRepository.findById(id);
     }
     
-    public Boolean unaMetaDefinida(Logro l) throws IllegalAccessException{
+    public void validarLogro(Logro l) throws IllegalAccessException, MultiplesMetasDefinidasException, MetaNegativaException{
+        //Boolean result = false;
         int cont = 0;
-        Field[] campos = l.getEstadisticasACumplir().getClass().getFields();
-       
-
+        Field[] campos = l.getEstadisticasACumplir().getClass().getDeclaredFields();
 
         for(Field c : campos){
-            if((Integer) c.get(l.getEstadisticasACumplir()) != null){
-                cont++;
+            if((Integer) c.get(l.getEstadisticasACumplir()) == null){
+                c.set(l.getEstadisticasACumplir(), 0);
+            }else if((Integer) c.get(l.getEstadisticasACumplir()) != 0){
+                if((Integer) c.get(l.getEstadisticasACumplir()) < 0){
+                    throw new MetaNegativaException();
+                }else{
+                    cont++;
+                } 
             }
-            /*else{
-                c.set(l, 0);
-            }*/
-            
         }
         if(cont != 1){
-            return false;
-        }
-        return true;
-        /*
-        if(l.getEstadisticasACumplir().getOcaDuracionMaxima() != null){
-            cont++;
-        }else if(l.getEstadisticasACumplir().getOcaDuracionMedia() != null){
-            cont++;
-        }else if(l.getEstadisticasACumplir().getOcaDuracionMinima() != null){
-            cont++;
-        }else if(l.getEstadisticasACumplir().getOcaDuracionTotal() != null){
-            cont++;
-        }
-
-        
-        else if(l.getEstadisticasACumplir().getParchisPartidasGanadas() != null){
-            cont++;
-        }
-        else if (l.getEstadisticasACumplir().getParchisPartidasJugadas()!=null){
-            cont++;
-        }
-        else if(l.getEstadisticasACumplir().getParchisDuracionTotal()!=null){
-            cont++;
-        }
-        else if(l.getEstadisticasACumplir().getParchisDuracionMinima()!=null){
-            cont++;
-        }
-        else if(l.getEstadisticasACumplir().getParchisDuracionMaxima()!=null){
-            cont++;
-        }
-        else if(l.getEstadisticasACumplir().getParchisDuracionMedia()!=null)
-        */
+            throw new MultiplesMetasDefinidasException();
+        }/*else{
+            result = true;
+            return result;
+        }*/
     }
 
 

@@ -24,5 +24,5 @@ public class Logro extends BaseEntity{
 
 	@Embedded
 
-	private Estadisticas estadisticasACumplir;   
+	public Estadisticas estadisticasACumplir;   
 }

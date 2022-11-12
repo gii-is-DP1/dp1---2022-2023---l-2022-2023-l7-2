@@ -45,7 +45,7 @@
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span>Logros</span>
 				</petclinic:menuItem>
-
+				
 
 				<petclinic:menuItem active="${name eq 'admin'}" url="/admin/listPartidas"
 					title="Admin" dropdown="${true}">										

@@ -41,4 +41,7 @@
         </c:forEach>
         </tbody>
     </table>
+    <spring:url value="/logro/new" var="logroCreateUrl">
+    </spring:url>
+    <a href="${fn:escapeXml(logroCreateUrl)}" class="btn btn-default">Crear un nuevo logro</a>
 </petclinic:layout>

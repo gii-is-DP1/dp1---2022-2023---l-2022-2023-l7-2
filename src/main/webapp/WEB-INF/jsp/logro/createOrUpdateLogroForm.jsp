@@ -9,12 +9,16 @@
 
 <petclinic:layout pageName="logros">
     <h2>
-        <c:if test="${logro['new']}">New </c:if> Logro
+        <c:if test="${logro['new']}">Nuevo </c:if> Logro
+        
     </h2>
     <form:form modelAttribute="logro" class="form-horizontal" id="add-logro-form">
         <div class="form-group has-feedback">
             <petclinic:inputField label="Nombre" name="nombre"/>
             <petclinic:inputField label="Descripción" name="descripcion"/>
+            <br>
+            <h3>Especifique una única meta para el logro</h3>
+            <br>
             <petclinic:inputField label="Partida Jugadas Parchís" name="estadisticasACumplir.parchisPartidasJugadas"/>
             <petclinic:inputField label="Partidas Ganadas Parchís" name="estadisticasACumplir.parchisPartidasGanadas"/>
             <petclinic:inputField label="Tiempo Jugando al Parchís" name="estadisticasACumplir.parchisDuracionTotal"/>
