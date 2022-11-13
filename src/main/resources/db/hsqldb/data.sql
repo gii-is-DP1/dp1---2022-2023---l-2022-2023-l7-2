@@ -112,7 +112,7 @@ INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, ma
 (2, 12, 4, 0, '2013-01-01', 2, 0);
 
 INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, numero_turnos) VALUES
-(1, 27, 5, 1, '2013-01-03', 4, 0);
+(1, 27, 5, 0, '2013-01-03', 4, 0);
 
 
 

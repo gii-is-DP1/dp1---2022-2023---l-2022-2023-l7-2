@@ -20,9 +20,14 @@ public class PartidaService {
 	public Collection<PartidaOca> findAllOca(){
 		return partidaOcaRepository.findAll();
     }
-
+    public PartidaOca findByIdOca(int id){
+        return partidaOcaRepository.findById(id);
+    }
     public Collection<PartidaParchis> findAllParchis(){
 		return partidaParchisRepository.findAll();
+    }
+    public PartidaParchis findByIdParchis(int id){
+        return partidaParchisRepository.findById(id);
     }
     public PartidaOca saveOca(PartidaOca p){
         return partidaOcaRepository.save(p);

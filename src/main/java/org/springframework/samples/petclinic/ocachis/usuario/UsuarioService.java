@@ -45,6 +45,11 @@ public class UsuarioService {
 		return usuarioRepository.findById(id);
 	}
 
+	@Transactional(readOnly = true)
+	public Usuario findUsuarioByUsuario(String usuario) throws DataAccessException {
+		return usuarioRepository.findByUsername(usuario);
+	}
+
 	
 	@Transactional
 	public void updateUsuario(@Valid Usuario usuario) {

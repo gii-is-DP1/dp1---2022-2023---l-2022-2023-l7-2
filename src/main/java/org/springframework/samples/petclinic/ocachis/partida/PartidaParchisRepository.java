@@ -12,8 +12,8 @@ import org.springframework.stereotype.Repository;
 public interface PartidaParchisRepository extends CrudRepository<PartidaParchis, Integer> {
 
     Collection<PartidaParchis> findAll();
-    Partida findById(int id);
+    PartidaParchis findById(int id);
     @Query("SELECT pP FROM PartidaParchis pP WHERE pP.estado = :estado")
     List<PartidaParchis> getPartidas(@Param("estado") TipoEstadoPartida estado);
-    Partida save(Partida p);
+    PartidaParchis save(PartidaParchis p);
 }
