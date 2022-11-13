@@ -120,3 +120,5 @@ INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,f
 (1, 1, FALSE, 0, 0, null, 1, null, null);
 INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
 (2, 1, FALSE, 0, 0, null, null, 1, null);
+
+

@@ -11,7 +11,7 @@ import org.springframework.samples.petclinic.ocachis.partida.PartidaParchis;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaService;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.samples.petclinic.ocachis.usuario.UsuarioService;
-import org.springframework.samples.petclinic.ocahis.user.UserService;
+import org.springframework.samples.petclinic.ocachis.user.UserService;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

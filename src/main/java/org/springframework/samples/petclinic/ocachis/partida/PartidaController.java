@@ -28,7 +28,7 @@ public class PartidaController {
 	private JugadorService jugadorService; 
 
     @Autowired
-	public PartidaController(PartidaService partidaService) {
+	public PartidaController(PartidaService partidaService, UsuarioService usuarioService, JugadorService jugadorService) {
 		this.partidaService=partidaService;
 		this.usuarioService = usuarioService;
 		this.jugadorService = jugadorService;
@@ -77,6 +77,7 @@ public class PartidaController {
 			jugador.setColor(Color.AZUL);
 		  }
         this.jugadorService.save(jugador);
+		model.put("jugador", jugador);
     	return VIEWS_ESPERA;
 		
 	}
@@ -99,7 +100,8 @@ public class PartidaController {
 		//si no devolvemos un error de que no hay nadie autenticado
 		else return "redirect:/noAccess";
 		Usuario u = usuarioService.findUsuarioByUsuario(loggedUser.getUsername());
-		Jugador jugador = new Jugador();jugador.setUsuario(u);
+		Jugador jugador = new Jugador();
+		jugador.setUsuario(u);
 		jugador.setPartidaParchis(p);
 		if(p.getJugadores().size()==0){
 			jugador.setColor(Color.ROJO);
@@ -111,6 +113,7 @@ public class PartidaController {
 			jugador.setColor(Color.AZUL);
 		  }
         this.jugadorService.save(jugador);
+		model.put("jugador", jugador);
 		return VIEWS_ESPERA;
 	}	
 

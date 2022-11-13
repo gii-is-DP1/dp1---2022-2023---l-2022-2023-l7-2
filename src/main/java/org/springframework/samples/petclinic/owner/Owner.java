@@ -35,7 +35,7 @@ import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.samples.petclinic.model.Person;
-import org.springframework.samples.petclinic.ocahis.user.User;
+import org.springframework.samples.petclinic.ocachis.user.User;
 import org.springframework.samples.petclinic.pet.Pet;
 
 /**

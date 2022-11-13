@@ -1,16 +1,14 @@
 package org.springframework.samples.petclinic.ocachis.usuario;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.ocahis.user.AuthoritiesService;
-import org.springframework.samples.petclinic.ocahis.user.User;
-import org.springframework.samples.petclinic.ocahis.user.UserService;
+import org.springframework.samples.petclinic.ocachis.user.AuthoritiesService;
+import org.springframework.samples.petclinic.ocachis.user.User;
+import org.springframework.samples.petclinic.ocachis.user.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;

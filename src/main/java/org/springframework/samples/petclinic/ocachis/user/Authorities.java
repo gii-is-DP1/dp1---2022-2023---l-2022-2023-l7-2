@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.ocahis.user;
+package org.springframework.samples.petclinic.ocachis.user;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;

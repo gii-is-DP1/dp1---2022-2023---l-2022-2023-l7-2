@@ -6,8 +6,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
-import org.springframework.samples.petclinic.ocahis.user.AuthoritiesService;
-import org.springframework.samples.petclinic.ocahis.user.UserService;
+import org.springframework.samples.petclinic.ocachis.user.AuthoritiesService;
+import org.springframework.samples.petclinic.ocachis.user.UserService;
 import org.springframework.samples.petclinic.owner.Owner;
 import org.springframework.stereotype.Service;
 
