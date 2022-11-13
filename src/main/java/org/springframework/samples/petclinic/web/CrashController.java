@@ -29,16 +29,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class CrashController {
 
-	private static final String NO_ACCESS_VIEW = "noAccess";
 	@GetMapping(value = "/oups")
 	public String triggerException() {
 		throw new RuntimeException(
 				"Expected: controller used to showcase what " + "happens when an exception is thrown");
-	}
-	
-	@GetMapping(value = "/noAccess")
-	public String triggerNoAccessException() {
-		return NO_ACCESS_VIEW;
 	}
 
 }

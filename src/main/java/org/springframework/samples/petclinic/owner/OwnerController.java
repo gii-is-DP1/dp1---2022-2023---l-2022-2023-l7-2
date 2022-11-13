@@ -21,8 +21,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.ocahis.user.AuthoritiesService;
-import org.springframework.samples.petclinic.ocahis.user.UserService;
+import org.springframework.samples.petclinic.user.AuthoritiesService;
+import org.springframework.samples.petclinic.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -70,7 +70,6 @@ public class OwnerController {
 		}
 		else {
 			//creating owner, user and authorities
-			System.out.println(owner);
 			this.ownerService.saveOwner(owner);
 			
 			return "redirect:/owners/" + owner.getId();
