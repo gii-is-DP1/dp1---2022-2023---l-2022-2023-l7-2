@@ -6,7 +6,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="espera">
-    <h2>Estás en espera a que empiece la partida...</h2>
+    <h2>Estas en espera a que empiece la partida...</h2>
 
     <table id="jugadoresTable" class="table table-striped">
         <thead>
@@ -16,7 +16,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${jugador}" var="jugadores">
+        <c:forEach items="${jugador}" var="jugadores"> 
             <tr>
                 <td>
                     <c:out value="${jugadores.jugador_id}"/>

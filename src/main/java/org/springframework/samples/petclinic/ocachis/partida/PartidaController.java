@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.ocachis.partida;
 
+import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
@@ -47,17 +48,22 @@ public class PartidaController {
     }
 
 	@GetMapping("/{partidaOcaId}/ocaJoin")
-    public ModelAndView showSalaList1() {
+    public ModelAndView showSalaList1(@PathVariable("partidaOcaId") int partidaOcaId) {
         ModelAndView mav = new ModelAndView(VIEWS_ESPERA);
-        mav.addObject("partidaOca", partidaService.findAllOca());
-		mav.addObject("partidaParchis", partidaService.findAllParchis());
+        mav.addObject("jugadores", partidaService.findByIdOca(partidaOcaId).getJugadores());
         return mav;
     }
 
 	@PostMapping(value = "/{partidaOcaId}/ocaJoin")
 	public String createEnJoinSalaOca(@PathVariable("partidaOcaId") int partidaOcaId, BindingResult result, ModelMap model) {
 		PartidaOca p = this.partidaService.findByIdOca(partidaOcaId);
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if(p.getJugadores().size()==4){
+			result.rejectValue("partidaOca", "full", "La partida está llena!");
+
+		} else if(p.getEstado() !=TipoEstadoPartida.CREADA){
+			result.rejectValue("partidaOca", "unavailable", "No te puedes unir a esta partida.");
+		} else {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    org.springframework.security.core.userdetails.User loggedUser =null;	
 		//si el usuario está autenticado, obtenemos sus credenciales
 		if(auth.isAuthenticated())	loggedUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();	
@@ -77,44 +83,51 @@ public class PartidaController {
 			jugador.setColor(Color.AZUL);
 		  }
         this.jugadorService.save(jugador);
-		model.put("jugador", jugador);
-    	return VIEWS_ESPERA;
+		return VIEWS_ESPERA;
+		}
+    	return VIEWS_SALAS;
 		
 	}
 
 	@GetMapping("/{partidaParchisId}/parchisJoin")
-    public ModelAndView showSalaList2() {
+    public ModelAndView showSalaList2(@PathVariable("partidaParchisId") int partidaParchisId) {
         ModelAndView mav = new ModelAndView(VIEWS_ESPERA);
-        mav.addObject("partidaOca", partidaService.findAllOca());
-		mav.addObject("partidaParchis", partidaService.findAllParchis());
+        mav.addObject("jugadores", partidaService.findByIdOca(partidaParchisId).getJugadores());
         return mav;
     }
 
     @PostMapping(value = "/{partidaParchisId}/parchisJoin")
 	public String createEnJoinSalaParchis(@PathVariable("partidaParchisId") int partidaParchisId, BindingResult result, ModelMap model) {
 		PartidaParchis p = this.partidaService.findByIdParchis(partidaParchisId);
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        org.springframework.security.core.userdetails.User loggedUser =null;	
+		if(p.getJugadores().size()==4){
+			result.rejectValue("partidaParchis", "full", "La partida está llena!");
+
+		} else if(p.getEstado() !=TipoEstadoPartida.CREADA){
+			result.rejectValue("partidaParchis", "unavailable", "No te puedes unir a esta partida.");
+		} else {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        	org.springframework.security.core.userdetails.User loggedUser =null;	
 		//si el usuario está autenticado, obtenemos sus credenciales
-		if(auth.isAuthenticated())	loggedUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();	
+			if(auth.isAuthenticated())	loggedUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();	
 		//si no devolvemos un error de que no hay nadie autenticado
-		else return "redirect:/noAccess";
-		Usuario u = usuarioService.findUsuarioByUsuario(loggedUser.getUsername());
-		Jugador jugador = new Jugador();
-		jugador.setUsuario(u);
-		jugador.setPartidaParchis(p);
-		if(p.getJugadores().size()==0){
-			jugador.setColor(Color.ROJO);
-		  } else if(p.getJugadores().size()==1){
-			jugador.setColor(Color.AMARILLO);
-		  } else if(p.getJugadores().size()==2){
-			jugador.setColor(Color.VERDE);
-		  } else if(p.getJugadores().size()==3){
-			jugador.setColor(Color.AZUL);
-		  }
-        this.jugadorService.save(jugador);
-		model.put("jugador", jugador);
-		return VIEWS_ESPERA;
+			else return "redirect:/noAccess";
+			Usuario u = usuarioService.findUsuarioByUsuario(loggedUser.getUsername());
+			Jugador jugador = new Jugador();
+			jugador.setUsuario(u);
+			jugador.setPartidaParchis(p);
+			if(p.getJugadores().size()==0){
+				jugador.setColor(Color.ROJO);
+			  } else if(p.getJugadores().size()==1){
+				jugador.setColor(Color.AMARILLO);
+			  } else if(p.getJugadores().size()==2){
+				jugador.setColor(Color.VERDE);
+			  } else if(p.getJugadores().size()==3){
+				jugador.setColor(Color.AZUL);
+			  }
+    	    this.jugadorService.save(jugador);
+			return VIEWS_ESPERA;
+		}
+        return VIEWS_SALAS;
 	}	
 
     @InitBinder
@@ -125,6 +138,12 @@ public class PartidaController {
 	@GetMapping(value = "/create")
 	public ModelAndView showPartidaCreate(){
 		ModelAndView mav = new ModelAndView(CREATE_SALAS);
+		return mav;
+	}	
+
+	@GetMapping(value = "/parchisCreate")
+	public ModelAndView showPartidaCreate1(){
+		ModelAndView mav = new ModelAndView("welcome");
 		return mav;
 	}	
 	
@@ -156,7 +175,7 @@ public class PartidaController {
 
 
 		this.partidaService.saveParchis(p);
-		return VIEWS_ESPERA;
+		return "welcome";
 	}
 
 	
