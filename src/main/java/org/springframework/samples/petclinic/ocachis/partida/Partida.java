@@ -25,11 +25,12 @@ public class Partida extends BaseEntity{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer codigoPartida;
 	
-	@NotEmpty
+	//@NotEmpty
 	private LocalDateTime fechaCreacion = LocalDateTime.now();
-	
-	@NotEmpty
+	/* 
+	@NotEmpty*/
 	private TipoEstadoPartida estado = TipoEstadoPartida.CREADA;
+	
 	/*
 	 * La duracion de la partida en mintuos. Se computa al final de la partida*/
 	private Integer duracion;

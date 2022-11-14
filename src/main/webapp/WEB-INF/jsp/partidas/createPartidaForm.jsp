@@ -9,6 +9,10 @@
    
     <form:form modelAttribute="procesarPartidaForm" class="form-horizontal" id="add-procesarPartidaForm-form">
         <div class="form-group has-feedback">
+            
+            <petclinic:inputField label="Numero Jugadores" name="numJugador"/>
+            <petclinic:inputField label="tipo de Partida" name="tipo"/>
+           
             <label for="maxJugadores">Num Jugadores:</label>
             <select name="numJugador">
                 <option selected value="2">2</option>
@@ -20,8 +24,6 @@
                 <option selected value="parchis">Parchis</option>
                 <option value="oca">Oca</option>
             </select>
-           
-           
             
         </div>
         <div class="form-group">

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.GetMapping; 
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -145,59 +145,72 @@ public class PartidaController {
 		return mav;
 	}
 	*/
-	
-    @GetMapping("/create")
-    public String initCrearLogro(ModelMap model){
-		ProcesarPartidaForm proceso = new ProcesarPartidaForm();
-		model.put("procesarPartidaForm",proceso);
-        
-        return CREATE_SALAS;
+
+	@GetMapping("/create")
+    public String crearPartida(ModelMap model){
+        ProcesarPartidaForm proceso = new ProcesarPartidaForm();
+        model.put("proceso", proceso);
+        return "prueba/crearPrueba";
     }  
 
-	
-	
-	@PostMapping("/create")
-	public String create(BindingResult result, ModelMap model, ProcesarPartidaForm proceso){
-		//String tipo = request.getParameter("tipo");
-		String tipo = proceso.getTipo();
-		if(tipo=="parchis"){
-			PartidaParchis p = new PartidaParchis();
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-       		org.springframework.security.core.userdetails.User loggedUser =null;	
-			if(auth.isAuthenticated())	loggedUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();	
-			else return "redirect:/noAccess";
-			Usuario u = usuarioService.findUsuarioByUsuario(loggedUser.getUsername());
-			Jugador jugador = new Jugador();
-			jugador.setUsuario(u);
-			jugador.setPartidaParchis(p);
-			jugador.setColor(Color.ROJO);
-        	this.jugadorService.save(jugador);
+    @PostMapping("/create")
+ 	public String processCrearLogro( ProcesarPartidaForm proceso, BindingResult result, ModelMap model) throws IllegalAccessException{
+   
+        String tipo = proceso.getTipo();
+        if (result.hasErrors()) {
+			
+			return "prueba/crearPrueba";
+		}else{
+			//Caso Oca
+            if(tipo.equals("oca")){
+				//Crear partida
+                PartidaOca partidaOca = new PartidaOca();
+                partidaOca.setMaxJugadores(proceso.getNumJugador());
+                this.partidaService.saveOca(partidaOca);
 
-			this.partidaService.saveParchis(p);
-		} else if(tipo=="oca"){
-			PartidaOca p = new PartidaOca();
-			//Crear un jugador que sera el usuario que la crea
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        	org.springframework.security.core.userdetails.User loggedUser =null;	
-			//si el usuario está autenticado, obtenemos sus credenciales
-			if(auth.isAuthenticated())	loggedUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();	
-			//si no devolvemos un error de que no hay nadie autenticado
-			else return "redirect:/noAccess";
-			Usuario u = usuarioService.findUsuarioByUsuario(loggedUser.getUsername());
-			Jugador jugador = new Jugador();
-			jugador.setUsuario(u);
-			jugador.setPartidaOca(p);
-			jugador.setColor(Color.ROJO);
-		  	this.jugadorService.save(jugador);
+				//Crear jugador
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        		org.springframework.security.core.userdetails.User loggedUser =null;
+				if(auth.isAuthenticated()){
+					loggedUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
+					}		
+				else {
+					return "redirect:/noAccess";
+					}
+				Usuario u = usuarioService.findUsuarioByUsuario(loggedUser.getUsername());
+				Jugador jugador = new Jugador();
+				jugador.setUsuario(u);
+				jugador.setPartidaOca(partidaOca);
+				jugador.setColor(Color.ROJO);
+		  		this.jugadorService.save(jugador);
+			//Caso Parchís
+            }else if(tipo.equals("parchis")){
+                //Crear partida
+				PartidaParchis partidaParchis = new PartidaParchis();
+                partidaParchis.setMaxJugadores(proceso.getNumJugador());
+                this.partidaService.saveParchis(partidaParchis);
 
-			this.partidaService.saveOca(p);
+				//Crear jugador
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        		org.springframework.security.core.userdetails.User loggedUser =null;
+				if(auth.isAuthenticated()){
+					loggedUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
+					}		
+				else {
+					return "redirect:/noAccess";
+					}
+				Usuario u = usuarioService.findUsuarioByUsuario(loggedUser.getUsername());
+				Jugador jugador = new Jugador();
+				jugador.setUsuario(u);
+				jugador.setPartidaParchis(partidaParchis);
+				jugador.setColor(Color.ROJO);
+		  		this.jugadorService.save(jugador);
+            }
+           
 
-		} else{
-
-		}
-		
-		return "welcome";
-	}
+            }
+            return "redirect:/sala/";
+        }
 
 	/*
 	@GetMapping(value = "/parchisCreate")
