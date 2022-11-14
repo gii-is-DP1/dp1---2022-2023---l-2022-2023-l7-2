@@ -5,44 +5,29 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="crearPartidas">
-    <jsp:body>
-            <c:if test="messages != null">
-            <div class="messages">
-                <c:forEach items="${messages}" var="message">
-                    <div class="message">
-                        <c:out value="${message}"/>
-                    </div>
-                </c:forEach>
-            </div>
-        </c:if>
-        <form:form modelAttribute="partida" class="form-horizontal">
-            <div>
+<petclinic:layout pageName="logros">
+   
+    <form:form modelAttribute="procesarPartidaForm" class="form-horizontal" id="add-procesarPartidaForm-form">
+        <div class="form-group has-feedback">
             <label for="maxJugadores">Num Jugadores:</label>
-            <select name="maxJugadoresSeleccionado">
-                <option value="2">2</option>
+            <select name="numJugador">
+                <option selected value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
             </select>
+            <label for ="tipo">Juego:</label>
+            <select name="tipo">
+                <option selected value="parchis">Parchis</option>
+                <option value="oca">Oca</option>
+            </select>
+           
+           
             
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn-default" type="submit">Crear Partida</button>
             </div>
-
-            <div>
-                <spring:url value="/sala/parchisCreate" var="parchisCreateUrl">
-                        <!--<spring:param name="maxJugadoresSeleccionado" value="${maxJugadoresSeleccionado}"/> -->
-                    </spring:url>
-                    <a href="${fn:escapeXml(parchisCreateUrl)}" class="btn btn-default">Crear Partida Parchis</a>
-
-            </div>
-            
-            <div>
-                <spring:url value="/sala/ocaCreate" var="ocaCreateUrl">
-                        <!--<spring:param name="maxJugadoresSeleccionado" value="${maxJugadoresSeleccionado}"/>-->
-                    </spring:url>
-                    <a href="${fn:escapeXml(ocaCreateUrl)}" class="btn btn-default">Crear Partida Oca</a>
-
-            </div>
-
-        </form:form>
-    </jsp:body>
+        </div>
+    </form:form>
 </petclinic:layout>

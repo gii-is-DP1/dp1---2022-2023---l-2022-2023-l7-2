@@ -26,7 +26,15 @@
                 </td>
             </tr>
         </c:forEach>
-        
+        <form>
+            <div>
+                <div class="form">
+                    <div>
+                        <button class="btn btn-default" type="submit">Unirse a Partida </button>
+                    </div>
+                </div>
+            </div>
+        </form>
         </tbody>
     </table>
 </petclinic:layout>
