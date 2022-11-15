@@ -1,7 +1,7 @@
 package org.springframework.samples.petclinic.ocachis.partida;
 
 import java.util.Collection;
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Repository;
 public interface PartidaOcaRepository extends CrudRepository<PartidaOca, Integer> {
 
     Collection<PartidaOca> findAll();
-
-    PartidaOca findById(@Param("id") int id);
-
+    PartidaOca findById(int id);
+    @Query("SELECT pO FROM PartidaOca pO WHERE pO.estado = :estado")
+    List<PartidaOca> getPartidas(@Param("estado") TipoEstadoPartida estado);
     PartidaOca save(PartidaOca p);
 }

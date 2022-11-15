@@ -24,6 +24,5 @@ public class PartidaParchis extends Partida{
 	private List<CasillaParchis> casillas;
 	
 	@OneToMany(mappedBy="partidaParchis")
-	private Collection<Jugador> jugador;
-
+	private Collection<Jugador> jugadores;
 }

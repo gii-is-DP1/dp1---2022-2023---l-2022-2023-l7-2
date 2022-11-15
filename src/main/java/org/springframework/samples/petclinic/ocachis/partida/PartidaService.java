@@ -1,49 +1,38 @@
 package org.springframework.samples.petclinic.ocachis.partida;
 
 import java.util.Collection;
-import java.util.List;
-
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PartidaService {
-    private PartidaRepository partidaRepository;
-    private PartidaParchisRepository partidaParchisRepository;
     private PartidaOcaRepository partidaOcaRepository;
+    private PartidaParchisRepository partidaParchisRepository;
+
     
     @Autowired
-	public PartidaService(PartidaRepository partidaRepo, PartidaParchisRepository partidaParchisRepo, PartidaOcaRepository partidaOcaRepo){
-		this.partidaRepository = partidaRepo;
-        this.partidaParchisRepository = partidaParchisRepo;
-        this.partidaOcaRepository = partidaOcaRepo;
+	public PartidaService(PartidaOcaRepository partidaOcaRepository, PartidaParchisRepository partidaParchisRepository){
+		this.partidaOcaRepository = partidaOcaRepository;
+        this.partidaParchisRepository = partidaParchisRepository;
 	}
-
-	public Collection<Partida> findAll(){
-		return partidaRepository.findAll();
-    }
 
 	public Collection<PartidaOca> findAllOca(){
-		return this.partidaOcaRepository.findAll();
-	}
-
-	public Collection<PartidaParchis> findAllParchis(){
-		return this.partidaParchisRepository.findAll();
-	}
-
-	public PartidaOca findPartidaOcaById(int id){
-		return this.partidaOcaRepository.findById(id);
-	}
-	
-	public PartidaParchis findPartidaParchisById(int id){
-		return this.partidaParchisRepository.findById(id);
-	}
-
-    public List<Partida> findPartidaByEstado(String estado) {
-        return partidaRepository.getPartidas(estado);
+		return partidaOcaRepository.findAll();
     }
-
-    public Partida save(Partida p){
-        return partidaRepository.save(p);
+    public PartidaOca findByIdOca(int id){
+        return partidaOcaRepository.findById(id);
+    }
+    public Collection<PartidaParchis> findAllParchis(){
+		return partidaParchisRepository.findAll();
+    }
+    public PartidaParchis findByIdParchis(int id){
+        return partidaParchisRepository.findById(id);
+    }
+    public PartidaOca saveOca(PartidaOca p){
+        return partidaOcaRepository.save(p);
+    }
+    public PartidaParchis saveParchis(PartidaParchis p){
+        return partidaParchisRepository.save(p);
     }
 }

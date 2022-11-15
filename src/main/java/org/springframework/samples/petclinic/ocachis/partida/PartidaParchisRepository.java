@@ -1,7 +1,7 @@
 package org.springframework.samples.petclinic.ocachis.partida;
 
 import java.util.Collection;
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -12,9 +12,8 @@ import org.springframework.stereotype.Repository;
 public interface PartidaParchisRepository extends CrudRepository<PartidaParchis, Integer> {
 
     Collection<PartidaParchis> findAll();
-
     PartidaParchis findById(int id);
-
+    @Query("SELECT pP FROM PartidaParchis pP WHERE pP.estado = :estado")
+    List<PartidaParchis> getPartidas(@Param("estado") TipoEstadoPartida estado);
     PartidaParchis save(PartidaParchis p);
-
 }
