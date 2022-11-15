@@ -142,8 +142,6 @@ INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,f
 (4, 1, FALSE, 0, 0, null, null, 1, 2);
 INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
 (5, 2, FALSE, 0, 0, null, null, 1, 3);
-INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
-(6, 3, FALSE, 0, 0, null, null, 1, 4);
 
 INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
 (7, 3, FALSE, 0, 0, null, null, 2, 4);

@@ -1,3 +1,5 @@
+<%@ page import="org.springframework.samples.petclinic.ocachis.partida.TipoEstadoPartida"%>
+
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -33,10 +35,15 @@
                     <c:out value="${partidaOca.fechaCreacion}"/>
                 </td>
                 <td>
-                    <spring:url value="/sala/{partidaOcaId}/ocaJoin" var="ocaJoinUrl">
-                        <spring:param name="partidaOcaId" value="${partidaOca.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(ocaJoinUrl)}" class="btn btn-default">Unirse</a>
+                    <c:choose>
+                        <c:when test="${partidaOca.estado==TipoEstadoPartida.CREADA}">
+                            <spring:url value="/sala/{partidaOcaId}/ocaJoin" var="ocaJoinUrl">
+                            <spring:param name="partidaOcaId" value="${partidaOca.id}"/>
+                            </spring:url>
+                            <a href="${fn:escapeXml(ocaJoinUrl)}" class="btn btn-default">Unirse</a>
+                        </c:when>
+                       
+                    </c:choose>
                 </td>
             </tr>
         </c:forEach>
@@ -55,10 +62,17 @@
                     <c:out value="${partidaParchis.fechaCreacion}"/>
                 </td>
                 <td>
-                    <spring:url value="/sala/{partidaParchisId}/parchisJoin" var="parchisJoinUrl">
-                        <spring:param name="partidaParchisId" value="${partidaParchis.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(parchisJoinUrl)}" class="btn btn-default">Unirse</a>
+                    
+                    <c:choose>
+                        <c:when test="${partidaParchis.estado==TipoEstadoPartida.CREADA}">
+                            <spring:url value="/sala/{partidaParchisId}/parchisJoin" var="parchisJoinUrl">
+                            <spring:param name="partidaParchisId" value="${partidaParchis.id}"/>
+                            </spring:url>
+                            <a href="${fn:escapeXml(parchisJoinUrl)}" class="btn btn-default">Unirse</a>
+                        </c:when>
+                       
+                    </c:choose>
+                    
                 </td>
             </tr>
         </c:forEach>

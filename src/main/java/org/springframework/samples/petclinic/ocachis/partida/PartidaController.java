@@ -1,6 +1,8 @@
 package org.springframework.samples.petclinic.ocachis.partida;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -84,7 +86,7 @@ public class PartidaController {
 			}
 			if(dentro){
 				return "redirect:/sala/{partidaOcaId}/showOca";
-			} else if(p.getJugadores().size()==4){
+			} else if(p.getJugadores().size()==p.getMaxJugadores()){
 				model.put("message","La partida esta llena");
 				model.put("partidaOca", partidaService.findEsperaOca());
 				model.put("partidaParchis", partidaService.findEsperaParchis());
@@ -92,11 +94,15 @@ public class PartidaController {
 			} else {	
 				jugador.setUsuario(u);
 				jugador.setPartidaOca(p);
-				if(p.getJugadores().size()==1){
+				List<Color> colores = new ArrayList<Color>();
+				for(Jugador j:p.getJugadores()){
+					colores.add(j.getColor());
+				}
+				if(!(colores.contains(Color.AMARILLO))){
 					jugador.setColor(Color.AMARILLO);
-				} else if(p.getJugadores().size()==2){
+				} else if(!(colores.contains(Color.VERDE))){
 					jugador.setColor(Color.VERDE);
-				} else if(p.getJugadores().size()==3){
+				}else{
 					jugador.setColor(Color.AZUL);
 				}
 	  		this.jugadorService.save(jugador);
@@ -145,7 +151,7 @@ public class PartidaController {
 			}
 			if(dentro){
 				return "redirect:/sala/{partidaParchisId}/showParchis";
-			} else if(p.getJugadores().size()==4){
+			} else if(p.getJugadores().size()== p.getMaxJugadores()){
 				model.put("message","La partida esta llena");
 				model.put("partidaOca", partidaService.findEsperaOca());
 				model.put("partidaParchis", partidaService.findEsperaParchis());
@@ -153,11 +159,15 @@ public class PartidaController {
 			} else {
 				jugador.setUsuario(u);
 				jugador.setPartidaParchis(p);
-				if(p.getJugadores().size()==1){
+				List<Color> colores = new ArrayList<Color>();
+				for(Jugador j:p.getJugadores()){
+					colores.add(j.getColor());
+				}
+				if(!(colores.contains(Color.AMARILLO))){
 					jugador.setColor(Color.AMARILLO);
-				} else if(p.getJugadores().size()==2){
+				} else if(!(colores.contains(Color.VERDE))){
 					jugador.setColor(Color.VERDE);
-				} else if(p.getJugadores().size()==3){
+				}else{
 					jugador.setColor(Color.AZUL);
 				}
 	  		this.jugadorService.save(jugador);
@@ -169,8 +179,21 @@ public class PartidaController {
     public String showPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model){
     	PartidaParchis partidaParchis = partidaService.findByIdParchis(partidaParchisId);
         model.put("jugadores", partidaParchis.getJugadores());
+		model.put("partidaParchis", partidaParchis);
         return VIEWS_ESPERA;
     }
+
+	@GetMapping("/{partidaParchisId}/startParchis")
+	public String initEmpezarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model){
+		PartidaParchis partidaParchis = partidaService.findByIdParchis(partidaParchisId);
+		model.put("partidaParchis", partidaParchis)
+		return processEmpezarPartidaParchis(partidaParchisId, partidaParchis, model);
+	}
+
+	@PostMapping("/{partidaParchisId}/startParchis")
+	public String processEmpezarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, PartidaParchis partida, ModelMap model){
+		
+	}
     
 
     @InitBinder
@@ -186,7 +209,7 @@ public class PartidaController {
     }  
 
     @PostMapping("/create")
- 	public String processCrearLogro( ProcesarPartidaForm proceso, BindingResult result, ModelMap model) throws IllegalAccessException{
+ 	public String processCrearPartida( ProcesarPartidaForm proceso, BindingResult result, ModelMap model) throws IllegalAccessException{
    
         String tipo = proceso.getTipo();
         if (result.hasErrors()) {
