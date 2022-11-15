@@ -6,7 +6,9 @@ import java.sql.Time;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
 
 import org.springframework.samples.petclinic.model.BaseEntity;
 
@@ -19,31 +21,31 @@ import lombok.Setter;
 @Embeddable
 public class Estadisticas{
 
-	private Integer parchisPartidasJugadas;
+	public Integer parchisPartidasJugadas;
 
-	private Integer parchisPartidasGanadas;
+	public Integer parchisPartidasGanadas;
 
-	private Time parchisDuracionTotal;
+	public Integer parchisDuracionTotal;
 
-	private Time parchisDuracionMinima;
+	public Integer parchisDuracionMinima;
 
-	private Time parchisDuracionMaxima;
+	public Integer parchisDuracionMaxima;
 
-	private Time parchisDuracionMedia;
+	public Integer parchisDuracionMedia;
 
-	private Integer parchisFichasComidas;
+	public Integer parchisFichasComidas;
 
-	private Integer ocaPartidasJugadas;
+	public Integer ocaPartidasJugadas;
 
-	private Integer ocaPartidasGanadas;
+	public Integer ocaPartidasGanadas;
 
-	private Time ocaDuracionTotal;
+	public Integer ocaDuracionTotal;
 
-	private Time ocaDuracionMinima;
+	public Integer ocaDuracionMinima;
 
-	private Time ocaDuracionMaxima;
+	public Integer ocaDuracionMaxima;
 
-	private Time ocaDuracionMedia; 
+	public Integer ocaDuracionMedia; 
 
-	private Integer ocaVecesCaidoEnMuerte;
+	public Integer ocaVecesCaidoEnMuerte;
 }

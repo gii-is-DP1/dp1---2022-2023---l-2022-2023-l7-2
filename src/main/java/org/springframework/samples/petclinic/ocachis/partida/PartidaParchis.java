@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
@@ -20,10 +21,10 @@ import lombok.Setter;
 @Entity
 public class PartidaParchis extends Partida{
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<CasillaParchis> casillas;
 	
-	@OneToMany(mappedBy="partidaParchis")
+	@OneToMany(mappedBy="partidaParchis", cascade = CascadeType.ALL)
 	private Collection<Jugador> jugadores;
 
 }

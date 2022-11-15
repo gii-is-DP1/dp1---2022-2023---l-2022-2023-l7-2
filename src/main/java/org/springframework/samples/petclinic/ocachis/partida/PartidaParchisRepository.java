@@ -1,16 +1,19 @@
 package org.springframework.samples.petclinic.ocachis.partida;
 
-import org.springframework.stereotype.Repository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import java.util.Collection;
 
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
 @Repository
-public interface PartidaRepository{
+public interface PartidaParchisRepository extends CrudRepository<PartidaParchis,Integer> {
     
-    /* 
-    Collection<Partida> findAll();
     
+    Collection<PartidaParchis> findAll();
+
+    PartidaParchis findById(int id);
+    
+    /*
     @Query("SELECT partida FROM Partida partida WHERE partida.estado = 'JUGANDO'")
     Collection<Partida> buscarPartidaEnJuego();
     
