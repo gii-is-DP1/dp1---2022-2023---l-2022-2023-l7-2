@@ -1,3 +1,4 @@
+<%@ page import="org.springframework.samples.petclinic.ocachis.partida.TipoEstadoPartida"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -7,8 +8,17 @@
 
 <petclinic:layout pageName="espera">
 	
-		<h2>Estas en espera a que empiece la partida...</h2>
-		
+    <c:choose>
+        <c:when test="${partidaParchis != null &&  partidaParchis.estado==TipoEstadoPartida.CREADA}">
+            <h2>Estas en espera a que empiece la partida...</h2>
+        </c:when>
+        <c:when test="${partidaOca != null &&  partidaOca.estado==TipoEstadoPartida.CREADA}">
+            <h2>Estas en espera a que empiece la partida...</h2>
+        </c:when>
+        <c:otherwise>
+            <h2>La partida esta en curso</h2>
+        </c:otherwise>
+    </c:choose>
 	
        	<table id="jugadoresTable" class="table table-striped">
         <thead>
@@ -19,7 +29,7 @@
         </thead>
         <tbody>
         <c:forEach items="${jugadores}" var="jugadores"> 
-            <tr>
+            <tr> 
                 <td>
                     <c:out value="${jugadores.usuario.user.username}"/>
                 </td>
@@ -30,6 +40,19 @@
         </c:forEach>
     </tbody>
     </table>
-    
+    <c:choose>
+                    <c:when test="${partidaParchis != null &&  partidaParchis.estado==TipoEstadoPartida.CREADA}">
+                        <spring:url value="/sala/{partidaParchisId}/startParchis" var="parchisStartUrl">
+                            <spring:param name="partidaParchisId" value="${partidaParchis.id}"/>
+                            </spring:url>
+                            <a href="${fn:escapeXml(parchisStartUrl)}" class="btn btn-default">Empezar Partida</a>
+                    </c:when>
+                    <c:when test="${partidaOca != null &&  partidaOca.estado==TipoEstadoPartida.CREADA}">
+                        <spring:url value="/sala/{partidaOcaId}/startOca" var="ocaStartUrl">
+                            <spring:param name="partidaOcaId" value="${partidaOca.id}"/>
+                            </spring:url>
+                            <a href="${fn:escapeXml(ocaStartUrl)}" class="btn btn-default">Empezar Partida</a>
+                    </c:when>
+                </c:choose>
 
 </petclinic:layout>

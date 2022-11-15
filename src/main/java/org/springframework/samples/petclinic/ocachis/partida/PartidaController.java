@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.ocachis.partida;
 
+import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -114,6 +115,7 @@ public class PartidaController {
     public String showPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model){
     	PartidaOca partidaOca = partidaService.findByIdOca(partidaOcaId);
         model.put("jugadores", partidaOca.getJugadores());
+		model.put("partidaOca",partidaOca);
         return VIEWS_ESPERA;
     }
     
@@ -186,13 +188,29 @@ public class PartidaController {
 	@GetMapping("/{partidaParchisId}/startParchis")
 	public String initEmpezarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model){
 		PartidaParchis partidaParchis = partidaService.findByIdParchis(partidaParchisId);
-		model.put("partidaParchis", partidaParchis)
+		model.put("partidaParchis", partidaParchis);
 		return processEmpezarPartidaParchis(partidaParchisId, partidaParchis, model);
 	}
 
 	@PostMapping("/{partidaParchisId}/startParchis")
 	public String processEmpezarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, PartidaParchis partida, ModelMap model){
-		
+		partida.setEstado(TipoEstadoPartida.JUGANDO);
+		partidaService.saveParchis(partida);
+		return "redirect:/sala/{partidaParchisId}/showParchis";
+	}
+
+	@GetMapping("/{partidaOcaId}/startOca")
+	public String initEmpezarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model){
+		PartidaOca partidaOca = partidaService.findByIdOca(partidaOcaId);
+		model.put("partidaOca", partidaOca);
+		return processEmpezarPartidaOca(partidaOcaId, partidaOca, model);
+	}
+
+	@PostMapping("/{partidaOcaId}/startOca")
+	public String processEmpezarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, PartidaOca partida, ModelMap model){
+		partida.setEstado(TipoEstadoPartida.JUGANDO);
+		partidaService.saveOca(partida);
+		return "redirect:/sala/{partidaOcaId}/showOca";
 	}
     
 
