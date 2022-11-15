@@ -1,8 +1,5 @@
 package org.springframework.samples.petclinic.ocachis.partida;
 
-import java.util.Collection;
-import java.util.Collections;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
@@ -48,48 +45,7 @@ public class PartidaController {
 		mav.addObject("partidaParchis", partidaService.findAllParchis());
         return mav;
     }
-    /*
-	@GetMapping("/{partidaOcaId}/ocaJoin")
-    public ModelAndView showSalaList1(@PathVariable("partidaOcaId") int partidaOcaId) {
-        ModelAndView mav = new ModelAndView(VIEWS_ESPERA);
-        mav.addObject("jugadores", partidaService.findByIdOca(partidaOcaId).getJugadores());
-        return mav;
-    }
 
-	@PostMapping("/{partidaOcaId}/ocaJoin")
-	public String createEnJoinSalaOca(@PathVariable("partidaOcaId") int partidaOcaId, BindingResult result, ModelMap model) {
-		PartidaOca p = this.partidaService.findByIdOca(partidaOcaId);
-		if(p.getJugadores().size()==4){
-			result.rejectValue("partidaOca", "full", "La partida está llena!");
-
-		} else if(p.getEstado() !=TipoEstadoPartida.CREADA){
-			result.rejectValue("partidaOca", "unavailable", "No te puedes unir a esta partida.");
-		} else {
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    org.springframework.security.core.userdetails.User loggedUser =null;	
-		//si el usuario está autenticado, obtenemos sus credenciales
-		if(auth.isAuthenticated())	loggedUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();	
-		//si no devolvemos un error de que no hay nadie autenticado
-		else return "redirect:/noAccess";
-		Usuario u = usuarioService.findUsuarioByUsuario(loggedUser.getUsername());
-		Jugador jugador = new Jugador();
-		jugador.setUsuario(u);
-		jugador.setPartidaOca(p);
-		if(p.getJugadores().size()==0){
-			jugador.setColor(Color.ROJO);
-		  } else if(p.getJugadores().size()==1){
-			jugador.setColor(Color.AMARILLO);
-		  } else if(p.getJugadores().size()==2){
-			jugador.setColor(Color.VERDE);
-		  } else if(p.getJugadores().size()==3){
-			jugador.setColor(Color.AZUL);
-		  }
-        this.jugadorService.save(jugador);
-		return VIEWS_ESPERA;
-		}
-    	return VIEWS_SALAS;	
-	}
-	*/
     @GetMapping("/{partidaOcaId}/ocaJoin")
     public String unirsePartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model){
     	PartidaOca partidaOca = partidaService.findByIdOca(partidaOcaId);
@@ -103,73 +59,12 @@ public class PartidaController {
     	if (result.hasErrors()) {
 			return VIEWS_ESPERA;
 		}else{
-			//Crear jugador
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    		org.springframework.security.core.userdetails.User loggedUser =null;
-			if(auth.isAuthenticated()){
-				loggedUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
-			}else {
-				return "redirect:/noAccess";
-			}
-			Usuario u = usuarioService.findUsuarioByUsuario(loggedUser.getUsername());
-			Jugador jugador = new Jugador();
-			jugador.setUsuario(u);
-			jugador.setPartidaOca(p);
-			if(p.getJugadores().size()==0){
-				jugador.setColor(Color.ROJO);
-			  } else if(p.getJugadores().size()==1){
-				jugador.setColor(Color.AMARILLO);
-			  } else if(p.getJugadores().size()==2){
-				jugador.setColor(Color.VERDE);
-			  } else if(p.getJugadores().size()==3){
-				jugador.setColor(Color.AZUL);
-			  }
-	  		this.jugadorService.save(jugador);
+			Jugador j = new Jugador();
+			this.jugadorService.save(j);
 		}
     	return VIEWS_ESPERA;
     }
-    /*
-	@GetMapping("/{partidaParchisId}/parchisJoin")
-    public ModelAndView showSalaList2(@PathVariable("partidaParchisId") int partidaParchisId) {
-        ModelAndView mav = new ModelAndView(VIEWS_ESPERA);
-        mav.addObject("jugadores", partidaService.findByIdOca(partidaParchisId).getJugadores());
-        return mav;
-    }
-
-    @PostMapping(value = "/{partidaParchisId}/parchisJoin")
-	public String createEnJoinSalaParchis(@PathVariable("partidaParchisId") int partidaParchisId, BindingResult result, ModelMap model) {
-		PartidaParchis p = this.partidaService.findByIdParchis(partidaParchisId);
-		if(p.getJugadores().size()==4){
-			result.rejectValue("partidaParchis", "full", "La partida está llena!");
-
-		} else if(p.getEstado() !=TipoEstadoPartida.CREADA){
-			result.rejectValue("partidaParchis", "unavailable", "No te puedes unir a esta partida.");
-		} else {
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        	org.springframework.security.core.userdetails.User loggedUser =null;	
-		//si el usuario está autenticado, obtenemos sus credenciales
-			if(auth.isAuthenticated())	loggedUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();	
-		//si no devolvemos un error de que no hay nadie autenticado
-			else return "redirect:/noAccess";
-			Usuario u = usuarioService.findUsuarioByUsuario(loggedUser.getUsername());
-			Jugador jugador = new Jugador();
-			jugador.setUsuario(u);
-			jugador.setPartidaParchis(p);
-			if(p.getJugadores().size()==0){
-				jugador.setColor(Color.ROJO);
-			  } else if(p.getJugadores().size()==1){
-				jugador.setColor(Color.AMARILLO);
-			  } else if(p.getJugadores().size()==2){
-				jugador.setColor(Color.VERDE);
-			  } else if(p.getJugadores().size()==3){
-				jugador.setColor(Color.AZUL);
-			  }
-    	    this.jugadorService.save(jugador);
-			return VIEWS_ESPERA;
-		}
-        return VIEWS_SALAS;
-	}
-	*/
+    
     @GetMapping("/{partidaParchisId}/parchisJoin")
     public String unirsePartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model){
     	PartidaParchis partidaParchis = partidaService.findByIdParchis(partidaParchisId);
@@ -195,9 +90,7 @@ public class PartidaController {
 			Jugador jugador = new Jugador();
 			jugador.setUsuario(u);
 			jugador.setPartidaParchis(p);
-			if(p.getJugadores().size()==0){
-				jugador.setColor(Color.ROJO);
-			  } else if(p.getJugadores().size()==1){
+			if(p.getJugadores().size()==1){
 				jugador.setColor(Color.AMARILLO);
 			  } else if(p.getJugadores().size()==2){
 				jugador.setColor(Color.VERDE);
@@ -214,14 +107,6 @@ public class PartidaController {
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	/*
-	@GetMapping(value = "/create")
-	public ModelAndView showPartidaCreate(){
-
-		ModelAndView mav = new ModelAndView(CREATE_SALAS);
-		return mav;
-	}
-	*/
 
 	@GetMapping("/create")
     public String crearPartida(ModelMap model){
@@ -289,76 +174,4 @@ public class PartidaController {
             return "redirect:/sala/";
         }
 
-	/*
-	@GetMapping(value = "/parchisCreate")
-	public ModelAndView showPartidaCreate1(){
-		ModelAndView mav = new ModelAndView("welcome");
-		return mav;
-	}
-	
-	@PostMapping(value = "/parchisCreate")
-	public String processCreationFormParchis(BindingResult result, ModelMap model) {
-		PartidaParchis p = new PartidaParchis();
-
-		//Crear un jugador que sera el usuario que la crea
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        org.springframework.security.core.userdetails.User loggedUser =null;	
-		//si el usuario está autenticado, obtenemos sus credenciales
-		if(auth.isAuthenticated())	loggedUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();	
-		//si no devolvemos un error de que no hay nadie autenticado
-		else return "redirect:/noAccess";
-		Usuario u = usuarioService.findUsuarioByUsuario(loggedUser.getUsername());
-		Jugador jugador = new Jugador();
-		jugador.setUsuario(u);
-		jugador.setPartidaParchis(p);
-		if(p.getJugadores().size()==0){
-			jugador.setColor(Color.ROJO);
-		  } else if(p.getJugadores().size()==1){
-			jugador.setColor(Color.AMARILLO);
-		  } else if(p.getJugadores().size()==2){
-			jugador.setColor(Color.VERDE);
-		  } else if(p.getJugadores().size()==3){
-			jugador.setColor(Color.AZUL);
-		  }
-        this.jugadorService.save(jugador);
-
-
-		this.partidaService.saveParchis(p);
-		return "welcome";
-	}
-
-	
-
-	@PostMapping(value = "/ocaCreate")
-	public String processCreationFormOca( BindingResult result, ModelMap model) {
-		PartidaOca p = new PartidaOca();
-
-		
-		//Crear un jugador que sera el usuario que la crea
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        org.springframework.security.core.userdetails.User loggedUser =null;	
-		//si el usuario está autenticado, obtenemos sus credenciales
-		if(auth.isAuthenticated())	loggedUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();	
-		//si no devolvemos un error de que no hay nadie autenticado
-		else return "redirect:/noAccess";
-		Usuario u = usuarioService.findUsuarioByUsuario(loggedUser.getUsername());
-		Jugador jugador = new Jugador();
-		jugador.setUsuario(u);
-		jugador.setPartidaOca(p);
-		if(p.getJugadores().size()==0){
-			jugador.setColor(Color.ROJO);
-		  } else if(p.getJugadores().size()==1){
-			jugador.setColor(Color.AMARILLO);
-		  } else if(p.getJugadores().size()==2){
-			jugador.setColor(Color.VERDE);
-		  } else if(p.getJugadores().size()==3){
-			jugador.setColor(Color.AZUL);
-		  }
-        this.jugadorService.save(jugador);
-
-
-		this.partidaService.saveOca(p);
-		return VIEWS_ESPERA;
-	}
-	*/
 }
