@@ -7,11 +7,8 @@
 
 <petclinic:layout pageName="logros">
    
-    <form:form modelAttribute="procesarPartidaForm" class="form-horizontal" id="add-procesarPartidaForm-form">
+    <form:form modelAttribute="proceso" class="form-horizontal" id="add-procesarPartidaForm-form">
         <div class="form-group has-feedback">
-            
-            <petclinic:inputField label="Numero Jugadores" name="numJugador"/>
-            <petclinic:inputField label="tipo de Partida" name="tipo"/>
            
             <label for="maxJugadores">Num Jugadores:</label>
             <select name="numJugador">
