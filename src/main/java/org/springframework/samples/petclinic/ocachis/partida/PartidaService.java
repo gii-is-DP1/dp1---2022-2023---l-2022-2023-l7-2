@@ -20,6 +20,13 @@ public class PartidaService {
 	public Collection<PartidaOca> findAllOca(){
 		return partidaOcaRepository.findAll();
     }
+
+    public Collection<PartidaOca> findEsperaOca(){
+        return partidaOcaRepository.findEsperaOca();
+    }
+    public Collection<PartidaParchis> findEsperaParchis(){
+        return partidaParchisRepository.findEsperaParchis();
+    }
     public PartidaOca findByIdOca(int id){
         return partidaOcaRepository.findById(id);
     }

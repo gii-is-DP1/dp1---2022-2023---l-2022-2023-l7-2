@@ -6,7 +6,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="espera">
-	<form:form modelAttribute="jugadores" class="form-horizontal" id="add-jugadores-form">
+	
 		<h2>Estas en espera a que empiece la partida...</h2>
 		
 	
@@ -21,23 +21,14 @@
         <c:forEach items="${jugadores}" var="jugadores"> 
             <tr>
                 <td>
-                    <c:out value="${jugadores.usuario.nombre}"/>
+                    <c:out value="${jugadores.usuario.user.username}"/>
                 </td>
                 <td>
                     <c:out value="${jugadores.color}"/>
                 </td>
             </tr>
         </c:forEach>
-        <form>
-            <div>
-                <div class="form">
-                    <div>
-                        <button class="btn btn-default" type="submit">Unirse a Partida </button>
-                    </div>
-                </div>
-            </div>
-        </form>
-        </tbody>
-    </form:form>
+    </tbody>
     </table>
+
 </petclinic:layout>

@@ -1,5 +1,9 @@
 package org.springframework.samples.petclinic.ocachis.partida;
 
+import java.util.Collection;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
@@ -41,43 +45,27 @@ public class PartidaController {
     @GetMapping("/")
     public ModelAndView showSalaList() {
         ModelAndView mav = new ModelAndView(VIEWS_SALAS);
-        mav.addObject("partidaOca", partidaService.findAllOca());
-		mav.addObject("partidaParchis", partidaService.findAllParchis());
+        mav.addObject("partidaOca", partidaService.findEsperaOca());
+		mav.addObject("partidaParchis", partidaService.findEsperaParchis());
         return mav;
     }
 
     @GetMapping("/{partidaOcaId}/ocaJoin")
     public String unirsePartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model){
     	PartidaOca partidaOca = partidaService.findByIdOca(partidaOcaId);
+		Jugador newJugador = new Jugador();
         model.put("jugadores", partidaOca.getJugadores());
-        return VIEWS_ESPERA;
+		model.put("jugador",newJugador);
+		model.put("partidaOcaId",partidaOcaId);
+        //return VIEWS_ESPERA;
+		return createEnJoinSalaOca(partidaOcaId, newJugador, model);
     }
     
     @PostMapping("/{partidaOcaId}/ocaJoin")
-    public String createEnJoinSalaOca(@PathVariable("partidaOcaId") int partidaOcaId, BindingResult result, ModelMap model) {
+    public String createEnJoinSalaOca(@PathVariable("partidaOcaId") int partidaOcaId,@Valid Jugador jugador, ModelMap model) {
     	PartidaOca p = partidaService.findByIdOca(partidaOcaId);
-    	if (result.hasErrors()) {
-			return VIEWS_ESPERA;
-		}else{
-			Jugador j = new Jugador();
-			this.jugadorService.save(j);
-		}
-    	return VIEWS_ESPERA;
-    }
-    
-    @GetMapping("/{partidaParchisId}/parchisJoin")
-    public String unirsePartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model){
-    	PartidaParchis partidaParchis = partidaService.findByIdParchis(partidaParchisId);
-        model.put("jugadores", partidaParchis.getJugadores());
-        return VIEWS_ESPERA;
-    }
-    
-    @PostMapping("/{partidaParchisId}/parchisJoin")
-    public String createEnJoinSalaParchis(@PathVariable("partidaParchisId") int partidaParchisId, BindingResult result, ModelMap model) {
-    	PartidaParchis p = partidaService.findByIdParchis(partidaParchisId);
-    	if (result.hasErrors()) {
-			return VIEWS_ESPERA;
-		}else{
+		Collection<Jugador> jugadores = p.getJugadores();
+		Boolean dentro = false;
 			//Crear jugador
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     		org.springframework.security.core.userdetails.User loggedUser =null;
@@ -86,20 +74,102 @@ public class PartidaController {
 			}else {
 				return "redirect:/noAccess";
 			}
+
 			Usuario u = usuarioService.findUsuarioByUsuario(loggedUser.getUsername());
-			Jugador jugador = new Jugador();
-			jugador.setUsuario(u);
-			jugador.setPartidaParchis(p);
-			if(p.getJugadores().size()==1){
-				jugador.setColor(Color.AMARILLO);
-			  } else if(p.getJugadores().size()==2){
-				jugador.setColor(Color.VERDE);
-			  } else if(p.getJugadores().size()==3){
-				jugador.setColor(Color.AZUL);
-			  }
+
+			for(Jugador j:jugadores){
+				if(j.getUsuario().getId().equals(u.getId())){
+					dentro = true;
+				}
+			}
+			if(dentro){
+				return "redirect:/sala/{partidaOcaId}/showOca";
+			} else if(p.getJugadores().size()==4){
+				model.put("message","La partida esta llena");
+				model.put("partidaOca", partidaService.findEsperaOca());
+				model.put("partidaParchis", partidaService.findEsperaParchis());
+				return VIEWS_SALAS;
+			} else {	
+				jugador.setUsuario(u);
+				jugador.setPartidaOca(p);
+				if(p.getJugadores().size()==1){
+					jugador.setColor(Color.AMARILLO);
+				} else if(p.getJugadores().size()==2){
+					jugador.setColor(Color.VERDE);
+				} else if(p.getJugadores().size()==3){
+					jugador.setColor(Color.AZUL);
+				}
 	  		this.jugadorService.save(jugador);
-		}
-    	return VIEWS_ESPERA;
+			}
+    	return "redirect:/sala/{partidaOcaId}/showOca";
+    }
+
+	@GetMapping("/{partidaOcaId}/showOca")
+    public String showPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model){
+    	PartidaOca partidaOca = partidaService.findByIdOca(partidaOcaId);
+        model.put("jugadores", partidaOca.getJugadores());
+        return VIEWS_ESPERA;
+    }
+    
+    @GetMapping("/{partidaParchisId}/parchisJoin")
+    public String unirsePartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model){
+    	PartidaParchis partidaParchis = partidaService.findByIdParchis(partidaParchisId);
+		Jugador newJugador = new Jugador();
+        model.put("jugadores", partidaParchis.getJugadores());
+		model.put("jugador",newJugador);
+		model.put("partidaParchisId",partidaParchisId);
+        //return VIEWS_ESPERA;
+		return createEnJoinSalaParchis(partidaParchisId, newJugador, model);
+    }
+    
+    @PostMapping("/{partidaParchisId}/parchisJoin")
+    public String createEnJoinSalaParchis(@PathVariable("partidaParchisId") int partidaParchisId,@Valid Jugador jugador, ModelMap model) {
+    	PartidaParchis p = partidaService.findByIdParchis(partidaParchisId);
+		Collection<Jugador> jugadores = p.getJugadores();
+		Boolean dentro = false;
+			//Crear jugador
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    		org.springframework.security.core.userdetails.User loggedUser =null;
+			if(auth.isAuthenticated()){
+				loggedUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
+			}else {
+				return "redirect:/noAccess";
+			}
+
+			Usuario u = usuarioService.findUsuarioByUsuario(loggedUser.getUsername());
+
+			for(Jugador j:jugadores){
+				if(j.getUsuario().getId().equals(u.getId())){
+					dentro = true;
+				}
+			}
+			if(dentro){
+				return "redirect:/sala/{partidaParchisId}/showParchis";
+			} else if(p.getJugadores().size()==4){
+				model.put("message","La partida esta llena");
+				model.put("partidaOca", partidaService.findEsperaOca());
+				model.put("partidaParchis", partidaService.findEsperaParchis());
+				return VIEWS_SALAS;
+			} else {
+				jugador.setUsuario(u);
+				jugador.setPartidaParchis(p);
+				if(p.getJugadores().size()==1){
+					jugador.setColor(Color.AMARILLO);
+				} else if(p.getJugadores().size()==2){
+					jugador.setColor(Color.VERDE);
+				} else if(p.getJugadores().size()==3){
+					jugador.setColor(Color.AZUL);
+				}
+	  		this.jugadorService.save(jugador);
+			}
+    	return "redirect:/sala/{partidaParchisId}/showParchis";
+    }
+
+	@GetMapping("/{partidaParchisId}/showParchis")
+    public String showPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model){
+    	PartidaParchis partidaParchis = partidaService.findByIdParchis(partidaParchisId);
+        model.put("jugadores", partidaParchis.getJugadores());
+        return VIEWS_ESPERA;
     }
     
 
