@@ -1,17 +1,6 @@
 package org.springframework.samples.petclinic.ocachis.estadisticas;
 
-import java.sql.Time;
-
-
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Positive;
-
-import org.springframework.samples.petclinic.model.BaseEntity;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,31 +10,62 @@ import lombok.Setter;
 @Embeddable
 public class Estadisticas{
 
-	public Integer parchisPartidasJugadas;
+	public Estadisticas() {
+		this.parchisPartidasJugadas = 0;
+		this.parchisPartidasGanadas = 0;
+		this.parchisFichasComidas = 0;
+		this.ocaPartidasJugadas = 0;
+		this.ocaPartidasGanadas = 0;
+		this.ocaVecesCaidoEnMuerte = 0;
+		this.parchisDuracionTotal = 0;
+		this.parchisDuracionMinima = 0;
+		this.parchisDuracionMaxima = 0;
+		this.parchisDuracionMedia = 0;
+		this.ocaDuracionTotal = 0;
+		this.ocaDuracionMinima = 0;
+		this.ocaDuracionMaxima = 0;
+		this.ocaDuracionMedia = 0;
+	}
 
-	public Integer parchisPartidasGanadas;
+	private Integer parchisPartidasJugadas;
 
-	public Integer parchisDuracionTotal;
+	private Integer parchisPartidasGanadas;
 
-	public Integer parchisDuracionMinima;
+	private Integer parchisDuracionTotal;
 
-	public Integer parchisDuracionMaxima;
+	private Integer parchisDuracionMinima;
 
-	public Integer parchisDuracionMedia;
+	private Integer parchisDuracionMaxima;
 
-	public Integer parchisFichasComidas;
+	private Integer parchisDuracionMedia;
 
-	public Integer ocaPartidasJugadas;
+	private Integer parchisFichasComidas;
 
-	public Integer ocaPartidasGanadas;
+	private Integer ocaPartidasJugadas;
 
-	public Integer ocaDuracionTotal;
+	private Integer ocaPartidasGanadas;
 
-	public Integer ocaDuracionMinima;
+	private Integer ocaDuracionTotal;
 
-	public Integer ocaDuracionMaxima;
+	private Integer ocaDuracionMinima;
 
-	public Integer ocaDuracionMedia; 
+	private Integer ocaDuracionMaxima;
 
-	public Integer ocaVecesCaidoEnMuerte;
+	private Integer ocaDuracionMedia; 
+
+	private Integer ocaVecesCaidoEnMuerte;
+	
+	
+	
+	@Override
+	public String toString() {
+		return "Estadisticas [parchisPartidasJugadas=" + parchisPartidasJugadas + ", parchisPartidasGanadas="
+				+ parchisPartidasGanadas + ", parchisDuracionTotal=" + parchisDuracionTotal + ", parchisDuracionMinima="
+				+ parchisDuracionMinima + ", parchisDuracionMaxima=" + parchisDuracionMaxima + ", parchisDuracionMedia="
+				+ parchisDuracionMedia + ", parchisFichasComidas=" + parchisFichasComidas + ", ocaPartidasJugadas="
+				+ ocaPartidasJugadas + ", ocaPartidasGanadas=" + ocaPartidasGanadas + ", ocaDuracionTotal="
+				+ ocaDuracionTotal + ", ocaDuracionMinima=" + ocaDuracionMinima + ", ocaDuracionMaxima="
+				+ ocaDuracionMaxima + ", ocaDuracionMedia=" + ocaDuracionMedia + ", ocaVecesCaidoEnMuerte="
+				+ ocaVecesCaidoEnMuerte + "]";
+	}
 }
