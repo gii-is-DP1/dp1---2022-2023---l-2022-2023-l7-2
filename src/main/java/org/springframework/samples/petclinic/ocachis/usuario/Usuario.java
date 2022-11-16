@@ -19,7 +19,7 @@ import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.logro.Logro;
 import org.springframework.samples.petclinic.ocachis.solicitud.Solicitud;
-import org.springframework.samples.petclinic.user.User;
+import org.springframework.samples.petclinic.ocachis.user.User;
 
 import lombok.Getter;
 import lombok.Setter;
