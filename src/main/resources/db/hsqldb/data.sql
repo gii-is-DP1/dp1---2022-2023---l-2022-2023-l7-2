@@ -32,10 +32,6 @@ INSERT INTO users(username,password,enabled) VALUES ('siadan','s14d4n',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (9,'siadan','owner');
 
 
--- One usuario user, maned usuario with password usuario
-INSERT INTO users(username,password,enabled) VALUES ('usuario','usuario',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (10,'usuario','jugador');
-INSERT INTO Usuario(id,nombre,apellido,username) VALUES(1,'nombreUsuario','apellidoUsuario','usuario');
 
 INSERT INTO vets(id, first_name,last_name) VALUES (1, 'James', 'Carter');
 INSERT INTO vets(id, first_name,last_name) VALUES (2, 'Helen', 'Leary');
@@ -106,18 +102,21 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
-
+-- One usuario user, maned usuario with password usuario
+INSERT INTO users(username,password,enabled) VALUES ('usuario','usuario',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (10,'usuario','jugador');
 
 
 INSERT INTO users(username,password,enabled) VALUES ('usuario1','usuario1',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (10,'usuario1','usuario');
+INSERT INTO authorities(id,username,authority) VALUES (11,'usuario1','usuario');
 
 INSERT INTO users(username,password,enabled) VALUES ('usuario2','usuario2',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (11,'usuario2','usuario');
+INSERT INTO authorities(id,username,authority) VALUES (12,'usuario2','usuario');
 
 
 INSERT INTO usuario(id,nombre,apellido,username) VALUES (1,'Pepe','Gonzalez','usuario1');
 INSERT INTO usuario(id,nombre,apellido,username) VALUES (2,'Maria','Gonzalez','usuario2');
+INSERT INTO Usuario(id,nombre,apellido,username) VALUES(3,'Juan','Mendoza','usuario');
 
 
 INSERT INTO partida_parchis(id,codigo_partida,fecha_creacion,estado,max_jugadores) VALUES (1,1,'2022-07-22',2,2);
@@ -127,7 +126,6 @@ INSERT INTO partida_parchis(id,codigo_partida,fecha_creacion,estado,max_jugadore
 INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (1,0,1,1);
 INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (2,2,2,1);
 INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (5,2,2,1);
-
 INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (3,0,1,2);
 INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (4,1,2,2);
 
