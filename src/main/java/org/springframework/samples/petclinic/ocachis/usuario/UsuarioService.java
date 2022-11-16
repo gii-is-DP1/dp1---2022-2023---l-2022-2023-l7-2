@@ -36,8 +36,7 @@ public class UsuarioService {
 //		//creamos el user
 		userService.saveUser(usuario.getUser());
 //		//creamos authorities
-		authoritiesService.saveAuthorities(usuario.getUser().getUsername(), "player");
-		
+		authoritiesService.saveAuthorities(usuario.getUser().getUsername(), "jugador");
 	}
 	
 	@Transactional

@@ -39,7 +39,6 @@ public class LogroService {
         //Boolean result = false;
         int cont = 0;
         Field[] campos = l.getEstadisticasACumplir().getClass().getDeclaredFields();
-
         for(Field c : campos){
             if((Integer) c.get(l.getEstadisticasACumplir()) == null){
                 c.set(l.getEstadisticasACumplir(), 0);

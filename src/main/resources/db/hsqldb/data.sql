@@ -108,10 +108,10 @@ INSERT INTO authorities(id,username,authority) VALUES (10,'usuario','jugador');
 
 
 INSERT INTO users(username,password,enabled) VALUES ('usuario1','usuario1',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (11,'usuario1','usuario');
+INSERT INTO authorities(id,username,authority) VALUES (11,'usuario1','jugador');
 
 INSERT INTO users(username,password,enabled) VALUES ('usuario2','usuario2',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (12,'usuario2','usuario');
+INSERT INTO authorities(id,username,authority) VALUES (12,'usuario2','jugador');
 
 
 INSERT INTO usuario(id,nombre,apellido,username) VALUES (1,'Pepe','Gonzalez','usuario1');

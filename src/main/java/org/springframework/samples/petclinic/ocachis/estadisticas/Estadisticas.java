@@ -27,33 +27,33 @@ public class Estadisticas{
 		this.ocaDuracionMedia = 0;
 	}
 
-	private Integer parchisPartidasJugadas;
+	public Integer parchisPartidasJugadas;
 
-	private Integer parchisPartidasGanadas;
+	public Integer parchisPartidasGanadas;
 
-	private Integer parchisDuracionTotal;
+	public Integer parchisDuracionTotal;
 
-	private Integer parchisDuracionMinima;
+	public Integer parchisDuracionMinima;
 
-	private Integer parchisDuracionMaxima;
+	public Integer parchisDuracionMaxima;
 
-	private Integer parchisDuracionMedia;
+	public Integer parchisDuracionMedia;
 
-	private Integer parchisFichasComidas;
+	public Integer parchisFichasComidas;
 
-	private Integer ocaPartidasJugadas;
+	public Integer ocaPartidasJugadas;
 
-	private Integer ocaPartidasGanadas;
+	public Integer ocaPartidasGanadas;
 
-	private Integer ocaDuracionTotal;
+	public Integer ocaDuracionTotal;
 
-	private Integer ocaDuracionMinima;
+	public Integer ocaDuracionMinima;
 
-	private Integer ocaDuracionMaxima;
+	public Integer ocaDuracionMaxima;
 
-	private Integer ocaDuracionMedia; 
+	public Integer ocaDuracionMedia; 
 
-	private Integer ocaVecesCaidoEnMuerte;
+	public Integer ocaVecesCaidoEnMuerte;
 	
 	
 	
