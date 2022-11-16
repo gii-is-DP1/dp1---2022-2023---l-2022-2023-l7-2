@@ -27,5 +27,4 @@ public class PartidaOca extends Partida{
 	
 	@OneToMany(mappedBy="partidaOca", cascade = CascadeType.ALL)
 	private Collection<Jugador> jugadores;
-
 }

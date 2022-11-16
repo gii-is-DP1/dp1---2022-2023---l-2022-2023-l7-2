@@ -26,5 +26,4 @@ public class PartidaParchis extends Partida{
 	
 	@OneToMany(mappedBy="partidaParchis", cascade = CascadeType.ALL)
 	private Collection<Jugador> jugadores;
-
 }

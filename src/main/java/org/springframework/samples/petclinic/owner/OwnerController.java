@@ -70,6 +70,7 @@ public class OwnerController {
 		}
 		else {
 			//creating owner, user and authorities
+			System.out.println(owner);
 			this.ownerService.saveOwner(owner);
 			
 			return "redirect:/owners/" + owner.getId();
