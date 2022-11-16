@@ -80,7 +80,7 @@
 
 			<ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">
-					<li><a href="<c:url value="/login" />">Iniciar sesión</a></li>
+					<li><a href="<c:url value="/login" />">Iniciar sesiÃ³n</a></li>
 					<li><a href="<c:url value="/usuario/nuevo" />">Regsitrarse</a></li>
 				</sec:authorize>			
 				

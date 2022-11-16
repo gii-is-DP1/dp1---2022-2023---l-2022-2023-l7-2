@@ -62,9 +62,6 @@ private PartidaParchis partidaParchis;
 
 @ManyToOne (optional = true)
 private PartidaOca partidaOca;
-
-
-
 }
 
 

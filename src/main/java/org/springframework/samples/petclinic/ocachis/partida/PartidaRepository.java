@@ -17,5 +17,4 @@ public interface PartidaRepository{
     @Query("SELECT partida FROM Partida partida WHERE partida.estado = 'TERMINADA'")
     Collection<Partida> buscarPartidaTerminada();*/
 
-    
 }

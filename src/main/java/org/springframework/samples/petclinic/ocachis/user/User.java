@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +19,7 @@ import lombok.Setter;
 public class User{
 	@Id
 	String username;
-	
+
 	String password;
 	
 	boolean enabled;

@@ -6,6 +6,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("ocachis/partida")
 public class PartidaController {
-    
 
 }

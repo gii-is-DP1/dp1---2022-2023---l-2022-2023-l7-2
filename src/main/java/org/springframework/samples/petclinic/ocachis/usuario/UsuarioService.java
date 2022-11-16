@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.ocachis.usuario;
 
 import org.springframework.transaction.annotation.Transactional;
 
+
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -38,6 +39,7 @@ public class UsuarioService {
 //		//creamos authorities
 		authoritiesService.saveAuthorities(usuario.getUser().getUsername(), "jugador");
 	}
+
 	
 	@Transactional
 	public void updateUsuario(@Valid Usuario usuario) {
@@ -48,6 +50,7 @@ public class UsuarioService {
 	public boolean existsUsuarioById(int usuarioId) {
 		return usuarioRepository.existsById(usuarioId);
 	}
+
     
     @Transactional(readOnly = true)
     public Collection<Usuario> findAll(){

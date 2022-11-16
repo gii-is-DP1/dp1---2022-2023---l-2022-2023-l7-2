@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.ocachis.usuario;
 
+
 import java.util.Collection;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -8,6 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
+
 	Usuario findById(int id);
 
     Collection<Usuario> findAll();

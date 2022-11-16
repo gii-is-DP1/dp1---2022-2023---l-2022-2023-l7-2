@@ -30,6 +30,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@Table(name = "usuarios")
 public class Usuario extends BaseEntity {
 	
 	@NotEmpty
