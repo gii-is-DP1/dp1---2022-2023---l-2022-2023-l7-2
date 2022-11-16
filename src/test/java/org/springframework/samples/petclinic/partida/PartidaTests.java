@@ -54,12 +54,6 @@ public class PartidaTests {
         assertThrows(ConstraintViolationException.class,() -> or.save(po),
         "El máximo de jugadores es 4");
 
-        pp.setId(3);
-        pp.setMaxJugadores(1);
-        pp.setEstado(TipoEstadoPartida.CREADA);
-        assertThrows(ConstraintViolationException.class,() -> pr.save(pp),
-        "El mínimo de jugadores es 2");
-
         pp.setMaxJugadores(5);
         assertThrows(ConstraintViolationException.class,() -> pr.save(pp),
         "El máximo de jugadores es 4");
