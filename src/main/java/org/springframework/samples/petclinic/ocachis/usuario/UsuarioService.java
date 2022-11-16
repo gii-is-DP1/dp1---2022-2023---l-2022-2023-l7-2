@@ -1,14 +1,16 @@
 package org.springframework.samples.petclinic.ocachis.usuario;
 
 import org.springframework.transaction.annotation.Transactional;
+
+
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
 import org.springframework.samples.petclinic.ocachis.user.AuthoritiesService;
 import org.springframework.samples.petclinic.ocachis.user.UserService;
-import org.springframework.samples.petclinic.owner.Owner;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,14 +37,7 @@ public class UsuarioService {
 //		//creamos el user
 		userService.saveUser(usuario.getUser());
 //		//creamos authorities
-		authoritiesService.saveAuthorities(usuario.getUser().getUsername(), "player");
-		
-	}
-	
-
-	@Transactional(readOnly = true)
-	public Usuario findUsuarioById(int id) throws DataAccessException {
-		return usuarioRepository.findById(id);
+		authoritiesService.saveAuthorities(usuario.getUser().getUsername(), "jugador");
 	}
 
 	
@@ -55,5 +50,20 @@ public class UsuarioService {
 	public boolean existsUsuarioById(int usuarioId) {
 		return usuarioRepository.existsById(usuarioId);
 	}
+
+    
+    @Transactional(readOnly = true)
+    public Collection<Usuario> findAll(){
+        return this.usuarioRepository.findAll();
+    }
+    @Transactional
+    public void deleteUsuarioById(int id){
+        usuarioRepository.deleteById(id);
+    }
+
+    @Transactional
+    public Usuario findUsuarioById(int id){
+        return this.usuarioRepository.findById(id);
+    }
 
 }

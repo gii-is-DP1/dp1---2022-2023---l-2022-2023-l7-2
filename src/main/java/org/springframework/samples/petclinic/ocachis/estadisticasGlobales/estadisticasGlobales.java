@@ -39,3 +39,4 @@ public class estadisticasGlobales extends BaseEntity{
 	private Collection<Usuario> ocaRankingJugadores;
 
 }
+

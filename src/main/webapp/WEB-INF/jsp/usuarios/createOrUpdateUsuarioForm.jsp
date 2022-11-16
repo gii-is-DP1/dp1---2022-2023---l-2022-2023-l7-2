@@ -9,7 +9,8 @@
 
 <%-- Esta vista requiere de los siguientes parametros:
 	-usuario, de tipo Usuario: es el usuario que se edita. Si se va a crear un usuario hay que pasarlo vacio como new Usuario()
-	-edit, de tipo Boolean: sirve para saber si se est� editando o no un usuario --%>
+	-edit, de tipo Boolean: sirve para saber si se está editando o no un usuario --%>
+
 <petclinic:layout pageName="usuarios">
     <h2>
         <c:if test="${usuario['new']}">Nuevo </c:if> Usuario
@@ -22,7 +23,8 @@
             <petclinic:inputField label="Apellido" name="apellido"/>
            <c:if test="${!edit}">
            <petclinic:inputField label="Username" name="user.username"/>
-            <petclinic:inputField label="Contrase�a" name="user.password"/>
+
+            <petclinic:inputField label="Contraseña" name="user.password"/>
            </c:if>            
         </div>
         <div class="form-group">
@@ -42,6 +44,7 @@
     	<div class="col-auto align-self-center">Ya tienes una cuenta?</div>
    	</div>
    	<div class="row">
-    	<div class="col-auto align-self-center"><a href="<c:url value="/login" />">Iniciar sesi�n</a></div>
+
+    	<div class="col-auto align-self-center"><a href="<c:url value="/login" />">Iniciar sesión</a></div>
    	</div>
 </petclinic:layout>

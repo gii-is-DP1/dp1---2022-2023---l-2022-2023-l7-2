@@ -3,8 +3,9 @@ package org.springframework.samples.petclinic.ocachis.logro;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
-
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
@@ -16,13 +17,15 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Logro extends BaseEntity{
-	@NotEmpty
+
+	@NotBlank
+	@Size(min=3,max=50)
 	private String nombre;
 
-	@NotEmpty
+	@NotBlank
+	@Size(min=10,max=150)
 	private String descripcion;
 
 	@Embedded
-
-	private Estadisticas estadisticasACumplir;   
+	public Estadisticas estadisticasACumplir;   
 }
