@@ -48,6 +48,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/logro/new").hasAnyAuthority("admin")
 				.antMatchers("/logro/**/edit").hasAnyAuthority("admin")
 				
+				.antMatchers("/listUsuarios").hasAnyAuthority("admin")
+				.antMatchers("/listUsuarios/**").hasAnyAuthority("admin")
+				.antMatchers("/listPartidas").hasAnyAuthority("admin")
+				.antMatchers("/listPartidas/**").hasAnyAuthority("admin")
+				
 				
 				.anyRequest().denyAll()
 				.and()
