@@ -59,14 +59,14 @@ public class AdminController {
         return mav;
     }
     */
-    @Transactional(readOnly = true)
+  
     @GetMapping(value="/listUsuarios")
     public String listarUsuarios(Map<String,Object> model){
 		Collection<Usuario> results = this.usuarioService.findAll();
 		model.put("selections", results);
 		return "admin/listUsuarios";
 	}
-    @Transactional(readOnly = true)
+
     @GetMapping(value="/listPartidas")
     public String listarPartidas(Map<String,Object> model){
 		Collection<PartidaOca> results1 = this.partidaService.findAllOca();
@@ -89,7 +89,7 @@ public class AdminController {
         return "redirect:/admin/listUsuarios";
     }
     
-    @Transactional
+
     @GetMapping("/listPartidas/partidaOca/{partidaOcaId}/delete")
     public String borrarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model){
         PartidaOca p = this.partidaService.findPartidaOcaById(partidaOcaId);
@@ -103,7 +103,7 @@ public class AdminController {
         return "redirect:/admin/listPartidas";
     }
 
-        @Transactional
+       
     @GetMapping("/listPartidas/partidaParchis/{partidaParchisId}/delete")
     public String borrarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model){
         PartidaParchis u = this.partidaService.findPartidaParchisById(partidaParchisId);

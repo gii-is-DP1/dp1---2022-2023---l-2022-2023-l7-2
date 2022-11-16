@@ -41,7 +41,6 @@ public class UsuarioController {
 	}
 	
 	@GetMapping(value="/usuarios/nuevo")
-
 	public String initCreationForm(Map<String, Object> model) {
 		Usuario usuario = new Usuario();
 		model.put("usuario", usuario);
@@ -51,7 +50,6 @@ public class UsuarioController {
 	
 
 	@PostMapping(value = "/usuarios/nuevo")
-
 	public String processCreationForm(@Valid Usuario usuario, BindingResult result, Map<String, Object> model) {
 		if (result.hasErrors()) {
 			return VIEWS_USUARIO_CREATE_OR_UPDATE_FORM;

@@ -6,6 +6,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout pageName="Partidas">
     <h2>Partidas</h2>
@@ -13,7 +15,7 @@
     <table id="partidasTable" class="table table-striped">
         <thead>
         <tr>
-            <th style="width: 50px;">Id Partida</th>
+            <th style="width: 80px;">Codigo de partida</th>
             <th style="width: 100px;">Creador (Jugador Rojo)</th>
             <th style="width: 200px">Jugadores</th>
             <th style="width: 100px">Tipo Partida</th>
@@ -25,7 +27,7 @@
         <c:forEach items="${parchis}" var="parchis">
             <tr>
                 <td>
-                  <c:out value="${parchis.id}"></c:out>
+                  <c:out value="${parchis.codigoPartida}"></c:out>
                 </td>
                 <td>
                     <c:forEach items="${parchis.jugadores}" var="jugador">
@@ -53,7 +55,7 @@
 
                 </td>
                 <td>
-                <spring:url value="listPartidas/partidaParchis/{partidaParchisId}/delete" var="partidaParchisDeleteUrl">
+                <spring:url value="/admin/listPartidas/partidaParchis/{partidaParchisId}/delete" var="partidaParchisDeleteUrl">
                         <spring:param name="partidaParchisId" value="${parchis.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(partidaParchisDeleteUrl)}">
@@ -64,7 +66,7 @@
         <c:forEach items="${oca}" var="oca">
             <tr>
                 <td>
-                  <c:out value="${oca.id}"></c:out>
+                  <c:out value="${oca.codigoPartida}"></c:out>
                 </td>
                 <td>
                     <c:forEach items="${oca.jugadores}" var="jugador">
@@ -92,7 +94,7 @@
 
                 </td>
                 <td>
-                    <spring:url value="listPartidas/partidaOca/{partidaOcaId}/delete" var="partidaOcaDeleteUrl">
+                    <spring:url value="/admin/listPartidas/partidaOca/{partidaOcaId}/delete" var="partidaOcaDeleteUrl">
                             <spring:param name="partidaOcaId" value="${oca.id}"/>
                         </spring:url>
                         <a href="${fn:escapeXml(partidaOcaDeleteUrl)}">
