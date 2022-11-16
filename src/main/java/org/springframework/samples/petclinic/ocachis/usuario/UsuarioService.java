@@ -1,6 +1,9 @@
 package org.springframework.samples.petclinic.ocachis.usuario;
 
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
