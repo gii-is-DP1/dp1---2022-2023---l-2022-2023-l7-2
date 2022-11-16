@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.assertj.core.util.Lists;
@@ -38,9 +39,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(controllers = UsuarioController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),excludeAutoConfiguration = SecurityConfiguration.class)
 class UsuarioControllerTests {
-	private static final int TEST_USUARIO_ID = 2;
+	private static final int TEST_USUARIO_ID = 100;
 	
-	@MockBean
+	@Autowired
 	private UsuarioController usuarioController;
 	
 	@MockBean
@@ -56,6 +57,7 @@ class UsuarioControllerTests {
 	private MockMvc mockMvc;
 
 	private Usuario auronplay;
+
 
 	@BeforeEach
 	void setup() {
@@ -87,20 +89,21 @@ class UsuarioControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessCreationFormSuccess() throws Exception {
-		mockMvc.perform(post("/usuarios/nuevo").param("Nombre", "Auron").param("Apellido", "Play").with(csrf())
-				.param("Estadisticas", "null").param("Logros", "null").param("SolicitudesEnvidas", "null").param("SolicitudesRecibidas", "null").param("PartidasJugadas", "null"))
-				.andExpect(status().is3xxRedirection());
+		mockMvc.perform(post("/usuarios/nuevo").param("nombre", "Auron").param("apellido", "Play").with(csrf())
+				.param("user.password", "usuario123")
+				.param("user.username", "usuario123"))
+				//.param("SolicitudesEnvidas", "null")
+				//.param("SolicitudesRecibidas", "null")
+				//.param("PartidasJugadas", "null"))
+		.andExpect(status().is3xxRedirection());
 	}
 
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessCreationFormHasErrors() throws Exception {
-		mockMvc.perform(post("/usuarios/nuevo").with(csrf()).param("Nombre", "Auron").param("Apellido", "Play")
-				.param("Estadisticas", "null")).andExpect(status().isOk()).andExpect(model().attributeHasErrors("usuario"))
-				.andExpect(model().attributeHasFieldErrors("usuario", "Logros"))
-				.andExpect(model().attributeHasFieldErrors("usuario", "SolicitudesEnvidas"))
-				.andExpect(model().attributeHasFieldErrors("usuario", "SolicitudesRecibidas"))
-				.andExpect(model().attributeHasFieldErrors("usuario", "PartidasJugadas"))
+		mockMvc.perform(post("/usuarios/nuevo").with(csrf()))
+				.andExpect(status().isOk()).andExpect(model().attributeHasErrors("usuario"))
+				.andExpect(model().attributeHasFieldErrors("usuario", "nombre"))
 				.andExpect(view().name("usuarios/createOrUpdateUsuarioForm"));
 	}
 
@@ -110,13 +113,14 @@ class UsuarioControllerTests {
 	void testInitUpdateUsuarioForm() throws Exception {
 		mockMvc.perform(get("/usuarios/{usuarioId}/edit", TEST_USUARIO_ID)).andExpect(status().isOk())
 				.andExpect(model().attributeExists("usuario"))
-				.andExpect(model().attribute("usuario", hasProperty("Nombre", is("Auron"))))
-				.andExpect(model().attribute("usuario", hasProperty("Apellido", is("Play"))))
+				.andExpect(model().attribute("usuario", hasProperty("nombre", is("Auron"))))
+				.andExpect(model().attribute("usuario", hasProperty("apellido", is("Play"))))
 //				.andExpect(model().attribute("usuario", hasProperty("Estadisticas", is("null"))))
 //				.andExpect(model().attribute("usuario", hasProperty("Logros", is("null"))))
 //				.andExpect(model().attribute("usuario", hasProperty("SolicitudesEnvidas", is("null"))))
 //				.andExpect(model().attribute("usuario", hasProperty("SolicitudesRecibidas", is("null"))))
 //				.andExpect(model().attribute("usuario", hasProperty("PartidasJugadas", is("null"))))
+				//.andExpect()
 				.andExpect(view().name("usuarios/createOrUpdateUsuarioForm"));
 	}
 

@@ -42,8 +42,6 @@ class LogroControllerTest {
 	@MockBean
 	private LogroService logroService;
 
-
-
 	@MockBean
 	private AuthoritiesService authoritiesService;
 
