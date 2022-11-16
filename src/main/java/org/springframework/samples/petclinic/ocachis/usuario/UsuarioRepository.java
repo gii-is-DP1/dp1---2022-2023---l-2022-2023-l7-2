@@ -1,15 +1,16 @@
 package org.springframework.samples.petclinic.ocachis.usuario;
 
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
-import java.util.Collection;
+import org.springframework.data.repository.query.Param;
 
-@Repository
-public interface UsuarioRepository extends CrudRepository<Usuario,Integer> {
-    
+public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
+	Usuario findById(int id);
+
     Collection<Usuario> findAll();
-
-    Usuario findById(int id);
-
     
+	@Modifying
+	@Query("UPDATE Usuario u SET u.nombre = :nombre, u.apellido = :apellido WHERE u.id = :id ")
+	void updateUsuario(@Param("id") int id, @Param("nombre") String nombre, @Param("apellido") String apellido);
 }
