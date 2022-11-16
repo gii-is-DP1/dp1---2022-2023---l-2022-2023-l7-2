@@ -21,8 +21,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.ocahis.user.AuthoritiesService;
-import org.springframework.samples.petclinic.ocahis.user.UserService;
+import org.springframework.samples.petclinic.ocachis.user.AuthoritiesService;
+import org.springframework.samples.petclinic.ocachis.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

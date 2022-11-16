@@ -22,7 +22,7 @@ import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.logro.Logro;
 import org.springframework.samples.petclinic.ocachis.solicitud.Solicitud;
-import org.springframework.samples.petclinic.ocahis.user.User;
+import org.springframework.samples.petclinic.ocachis.user.User;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +30,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@Table(name = "usuarios")
 public class Usuario extends BaseEntity {
 	
 	@NotEmpty
@@ -59,7 +60,11 @@ public class Usuario extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "Usuario [nombre=" + nombre + ", apellido=" + apellido + ", estadisticas=" + estadisticas.toString() + ", user=" + user.getUsername() + " | " + user.getPassword() + "]";
+		return "Usuario [nombre=" + nombre +
+				", apellido=" + apellido +
+//				", estadisticas=" + estadisticas.toString() +
+				", user=" + user.getUsername() + " | " + user.getPassword() +
+			"]";
 	}
 
 }
