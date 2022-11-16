@@ -32,6 +32,24 @@ INSERT INTO users(username,password,enabled) VALUES ('siadan','s14d4n',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (9,'siadan','owner');
 
 
+-- One usuario user, maned usuario with password usuario
+INSERT INTO users(username,password,enabled) VALUES ('usuario','usuario',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (10,'usuario','jugador');
+INSERT INTO Usuario(id,nombre,apellido,username) VALUES(1,'nombreUsuario','apellidoUsuario','usuario');
+
+INSERT INTO users(username,password,enabled) VALUES ('usuario1','aaa',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (11,'usuario1','jugador1');
+INSERT INTO Usuario(id,nombre,apellido,username) VALUES(2,'nombreUsuario1','apellidoUsuario1','usuario1');
+
+INSERT INTO users(username,password,enabled) VALUES ('Pepe','aaa',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (12,'Pepe','jugador2');
+INSERT INTO Usuario(id,nombre,apellido,username) VALUES(3,'Pepe','Almuedos','Pepe');
+
+INSERT INTO users(username,password,enabled) VALUES ('Pablo','aaa',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (13,'Pablo','jugador3');
+INSERT INTO Usuario(id,nombre,apellido,username) VALUES(4,'Pablo','Kratzer','Pablo');
+
+
 
 INSERT INTO vets(id, first_name,last_name) VALUES (1, 'James', 'Carter');
 INSERT INTO vets(id, first_name,last_name) VALUES (2, 'Helen', 'Leary');
@@ -130,3 +148,29 @@ INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (4,1,2,2);
 
 
 INSERT INTO logro(id,nombre,descripcion,oca_partidas_jugadas) VALUES (1,'Jugador Oca Junior','Juega 10 partidas de la Oca',10); 
+INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, numero_turnos) VALUES
+(1, 22, 3, 0, '2013-01-01', 3, 0);
+INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, numero_turnos) VALUES
+(2, 12, 4, 0, '2013-01-01', 2, 0);
+INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, numero_turnos) VALUES
+(3, 12, 4, 1, '2013-01-01', 2, 0);
+
+INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, numero_turnos) VALUES
+(1, 27, 5, 0, '2013-01-03', 4, 0);
+INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, numero_turnos) VALUES
+(2, 28, 5, 2, '2013-01-03', 4, 0);
+
+INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
+(1, 0, FALSE, 0, 0, null, 1, null, 3);
+INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
+(2, 0, FALSE, 0, 0, null, 2, null, 4);
+INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
+(3, 0, FALSE, 0, 0, null, null, 1, 1);
+INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
+(4, 1, FALSE, 0, 0, null, null, 1, 2);
+INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
+(5, 2, FALSE, 0, 0, null, null, 1, 3);
+
+INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
+(7, 3, FALSE, 0, 0, null, null, 2, 4);
+

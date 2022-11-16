@@ -2,23 +2,20 @@ package org.springframework.samples.petclinic.ocachis.partida;
 
 import java.util.Collection;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PartidaParchisRepository extends CrudRepository<PartidaParchis,Integer> {
-    
-    
-    Collection<PartidaParchis> findAll();
+public interface PartidaParchisRepository extends CrudRepository<PartidaParchis, Integer> {
 
+    Collection<PartidaParchis> findAll();
     PartidaParchis findById(int id);
     
-    /*
-    @Query("SELECT partida FROM Partida partida WHERE partida.estado = 'JUGANDO'")
-    Collection<Partida> buscarPartidaEnJuego();
+    @Query("SELECT parchis from PartidaParchis parchis where parchis.estado=0 OR parchis.estado=1")
+    Collection<PartidaParchis> findEsperaParchis();
     
-    @Query("SELECT partida FROM Partida partida WHERE partida.estado = 'TERMINADA'")
-    Collection<Partida> buscarPartidaTerminada();*/
+    PartidaParchis save(PartidaParchis p);
 
     
 }

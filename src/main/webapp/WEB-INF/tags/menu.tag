@@ -62,6 +62,12 @@
 						</ul>
 					</petclinic:menuItem>
 
+					<petclinic:menuItem active="${name eq 'salas'}" url="/sala/"
+					title="Salas de Juego">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span>Salas</span>
+				</petclinic:menuItem>
+
 
 <%-- 
 					<petclinic:menuItem active="${name eq 'error'}" url="/oups"
@@ -80,7 +86,7 @@
 
 			<ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">
-					<li><a href="<c:url value="/login" />">Iniciar sesión</a></li>
+					<li><a href="<c:url value="/login" />">Iniciar sesiÃ³n</a></li>
 					<li><a href="<c:url value="/usuario/nuevo" />">Registrarse</a></li>
 				</sec:authorize>			
 				

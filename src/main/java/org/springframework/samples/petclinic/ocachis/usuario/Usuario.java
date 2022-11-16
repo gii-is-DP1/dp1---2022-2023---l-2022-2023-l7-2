@@ -3,7 +3,6 @@ package org.springframework.samples.petclinic.ocachis.usuario;
 
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
@@ -13,7 +12,6 @@ import javax.persistence.ManyToMany;
 
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.swing.ImageIcon;
 import javax.validation.constraints.NotEmpty;
 
@@ -22,6 +20,7 @@ import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.logro.Logro;
 import org.springframework.samples.petclinic.ocachis.solicitud.Solicitud;
+import javax.persistence.Table;
 import org.springframework.samples.petclinic.ocachis.user.User;
 
 import lombok.Getter;
