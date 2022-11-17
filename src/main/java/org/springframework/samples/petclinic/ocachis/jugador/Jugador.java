@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.NotBlank;
 
 import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.model.Color;
@@ -57,8 +56,6 @@ private PartidaParchis partidaParchis;
 
 @ManyToOne (optional = true)
 private PartidaOca partidaOca;
-
-
 }
 
 

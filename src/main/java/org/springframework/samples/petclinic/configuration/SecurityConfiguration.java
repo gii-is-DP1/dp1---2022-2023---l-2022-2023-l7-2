@@ -39,14 +39,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/session/**").permitAll()
 				.antMatchers("/noAccess").permitAll()
 				.antMatchers("/sala/**").permitAll()
-				.antMatchers("/c").permitAll()
 				.antMatchers("/admin/**").hasAnyAuthority("admin")
 				.antMatchers("/owners/**").hasAnyAuthority("owner","admin")				
 				.antMatchers("/vets/**").authenticated()
-				.antMatchers("/usuario/nuevo").permitAll()
-				.antMatchers("/usuario/**").permitAll()
-				
-				
+				.antMatchers("/usuarios/nuevo").permitAll()
+				.antMatchers("/usuarios/**").permitAll()
+				.antMatchers("/usuarios/**/edit").permitAll() //aqui va admin y jugador
+                .antMatchers("/logro/listLogros").permitAll()
+				.antMatchers("/logro/new").hasAnyAuthority("admin")
+				.antMatchers("/logro/**/edit").hasAnyAuthority("admin")
+				.antMatchers("/listUsuarios").hasAnyAuthority("admin")
+				.antMatchers("/listUsuarios/**").hasAnyAuthority("admin")
+				.antMatchers("/listPartidas").hasAnyAuthority("admin")
+				.antMatchers("/listPartidas/**").hasAnyAuthority("admin")
+				.antMatchers("/welcome").permitAll()
 				.anyRequest().denyAll()
 				.and()
 				 	.formLogin()
@@ -85,5 +91,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 	
 }
+
 
 

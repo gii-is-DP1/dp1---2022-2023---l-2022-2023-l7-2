@@ -5,14 +5,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="logros">
+<petclinic:layout pageName="crearPartida">
    
-    <form:form modelAttribute="proceso" class="form-horizontal" id="add-procesarPartidaForm-form">
+    <form:form modelAttribute="procesarPartidaForm" class="form-horizontal" id="add-procesarPartidaForm-form">
         <div class="form-group has-feedback">
            
             <label for="maxJugadores">Num Jugadores:</label>
             <select name="numJugador">
-                <option selected value="2">2</option>
+                <option selected value="2">2</option>2
                 <option value="3">3</option>
                 <option value="4">4</option>
             </select>
