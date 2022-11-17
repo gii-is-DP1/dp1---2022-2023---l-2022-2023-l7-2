@@ -12,7 +12,7 @@
 	-edit, de tipo Boolean: sirve para saber si se está editando o no un usuario --%>
 
 <petclinic:layout pageName="usuarios">
-    <h2>
+    <h2> 
         <c:if test="${usuario['new']}">Nuevo </c:if> Usuario
     </h2>
    

@@ -40,6 +40,12 @@
 						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 						<span>Logros</span>
 				</petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'partida'}"
+						url="/sala/create" title="Crear Partida">
+						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+						<span>Crear Partida</span>
+				</petclinic:menuItem>
 
 			<sec:authorize access="hasAuthority('admin')">
 					<petclinic:menuItem active="${name eq 'admin'}"
