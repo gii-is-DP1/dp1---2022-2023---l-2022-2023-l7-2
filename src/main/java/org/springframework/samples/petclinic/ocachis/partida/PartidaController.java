@@ -222,14 +222,14 @@ public class PartidaController {
 	@GetMapping("/create")
     public String crearPartida(ModelMap model){
         ProcesarPartidaForm proceso = new ProcesarPartidaForm();
-        model.put("proceso", proceso);
+        model.put("procesarPartidaForm", proceso);
         return CREATE_SALAS;
     }  
 
     @PostMapping("/create")
- 	public String processCrearPartida( ProcesarPartidaForm proceso, BindingResult result, ModelMap model) throws IllegalAccessException{
+ 	public String processCrearPartida(@Valid ProcesarPartidaForm procesarPartidaForm, BindingResult result, ModelMap model) throws IllegalAccessException{
    
-        String tipo = proceso.getTipo();
+        String tipo = procesarPartidaForm.getTipo();
         if (result.hasErrors()) {
 			
 			return CREATE_SALAS;
@@ -238,7 +238,7 @@ public class PartidaController {
             if(tipo.equals("oca")){
 				//Crear partida
                 PartidaOca partidaOca = new PartidaOca();
-                partidaOca.setMaxJugadores(proceso.getNumJugador());
+                partidaOca.setMaxJugadores(procesarPartidaForm.getNumJugador());
                 this.partidaService.saveOca(partidaOca);
 
 				//Crear jugador
@@ -260,7 +260,7 @@ public class PartidaController {
             }else if(tipo.equals("parchis")){
                 //Crear partida
 				PartidaParchis partidaParchis = new PartidaParchis();
-                partidaParchis.setMaxJugadores(proceso.getNumJugador());
+                partidaParchis.setMaxJugadores(procesarPartidaForm.getNumJugador());
                 this.partidaService.saveParchis(partidaParchis);
 
 				//Crear jugador
