@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.ocachis.usuario;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -23,7 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UsuarioController {
 	
 	private static final String VIEWS_USUARIO_CREATE_OR_UPDATE_FORM = "usuarios/createOrUpdateUsuarioForm";
-
+ 
 	private final UsuarioService usuarioService;
 	private final UserService userService;
 
@@ -38,7 +40,7 @@ public class UsuarioController {
 		dataBinder.setDisallowedFields("id");
 	}
 	
-	@GetMapping(value="/usuario/nuevo")
+	@GetMapping(value="/usuarios/nuevo")
 	public String initCreationForm(Map<String, Object> model) {
 		Usuario usuario = new Usuario();
 		model.put("usuario", usuario);
@@ -46,7 +48,8 @@ public class UsuarioController {
 		return VIEWS_USUARIO_CREATE_OR_UPDATE_FORM;
 	}
 	
-	@PostMapping(value = "/usuario/nuevo")
+
+	@PostMapping(value = "/usuarios/nuevo")
 	public String processCreationForm(@Valid Usuario usuario, BindingResult result, Map<String, Object> model) {
 		if (result.hasErrors()) {
 			return VIEWS_USUARIO_CREATE_OR_UPDATE_FORM;
@@ -77,7 +80,8 @@ public class UsuarioController {
 	}
 	
 	
-	@GetMapping(value = "/usuario/{usuarioId}/edit")
+	@GetMapping(value = "/usuarios/{usuarioId}/edit")
+
 	public String initUpdateusuarioForm(@PathVariable("usuarioId") int usuarioId, Map<String, Object> model) {
 		
 		//Obtener la autenticación del usuario
@@ -122,8 +126,9 @@ public class UsuarioController {
 		model.put("edit", true);
 		return VIEWS_USUARIO_CREATE_OR_UPDATE_FORM;
 	}
-	
-	@PostMapping(value = "/usuario/{usuarioId}/edit")
+
+	@PostMapping(value = "/usuarios/{usuarioId}/edit")
+
 	public String processUpdateUsuarioForm(@Valid Usuario usuario, BindingResult result,
 			@PathVariable("usuarioId") int usuarioId, Map<String, Object> model) {
 		
@@ -164,6 +169,5 @@ public class UsuarioController {
 		this.usuarioService.updateUsuario(usuario);
 		return "redirect:/usuario/{usuarioId}/edit";
 	
-	}
-	
+	}	
 }

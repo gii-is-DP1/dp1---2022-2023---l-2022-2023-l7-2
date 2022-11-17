@@ -27,7 +27,7 @@ import org.springframework.samples.petclinic.ocachis.usuario.UsuarioService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 
 
 @WebMvcTest(controllers = PartidaController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
@@ -77,22 +77,22 @@ class PartidaControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testcrearPartidaHtml() throws Exception {
-		mockMvc.perform(get("/sala/create")).andExpect(status().isOk()).andExpect(model().attributeExists("proceso"))
+		mockMvc.perform(get("/sala/create")).andExpect(status().isOk()).andExpect(model().attributeExists("procesarPartidaForm"))
 				.andExpect(view().name("partidas/createPartidaForm"));
 	}
 
     @WithMockUser(value = "spring")
 	@Test
 	void testProcessCrearPartidaSuccess() throws Exception {
-		mockMvc.perform(post("/sala/create").param("estado", "0").param("maxJugadores", "3").with(csrf()))
-		.andExpect(status().is2xxSuccessful());
+		mockMvc.perform(post("/sala/create").param("tipo", "parchis").param("maxJugadores", "3").with(csrf()))
+		.andExpect(status().is3xxRedirection());
 	}
 
     @WithMockUser(value = "spring")
 	@Test
 	void testProcessCrearPartidaHasErrors() throws Exception {
-		mockMvc.perform(post("/sala/create").with(csrf()).param("estado", "0").param("maxJugadores", "5")
-				).andExpect(status().isOk()).andExpect(model().attributeHasFieldErrors("result","maxJugadores"))
+		mockMvc.perform(post("/sala/create").with(csrf()).param("maxJugadores", "4")
+				).andExpect(status().isOk()).andExpect(model().attributeHasFieldErrors("procesarPartidaForm", "tipo"))
 				.andExpect(view().name("partidas/createPartidaForm"));
 	}
 
@@ -102,64 +102,47 @@ class PartidaControllerTests {
 		mockMvc.perform(get("/sala/")).andExpect(status().isOk()).andExpect(model().attributeExists("partidaOca"))
 				.andExpect(view().name("partidas/salaList"));
 	}
-	
+	/*
 	@WithMockUser(value = "spring")
 	@Test
 	void testcreateEnJoinSalaOcaSuccess() throws Exception {
 		mockMvc.perform(post("/sala/{partidaOcaId}/ocaJoin",TEST_PARTIDAOCA_ID).with(csrf()).param("jugadorId", "6")
 				.param("color", "ROJO")
-				).andExpect(status().is2xxSuccessful())
-				.andExpect(view().name("partidas/espera"));
+				).andExpect(status().is2xxSuccessful());
 	}
-	
-	@WithMockUser(value = "spring")
-	@Test
-	void testcreateEnJoinSalaOcaHasErrors() throws Exception {
-		mockMvc.perform(post("/sala/{partidaOcaId}/ocaJoin",TEST_PARTIDAOCA_ID).with(csrf()).param("jugadorId","1")
-				).andExpect(status().isOk())
-				 .andExpect(model().attributeHasErrors("jugador"))
-		
-				.andExpect(model().attributeHasFieldErrors("jugador", "color"))
-				.andExpect(view().name("partidas/createPartidaForm"));
-	}
-	
+	*/
 	@WithMockUser(value = "spring")
 	@Test
 	void testShowOcaHtml() throws Exception {
 		mockMvc.perform(get("/sala/{partidaOcaId}/showOca", TEST_PARTIDAOCA_ID)).andExpect(status().isOk())
-			.andExpect(model().attributeExists("jugador"))
 			.andExpect(model().attributeExists("partidaOca"))
 				.andExpect(view().name("partidas/espera"));
 	}
-	
+	/*
 	@WithMockUser(value = "spring")
 	@Test
 	void testcreateEnJoinSalaParchisSuccess() throws Exception {
-		mockMvc.perform(post("/sala/{partidaParchisId}/parchisJoin",TEST_PARTIDAPARCHIS_ID).with(csrf()).param("jugadorId", "6")
-				.param("color", "ROJO")
-				).andExpect(status().is2xxSuccessful())
-				.andExpect(view().name("redirect:/sala/{partidaParchisId}/showParchis"));
+		mockMvc.perform(get("/sala/{partidaParchisId}/parchisJoin", 2)).andExpect(status().is3xxRedirection())
+				.andExpect(redirectedUrl("/sala/2/parchisJoin")).andExpect(status().isFound());
 	}
-	
-	@WithMockUser(value = "spring")
-	@Test
-	void testcreateEnJoinSalaParchisHasErrors() throws Exception {
-		mockMvc.perform(post("/sala/{partidaParchisId}/ocaJoin",TEST_PARTIDAPARCHIS_ID).with(csrf()).param("jugadorId","1")
-				).andExpect(status().isOk())
-				 .andExpect(model().attributeHasErrors("jugador"))
-		
-				.andExpect(model().attributeHasFieldErrors("jugador", "color"))
-				.andExpect(view().name("partidas/createPartidaForm"));
-	}
-	
+	*/
 	@WithMockUser(value = "spring")
 	@Test
 	void testShowParchisHtml() throws Exception {
 		mockMvc.perform(get("/sala/{partidaParchisId}/showParchis", TEST_PARTIDAPARCHIS_ID)).andExpect(status().isOk())
-			.andExpect(model().attributeExists("jugadores"))
 			.andExpect(model().attributeExists("partidaParchis"))
 				.andExpect(view().name("partidas/espera"));
 	}
-
-
+ @WithMockUser(value = "spring")
+	@Test
+	void testEmpezarPartidaParchis() throws Exception {
+		mockMvc.perform(get("/sala/{partidaParchisId}/startParchis", TEST_PARTIDAPARCHIS_ID)).andExpect(status().is3xxRedirection())
+				.andExpect(redirectedUrl("/sala/41/showParchis")).andExpect(status().isFound());
+	}
+ @WithMockUser(value = "spring")
+	@Test
+	void testEmpezarPartidaOca() throws Exception {
+		mockMvc.perform(get("/sala/{partidaOcaId}/startOca", TEST_PARTIDAOCA_ID)).andExpect(status().is3xxRedirection())
+				.andExpect(redirectedUrl("/sala/41/showOca")).andExpect(status().isFound());
+	}
 }

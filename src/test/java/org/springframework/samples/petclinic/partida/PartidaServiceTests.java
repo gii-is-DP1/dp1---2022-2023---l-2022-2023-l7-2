@@ -69,7 +69,7 @@ public class PartidaServiceTests {
 		            
 	
 		assertThat(p.getId().longValue()).isNotEqualTo(0);
-        int numeroPartidaParchisFinal = this.ls.findAllOca().size();
+        int numeroPartidaParchisFinal = this.ls.findAllParchis().size();
 		assertThat(numeroPartidaParchisFinal).isEqualTo(numeroPartidaParchisInicial +1);
     }
 }

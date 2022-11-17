@@ -20,6 +20,7 @@ import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.logro.Logro;
 import org.springframework.samples.petclinic.ocachis.solicitud.Solicitud;
+import javax.persistence.Table;
 import org.springframework.samples.petclinic.ocachis.user.User;
 
 import lombok.Getter;
@@ -28,6 +29,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@Table(name = "usuarios")
 public class Usuario extends BaseEntity {
 	
 	@NotEmpty
@@ -48,20 +50,20 @@ public class Usuario extends BaseEntity {
     @OneToMany
     private Collection<Solicitud> solicitudesRecibidas;
 
-    @OneToMany(mappedBy="usuario")
+    @OneToMany(mappedBy="usuario", cascade = CascadeType.ALL)
     private Collection<Jugador> partidasJugadas;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
 
-	@Override
+	/*@Override
 	public String toString() {
 		return "Usuario [nombre=" + nombre +
 				", apellido=" + apellido +
-//				", estadisticas=" + estadisticas.toString() +
+		", estadisticas=" + estadisticas.toString() +
 				", user=" + user.getUsername() + " | " + user.getPassword() +
 			"]";
-	}
+	}*/
 
 }

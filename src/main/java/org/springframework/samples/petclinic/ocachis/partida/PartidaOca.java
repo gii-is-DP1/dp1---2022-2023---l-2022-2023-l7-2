@@ -4,6 +4,9 @@ package org.springframework.samples.petclinic.ocachis.partida;
 import java.util.Collection;
 import java.util.List;
 
+
+import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
@@ -21,9 +24,10 @@ import lombok.Setter;
 @Entity
 public class PartidaOca extends Partida{
 
-	@OneToMany
+
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<CasillaOca> casillas;
 	
-	@OneToMany(mappedBy="partidaOca")
+	@OneToMany(mappedBy="partidaOca", cascade = CascadeType.ALL)
 	private Collection<Jugador> jugadores;
 }
