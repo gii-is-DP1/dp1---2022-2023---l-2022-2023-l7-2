@@ -49,7 +49,7 @@ public class AdminControllerTest {
 
     private Usuario usuario;
 
-    /*@BeforeEach
+    @BeforeEach
 	void setup() {
         
         usuario = new Usuario();
@@ -59,7 +59,7 @@ public class AdminControllerTest {
         doNothing().when(this.partidaService).borrarPartidaParchis(TEST_ID);
         doNothing().when(this.usuarioService).deleteUsuarioById(TEST_ID);
 
-	}*/
+	}
 
     @WithMockUser(value = "spring")
 	@Test
@@ -75,11 +75,11 @@ public class AdminControllerTest {
 				.andExpect(view().name("admin/listUsuarios"));
 	}
 
-    /*@WithMockUser(value = "spring")
+    @WithMockUser(value = "spring")
 	@Test
 	void testDeleteUsuario() throws Exception {
-		mockMvc.perform(get("/listUsuarios/{usuarioId}/delete", TEST_ID).with(csrf())).andExpect(status().is3xxRedirection())
+		mockMvc.perform(get("/admin/listUsuarios/{usuarioId}/delete", TEST_ID).with(csrf())).andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/admin/listUsuarios"));
-	}*/
+	}
     
 }
