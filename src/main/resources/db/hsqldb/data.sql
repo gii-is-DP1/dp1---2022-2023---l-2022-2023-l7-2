@@ -143,19 +143,19 @@ INSERT INTO usuarios(id,nombre,apellido,username) VALUES(7,'Juan','Mendoza','usu
 INSERT INTO logro(id,nombre,descripcion,oca_partidas_jugadas) VALUES (1,'Jugador Oca Junior','Juega 10 partidas de la Oca',10);
 
 INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, numero_turnos) VALUES
-(1, 22, 3, 0, '2013-01-01', 3, 0);
+(1, 100, 3, 0, '2013-01-01', 3, 0);
 INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, numero_turnos) VALUES
-(2, 12, 4, 0, '2013-01-01', 2, 0);
+(2, 101, 4, 0, '2013-01-01', 2, 0);
 INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, numero_turnos) VALUES
-(3, 12, 4, 1, '2013-01-01', 2, 0);
+(3, 102, 4, 1, '2013-01-01', 2, 0);
 
 INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, numero_turnos) VALUES
-(1, 27, 5, 0, '2013-01-03', 4, 0);
+(1, 103, 5, 0, '2013-01-03', 4, 0);
 INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, numero_turnos) VALUES
-(2, 28, 5, 2, '2013-01-03', 4, 0);
+(2, 104, 5, 2, '2013-01-03', 4, 0);
 
-INSERT INTO partida_parchis(id,codigo_partida,fecha_creacion,estado,max_jugadores) VALUES (3,177,'2022-07-22',2,2);
-INSERT INTO partida_parchis(id,codigo_partida,fecha_creacion,estado,max_jugadores) VALUES (4,222,'2022-07-23',2,2);
+INSERT INTO partida_parchis(id,codigo_partida,fecha_creacion,estado,max_jugadores) VALUES (3,105,'2022-07-22',2,2);
+INSERT INTO partida_parchis(id,codigo_partida,fecha_creacion,estado,max_jugadores) VALUES (4,106,'2022-07-23',2,2);
 
 INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
 (6, 0, FALSE, 0, 0, null, 1, null, 3);

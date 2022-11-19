@@ -22,7 +22,6 @@ import lombok.Setter;
 @MappedSuperclass
 public class Partida extends BaseEntity{
 
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer codigoPartida;
 	
 	//@NotEmpty
@@ -46,5 +45,11 @@ public class Partida extends BaseEntity{
 
 	@ManyToMany
 	private Collection<Usuario> usuariosObservadores;
+
+
+	private static Integer generadorCodigoPartida=104;
+	public static Integer getNuevoCodigoPartida(){
+		return generadorCodigoPartida++;
+	}
 }
 

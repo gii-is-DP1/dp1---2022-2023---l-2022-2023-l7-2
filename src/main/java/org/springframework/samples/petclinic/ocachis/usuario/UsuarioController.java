@@ -63,8 +63,9 @@ public class UsuarioController {
 				errorPresent=true;
 				
 			}
-			if(usuario.getUser().getPassword().length()<3) {
-				result.rejectValue("user.password", "short", "La longitud mínima de la contraseña es de caracteres");
+			
+			if(usuario.getUser().getPassword().length()<5) {
+				result.rejectValue("user.password", "short", "La longitud mínima de la contraseña es de 5 caracteres");
 				errorPresent=true;
 			}
 			

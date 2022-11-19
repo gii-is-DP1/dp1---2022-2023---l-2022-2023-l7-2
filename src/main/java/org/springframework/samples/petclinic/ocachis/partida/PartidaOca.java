@@ -24,7 +24,6 @@ import lombok.Setter;
 @Entity
 public class PartidaOca extends Partida{
 
-
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<CasillaOca> casillas;
 	
