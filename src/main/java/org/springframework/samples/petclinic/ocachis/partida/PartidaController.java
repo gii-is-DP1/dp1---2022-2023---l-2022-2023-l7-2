@@ -48,6 +48,9 @@ public class PartidaController {
 	private static final String VIEWS_SALAS = "partidas/salaList";
 	private static final String VIEWS_ESPERA = "partidas/espera";
 	private static final String CREATE_SALAS = "partidas/createPartidaForm";
+	private static final String VIEWS_JUGAR_OCA = "partidas/ocaGame";
+
+
 
 	private Boolean estaJugando(Integer usuarioId) {
 		Collection<Jugador> jugadores = jugadorService.findAllJugadoresForUsuario(usuarioId);
@@ -304,7 +307,7 @@ public class PartidaController {
 			ModelMap model) {
 		partida.setEstado(TipoEstadoPartida.JUGANDO);
 		partidaService.saveOca(partida);
-		return "redirect:/sala/{partidaOcaId}/showOca";
+		return "redirect:/sala/{partidaOcaId}/playOca";
 	}
 	
 	@GetMapping("/{partidaParchisId}/startParchis")
@@ -319,7 +322,7 @@ public class PartidaController {
 			PartidaParchis partida, ModelMap model) {
 		partida.setEstado(TipoEstadoPartida.JUGANDO);
 		partidaService.saveParchis(partida);
-		return "redirect:/sala/{partidaParchisId}/showParchis";
+		return "redirect:/sala/{partidaParchisId}/playParchis";
 	}
 
 
@@ -364,6 +367,12 @@ public class PartidaController {
 			partidaService.borrarPartidaParchis(partidaParchisId);
 		}
 		return "redirect:/sala/";
+	}
 
+ 
+	@GetMapping(value="/{partidaOcaId}/playOca")
+	public String jugarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model){
+		model.put("partidaOca", partidaService.findByIdOca(partidaOcaId));
+		return VIEWS_JUGAR_OCA;
 	}
 }

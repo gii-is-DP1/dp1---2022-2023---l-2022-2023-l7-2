@@ -29,4 +29,11 @@ public class PartidaOca extends Partida{
 	
 	@OneToMany(mappedBy="partidaOca", cascade = CascadeType.ALL)
 	private Collection<Jugador> jugadores;
+
+	 private String tableroURL = "/resources/images/tableOca.jpg";
+
+	 
+	 public String print(){
+		return tableroURL;
+	 }
 }
