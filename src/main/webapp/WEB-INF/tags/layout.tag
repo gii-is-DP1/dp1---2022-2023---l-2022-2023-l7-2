@@ -3,10 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ attribute name="pageName" required="true" %>
 <%@ attribute name="customScript" required="false" fragment="true"%>
+<%@ attribute name="title" required="false" %>
+
 
 <!doctype html>
 <html>
-<petclinic:htmlHeader/>
+<petclinic:htmlHeader title="${title}"/>
 
 <body>
 <petclinic:bodyHeader menuName="${pageName}"/>

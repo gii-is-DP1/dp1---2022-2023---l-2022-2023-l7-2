@@ -68,8 +68,8 @@ public class UsuarioService {
     }
 
 	@Transactional(readOnly = true)
-    public Usuario findUsuarioByUsuario(String usuario) throws DataAccessException {
-        return usuarioRepository.findByUsername(usuario);
+    public Usuario findUsuarioByUsername(String username) throws DataAccessException {
+        return usuarioRepository.findByUsername(username);
     }
 
 }

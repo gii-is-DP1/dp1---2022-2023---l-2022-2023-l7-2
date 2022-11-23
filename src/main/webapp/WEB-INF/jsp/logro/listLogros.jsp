@@ -8,7 +8,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-<petclinic:layout pageName="Logros">
+<petclinic:layout pageName="Logros"title="Logros">
     <h2>Logros</h2>
 
     <table id="logrosTable" class="table table-striped">

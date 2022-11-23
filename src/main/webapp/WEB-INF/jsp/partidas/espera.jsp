@@ -6,7 +6,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="espera">
+
+<petclinic:layout pageName="espera" title="Sala de espera">
 	
     <c:choose>
         <c:when test="${partidaParchis != null &&  partidaParchis.estado==TipoEstadoPartida.CREADA}">

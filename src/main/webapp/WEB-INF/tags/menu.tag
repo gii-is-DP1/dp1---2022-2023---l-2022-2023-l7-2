@@ -80,7 +80,7 @@
 							class="glyphicon glyphicon-chevron-down"></span>
 					</a>
 						<ul class="dropdown-menu">
-							<li><a href="<c:url value="/" />">Editar usuario</a></li>
+							<li><a href="<c:url value="/usuarios/profile" />">Editar usuario</a></li>
 							<li class="divider"></li>
 							<li><a href="<c:url value="/logout" />">Logout</a></li>
 						</ul>
