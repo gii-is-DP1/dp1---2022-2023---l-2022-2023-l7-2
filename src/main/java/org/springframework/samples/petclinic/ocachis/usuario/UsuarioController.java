@@ -43,11 +43,9 @@ public class UsuarioController {
 	/**Método que verifica que un usuarioId es el mismo que el usuarioId de la persona autenticada
 	   */
 	private Boolean esElMismoUserQueElAutenticado(Integer usuarioId) {
-	
 		Usuario usuarioAutenticado = getAutenticadedUsuario();
 		User userOcachisAutenticado = usuarioAutenticado.getUser();
 		User userOcachisSolicitado = this.usuarioService.findUsuarioById(usuarioId).getUser();
-		
 		if(userOcachisSolicitado != null &&	userOcachisAutenticado.equals(userOcachisSolicitado)) 
 			return true;
 		return false;

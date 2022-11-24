@@ -15,5 +15,5 @@ import lombok.Setter;
 public class Casilla extends BaseEntity {
     
     @NotEmpty
-    private Integer numero;
+    protected Integer numero;
 }

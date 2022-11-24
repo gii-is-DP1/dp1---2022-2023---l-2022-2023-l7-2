@@ -369,6 +369,7 @@ public class PartidaController {
 		return "redirect:/sala/";
 	}
 
+	//jugar
  
 	@GetMapping(value="/{partidaOcaId}/playOca")
 	public String jugarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model){

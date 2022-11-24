@@ -21,4 +21,18 @@ public class CasillaOca extends Casilla{
 
     @OneToMany(mappedBy="casillaActual")
     private List<FichaOca> fichas;    
+
+
+    public Coordenadas getCoordenadas(){
+        return null;
+    } 
+
+    public String getOrientacion(){
+    if( (numero >= 2 && numero <=8) || (numero >= 19 && numero <=28)
+        || (numero >= 19 && numero <=28)
+        || (numero >= 19 && numero <=28) ) return "";
+        return "";
+    }
 }
+
+

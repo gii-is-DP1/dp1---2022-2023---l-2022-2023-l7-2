@@ -56,14 +56,4 @@ public class Usuario extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
-
-	/*@Override
-	public String toString() {
-		return "Usuario [nombre=" + nombre +
-				", apellido=" + apellido +
-		", estadisticas=" + estadisticas.toString() +
-				", user=" + user.getUsername() + " | " + user.getPassword() +
-			"]";
-	}*/
-
 }
