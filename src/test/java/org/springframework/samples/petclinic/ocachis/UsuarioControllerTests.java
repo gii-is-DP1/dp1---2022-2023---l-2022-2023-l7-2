@@ -77,7 +77,7 @@ class UsuarioControllerTests {
 		auronplay.setSolicitudesEnvidas(solicitudesenviadas);
 		auronplay.setSolicitudesRecibidas(solicitudesrecibidas);
 		given(this.usuarioService.findUsuarioById(TEST_USUARIO_ID)).willReturn(auronplay);
-
+		
 	}
 
 	@WithMockUser(value = "spring")

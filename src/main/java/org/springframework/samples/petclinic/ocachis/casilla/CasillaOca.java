@@ -23,16 +23,20 @@ public class CasillaOca extends Casilla{
     private List<FichaOca> fichas;    
 
 
-    public Coordenadas getCoordenadas(){
-        return null;
-    } 
-
     public String getOrientacion(){
-    if( (numero >= 2 && numero <=8) || (numero >= 19 && numero <=28)
-        || (numero >= 19 && numero <=28)
-        || (numero >= 19 && numero <=28) ) return "";
-        return "";
+        if( (this.getNumero() >= 2 && numero <=8) || (numero >= 19 && numero <=28)
+            || (numero >= 37 && numero <=44) || (numero >= 51 && numero <=56)
+            || (numero >= 61 && numero <=62)) 
+            return "vertical";
+        else return "horizontal";
+    }
+
+    public Coordenadas getCoordenadas(){
+        //switch DE 64 CASOS YUJÚUUUUU
+        return null;
+    }
+
+    public Integer getNumeroFichas(){
+        return fichas.size();
     }
 }
-
-

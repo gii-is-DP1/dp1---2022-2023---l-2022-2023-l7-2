@@ -242,11 +242,9 @@ public class PartidaController {
 		} else {
 			return "redirect:/noAccess";
 		}
-
 		Usuario u = usuarioService.findUsuarioByUsername(loggedUser.getUsername());
 		
 		if (estaJugando(u.getId())) {
-			model.put("message", "Estas jugando ya en una partida");
 			model.put("message", "Estas jugando ya en una partida");
 			model.put("partidaOca", partidaService.findEsperaOca());
 			model.put("partidaParchis", partidaService.findEsperaParchis());
@@ -345,7 +343,6 @@ public class PartidaController {
 		if (jugadorAEliminar.getColor() == Color.ROJO) {
 			partidaService.borrarPartidaOca(partidaOcaId);
 		}
-
 		return "redirect:/sala/";
 	}
 	

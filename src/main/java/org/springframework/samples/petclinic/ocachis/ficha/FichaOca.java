@@ -20,6 +20,16 @@ public class FichaOca extends Ficha {
 
 
 	public Coordenadas getCoordenadas(){
-		return casillaActual.getCoordenadas();
+		Coordenadas coordenadasCasilla =  casillaActual.getCoordenadas();
+		if(casillaActual.getOrientacion() == "vertical"){
+			coordenadasCasilla.setY(coordenadasCasilla.getY() + casillaActual.getNumeroFichas()-1 * 20);
+			return coordenadasCasilla;
+		}
+							
+		Coordenadas coordenadasASumar = null;
+		if(casillaActual.getOrientacion()=="vertical"){
+			coordenadasASumar = new Coordenadas();
+		}
+		return coordenadasASumar;
 	}
 }
