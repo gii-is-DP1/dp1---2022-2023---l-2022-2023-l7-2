@@ -24,7 +24,7 @@ import lombok.Setter;
 @Entity
 public class PartidaOca extends Partida{
 
-	public static Map<Integer,Coordenadas> coordenadas = inicializarMapa();
+	
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<CasillaOca> casillas;
 	
@@ -38,7 +38,5 @@ public class PartidaOca extends Partida{
 		return tableroURL;
 	 }
 
-	 private static Map<Integer,Coordenadas> inicializarMapa(){
-		return null;
-	 }
+	 
 }
