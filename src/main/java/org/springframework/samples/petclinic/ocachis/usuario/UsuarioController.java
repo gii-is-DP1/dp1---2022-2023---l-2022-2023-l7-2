@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.ocachis.user.AuthoritiesService;
 import org.springframework.samples.petclinic.ocachis.user.User;
 import org.springframework.samples.petclinic.ocachis.user.UserService;
+import org.springframework.samples.petclinic.ocachis.usuario.exceptions.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -68,23 +69,19 @@ public class UsuarioController {
 
 	@PostMapping(value = "/usuarios/nuevo")
 	public String processCreationForm(@Valid Usuario usuario, BindingResult result, Map<String, Object> model) {
-			Optional<User> user = userService.findUser(usuario.getUser().getUsername());
-			if(user.isPresent()) {
-				result.rejectValue("user.username", "duplicate", "Este usuario ya existe");	
-			}
-			
-			if(usuario.getUser().getUsername().length()<3){
-				result.rejectValue("user.username", "short", "La longitud mínima de la contraseña es de 3 caracteres");
-			}
-			
-			if(usuario.getUser().getPassword().length()<5) {
+			try {
+				usuarioService.saveUsuario(usuario);
+			}catch (InvalidUsernameException e) {
+				result.rejectValue("user.username", "short", "La longitud mínima del username es de 3 caracteres");
+			}catch(InvalidPasswordException e) {
 				result.rejectValue("user.password", "short", "La longitud mínima de la contraseña es de 5 caracteres");
+			}catch(DuplicateUsernameException e) {
+				result.rejectValue("user.username", "duplicate", "Este usuario ya existe");
 			}
-		
+			
 			if (result.hasErrors()) {
 				return VIEWS_USUARIO_CREATE_OR_UPDATE_FORM;
 			}
-			this.usuarioService.saveUsuario(usuario);
 			return "redirect:/login";
 	}
 	
@@ -101,10 +98,11 @@ public class UsuarioController {
 			@PathVariable("usuarioId") int usuarioId, Map<String, Object> model) {			
 		if(!esElMismoUserQueElAutenticado(usuarioId)) return "redirect:/noAccess";
 		usuario.setId(usuarioId);
+		
 		if (result.hasErrors()) {
 			model.put("usuario", usuario);
 			return VIEWS_USUARIO_CREATE_OR_UPDATE_FORM;
-		}		
+		}
 		this.usuarioService.updateUsuario(usuario);
 		model.put("message", "Usuario actualizado correctamente");
 		return VIEWS_USUARIO_CREATE_OR_UPDATE_FORM;

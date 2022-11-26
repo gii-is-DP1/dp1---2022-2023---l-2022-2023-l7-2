@@ -28,7 +28,7 @@ public class FichaOca extends Ficha {
 							
 		Coordenadas coordenadasASumar = null;
 		if(casillaActual.getOrientacion()=="vertical"){
-			coordenadasASumar = new Coordenadas();
+			coordenadasASumar = new Coordenadas(0,0);
 		}
 		return coordenadasASumar;
 	}

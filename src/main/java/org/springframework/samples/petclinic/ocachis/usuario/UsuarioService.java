@@ -4,6 +4,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Collection;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -11,27 +12,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
 import org.springframework.samples.petclinic.ocachis.user.AuthoritiesService;
+import org.springframework.samples.petclinic.ocachis.user.User;
 import org.springframework.samples.petclinic.ocachis.user.UserService;
+import org.springframework.samples.petclinic.ocachis.usuario.exceptions.DuplicateUsernameException;
+import org.springframework.samples.petclinic.ocachis.usuario.exceptions.InvalidPasswordException;
+import org.springframework.samples.petclinic.ocachis.usuario.exceptions.InvalidUsernameException;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UsuarioService {
 	
+	private static final Integer LONGITUD_MINIMA_USERNAME = 3;
+	private static final Integer LONGITUD_MINIMA_PASSWORD = 5;
+	
 	private UsuarioRepository usuarioRepository;
-	@Autowired
+	
 	private UserService userService;
 	
-	@Autowired
 	private AuthoritiesService authoritiesService;
 	
 	@Autowired
-	public UsuarioService(UsuarioRepository usuarioRepository) {
+	public UsuarioService(UsuarioRepository usuarioRepository, UserService userService, AuthoritiesService authoritiesService) {
 		this.usuarioRepository = usuarioRepository;
+		this.userService = userService;
+		this.authoritiesService = authoritiesService;
 	}
 
-	@Transactional
-	public void saveUsuario(@Valid Usuario usuario) {
+	@Transactional(rollbackFor = {DuplicateUsernameException.class, InvalidPasswordException.class, InvalidUsernameException.class})
+	public void saveUsuario(@Valid Usuario usuario) throws DuplicateUsernameException, InvalidPasswordException, InvalidUsernameException {
 		if(usuario.getEstadisticas()==null)usuario.setEstadisticas(new Estadisticas());
+		Optional<User> user = userService.findUser(usuario.getUser().getUsername());
+		if(user.isPresent()) throw new DuplicateUsernameException();
+		if(usuario.getUser().getUsername().length()<LONGITUD_MINIMA_USERNAME) throw new InvalidUsernameException();
+		if(usuario.getUser().getPassword().length()<LONGITUD_MINIMA_PASSWORD) throw new InvalidPasswordException();
 		
 		// creamos el usuario
 		usuarioRepository.save(usuario);

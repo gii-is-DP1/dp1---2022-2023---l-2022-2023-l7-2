@@ -1,9 +1,6 @@
 
 <%@ attribute name="tablero" required="false" rtexprvalue="true" type="org.springframework.samples.petclinic.ocachis.partida.PartidaOca"
  description="ocaBoard to be rendered" %>
-
-<c:var name="widht" value=800>
-
     <canvas id="canvas" width="800" height="800"></canvas>
     <img id="source" src="${tablero.tableroURL}" style="display:none">
     
