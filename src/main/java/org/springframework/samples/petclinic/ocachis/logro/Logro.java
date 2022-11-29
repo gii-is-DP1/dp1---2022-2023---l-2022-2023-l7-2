@@ -17,7 +17,7 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Logro extends BaseEntity{
-	
+
 	@NotBlank
 	@Size(min=3,max=50)
 	private String nombre;
@@ -27,6 +27,5 @@ public class Logro extends BaseEntity{
 	private String descripcion;
 
 	@Embedded
-
 	public Estadisticas estadisticasACumplir;   
 }

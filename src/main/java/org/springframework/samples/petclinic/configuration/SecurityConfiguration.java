@@ -37,12 +37,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/","/oups").permitAll()
 				.antMatchers("/users/new").permitAll()
 				.antMatchers("/session/**").permitAll()
-				.antMatchers("/logro/listLogros").permitAll()
-				.antMatchers("/logro/new").hasAnyAuthority("admin")
-				.antMatchers("/logro/**/edit").hasAnyAuthority("admin")
+				.antMatchers("/noAccess").permitAll()
+				
+				
 				.antMatchers("/admin/**").hasAnyAuthority("admin")
 				.antMatchers("/owners/**").hasAnyAuthority("owner","admin")				
 				.antMatchers("/vets/**").authenticated()
+				
+
+				.antMatchers("/sala/**").authenticated()
+
+				.antMatchers("/usuarios/nuevo").permitAll()
+				.antMatchers("/usuarios/profile").authenticated()
+				.antMatchers("/usuarios/**/edit").hasAnyAuthority("admin","jugador") //aqui va admin y jugador
+                
+				.antMatchers("/logro/listLogros").permitAll()
+				.antMatchers("/logro/new").hasAnyAuthority("admin")
+				.antMatchers("/logro/**/edit").hasAnyAuthority("admin")
+				
+				.antMatchers("/listUsuarios").hasAnyAuthority("admin")
+				.antMatchers("/listUsuarios/**").hasAnyAuthority("admin")
+				.antMatchers("/listPartidas").hasAnyAuthority("admin")
+				.antMatchers("/listPartidas/**").hasAnyAuthority("admin")
+				.antMatchers("/welcome").permitAll()
 				.anyRequest().denyAll()
 				.and()
 				 	.formLogin()
@@ -81,5 +98,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 	
 }
+
 
 

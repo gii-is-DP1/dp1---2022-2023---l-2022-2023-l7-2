@@ -22,9 +22,9 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.ocachis.admin.AdminController;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaService;
+import org.springframework.samples.petclinic.ocachis.user.AuthoritiesService;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.samples.petclinic.ocachis.usuario.UsuarioService;
-import org.springframework.samples.petclinic.user.AuthoritiesService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -49,7 +49,8 @@ public class AdminControllerTest {
 
     private Usuario usuario;
 
-    /*@BeforeEach
+
+    @BeforeEach
 	void setup() {
         
         usuario = new Usuario();
@@ -59,7 +60,7 @@ public class AdminControllerTest {
         doNothing().when(this.partidaService).borrarPartidaParchis(TEST_ID);
         doNothing().when(this.usuarioService).deleteUsuarioById(TEST_ID);
 
-	}*/
+	}
 
     @WithMockUser(value = "spring")
 	@Test
@@ -75,11 +76,11 @@ public class AdminControllerTest {
 				.andExpect(view().name("admin/listUsuarios"));
 	}
 
-    /*@WithMockUser(value = "spring")
+    @WithMockUser(value = "spring")
 	@Test
 	void testDeleteUsuario() throws Exception {
-		mockMvc.perform(get("/listUsuarios/{usuarioId}/delete", TEST_ID).with(csrf())).andExpect(status().is3xxRedirection())
+		mockMvc.perform(get("/admin/listUsuarios/{usuarioId}/delete", TEST_ID).with(csrf())).andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/admin/listUsuarios"));
-	}*/
+	}
     
 }

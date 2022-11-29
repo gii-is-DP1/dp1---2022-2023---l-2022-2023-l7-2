@@ -1,16 +1,17 @@
+
 package org.springframework.samples.petclinic.ocachis.usuario;
 
+
 import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.swing.ImageIcon;
 import javax.validation.constraints.NotEmpty;
 
@@ -19,25 +20,23 @@ import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.logro.Logro;
 import org.springframework.samples.petclinic.ocachis.solicitud.Solicitud;
-import org.springframework.samples.petclinic.user.User;
+import javax.persistence.Table;
+import org.springframework.samples.petclinic.ocachis.user.User;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.bytebuddy.implementation.bind.annotation.Empty;
 
 @Getter
 @Setter
 @Entity
+@Table(name = "usuarios")
 public class Usuario extends BaseEntity {
-
-    @NotEmpty
+	
+	@NotEmpty
     private String nombre;
 
-    @NotEmpty
+//  @NotEmpty
     private String apellido;
-
-    
-    private ImageIcon avatar;
 
 	@Embedded
     private Estadisticas estadisticas;
@@ -57,5 +56,4 @@ public class Usuario extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
-
 }

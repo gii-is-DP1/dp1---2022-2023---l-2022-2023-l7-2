@@ -14,5 +14,5 @@ import lombok.Getter;
 @MappedSuperclass
 public class Ficha extends BaseEntity {
 	@NotEmpty
-	private Color color;
+	protected Color color;
 }

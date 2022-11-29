@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.user;
+package org.springframework.samples.petclinic.ocachis.user;
 
 import java.util.Set;
 
@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +20,8 @@ import lombok.Setter;
 public class User{
 	@Id
 	String username;
-	
+
+	@Size(min = 5)
 	String password;
 	
 	boolean enabled;
