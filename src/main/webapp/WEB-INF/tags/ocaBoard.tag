@@ -13,7 +13,7 @@
     <img id="source" src="${tablero.tableroURL}" style="display:none">
     
     <c:forEach items="${tablero.jugadores}" var="jugador">
-    ${jugador}
+    <!--${jugador}-->
     <c:choose>
         <c:when test="${jugador.color eq 'ROJO'}">
             <img id="FichaRoja" src="/resources/images/Ficharojo.png" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:none">

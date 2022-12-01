@@ -12,6 +12,7 @@ import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.jugador.JugadorService;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.samples.petclinic.ocachis.usuario.UsuarioService;
+import org.springframework.samples.petclinic.web.DicesOnSessionController;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -371,6 +372,7 @@ public class PartidaController {
 	@GetMapping(value="/{partidaOcaId}/playOca")
 	public String jugarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model){
 		model.put("partidaOca", partidaService.findByIdOca(partidaOcaId));
+		model.put("dado",0);
 		return VIEWS_JUGAR_OCA;
 	}
 }

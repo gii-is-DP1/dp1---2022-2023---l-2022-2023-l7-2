@@ -15,7 +15,7 @@
     <petclinic:ocaBoard tablero="${partidaOca}"></petclinic:ocaBoard>
     <span id="tirarDado" class="btn btn-default" onclick="tirarDado()">Tirar dado</span>
     <c:out value="${dado}"></c:out>
-</petclinic:layout>
+    </petclinic:layout>
 
 <script>
     let res=null;
@@ -33,8 +33,12 @@
 
         }
     });
-    
-    alert(res);
+    if(res === null){
+        alert("Vuelva a lanzar el dado");
+    }else{
+        alert(res);
+    }
+    //alert(res);
     //console.log(res);
     }
     
