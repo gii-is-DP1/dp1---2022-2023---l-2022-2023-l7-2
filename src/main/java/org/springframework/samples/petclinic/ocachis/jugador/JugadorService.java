@@ -45,8 +45,8 @@ public class JugadorService {
       return jugadorRepository.findJugadorParchis(usuarioId, parchisId);
     }
     @Transactional(readOnly = true)
-    public Jugador findJugadorOca(Integer usuarioId, Integer parchisId){
-      return jugadorRepository.findJugadorOca(usuarioId, parchisId);
+    public Jugador findJugadorOca(Integer usuarioId, Integer ocaId){
+      return jugadorRepository.findJugadorOca(usuarioId, ocaId);
     }
     
     

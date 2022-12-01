@@ -10,28 +10,28 @@
         <canvas id="canvas" width="700" height="700"></canvas>
     </div>  
  </div>
-    <img id="source" src="${tablero.tableroURL}" style="display:none">
+    <img id="source" src="/resources/images/tableOca.jpg" style="display:none">
     
     <c:forEach items="${tablero.jugadores}" var="jugador">
     <!--${jugador}-->
     <c:choose>
         <c:when test="${jugador.color eq 'ROJO'}">
-            <img id="FichaRoja" src="/resources/images/Ficharojo.png" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:none">
+            <img id="FichaRoja" src="/resources/images/FichaRoja.jpg" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:none">
         </c:when>
         <c:when test="${jugador.color eq 'AMARILLO'}">
-            <img id="FichaAmarilla" src="/resources/images/FichaAmarilla.png" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:none">
+            <img id="FichaAmarilla" src="/resources/images/FichaAmarilla2.jpg" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:none">
         </c:when>
         <c:when test="${jugador.color eq 'VERDE'}">
-        <img id="FichaVerde" src="/resources/images/Fichaverde.png" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:none">         
+        <img id="FichaVerde" src="/resources/images/FichaVerde.jpg" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:none">         
         </c:when>
         <c:when test="${jugador.color eq 'AZUL'}">
-        <img id="FichaAzul" src="/resources/images/Fichaazul.png" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:none">
+        <img id="FichaAzul" src="/resources/images/FichaAzul.jpg" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:none">
         </c:when>
     </c:choose>
    
     </c:forEach>
-
     
+
 
     <script>
         function drawBoard(){ 

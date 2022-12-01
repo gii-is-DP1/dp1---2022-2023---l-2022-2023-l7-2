@@ -149,16 +149,16 @@ INSERT INTO usuarios(id,nombre,apellido,username) VALUES(9,'Miguel','Farnes','us
 
 INSERT INTO logro(id,nombre,descripcion,oca_partidas_jugadas) VALUES (1,'Jugador Oca Junior','Juega 10 partidas de la Oca',10);
 
-INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, numero_turnos) VALUES
+INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, jugador_actual) VALUES
 (1, 100, 3, 0, '2013-01-01', 3, 0);
-INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, numero_turnos) VALUES
+INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, jugador_actual) VALUES
 (2, 101, 4, 0, '2013-01-01', 2, 0);
-INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, numero_turnos,tableroURL) VALUES
-(3, 102, 4, 0, '2000-12-12', 4, 0,'/resources/images/tableOca.jpg');
+INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, jugador_actual) VALUES
+(3, 102, 4, 0, '2000-12-12', 4, 0);
 
-INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, numero_turnos) VALUES
+INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, jugador_actual) VALUES
 (1, 103, 5, 0, '2013-01-03', 4, 0);
-INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, numero_turnos) VALUES
+INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, jugador_actual) VALUES
 (2, 104, 5, 2, '2013-01-03', 4, 0);
 
 INSERT INTO partida_parchis(id,codigo_partida,fecha_creacion,estado,max_jugadores) VALUES (3,105,'2022-07-22',2,2);
@@ -236,8 +236,8 @@ INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (61, 61, 0);
 INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (62, 62, 0);
 INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (63, 63, 9);
 
-INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (1, 0, 1);
-INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (2, 1, 1);
+INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (1, 0, 2);
+INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (2, 1, 2);
 INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (3, 2, 1);
 INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (4, 3, 1);
 

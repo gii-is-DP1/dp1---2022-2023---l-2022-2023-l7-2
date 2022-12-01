@@ -16,8 +16,10 @@ public interface JugadorRepository extends CrudRepository<Jugador, Integer>{
 
     @Query("SELECT j from Jugador j WHERE j.usuario.id = :usuarioId")
     Collection<Jugador> findAllJugadoresForUsuario(@Param("usuarioId") Integer usuarioId);
+    
     @Query("SELECT j from Jugador j WHERE j.usuario.id=:usuarioId AND j.partidaParchis.id=:parchisId")
     Jugador findJugadorParchis(@Param("usuarioId") Integer usuarioId, @Param("parchisId") Integer parchisId);
+
     @Query("SELECT j from Jugador j WHERE j.usuario.id=:usuarioId AND j.partidaOca.id=:ocaId")
     Jugador findJugadorOca(@Param("usuarioId") Integer usuarioId, @Param("ocaId") Integer OcaId);
 }

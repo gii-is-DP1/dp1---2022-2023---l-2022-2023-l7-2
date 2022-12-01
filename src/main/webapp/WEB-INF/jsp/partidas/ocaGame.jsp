@@ -12,34 +12,30 @@
 
 
 <petclinic:layout pageName="home" title="Jugando a la Oca">
+    <c:out value="${now}"></c:out>
     <petclinic:ocaBoard tablero="${partidaOca}"></petclinic:ocaBoard>
     <span id="tirarDado" class="btn btn-default" onclick="tirarDado()">Tirar dado</span>
     <c:out value="${dado}"></c:out>
-    </petclinic:layout>
 
-<script>
-    let res=null;
-    function tirarDado(){
-        //res = $.get("/session/rolldices").responseText;//
-        $.ajax(
-    {
-        type: "GET",
-        url: '/session/rolldices',
-        dataType: "json",
-        success: function(result) {
-            res = result;
-        },
-        error: function(x, e) {
 
-        }
-    });
-    if(res === null){
-        alert("Vuelva a lanzar el dado");
-    }else{
-        alert(res);
-    }
-    //alert(res);
-    //console.log(res);
-    }
     
-</script>
+    ${jugadorAutenticado}
+    
+    
+    partidaOca: ${partidaId}
+
+    user:
+    ${uId}
+    
+    
+    <c:if test="jugadorAutenticado.color==partidaOca.jugadorActual"> 
+            <form:form method="post" action="/sala/${partidaOca.id}/jugarOca" >
+                <button >tirar dado</button>
+            </form:form>
+            
+    </c:if>
+
+
+
+    
+    </petclinic:layout>

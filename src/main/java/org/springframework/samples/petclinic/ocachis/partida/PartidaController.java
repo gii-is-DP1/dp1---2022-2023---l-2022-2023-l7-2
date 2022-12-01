@@ -1,9 +1,12 @@
 package org.springframework.samples.petclinic.ocachis.partida;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -295,7 +298,8 @@ public class PartidaController {
 	//empezarPartida
 	
 	@GetMapping("/{partidaOcaId}/startOca")
-	public String initEmpezarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model) {
+	public String initEmpezarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model,HttpServletResponse response) {
+		response.addHeader("Refresh", "1");
 		PartidaOca partidaOca = partidaService.findByIdOca(partidaOcaId);
 		model.put("partidaOca", partidaOca);
 		return processEmpezarPartidaOca(partidaOcaId, partidaOca, model);
@@ -370,9 +374,20 @@ public class PartidaController {
 	//jugar
  
 	@GetMapping(value="/{partidaOcaId}/playOca")
-	public String jugarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model){
-		model.put("partidaOca", partidaService.findByIdOca(partidaOcaId));
-		model.put("dado",0);
+	public String jugarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model,HttpServletResponse response){
+		PartidaOca partida = partidaService.findByIdOca(partidaOcaId);
+		
+		model.put("partidaOca", partida);
+		Usuario u = this.usuarioService.getLoggedUsuario();
+
+		Jugador j = this.jugadorService.findJugadorOca(u.getId(), partida.getId());
+
+
+		model.put("uId",u.getId());
+		model.put("partidaId",partida.getId());
+		model.put("jugadorAutenticado", j);
+		//response.addHeader("Refresh", "1");
+		model.put("now", new Date());
 		return VIEWS_JUGAR_OCA;
 	}
 }

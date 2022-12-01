@@ -17,6 +17,8 @@ import org.springframework.samples.petclinic.ocachis.user.UserService;
 import org.springframework.samples.petclinic.ocachis.usuario.exceptions.DuplicateUsernameException;
 import org.springframework.samples.petclinic.ocachis.usuario.exceptions.InvalidPasswordException;
 import org.springframework.samples.petclinic.ocachis.usuario.exceptions.InvalidUsernameException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -84,5 +86,13 @@ public class UsuarioService {
     public Usuario findUsuarioByUsername(String username) throws DataAccessException {
         return usuarioRepository.findByUsername(username);
     }
+
+
+	public Usuario getLoggedUsuario(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		 if(!auth.isAuthenticated()) return null;
+		 String username = ((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername();	
+		 return this.findUsuarioByUsername(username);
+	}
 
 }

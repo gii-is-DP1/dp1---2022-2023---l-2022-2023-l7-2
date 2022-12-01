@@ -12,7 +12,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import org.springframework.samples.petclinic.model.BaseEntity;
-
+import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +26,8 @@ public class Partida extends BaseEntity{
 	
 	//@NotEmpty
 	private LocalDateTime fechaCreacion = LocalDateTime.now();
+
+	private LocalDateTime fechaFinalizacion = LocalDateTime.now();
 	/* 
 	@NotEmpty*/
 	private TipoEstadoPartida estado = TipoEstadoPartida.CREADA;
@@ -37,7 +39,7 @@ public class Partida extends BaseEntity{
 	@OneToOne
 	private Usuario ganador;
 	
-	private Integer numeroTurnos=0;
+	private Color jugadorActual=Color.ROJO;
 	
 	@Min(value=2)
 	@Max(value=4)

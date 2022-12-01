@@ -44,19 +44,12 @@ public class UsuarioController {
 	/**Método que verifica que un usuarioId es el mismo que el usuarioId de la persona autenticada
 	   */
 	private Boolean esElMismoUserQueElAutenticado(Integer usuarioId) {
-		Usuario usuarioAutenticado = getAutenticadedUsuario();
+		Usuario usuarioAutenticado = this.usuarioService.getLoggedUsuario();
 		User userOcachisAutenticado = usuarioAutenticado.getUser();
 		User userOcachisSolicitado = this.usuarioService.findUsuarioById(usuarioId).getUser();
 		if(userOcachisSolicitado != null &&	userOcachisAutenticado.equals(userOcachisSolicitado)) 
 			return true;
 		return false;
-	}
-	
-	private Usuario getAutenticadedUsuario(){
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		 if(!auth.isAuthenticated()) return null;
-		 String username = ((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername();	
-		 return this.usuarioService.findUsuarioByUsername(username);
 	}
 	
 	@GetMapping(value="/usuarios/nuevo")
@@ -111,7 +104,7 @@ public class UsuarioController {
 	
 	@GetMapping(value="/usuarios/profile")
 	public String editProfile(Map<String, Object> model) {
-		Usuario usuarioEditado = getAutenticadedUsuario();
+		Usuario usuarioEditado = this.usuarioService.getLoggedUsuario();
 		if(usuarioEditado!=null) return "redirect:/usuarios/"+usuarioEditado.getId()+"/edit";
 		else return "redirect:/noAccess";
 	}

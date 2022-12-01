@@ -58,7 +58,7 @@ public class CasillaOca extends Casilla{
             posiciones.put(7,new Coordenadas(535,609));
             posiciones.put(8,new Coordenadas(584,609));
 
-            posiciones.put(9,new Coordenadas(609,606));
+            posiciones.put(9,new Coordenadas(619,596));
             posiciones.put(10,new Coordenadas(609,567 )); //referencia
             posiciones.put(11,new Coordenadas(609,509));
             posiciones.put(12,new Coordenadas(609,451));
