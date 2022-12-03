@@ -20,8 +20,9 @@ public class FichaService {
     }
 
     @Transactional
-    public void moverFichaOca(FichaOca ficha, CasillaOca nuevaCasilla){
-        ficha.setCasillaActual(nuevaCasilla);
-        fichaOcaRepository.save(ficha);
+    public void moverFichaOca(FichaOca ficha, CasillaOca casillaInicial, CasillaOca casillaFinal){
+        //ficha.setCasillaActual(casillaFinal);
+        casillaInicial.quitarFicha(ficha);
+        casillaFinal.añadirFicha(ficha);
     }
 }

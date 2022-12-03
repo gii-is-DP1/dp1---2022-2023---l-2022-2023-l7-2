@@ -31,15 +31,12 @@ public class PartidaOca extends Partida{
 	@OneToMany(mappedBy="partidaOca", cascade = CascadeType.ALL)
 	private Collection<Jugador> jugadores;
 
-	 private String tableroURL = "/resources/images/tableOca.jpg";
 
 	 
-	 public String print(){
-		return tableroURL;
-	 }
+
 
 	 public CasillaOca getCasillaConNumero(Integer numero){
-		Optional<CasillaOca> opt = this.getCasillas().stream().filter(c->c.getNumero()==numero).findFirst();
+		Optional<CasillaOca> opt = this.getCasillas().stream().filter(c->c.getNumero().equals(numero)).findFirst();
 		if(opt.isPresent()) return opt.get();
 		return null;
 	}

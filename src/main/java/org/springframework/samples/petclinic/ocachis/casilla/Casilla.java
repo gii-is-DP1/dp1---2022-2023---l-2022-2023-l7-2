@@ -1,7 +1,6 @@
 package org.springframework.samples.petclinic.ocachis.casilla;
 
 
-import javax.persistence.Embedded;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotEmpty;
 
@@ -17,7 +16,4 @@ public class Casilla extends BaseEntity {
     
     @NotEmpty
     protected Integer numero;
-
-    @Embedded
-    Coordenadas coordenadas;
 }

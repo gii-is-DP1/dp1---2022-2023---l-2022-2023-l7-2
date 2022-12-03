@@ -56,7 +56,7 @@ private Collection<FichaParchis> fichasParchis;
 @ManyToOne(optional = true)
 private PartidaParchis partidaParchis;
 
-@ManyToOne (optional = true)
+@ManyToOne(optional = true)
 private PartidaOca partidaOca;
 
 

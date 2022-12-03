@@ -411,57 +411,25 @@ public class PartidaController {
 
 
 	@PostMapping(value="/{partidaOcaId}/playOca")
-	@Transactional
 	public String tirarDadosPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId,
 					 ModelMap model,HttpServletResponse response){
 		
 		PartidaOca partida = partidaService.findByIdOca(partidaOcaId);
 		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorOca(u.getId(), partida.getId());
+		FichaOca ficha = j.getFichaOca();
 		
 		if(j.getColor() != partida.getColorJugadorActual()){
-			return "redirect:/noAccess";
-		}
+				return "redirect:/noAccess";
+		}		
 
-		FichaOca ficha = j.getFichaOca();
-		CasillaOca casillaInicial =  ficha.getCasillaActual();
-		Integer numeroCasillaInicial = casillaInicial.getNumero();
-		int dado =(int) (Math.random()*6+1);
-		Integer numeroCasillaFinal = numeroCasillaInicial + dado;
-		CasillaOca casillaFinal = partida.getCasillaConNumero(numeroCasillaFinal);
-
-		casillaInicial.quitarFicha(ficha);
-		casillaFinal.añadirFicha(ficha);
-		casillaService.saveCasillaOca(casillaInicial);
-		casillaService.saveCasillaOca(casillaFinal);
-		fichaService.moverFichaOca(ficha, casillaFinal);
-
-
-
-
-
-
-
-		switch(partida.getColorJugadorActual()){
-			case ROJO:
-				partida.setColorJugadorActual(Color.AMARILLO);
-				break;
-			case AMARILLO:
-			partida.setColorJugadorActual(Color.VERDE);
-				break;
-			case VERDE:
-			partida.setColorJugadorActual(Color.AZUL);
-				break;
-			case AZUL:
-			partida.setColorJugadorActual(Color.ROJO);
-				break;
-		}
-		partida.setColorJugadorActual(Color.ROJO);
-		
-
-		
-		
-		partidaService.saveOca(partida);
+		partidaService.jugar(partida,ficha);
+		// try{
+			
+		// }
+		// catch(Exception e){
+		// 	return "redirect:/sala/";
+		// }	
 		return "redirect:/sala/" + partidaOcaId + "/playOca";
 	}
 }

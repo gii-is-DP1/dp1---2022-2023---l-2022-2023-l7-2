@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
@@ -22,7 +23,11 @@ public class CasillaOca extends Casilla{
     @NotBlank
     private TipoCasillaOca tipoCasillaOca;
 
-    @OneToMany(mappedBy="casillaActual")
+    @OneToMany(cascade =
+                {CascadeType.PERSIST,
+                CascadeType.MERGE,
+                CascadeType.DETACH,
+                CascadeType.REFRESH})
     private List<FichaOca> fichas;    
 
 
@@ -135,7 +140,7 @@ public class CasillaOca extends Casilla{
 	 }
 
     public void quitarFicha(FichaOca ficha) {
-        getFichas().remove(ficha);
+        fichas.remove(ficha);
     }
 
     public void añadirFicha(FichaOca ficha) {

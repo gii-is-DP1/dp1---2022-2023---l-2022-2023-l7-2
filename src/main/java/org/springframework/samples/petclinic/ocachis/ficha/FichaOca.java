@@ -21,7 +21,12 @@ public class FichaOca extends Ficha {
 	private static final Coordenadas TRANSFORMACION_HORIZONTAL_3 = new Coordenadas(48,-18);
 
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade =
+		{CascadeType.PERSIST,
+		CascadeType.MERGE,
+		CascadeType.DETACH,
+		CascadeType.REFRESH})
+		// @ManyToOne(cascade = CascadeType.ALL)
 	private CasillaOca casillaActual;
 
 	
