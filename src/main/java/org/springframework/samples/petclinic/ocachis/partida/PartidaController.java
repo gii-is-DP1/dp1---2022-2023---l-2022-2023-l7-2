@@ -11,6 +11,11 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Color;
+import org.springframework.samples.petclinic.ocachis.casilla.Casilla;
+import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
+import org.springframework.samples.petclinic.ocachis.casilla.CasillaService;
+import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
+import org.springframework.samples.petclinic.ocachis.ficha.FichaService;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.jugador.JugadorService;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
@@ -19,6 +24,7 @@ import org.springframework.samples.petclinic.web.DicesOnSessionController;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -35,13 +41,17 @@ public class PartidaController {
 	private PartidaService partidaService;
 	private UsuarioService usuarioService;
 	private JugadorService jugadorService;
+	private CasillaService casillaService;
+	private FichaService fichaService;
 
 	@Autowired
 	public PartidaController(PartidaService partidaService, UsuarioService usuarioService,
-			JugadorService jugadorService) {
+			JugadorService jugadorService, CasillaService casillaService, FichaService fichaService) {
 		this.partidaService = partidaService;
 		this.usuarioService = usuarioService;
 		this.jugadorService = jugadorService;
+		this.casillaService = casillaService;
+		this.fichaService = fichaService;
 	}
 
 	@InitBinder
@@ -375,19 +385,83 @@ public class PartidaController {
  
 	@GetMapping(value="/{partidaOcaId}/playOca")
 	public String jugarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model,HttpServletResponse response){
-		PartidaOca partida = partidaService.findByIdOca(partidaOcaId);
 		
-		model.put("partidaOca", partida);
-		Usuario u = this.usuarioService.getLoggedUsuario();
+		
 
+
+		PartidaOca partida = partidaService.findByIdOca(partidaOcaId);
+		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorOca(u.getId(), partida.getId());
 
+		model.put("partidaOca", partida);
 
-		model.put("uId",u.getId());
-		model.put("partidaId",partida.getId());
-		model.put("jugadorAutenticado", j);
+		if(j!=null){
+			model.put("modo","jugador");
+			model.put("jugadorAutenticado", j);
+		}else if(partida.getUsuariosObservadores().contains(u)){
+			model.put("modo","observador");
+		}
+		
 		//response.addHeader("Refresh", "1");
 		model.put("now", new Date());
+
+
 		return VIEWS_JUGAR_OCA;
+	}
+
+
+	@PostMapping(value="/{partidaOcaId}/playOca")
+	@Transactional
+	public String tirarDadosPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId,
+					 ModelMap model,HttpServletResponse response){
+		
+		PartidaOca partida = partidaService.findByIdOca(partidaOcaId);
+		Usuario u = this.usuarioService.getLoggedUsuario();
+		Jugador j = this.jugadorService.findJugadorOca(u.getId(), partida.getId());
+		
+		if(j.getColor() != partida.getColorJugadorActual()){
+			return "redirect:/noAccess";
+		}
+
+		FichaOca ficha = j.getFichaOca();
+		CasillaOca casillaInicial =  ficha.getCasillaActual();
+		Integer numeroCasillaInicial = casillaInicial.getNumero();
+		int dado =(int) (Math.random()*6+1);
+		Integer numeroCasillaFinal = numeroCasillaInicial + dado;
+		CasillaOca casillaFinal = partida.getCasillaConNumero(numeroCasillaFinal);
+
+		casillaInicial.quitarFicha(ficha);
+		casillaFinal.añadirFicha(ficha);
+		casillaService.saveCasillaOca(casillaInicial);
+		casillaService.saveCasillaOca(casillaFinal);
+		fichaService.moverFichaOca(ficha, casillaFinal);
+
+
+
+
+
+
+
+		switch(partida.getColorJugadorActual()){
+			case ROJO:
+				partida.setColorJugadorActual(Color.AMARILLO);
+				break;
+			case AMARILLO:
+			partida.setColorJugadorActual(Color.VERDE);
+				break;
+			case VERDE:
+			partida.setColorJugadorActual(Color.AZUL);
+				break;
+			case AZUL:
+			partida.setColorJugadorActual(Color.ROJO);
+				break;
+		}
+		partida.setColorJugadorActual(Color.ROJO);
+		
+
+		
+		
+		partidaService.saveOca(partida);
+		return "redirect:/sala/" + partidaOcaId + "/playOca";
 	}
 }

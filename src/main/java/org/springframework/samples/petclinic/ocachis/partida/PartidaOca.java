@@ -3,7 +3,7 @@ package org.springframework.samples.petclinic.ocachis.partida;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 import javax.persistence.CascadeType;
 
@@ -37,6 +37,12 @@ public class PartidaOca extends Partida{
 	 public String print(){
 		return tableroURL;
 	 }
+
+	 public CasillaOca getCasillaConNumero(Integer numero){
+		Optional<CasillaOca> opt = this.getCasillas().stream().filter(c->c.getNumero()==numero).findFirst();
+		if(opt.isPresent()) return opt.get();
+		return null;
+	}
 
 	 
 }

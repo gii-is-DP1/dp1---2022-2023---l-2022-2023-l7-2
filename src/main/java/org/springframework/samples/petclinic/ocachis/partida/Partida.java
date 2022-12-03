@@ -13,6 +13,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.model.Color;
+import org.springframework.samples.petclinic.ocachis.casilla.Casilla;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,7 +40,7 @@ public class Partida extends BaseEntity{
 	@OneToOne
 	private Usuario ganador;
 	
-	private Color jugadorActual=Color.ROJO;
+	private Color ColorJugadorActual=Color.ROJO;
 	
 	@Min(value=2)
 	@Max(value=4)
@@ -53,5 +54,8 @@ public class Partida extends BaseEntity{
 	public static Integer getNuevoCodigoPartida(){
 		return generadorCodigoPartida++;
 	}
+
+
+	
 }
 

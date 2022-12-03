@@ -1,5 +1,4 @@
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
-
 <%@ page import="org.springframework.samples.petclinic.model.Color"%>
 
 
@@ -7,35 +6,35 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
 
 
 <petclinic:layout pageName="home" title="Jugando a la Oca">
-    <c:out value="${now}"></c:out>
-    <petclinic:ocaBoard tablero="${partidaOca}"></petclinic:ocaBoard>
-    <span id="tirarDado" class="btn btn-default" onclick="tirarDado()">Tirar dado</span>
-    <c:out value="${dado}"></c:out>
+    
+    <h1>vista: ${modo}</h1>
+    <h1>Es el turno del jugador ${partidaOca.colorJugadorActual}</h1>
 
+<petclinic:ocaBoard tablero="${partidaOca}"></petclinic:ocaBoard>
+    
+    <br>
+    Jugador autenticado: ${jugadorAutenticado}
 
-    
-    ${jugadorAutenticado}
-    
-    
-    partidaOca: ${partidaId}
+    Color jugador autenticado : ${jugadorAutenticado.color}
+    <br>
+    colorJugador actual : ${partidaOca.colorJugadorActual}
 
-    user:
-    ${uId}
-    
-    
-    <c:if test="jugadorAutenticado.color==partidaOca.jugadorActual"> 
-            <form:form method="post" action="/sala/${partidaOca.id}/jugarOca" >
-                <button >tirar dado</button>
-            </form:form>
+    <c:if test="${jugadorAutenticado.color == partidaOca.colorJugadorActual}"> 
+        
+        <form:form class="form-horizontal" id="tirar-dado-form"
+            method="post" action="/sala/${partidaOca.id}/playOca">
+            <button class="btn btn-default">Tirar dado</button>
+        </form:form>
             
     </c:if>
-
-
-
+    <c:if test="${jugadorAutenticado.color != partidaOca.colorJugadorActual}"> 
+        <button id="tirarDado" class="btn btn-default" disabled >Tirar dado</button>
     
-    </petclinic:layout>
+    </c:if>
+</petclinic:layout>

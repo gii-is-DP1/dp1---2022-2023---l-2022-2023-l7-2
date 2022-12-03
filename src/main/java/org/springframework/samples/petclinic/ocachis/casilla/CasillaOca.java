@@ -133,4 +133,12 @@ public class CasillaOca extends Casilla{
 
         return posiciones;
 	 }
+
+    public void quitarFicha(FichaOca ficha) {
+        getFichas().remove(ficha);
+    }
+
+    public void añadirFicha(FichaOca ficha) {
+        getFichas().add(ficha);
+    }
 }

@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
 import org.springframework.samples.petclinic.ocachis.casilla.Coordenadas;
-
+import javax.persistence.CascadeType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,9 +21,10 @@ public class FichaOca extends Ficha {
 	private static final Coordenadas TRANSFORMACION_HORIZONTAL_3 = new Coordenadas(48,-18);
 
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private CasillaOca casillaActual;
 
+	
 	public Coordenadas getCoordenadas(){
 		Coordenadas coordCasillaActual = this.getCasillaActual().getCoordenadas();
 		Coordenadas result = new Coordenadas(coordCasillaActual.getX(),coordCasillaActual.getY());
