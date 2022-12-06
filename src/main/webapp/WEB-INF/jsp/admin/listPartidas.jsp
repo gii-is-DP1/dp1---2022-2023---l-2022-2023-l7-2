@@ -9,7 +9,9 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 
-<petclinic:layout pageName="Partidas">
+
+
+<petclinic:layout pageName="Partidas" title="admin - Partidas">
     <h2>Partidas</h2>
 
     <table id="partidasTable" class="table table-striped">

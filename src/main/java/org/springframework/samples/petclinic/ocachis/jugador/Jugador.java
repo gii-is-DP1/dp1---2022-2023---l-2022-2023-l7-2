@@ -41,6 +41,8 @@ private Integer vecesCaidoEnMuerte=0;
 
 private Boolean esGanador=false;
 
+private Integer numTurnosBloqueadoRestantesOca = 0;
+
 
 //Fichas//
 @OneToOne(cascade = CascadeType.ALL, optional = true)
@@ -56,6 +58,12 @@ private PartidaParchis partidaParchis;
 
 @ManyToOne (optional = true)
 private PartidaOca partidaOca;
+
+
+@Override
+public String toString(){
+    return "usuarioId: " + usuario.getId() + " color: " + color.toString();
 }
+}   
 
 
