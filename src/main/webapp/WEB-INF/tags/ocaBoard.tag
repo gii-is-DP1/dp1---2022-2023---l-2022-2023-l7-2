@@ -13,23 +13,29 @@
     <img id="source" src="/resources/images/tableOca.jpg" style="display:none">
     
     <c:forEach items="${tablero.jugadores}" var="jugador">
-    <!--${jugador}-->
-    <c:choose>
-        <c:when test="${jugador.color eq 'ROJO'}">
-            <img id="FichaRoja" src="/resources/images/FichaRoja.jpg" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:none">
-        </c:when>
-        <c:when test="${jugador.color eq 'AMARILLO'}">
-            <img id="FichaAmarilla" src="/resources/images/FichaAmarilla2.jpg" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:none">
-        </c:when>
-        <c:when test="${jugador.color eq 'VERDE'}">
-        <img id="FichaVerde" src="/resources/images/FichaVerde.jpg" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:none">         
-        </c:when>
-        <c:when test="${jugador.color eq 'AZUL'}">
-        <img id="FichaAzul" src="/resources/images/FichaAzul.jpg" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:none">
-        </c:when>
-    </c:choose>
+        <!--${jugador}-->
+        <c:choose>
+            <c:when test="${jugador.color eq 'ROJO'}">
+                <img id="FichaRoja" src="/resources/images/FichaRoja.jpg" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:hidden">
+                rojo: ${jugador.fichaOca.getCoordenadas().getX()} - ${jugador.fichaOca.getCoordenadas().getY()}
+            </c:when>
+            <c:when test="${jugador.color eq 'AMARILLO'}">
+                <img id="FichaAmarilla" src="/resources/images/FichaAmarilla2.jpg" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:hidden">
+                amarillo: ${jugador.fichaOca.getCoordenadas().getX()} - ${jugador.fichaOca.getCoordenadas().getY()}
+            </c:when>
+            <c:when test="${jugador.color eq 'VERDE'}">
+            <img id="FichaVerde" src="/resources/images/FichaVerde.jpg" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:hidden">         
+                verde: ${jugador.fichaOca.getCoordenadas().getX()} - ${jugador.fichaOca.getCoordenadas().getY()}
+            </c:when>
+            <c:when test="${jugador.color eq 'AZUL'}">
+            <img id="FichaAzul" src="/resources/images/FichaAzul.jpg" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:hidden">
+                azul: ${jugador.fichaOca.getCoordenadas().getX()} - ${jugador.fichaOca.getCoordenadas().getY()}
+            </c:when>
+        </c:choose>
    
     </c:forEach>
+
+
     
 
 
@@ -41,7 +47,7 @@
             var image = document.getElementById('source');
             ctx.drawImage(image, 0, 0, 700, 700);
 
-            var fichaRoja = document.getElementById("FichaRoja");
+         var fichaRoja = document.getElementById("FichaRoja");
             ctx.drawImage(fichaRoja,
                             fichaRoja.getAttribute("data-x"),
                             fichaRoja.getAttribute("data-y"),
@@ -63,7 +69,7 @@
             ctx.drawImage(fichaAzul,
                             fichaAzul.getAttribute("data-x"),
                             fichaAzul.getAttribute("data-y"),
-                            24,24);
+                            24,24);   
         }
 
             

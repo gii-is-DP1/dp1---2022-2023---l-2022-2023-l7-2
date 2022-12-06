@@ -238,28 +238,28 @@ INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (63, 63, 9);
 
 INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (1, 0, 2);
 INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (2, 1, 2);
-INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (3, 2, 1);
-INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (4, 3, 1);
+-- INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (3, 2, 1);
+-- INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (4, 3, 1);
 
 
-INSERT INTO jugador(id, color, es_ganador, fichas_comidas, veces_caido_en_muerte, ficha_oca_id, partida_oca_id, partida_parchis_id, usuario_id) VALUES
-                    (6,     0,      FALSE,       0,              0,                 1,              3,      null,                    3);
-INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
-(7, 1, FALSE, 0, 0, 2, 3, null, 4);
-INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
-(12, 2, FALSE, 0, 0, 3, 3, null, 8);
-INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
-(13, 3, FALSE, 0, 0, 4, 3, null, 9);
+INSERT INTO jugador(id, color, es_ganador, fichas_comidas, veces_caido_en_muerte, ficha_oca_id, partida_oca_id, partida_parchis_id, usuario_id, num_turnos_bloqueado_restantes_oca) VALUES
+                    (6,     0,      FALSE,       0,              0,                 1,              3,      null,                    3, 0);
+INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id,num_turnos_bloqueado_restantes_oca) VALUES
+(7, 1, FALSE, 0, 0, 2, 3, null, 4,0);
+-- INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id,num_turnos_bloqueado_restantes_oca) VALUES
+-- (12, 2, FALSE, 0, 0, 3, 3, null, 8,0);
+-- INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id,num_turnos_bloqueado_restantes_oca) VALUES
+-- (13, 3, FALSE, 0, 0, 4, 3, null, 9,0);
 
 
-INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
-(8, 0, FALSE, 0, 0, null, null, 1, 1);
-INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
-(9, 1, FALSE, 0, 0, null, null, 1, 2);
-INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
-(10, 2, FALSE, 0, 0, null, null, 1, 3);
-INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id) VALUES
-(11, 3, FALSE, 0, 0, null, null, 2, 4);
+INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id,num_turnos_bloqueado_restantes_oca) VALUES
+(8, 0, FALSE, 0, 0, null, null, 1, 1,0);
+INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id,num_turnos_bloqueado_restantes_oca) VALUES
+(9, 1, FALSE, 0, 0, null, null, 1, 2,0);
+INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id,num_turnos_bloqueado_restantes_oca) VALUES
+(10, 2, FALSE, 0, 0, null, null, 1, 3,0);
+INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id,num_turnos_bloqueado_restantes_oca) VALUES
+(11, 3, FALSE, 0, 0, null, null, 2, 4,0);
 
 -- usuario 1 espectea partida 3(oca)
 INSERT INTO PARTIDA_OCA_USUARIOS_OBSERVADORES VALUES(3,1);

@@ -23,11 +23,7 @@ public class CasillaOca extends Casilla{
     @NotBlank
     private TipoCasillaOca tipoCasillaOca;
 
-    @OneToMany(cascade =
-                {CascadeType.PERSIST,
-                CascadeType.MERGE,
-                CascadeType.DETACH,
-                CascadeType.REFRESH})
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="casillaActual")
     private List<FichaOca> fichas;    
 
 
@@ -40,7 +36,6 @@ public class CasillaOca extends Casilla{
     }
 
     public Coordenadas getCoordenadas(){
-        
         return coordenadas.get(numero);
     }
 
@@ -64,15 +59,15 @@ public class CasillaOca extends Casilla{
             posiciones.put(8,new Coordenadas(584,609));
 
             posiciones.put(9,new Coordenadas(619,596));
-            posiciones.put(10,new Coordenadas(609,567 )); //referencia
-            posiciones.put(11,new Coordenadas(609,509));
-            posiciones.put(12,new Coordenadas(609,451));
-            posiciones.put(13,new Coordenadas(609,393));
-            posiciones.put(14,new Coordenadas(609,335));
-            posiciones.put(15,new Coordenadas(609,277));
-            posiciones.put(16,new Coordenadas(609,219));
-            posiciones.put(17,new Coordenadas(609,161));
-            posiciones.put(18,new Coordenadas(609,110));
+            posiciones.put(10,new Coordenadas(619,547)); //referencia
+            posiciones.put(11,new Coordenadas(619,489));
+            posiciones.put(12,new Coordenadas(619,430));
+            posiciones.put(13,new Coordenadas(619,373));
+            posiciones.put(14,new Coordenadas(619,313));
+            posiciones.put(15,new Coordenadas(619,263));
+            posiciones.put(16,new Coordenadas(619,203));
+            posiciones.put(17,new Coordenadas(619,147));
+            posiciones.put(18,new Coordenadas(619,89));
 
 
             
@@ -88,32 +83,32 @@ public class CasillaOca extends Casilla{
             posiciones.put(28,new Coordenadas(79,14));
 
 
-            posiciones.put(29,new Coordenadas(15,121));
-            posiciones.put(30,new Coordenadas(15,177));
-            posiciones.put(31,new Coordenadas(15,235));
-            posiciones.put(32,new Coordenadas(15,293));
-            posiciones.put(33,new Coordenadas(15,351));
-            posiciones.put(34,new Coordenadas(15,409));
-            posiciones.put(35,new Coordenadas(15,467));
-            posiciones.put(36,new Coordenadas(15,512));
+            posiciones.put(29,new Coordenadas(15,101));
+            posiciones.put(30,new Coordenadas(15,150));
+            posiciones.put(31,new Coordenadas(15,209));
+            posiciones.put(32,new Coordenadas(15,268));
+            posiciones.put(33,new Coordenadas(15,325));
+            posiciones.put(34,new Coordenadas(15,384));
+            posiciones.put(35,new Coordenadas(15,443));
+            posiciones.put(36,new Coordenadas(15,505));
 
 
-            posiciones.put(37,new Coordenadas(91,515));
-            posiciones.put(38,new Coordenadas(142,515));
-            posiciones.put(39,new Coordenadas(199,515));
-            posiciones.put(40,new Coordenadas(256,515));
-            posiciones.put(41,new Coordenadas(313,515));
-            posiciones.put(42,new Coordenadas(370,515));
-            posiciones.put(43,new Coordenadas(427,515));
-            posiciones.put(44,new Coordenadas(484,515));
+            posiciones.put(37,new Coordenadas(84,515));
+            posiciones.put(38,new Coordenadas(132,515));
+            posiciones.put(39,new Coordenadas(193,515));
+            posiciones.put(40,new Coordenadas(250,515));
+            posiciones.put(41,new Coordenadas(307,515));
+            posiciones.put(42,new Coordenadas(363,515));
+            posiciones.put(43,new Coordenadas(421,515));
+            posiciones.put(44,new Coordenadas(478,515));
 
 
-            posiciones.put(45,new Coordenadas(517,502));
-            posiciones.put(46,new Coordenadas(517,454));
-            posiciones.put(47,new Coordenadas(517,395));
-            posiciones.put(48,new Coordenadas(517,336));
-            posiciones.put(49,new Coordenadas(517,277));
-            posiciones.put(50,new Coordenadas(517,218));
+            posiciones.put(45,new Coordenadas(517,492));
+            posiciones.put(46,new Coordenadas(517,434));
+            posiciones.put(47,new Coordenadas(517,375));
+            posiciones.put(48,new Coordenadas(517,316));
+            posiciones.put(49,new Coordenadas(517,257));
+            posiciones.put(50,new Coordenadas(517,198));
 
 
             posiciones.put(51,new Coordenadas(477,109));
@@ -121,17 +116,17 @@ public class CasillaOca extends Casilla{
             posiciones.put(53,new Coordenadas(360,109));
             posiciones.put(54,new Coordenadas(302,109));
             posiciones.put(55,new Coordenadas(243,109));
-            posiciones.put(56,new Coordenadas(195,109));
+            posiciones.put(56,new Coordenadas(185,109));
 
 
-            posiciones.put(57,new Coordenadas(113,229));
-            posiciones.put(58,new Coordenadas(113,293));
-            posiciones.put(59,new Coordenadas(113,353));
-            posiciones.put(60,new Coordenadas(113,410));
+            posiciones.put(57,new Coordenadas(113,209));
+            posiciones.put(58,new Coordenadas(113,273));
+            posiciones.put(59,new Coordenadas(113,333));
+            posiciones.put(60,new Coordenadas(113,390));
 
 
-            posiciones.put(61,new Coordenadas(199,418));
-            posiciones.put(62,new Coordenadas(251,418));
+            posiciones.put(61,new Coordenadas(189,418));
+            posiciones.put(62,new Coordenadas(241,418));
 
             posiciones.put(63,new Coordenadas(322,381));
 

@@ -5,5 +5,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface fichaOcaRepository extends CrudRepository<FichaOca,Integer>{
+
+    
+    
+
     
 }

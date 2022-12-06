@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.ocachis.ficha;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
+import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,9 +21,23 @@ public class FichaService {
     }
 
     @Transactional
-    public void moverFichaOca(FichaOca ficha, CasillaOca casillaInicial, CasillaOca casillaFinal){
-        //ficha.setCasillaActual(casillaFinal);
-        casillaInicial.quitarFicha(ficha);
-        casillaFinal.añadirFicha(ficha);
+    public void moverFichaOca(FichaOca ficha,  CasillaOca casillaFinal, Jugador j){
+        //Borramos ficha antigua
+		j.setFichaOca(null);
+		removeFichaOca(ficha);
+
+		//Creamos ficha nueva
+		FichaOca f = new FichaOca(j.getColor(), casillaFinal);
+		f = saveFichaOca(f);
+		j.setFichaOca(f);	
     }
+
+
+    public FichaOca findFichaOca(Integer id){
+        return fichaOcaRepository.findById(id).get();
+    }
+
+	public void removeFichaOca(FichaOca ficha) {
+        fichaOcaRepository.delete(ficha);
+	}
 }

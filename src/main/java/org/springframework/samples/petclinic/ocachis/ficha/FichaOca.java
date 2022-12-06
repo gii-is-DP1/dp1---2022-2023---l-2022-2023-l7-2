@@ -2,6 +2,8 @@ package org.springframework.samples.petclinic.ocachis.ficha;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+
+import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
 import org.springframework.samples.petclinic.ocachis.casilla.Coordenadas;
 import javax.persistence.CascadeType;
@@ -20,17 +22,18 @@ public class FichaOca extends Ficha {
 	private static final Coordenadas TRANSFORMACION_HORIZONTAL_2 = new Coordenadas(30,0);
 	private static final Coordenadas TRANSFORMACION_HORIZONTAL_3 = new Coordenadas(48,-18);
 
-
-	@ManyToOne(cascade =
-		{CascadeType.PERSIST,
-		CascadeType.MERGE,
-		CascadeType.DETACH,
-		CascadeType.REFRESH})
-		// @ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(optional = false)
 	private CasillaOca casillaActual;
 
-	
-	public Coordenadas getCoordenadas(){
+	public FichaOca(){
+	};
+
+	public FichaOca(Color color, CasillaOca casillaActual) {
+		this.color = color;
+		this.casillaActual = casillaActual;
+    }
+
+    public Coordenadas getCoordenadas(){
 		Coordenadas coordCasillaActual = this.getCasillaActual().getCoordenadas();
 		Coordenadas result = new Coordenadas(coordCasillaActual.getX(),coordCasillaActual.getY());
 		Integer posicionDentroDeLaCasilla = casillaActual.getFichas().indexOf(this);
