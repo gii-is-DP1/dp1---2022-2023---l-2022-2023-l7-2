@@ -55,7 +55,6 @@ public class Estadisticas{
 
 	public Integer ocaVecesCaidoEnMuerte;
 	
-	
 	@Override
 	public String toString() {
 		return "Estadisticas [parchisPartidasJugadas=" + parchisPartidasJugadas + ", parchisPartidasGanadas="

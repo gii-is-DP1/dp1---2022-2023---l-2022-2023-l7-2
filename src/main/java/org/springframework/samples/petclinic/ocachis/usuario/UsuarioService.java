@@ -8,6 +8,7 @@ import java.util.Collection;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
 import org.springframework.samples.petclinic.ocachis.user.AuthoritiesService;
 import org.springframework.samples.petclinic.ocachis.user.UserService;
@@ -64,6 +65,11 @@ public class UsuarioService {
     @Transactional
     public Usuario findUsuarioById(int id){
         return this.usuarioRepository.findById(id);
+    }
+
+	@Transactional(readOnly = true)
+    public Usuario findUsuarioByUsuario(String usuario) throws DataAccessException {
+        return usuarioRepository.findByUsername(usuario);
     }
 
 }

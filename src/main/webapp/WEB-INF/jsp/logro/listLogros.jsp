@@ -1,6 +1,5 @@
 <%@ page import="org.springframework.samples.petclinic.model.Color"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
-
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -46,7 +45,9 @@
         </c:forEach>
         </tbody>
     </table>
+    <sec:authorize access="hasAuthority('admin')">
     <spring:url value="/logro/new" var="logroCreateUrl">
     </spring:url>
     <a href="${fn:escapeXml(logroCreateUrl)}" class="btn btn-default">Crear un nuevo logro</a>
+    </sec:authorize>
 </petclinic:layout>

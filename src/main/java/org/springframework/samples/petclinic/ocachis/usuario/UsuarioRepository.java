@@ -17,4 +17,7 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
 	@Modifying
 	@Query("UPDATE Usuario u SET u.nombre = :nombre, u.apellido = :apellido WHERE u.id = :id ")
 	void updateUsuario(@Param("id") int id, @Param("nombre") String nombre, @Param("apellido") String apellido);
+
+	@Query("SELECT usuario FROM Usuario usuario WHERE usuario.user.username =:username")
+    public Usuario findByUsername(@Param("username") String username);
 }
