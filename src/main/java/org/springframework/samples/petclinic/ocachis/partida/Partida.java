@@ -28,7 +28,7 @@ public class Partida extends BaseEntity{
 	//@NotEmpty
 	private LocalDateTime fechaCreacion = LocalDateTime.now();
 
-	private LocalDateTime fechaFinalizacion = LocalDateTime.now();
+	private LocalDateTime fechaFinalizacion;
 	/* 
 	@NotEmpty*/
 	private TipoEstadoPartida estado = TipoEstadoPartida.CREADA;
@@ -47,7 +47,7 @@ public class Partida extends BaseEntity{
 	private Integer maxJugadores;
 
 	@ManyToMany
-	private Collection<Usuario> usuariosObservadores;
+	private List<Usuario> usuariosObservadores;
 
 
 	private static Integer generadorCodigoPartida=104;

@@ -1,23 +1,32 @@
 package org.springframework.samples.petclinic.ocachis.jugador;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Color;
+import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
+import org.springframework.samples.petclinic.ocachis.ficha.FichaService;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaOca;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaParchis;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
+import org.springframework.samples.petclinic.ocachis.usuario.UsuarioService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class JugadorService {
     private JugadorRepository jugadorRepository;
+    private UsuarioService usuarioService;
+    private FichaService fichaService;
 
     
     @Autowired
-	  public JugadorService(JugadorRepository jugadorRepository){
+	  public JugadorService(JugadorRepository jugadorRepository, UsuarioService usuarioService, FichaService fichaService){
 	  	this.jugadorRepository = jugadorRepository;
+      this.usuarioService = usuarioService;
+      this.fichaService = fichaService;
 	  }
 
 	  public Collection<Jugador> findAll(){
@@ -48,6 +57,30 @@ public class JugadorService {
     public Jugador findJugadorOca(Integer usuarioId, Integer ocaId){
       return jugadorRepository.findJugadorOca(usuarioId, ocaId);
     }
+
     
+    @Transactional
+    public Jugador createJugadorOca(PartidaOca partida) {
+      Jugador jugador = new Jugador();
+      jugador.setUsuario(usuarioService.getLoggedUsuario());
+			jugador.setPartidaOca(partida);
+			jugador.setColor(getColorNuevoJugador(partida));
+      FichaOca ficha = this.fichaService.createFichaOca(jugador, partida);
+      jugador.setFichaOca(ficha);
+			jugador = save(jugador);
+      return jugador;
+    }
     
+    public Color getColorNuevoJugador(PartidaOca partida){
+      List<Color> colores = new ArrayList<Color>();
+      for (Jugador j : partida.getJugadores()) {
+        colores.add(j.getColor());
+      }
+
+      if (!(colores.contains(Color.ROJO))) return Color.ROJO;
+      else if (!(colores.contains(Color.AMARILLO))) return Color.AMARILLO;
+      else if (!(colores.contains(Color.VERDE))) return Color.VERDE;
+      else return Color.AZUL;
+			
+    }
 }

@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.ocachis.ficha;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
+import org.springframework.samples.petclinic.ocachis.partida.PartidaOca;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,4 +41,12 @@ public class FichaService {
 	public void removeFichaOca(FichaOca ficha) {
         fichaOcaRepository.delete(ficha);
 	}
+
+    public FichaOca createFichaOca(Jugador jugador, PartidaOca partida) {
+        FichaOca ficha = new FichaOca();
+        ficha.setCasillaActual(partida.getCasillaConNumero(1));
+        ficha.setColor(jugador.getColor());
+        ficha = saveFichaOca(ficha);
+        return ficha;
+    }
 }

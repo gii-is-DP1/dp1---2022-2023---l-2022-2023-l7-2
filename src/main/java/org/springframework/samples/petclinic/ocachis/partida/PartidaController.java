@@ -110,10 +110,10 @@ public class PartidaController {
 
 			return CREATE_SALAS;
 		}
-		org.springframework.security.core.userdetails.User loggedUser = (org.springframework.security.core.userdetails.User) SecurityContextHolder
-				.getContext().getAuthentication().getPrincipal();
-		Usuario u = usuarioService.findUsuarioByUsername(loggedUser.getUsername());
-		Jugador jugador = new Jugador();
+		
+		//al refactorizar parchis y crear el jugador en jugadorService, u ya no es necesario en esta funcion
+		Usuario u = usuarioService.getLoggedUsuario();
+		Jugador jugador = null;
 		
 		if (estaJugando(u.getId())) {
 			model.put("message", "Estas jugando ya en una partida");
@@ -123,17 +123,15 @@ public class PartidaController {
 		// Caso Oca
 		if (tipo.equals("oca")) {
 			// Crear partida
-			PartidaOca partidaOca = new PartidaOca();
-			partidaOca.setMaxJugadores(procesarPartidaForm.getNumJugador());
-			partidaOca.setCodigoPartida(Partida.getNuevoCodigoPartida());
-			this.partidaService.saveOca(partidaOca);
-
+			PartidaOca partida = partidaService.crearPartidaOca(procesarPartidaForm.getNumJugador());
 			// Crear jugador
-			jugador.setUsuario(u);
-			jugador.setPartidaOca(partidaOca);
-			jugador.setColor(Color.ROJO);
-			this.jugadorService.save(jugador);
-			return "redirect:/sala/" + partidaOca.getId() + "/showOca";
+			jugador = jugadorService.createJugadorOca(partida);
+			
+
+
+
+
+			return "redirect:/sala/" + partida.getId() + "/showOca";
 			// Caso Parchís
 		} else if (tipo.equals("parchis")) {
 			// Crear partida
@@ -174,15 +172,10 @@ public class PartidaController {
 		Collection<Jugador> jugadores = p.getJugadores();
 		Boolean dentro = false;
 		// Crear jugador
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		org.springframework.security.core.userdetails.User loggedUser = null;
-		if (auth.isAuthenticated()) {
-			loggedUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
-		} else {
-			return "redirect:/noAccess";
-		}
+		
+		
 
-		Usuario u = usuarioService.findUsuarioByUsername(loggedUser.getUsername());
+		Usuario u = usuarioService.getLoggedUsuario();
 		Collection<Jugador> jugadores1 = jugadorService.findAllJugadoresForUsuario(u.getId());
 
 		// Detecta si el usuario está en una partida, y si lo está, al tratar de unirse a una sala lo redirigá a la sala o partida en el que ya se encuentra
@@ -214,29 +207,17 @@ public class PartidaController {
 		}
 
 		if (dentro) {
-			return "redirect:/sala/{partidaOcaId}/showOca";
+			return "redirect:/sala/" + partidaOcaId + "/showOca";
+
 		} else if (p.getJugadores().size() == p.getMaxJugadores()) {
 			model.put("message", "La partida esta llena");
 			model.put("partidaOca", partidaService.findEsperaOca());
 			model.put("partidaParchis", partidaService.findEsperaParchis());
 			return VIEWS_SALAS;
 		} else {
-			jugador.setUsuario(u);
-			jugador.setPartidaOca(p);
-			List<Color> colores = new ArrayList<Color>();
-			for (Jugador j : p.getJugadores()) {
-				colores.add(j.getColor());
-			}
-			if (!(colores.contains(Color.AMARILLO))) {
-				jugador.setColor(Color.AMARILLO);
-			} else if (!(colores.contains(Color.VERDE))) {
-				jugador.setColor(Color.VERDE);
-			} else {
-				jugador.setColor(Color.AZUL);
-			}
-			this.jugadorService.save(jugador);
+			jugador = jugadorService.createJugadorOca(p);
 		}
-		return "redirect:/sala/{partidaOcaId}/showOca";
+		return "redirect:/sala/" + partidaOcaId + "/showOca";
 	}
 
 	@GetMapping("/{partidaOcaId}/showOca")

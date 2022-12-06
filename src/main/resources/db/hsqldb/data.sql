@@ -102,7 +102,7 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
--- One usuario user, maned usuario with password usuario
+-- One usuario user, named usuario with password usuario
 
 INSERT INTO users(username,password,enabled) VALUES ('usuario','usuario',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (10,'usuario','jugador');
@@ -139,6 +139,10 @@ INSERT INTO usuarios(id,nombre,apellido,username) VALUES(8,'Marina','Blanco','us
 INSERT INTO users(username,password,enabled) VALUES ('usuario6','usuario6',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (18,'usuario6','jugador');
 INSERT INTO usuarios(id,nombre,apellido,username) VALUES(9,'Miguel','Farnes','usuario6');
+
+INSERT INTO users(username,password,enabled) VALUES ('aaaaa','aaaaa',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (19,'aaaaa','jugador');
+INSERT INTO usuarios(id,nombre,apellido,username) VALUES(10,'NoJugador','NoJugador','aaaaa');
 
 
 --INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (1,0,1,1);

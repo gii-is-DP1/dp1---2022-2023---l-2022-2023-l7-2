@@ -19,8 +19,6 @@ import lombok.Setter;
 public class CasillaOca extends Casilla{
     public static Map<Integer,Coordenadas> coordenadas = inicializarMapa();
 
-
-    @NotBlank
     private TipoCasillaOca tipoCasillaOca;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="casillaActual")

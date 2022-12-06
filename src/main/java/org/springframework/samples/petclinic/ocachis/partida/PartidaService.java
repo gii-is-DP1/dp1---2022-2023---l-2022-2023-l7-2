@@ -8,6 +8,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
+import org.springframework.samples.petclinic.ocachis.casilla.CasillaService;
+import org.springframework.samples.petclinic.ocachis.casilla.TipoCasillaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaService;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
@@ -20,14 +22,63 @@ public class PartidaService {
 	private PartidaOcaRepository partidaOcaRepository;
     private PartidaParchisRepository partidaParchisRepository;
 	private FichaService fichaService;
+	private CasillaService casillaService;
 
     
     @Autowired
 	public PartidaService(PartidaOcaRepository partidaOcaRepository, PartidaParchisRepository partidaParchisRepository,
-	FichaService fichaService){
+	FichaService fichaService, CasillaService casillaService){
 		this.partidaOcaRepository = partidaOcaRepository;
         this.partidaParchisRepository = partidaParchisRepository;
 		this.fichaService = fichaService;
+		this.casillaService = casillaService;
+	}
+
+
+	
+	public void inicializarCasillasOca(PartidaOca partida){
+		List<Integer> numerosCasillasOca = new ArrayList<>();
+		numerosCasillasOca.add(5); numerosCasillasOca.add(9); numerosCasillasOca.add(14);
+		numerosCasillasOca.add(18); numerosCasillasOca.add(23); numerosCasillasOca.add(27);
+		numerosCasillasOca.add(32); numerosCasillasOca.add(36); numerosCasillasOca.add(41);
+		numerosCasillasOca.add(45); numerosCasillasOca.add(50); numerosCasillasOca.add(54);
+		numerosCasillasOca.add(59);
+		List<CasillaOca> casillas = new ArrayList<CasillaOca>();
+		
+		for(int i = 1; i<=63; i++){
+			CasillaOca casilla = new CasillaOca();
+			casilla.setNumero(i);
+			casilla.setFichas(new ArrayList<FichaOca>());
+			if(numerosCasillasOca.contains(i)) casilla.setTipoCasillaOca(TipoCasillaOca.OCA);
+			else if(i == 6 || i==12) casilla.setTipoCasillaOca(TipoCasillaOca.PUENTE);
+			else if(i == 19) casilla.setTipoCasillaOca(TipoCasillaOca.POSADA);
+			else if(i == 26 || i==53) casilla.setTipoCasillaOca(TipoCasillaOca.DADOS);
+			else if(i == 31) casilla.setTipoCasillaOca(TipoCasillaOca.POZO);
+			else if(i == 42) casilla.setTipoCasillaOca(TipoCasillaOca.LABERINTO);
+			else if(i == 52) casilla.setTipoCasillaOca(TipoCasillaOca.CARCEL);
+			else if(i == 58) casilla.setTipoCasillaOca(TipoCasillaOca.MUERTE);
+			else if(i == 63) casilla.setTipoCasillaOca(TipoCasillaOca.FINAL);
+			else casilla.setTipoCasillaOca(TipoCasillaOca.NORMAL);
+			casilla = casillaService.saveCasillaOca(casilla);
+			casillas.add(casilla);
+		}
+
+		partida.setCasillas(casillas);
+	}
+
+	@Transactional
+	public PartidaOca crearPartidaOca(Integer maxJugadores){
+		PartidaOca partida = new PartidaOca();
+		partida.setMaxJugadores(maxJugadores);
+		partida.setCodigoPartida(Partida.getNuevoCodigoPartida());
+		partida.setColorJugadorActual(Color.ROJO);
+		partida.setEstado(TipoEstadoPartida.CREADA);
+		partida.setJugadores(new ArrayList<Jugador>());
+		partida.setUsuariosObservadores(new ArrayList<>());
+		inicializarCasillasOca(partida);
+
+		partida = partidaOcaRepository.save(partida);
+		return partida;
 	}
 
 	@Transactional(readOnly = true)
