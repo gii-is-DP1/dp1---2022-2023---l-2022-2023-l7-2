@@ -15,7 +15,7 @@
         <tr>
             <th>Salas</th>
             <th>Tipo<th>
-            <th>Maximo Jugadores</th>
+            <th>Jugadores</th>
             <th>Estado</th>
             <th>Fecha Creacion</th>
             <th>Unirse</th>
@@ -35,7 +35,7 @@
                 <td style="display:hidden"></td>
 
                 <td>
-                    <c:out value="${partidaOca.maxJugadores}"></c:out>
+                    <c:out value="${partidaOca.jugadores.size()}/${partidaOca.maxJugadores}"></c:out>
                 </td>
 
                 <td>
@@ -72,7 +72,7 @@
                 <td style="display:hidden"></td>
 
                 <td>
-                    <c:out value="${partidaParchis.maxJugadores}"></c:out>
+                    <c:out value="${partidaParchis.jugadores.size()}/${partidaParchis.maxJugadores}"></c:out>
                 </td>
 
                 <td>

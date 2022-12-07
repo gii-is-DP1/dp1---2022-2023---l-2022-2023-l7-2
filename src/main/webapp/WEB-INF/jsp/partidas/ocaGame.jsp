@@ -15,7 +15,7 @@
     
     <h1>vista: ${modo}</h1>
     <h1>Es el turno del jugador ${partidaOca.colorJugadorActual}</h1>
-    ${log}
+   
 <petclinic:ocaBoard tablero="${partidaOca}"></petclinic:ocaBoard>
    
     <br>
@@ -36,4 +36,10 @@
     <c:if test="${jugadorAutenticado.color != partidaOca.colorJugadorActual}"> 
         <button id="tirarDado" class="btn btn-default" disabled >Tirar dado</button>
     </c:if>
+
+
+    <br>
+    <br>
+    <h1>Log</h1>
+    ${partidaOca.printLog()}
 </petclinic:layout>

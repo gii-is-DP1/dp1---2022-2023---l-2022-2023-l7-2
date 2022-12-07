@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.ocachis.partida;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -131,62 +133,62 @@ public class PartidaService {
 		return this.partidaParchisRepository.findById(id);
 	}
 
-	private CasillaOca funcionOca(PartidaOca partida, CasillaOca casillaInicial, List<String> log, Jugador j){
+	private CasillaOca funcionOca(PartidaOca partida, CasillaOca casillaInicial, Jugador j){
 		
 		CasillaOca casillaFinal = null;
 		switch(casillaInicial.getNumero()){
 			case 5:
 				casillaFinal = partida.getCasillaConNumero(9);
-				log.add("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 9");
+				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 9");
 				return casillaFinal;
 			case 9:
 				casillaFinal = partida.getCasillaConNumero(14);
-				log.add("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 14");
+				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 14");
 				return casillaFinal;
 			case 14:
 				casillaFinal = partida.getCasillaConNumero(18);
-				log.add("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 18");	
+				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 18");	
 				return casillaFinal;
 			case 18:
 				casillaFinal = partida.getCasillaConNumero(23);
-				log.add("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 23");
+				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 23");
 				return casillaFinal;
 			case 23:
 				casillaFinal = partida.getCasillaConNumero(27);
-				log.add("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 27");
+				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 27");
 				return casillaFinal;
 			case 27:
 				casillaFinal = partida.getCasillaConNumero(32);
-				log.add("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 32");
+				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 32");
 				return casillaFinal;
 			case 32:
 				casillaFinal = partida.getCasillaConNumero(36);
-				log.add("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 36");
+				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 36");
 				return casillaFinal;
 			case 36:
 				casillaFinal = partida.getCasillaConNumero(41);
-				log.add("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 41");
+				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 41");
 				return casillaFinal;
 			case 41:
 				casillaFinal = partida.getCasillaConNumero(45);
-				log.add("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 45");
+				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 45");
 				return casillaFinal;
 			case 45:
 				casillaFinal = partida.getCasillaConNumero(50);
-				log.add("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 50");
+				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 50");
 				return casillaFinal;
 			case 50:
 				casillaFinal = partida.getCasillaConNumero(54);
-				log.add("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 54");
+				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 54");
 				return casillaFinal;
 			case 54:
 			
 				casillaFinal = partida.getCasillaConNumero(59);
-				log.add("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 59");
+				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 59");
 				return casillaFinal;
 			case 59:
 				casillaFinal = partida.getCasillaConNumero(59);
-				log.add("'Tiro porque me toca' - El jugador " + j.getColor() + " vuelve a tirar");
+				partida.addLog("'Tiro porque me toca' - El jugador " + j.getColor() + " vuelve a tirar");
 				return casillaFinal;
 		}
 		return casillaFinal;
@@ -196,8 +198,7 @@ public class PartidaService {
 		return partida.getCasillaConNumero(31).getFichas().size() > 0;
 	}
 
-
-	public void liberarFichasPozo(PartidaOca partida, List<String> log){
+	public void liberarFichasPozo(PartidaOca partida){
 		List<Color> coloresEnElPozo = new ArrayList<Color>();
 		CasillaOca pozo = partida.getCasillaConNumero(31);
 		
@@ -207,7 +208,7 @@ public class PartidaService {
 
 		for(Jugador j: partida.getJugadores()){
 			if(coloresEnElPozo.contains(j.getColor())) j.setNumTurnosBloqueadoRestantesOca(0);
-			log.add("El jugador " + j.getColor() + " ha salido del pozo");
+			partida.addLog("El jugador " + j.getColor() + " ha salido del pozo");
 		}
 	
 	}
@@ -216,6 +217,7 @@ public class PartidaService {
 		switch(partida.getColorJugadorActual()){
 			case ROJO:
 				partida.setColorJugadorActual(Color.AMARILLO);
+				
 				break;
 			case AMARILLO:
 				if(partida.getJugadores().size()==2) partida.setColorJugadorActual(Color.ROJO);
@@ -229,19 +231,20 @@ public class PartidaService {
 				partida.setColorJugadorActual(Color.ROJO);
 				break;
 		}
+		partida.addLog("TURNO DEL JUGADOR " + partida.getColorJugadorActual());
 	}
 
 	@Transactional
-    public List<String> jugar(PartidaOca partida, FichaOca ficha, Jugador j) {
-		List<String> log = new ArrayList<>();
+    public void jugar(PartidaOca partida, FichaOca ficha, Jugador j) {
+			
 		
 		if(j.getNumTurnosBloqueadoRestantesOca()>0){
 			j.setNumTurnosBloqueadoRestantesOca(j.getNumTurnosBloqueadoRestantesOca()-1);
+			if(j.getNumTurnosBloqueadoRestantesOca()==0) partida.addLog("El jugador " + j.getColor() + " ya no está bloqueado y puede volver a jugar");
+			else if(j.getNumTurnosBloqueadoRestantesOca()==1) partida.addLog("Al jugador " + j.getColor() + " le queda 1 turno bloqueado");
+			else partida.addLog("Al jugador " + j.getColor() + " le quedan "+ j.getNumTurnosBloqueadoRestantesOca() + " turnos bloqueados");
 			pasarTurno(partida);
-			if(j.getNumTurnosBloqueadoRestantesOca()==0) log.add("El jugador " + j.getColor() + " ya no está bloqueado y puede volver a jugar");
-			else if(j.getNumTurnosBloqueadoRestantesOca()==1)log.add("Al jugador " + j.getColor() + " le queda 1 turno bloqueado");
-			else log.add("Al jugador " + j.getColor() + " le quedan "+ j.getNumTurnosBloqueadoRestantesOca() + " turnos bloqueados");
-			return log;
+			return;
 		}
 
 		Boolean volverATirar = false;
@@ -250,13 +253,13 @@ public class PartidaService {
 		Integer numeroCasillaInicial = casillaInicial.getNumero();
 
 		int dado =(int) (Math.random()*6+1);
-		log.add("El jugador " + j.getColor() + " ha sacado " + dado + " en el dado");
+		partida.addLog("El jugador " + j.getColor() + " ha sacado " + dado + " en el dado");
 
 		Integer numeroCasillaInicialMasDado = numeroCasillaInicial + dado;
 		if(numeroCasillaInicialMasDado > 63){
 			int dif = numeroCasillaInicialMasDado -63;
 			numeroCasillaInicialMasDado = 63-dif;
-			log.add("El jugador " + j.getColor() + " ha rebotado hasta la casilla " + numeroCasillaInicialMasDado);
+			partida.addLog("El jugador " + j.getColor() + " ha rebotado hasta la casilla " + numeroCasillaInicialMasDado);
 		}
 		
 		CasillaOca casillaInicialMasDado = partida.getCasillaConNumero(numeroCasillaInicialMasDado);
@@ -268,50 +271,55 @@ public class PartidaService {
 				break;
 				
 			case OCA: 
-				casillaFinal = funcionOca(partida, casillaInicialMasDado, log, j);
+				casillaFinal = funcionOca(partida, casillaInicialMasDado, j);
 				volverATirar = true;
 				break;
 			case PUENTE:
 				casillaFinal = partida.getCasillaConNumero(19);
 				j.setNumTurnosBloqueadoRestantesOca(1);
-				log.add("El jugador " + j.getColor() + " ha caido en puente y va a la posada. Está 1 turno bloqueado");
+				partida.addLog("El jugador " + j.getColor() + " ha caido en puente y va a la posada. Está 1 turno bloqueado");
 				break;
 
 			case POSADA:
 				casillaFinal = casillaInicialMasDado;
 				j.setNumTurnosBloqueadoRestantesOca(1);
-				log.add("El jugador " + j.getColor() + " ha caido en la posada. Está 1 turno bloqueado");
+				partida.addLog("El jugador " + j.getColor() + " ha caido en la posada. Está 1 turno bloqueado");
 				break;
 				
 			case LABERINTO: 
 				casillaFinal = partida.getCasillaConNumero(30);
-				log.add("El jugador " + j.getColor() + " ha caido en el laberinto y va a la casilla 30");
+				partida.addLog("El jugador " + j.getColor() + " ha caido en el laberinto y va a la casilla 30");
 				break;
 
 			case POZO:
 				casillaFinal = casillaInicialMasDado;
 				j.setNumTurnosBloqueadoRestantesOca(4);
-				log.add("El jugador " + j.getColor() + " ha caido en el pozo. Está 4 turnos bloqueado o hasta que otro jugador pase por la casilla.");
+				partida.addLog("El jugador " + j.getColor() + " ha caido en el pozo. Está 4 turnos bloqueado o hasta que otro jugador pase por la casilla.");
 				break;
 				
 			case DADOS: 
 				casillaFinal = partida.getCasillaConNumero(numeroCasillaInicialMasDado + 8);
-				log.add("El jugador " + j.getColor() + " ha caido en dados, avanza la suma de los digitos de la casilla dados");
+				partida.addLog("El jugador " + j.getColor() + " ha caido en dados, avanza la suma de los digitos de la casilla dados");
 				break;
 
 			case MUERTE: 
 				casillaFinal = partida.getCasillaConNumero(1);
-				log.add("El jugador " + j.getColor() + " ha muerto ඞ. Vuelve a la casilla 1");
+				j.setVecesCaidoEnMuerte(j.getVecesCaidoEnMuerte() + 1);
+				partida.addLog("El jugador " + j.getColor() + " ha muerto ඞ. Vuelve a la casilla 1");
 				break;
 			
 			case CARCEL:
 				casillaFinal = casillaInicialMasDado;
 				j.setNumTurnosBloqueadoRestantesOca(2);
-				log.add("El jugador " + j.getColor() + " ha caido en la cárcel. Está 2 turnos bloqueado");
+				partida.addLog("El jugador " + j.getColor() + " ha caido en la cárcel. Está 2 turnos bloqueado");
 				break;
 
 			case FINAL:
-				break;
+				casillaFinal = casillaInicialMasDado;
+				partida.setEstado(TipoEstadoPartida.TERMINADA);
+				finalizarPartidaOca(partida,j);
+				
+				partida.addLog("El jugador " + j.getColor() + " ha ganado la partida");
 		}
 
 		fichaService.moverFichaOca(ficha, casillaFinal, j);
@@ -319,15 +327,20 @@ public class PartidaService {
 		if(hayAlguienEnElPozo(partida)){
 			Integer numeroCasillaFinal = casillaFinal.getNumero();
 			if(numeroCasillaInicial < 31 && numeroCasillaFinal > 31){
-				liberarFichasPozo(partida, log);
+				liberarFichasPozo(partida);
 			}
 		}
 		
-
-
 		if(!volverATirar){
 			pasarTurno(partida);
 		}
-	return log;
 	}		
+
+	public void finalizarPartidaOca(PartidaOca partida, Jugador jugadorGanador){
+		partida.setGanador(jugadorGanador.getUsuario());
+		partida.setFechaFinalizacion(LocalDateTime.now());
+		Duration duracion =Duration.between(partida.getFechaCreacion(), partida.getFechaFinalizacion());
+		Integer duracionInMinutes = (int)duracion.getSeconds() /60;
+		partida.setDuracion(duracionInMinutes);
+	}
 }

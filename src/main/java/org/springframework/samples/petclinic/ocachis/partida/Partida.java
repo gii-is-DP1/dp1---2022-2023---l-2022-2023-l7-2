@@ -1,8 +1,11 @@
 package org.springframework.samples.petclinic.ocachis.partida;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.ManyToMany;
@@ -50,12 +53,10 @@ public class Partida extends BaseEntity{
 	private List<Usuario> usuariosObservadores;
 
 
-	private static Integer generadorCodigoPartida=104;
+	private static Integer generadorCodigoPartida=115;
 	public static Integer getNuevoCodigoPartida(){
 		return generadorCodigoPartida++;
 	}
-
-
 	
 }
 
