@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.ocachis.partida;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -61,6 +62,8 @@ public class PartidaController {
 	private static final String VIEWS_ESPERA = "partidas/espera";
 	private static final String CREATE_SALAS = "partidas/createPartidaForm";
 	private static final String VIEWS_JUGAR_OCA = "partidas/ocaGame";
+	private static final String VIEWS_JUGAR_PARCHIS = "partidas/parchisGame";
+	private static final String VIEWS_PARTIDAOCA_TERMINADA = "partidas/resumenPartidaOca";
 
 
 
@@ -178,19 +181,19 @@ public class PartidaController {
 			for (Jugador j : jugadores1) {
 			if (j.getPartidaOca() != null && j.getPartidaOca().getEstado() == TipoEstadoPartida.JUGANDO) {
 				var partidaActual = j.getPartidaOca().getId();
-				redirectAttributes.addFlashAttribute("message", "Estas jugando ya en una partida");
+				redirectAttributes.addFlashAttribute("message", "Estas jugando ya en una partida. Se te ha redirigido a ella");
 				return "redirect:/sala/" + partidaActual + "/playOca";
 			} else if (j.getPartidaOca() != null && j.getPartidaOca().getEstado() == TipoEstadoPartida.CREADA) {
 				var partidaActual = j.getPartidaOca().getId();
-				redirectAttributes.addFlashAttribute("message", "Ya estas en una sala");
+				redirectAttributes.addFlashAttribute("message", "Ya estas en una sala. Se te ha redirigido a ella");
 				return "redirect:/sala/" + partidaActual + "/showOca";
 			} else if (j.getPartidaParchis() != null && (j.getPartidaParchis().getEstado() == TipoEstadoPartida.JUGANDO)) {
 				var partidaActual = j.getPartidaParchis().getId();
-				redirectAttributes.addFlashAttribute("message", "Estas jugando ya en una partida");
+				redirectAttributes.addFlashAttribute("message", "Estas jugando ya en una partida. Se te ha redirigido a ella");
 				return "redirect:/sala/" + partidaActual + "/showOca";
 			} else if (j.getPartidaParchis() != null && (j.getPartidaParchis().getEstado() == TipoEstadoPartida.CREADA)) {
 				var partidaActual = j.getPartidaParchis().getId();
-				redirectAttributes.addFlashAttribute("message", "Ya estas en una sala");
+				redirectAttributes.addFlashAttribute("message", "Ya estas en una sala. Se te ha redirigido a ella");
 				return "redirect:/sala/" + partidaActual + "/showOca";
 			}}
 		}
@@ -314,6 +317,7 @@ public class PartidaController {
 	public String processEmpezarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, PartidaOca partida,
 			ModelMap model) {
 		partida.setEstado(TipoEstadoPartida.JUGANDO);
+		partida.setFechaCreacion(LocalDateTime.now());
 		partidaService.saveOca(partida);
 		return "redirect:/sala/{partidaOcaId}/playOca";
 	}
@@ -328,9 +332,10 @@ public class PartidaController {
 	@PostMapping("/{partidaParchisId}/startParchis")
 	public String processEmpezarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId,
 			PartidaParchis partida, ModelMap model) {
-		partida.setEstado(TipoEstadoPartida.JUGANDO);
-		partidaService.saveParchis(partida);
-		return "redirect:/sala/{partidaParchisId}/playParchis";
+				partida.setEstado(TipoEstadoPartida.JUGANDO);
+				partida.setFechaCreacion(LocalDateTime.now());
+				partidaService.saveParchis(partida);
+				return "redirect:/sala/{partidaParchisId}/playParchis";
 	}
 
 
@@ -357,8 +362,37 @@ public class PartidaController {
 		}
 		return "redirect:/sala/";
 	}
+	//jugar PARCHIS
+	@GetMapping("/{partidaParchisId}/playParchis")
+	public String jugarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model,HttpServletResponse response,RedirectAttributes redirectAttributes){
+		PartidaParchis partida = partidaService.findByIdParchis(partidaParchisId);
+		Usuario u = this.usuarioService.getLoggedUsuario();
+		Jugador j = this.jugadorService.findJugadorOca(u.getId(), partida.getId());
+		model.put("partidaParchis", partida);
 
-	//jugar
+		if(partida.getEstado()==TipoEstadoPartida.TERMINADA){
+			return "redirect:/sala/" + partidaParchisId + "/resumen";
+
+		}else if(partida.getEstado()==TipoEstadoPartida.CREADA){
+			redirectAttributes.addFlashAttribute("message", "La partida aun no ha empezado");
+			return "redirect:/sala/" + partidaParchisId + "/showParchis";
+		}
+
+		if(j!=null){
+			model.put("modo","jugador");
+			model.put("jugadorAutenticado", j);
+		}else if(partida.getUsuariosObservadores().contains(u)){
+			model.put("modo","observador");
+		}
+		response.addHeader("Refresh", REFRESH_SEECONDS);
+		model.put("now", new Date());
+		return VIEWS_JUGAR_PARCHIS;
+
+
+	}
+
+
+	//jugar OCA
  
 	@GetMapping(value="/{partidaOcaId}/playOca")
 	public String jugarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model,HttpServletResponse response, RedirectAttributes redirectAttributes){
@@ -401,5 +435,13 @@ public class PartidaController {
 		}		
 		partidaService.jugar(partida, ficha, j);
 		return "redirect:/sala/" + partidaOcaId + "/playOca";
+	}
+
+	@GetMapping("/{partidaOcaId}/resumen")
+	public String terminadaPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model, HttpServletResponse response){
+		PartidaOca partida = partidaService.findByIdOca(partidaOcaId);
+		
+		model.put("partidaOca", partida);
+		return VIEWS_PARTIDAOCA_TERMINADA;
 	}
 }

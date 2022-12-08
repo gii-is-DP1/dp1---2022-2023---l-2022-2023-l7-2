@@ -29,7 +29,7 @@ public class Partida extends BaseEntity{
 	private Integer codigoPartida;
 	
 	//@NotEmpty
-	private LocalDateTime fechaCreacion = LocalDateTime.now();
+	private LocalDateTime fechaCreacion;
 
 	private LocalDateTime fechaFinalizacion;
 	/* 

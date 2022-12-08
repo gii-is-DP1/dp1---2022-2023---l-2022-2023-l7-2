@@ -11,35 +11,33 @@
 
 
 
-<petclinic:layout pageName="game" title="Jugando a la Oca">
+<petclinic:layout pageName="game" title="Jugando al parchís">
     
     <h1>vista: ${modo}</h1>
-    <h1>Es el turno del jugador ${partidaOca.colorJugadorActual}</h1>
+    <h1>Es el turno del jugador ${partidaParchis.colorJugadorActual}</h1>
    
-<petclinic:ocaBoard tablero="${partidaOca}"></petclinic:ocaBoard>
+<petclinic:parchisBoard tablero="${partidaParchis}"></petclinic:parchisBoard>
    
     <br>
     Jugador autenticado: ${jugadorAutenticado}
 
     Color jugador autenticado : ${jugadorAutenticado.color}
     <br>
-    colorJugador actual : ${partidaOca.colorJugadorActual}
+    colorJugador actual : ${partidaParchis.colorJugadorActual}
 
-    <c:if test="${jugadorAutenticado.color == partidaOca.colorJugadorActual}"> 
+    <c:if test="${jugadorAutenticado.color == partidaParchis.colorJugadorActual}"> 
         
         <form:form class="form-horizontal" id="tirar-dado-form"
-            method="post" action="/sala/${partidaOca.id}/playOca">
+            method="post" action="/sala/${partidaParchis.id}/playOca">
             <button class="btn btn-default">Tirar dado</button>
         </form:form>
             
     </c:if>
-    <c:if test="${jugadorAutenticado.color != partidaOca.colorJugadorActual}"> 
-        <button id="tirarDado" class="btn btn-default" disabled >Tirar dado</button>
-    </c:if>
+    
 
 
     <br>
     <br>
     <h1>Resumen:</h1>
-    ${partidaOca.printLog()}
+    
 </petclinic:layout>
