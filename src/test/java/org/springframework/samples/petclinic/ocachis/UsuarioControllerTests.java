@@ -119,49 +119,7 @@ class UsuarioControllerTests {
 				.andExpect(view().name("usuarios/createOrUpdateUsuarioForm"));
 	}
 
-	
-	
-	@Test   
-	void testInitUpdateUsuarioForm() throws Exception {
-		mockMvc.perform(get("/usuarios/1/edit")
-				.with(SecurityMockMvcRequestPostProcessors.user("usuario").password("usuario").roles("jugador")))
 		
 		
-		.andExpect(status().isOk())
-		.andExpect(view().name("usuarios/createOrUpdateUsuarioForm"));
-		
-		
-		
-//				.andExpect(model().attributeExists("usuario"));
-//				.andExpect(model().attribute("usuario", hasProperty("nombre", is("Auron"))))
-//				.andExpect(model().attribute("usuario", hasProperty("apellido", is("Play"))))
-//				.andExpect(model().attribute("usuario", hasProperty("Estadisticas", is("null"))))
-//				.andExpect(model().attribute("usuario", hasProperty("Logros", is("null"))))
-//				.andExpect(model().attribute("usuario", hasProperty("SolicitudesEnvidas", is("null"))))
-//				.andExpect(model().attribute("usuario", hasProperty("SolicitudesRecibidas", is("null"))))
-//				.andExpect(model().attribute("usuario", hasProperty("PartidasJugadas", is("null"))))
-			
-	}
-
-//	@WithMockUser(value = "spring")
-//	@Test
-//	void testProcessUpdateUsuarioFormSuccess() throws Exception {
-//		mockMvc.perform(post("/usuarios/{usuarioId}/edit", TEST_USUARIO_ID).with(csrf()).param("nombre", "Auron")
-//				.param("apellido", "Play")).andExpect(status().is3xxRedirection())
-//				.andExpect(view().name("redirect:/usuario/{usuarioId}/edit"));
-//	}
-
-//	@WithMockUser(value = "spring")
-//	@Test
-//	void testProcessUpdateUsuarioFormHasErrors() throws Exception {
-//		mockMvc.perform(post("/usuarios/{usuarioId}/edit", TEST_USUARIO_ID).with(csrf()).param("nombre", "Auron")).andExpect(status().isOk())
-//				.andExpect(model().attributeHasErrors("usuario"))
-//				.andExpect(model().attributeHasFieldErrors("usuario", "Apellido"))
-////				.andExpect(model().attributeHasFieldErrors("usuario", "Logros"))
-////				.andExpect(model().attributeHasFieldErrors("usuario", "SolicitudesEnvidas"))
-////				.andExpect(model().attributeHasFieldErrors("usuario", "SolicitudesRecibidas"))
-////				.andExpect(model().attributeHasFieldErrors("usuario", "PartidasJugadas"))
-//				.andExpect(view().name("usuarios/createOrUpdateUsuarioForm"));
-//	}
 
 }

@@ -15,6 +15,7 @@ import org.springframework.samples.petclinic.ocachis.casilla.TipoCasillaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaService;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
+import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -317,9 +318,8 @@ public class PartidaService {
 			case FINAL:
 				casillaFinal = casillaInicialMasDado;
 				partida.setEstado(TipoEstadoPartida.TERMINADA);
-				finalizarPartidaOca(partida,j);
-				
 				partida.addLog("El jugador " + j.getColor() + " ha ganado la partida");
+				finalizarPartidaOca(partida,j);
 		}
 
 		fichaService.moverFichaOca(ficha, casillaFinal, j);
@@ -338,9 +338,16 @@ public class PartidaService {
 
 	public void finalizarPartidaOca(PartidaOca partida, Jugador jugadorGanador){
 		partida.setGanador(jugadorGanador.getUsuario());
+		jugadorGanador.setEsGanador(true);
+	
 		partida.setFechaFinalizacion(LocalDateTime.now());
 		Duration duracion =Duration.between(partida.getFechaCreacion(), partida.getFechaFinalizacion());
 		Integer duracionInMinutes = (int)duracion.getSeconds() /60;
 		partida.setDuracion(duracionInMinutes);
+		
+	for(Jugador j:partida.getJugadores()){
+			j.finalizarPartidaOca(duracionInMinutes, j.getUsuario()==jugadorGanador.getUsuario(), j.getVecesCaidoEnMuerte());
+	}
+
 	}
 }

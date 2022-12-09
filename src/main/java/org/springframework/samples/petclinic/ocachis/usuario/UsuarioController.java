@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.ocachis.usuario;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,12 +22,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/usuarios")
 public class UsuarioController {
 	
 	private static final String VIEWS_USUARIO_CREATE_OR_UPDATE_FORM = "usuarios/createOrUpdateUsuarioForm";
- 
+	private static final String VIEWS_USUARIO_PROFILE ="usuarios/perfil";
+	
 	private final UsuarioService usuarioService;
 	private final UserService userService;
 
@@ -52,7 +56,7 @@ public class UsuarioController {
 		return false;
 	}
 	
-	@GetMapping(value="/usuarios/nuevo")
+	@GetMapping(value="/nuevo")
 	public String initCreationForm(Map<String, Object> model) {
 		Usuario usuario = new Usuario();
 		model.put("usuario", usuario);
@@ -60,7 +64,7 @@ public class UsuarioController {
 	}
 	
 
-	@PostMapping(value = "/usuarios/nuevo")
+	@PostMapping(value = "/nuevo")
 	public String processCreationForm(@Valid Usuario usuario, BindingResult result, Map<String, Object> model) {
 			try {
 				usuarioService.saveUsuario(usuario);
@@ -78,7 +82,7 @@ public class UsuarioController {
 			return "redirect:/login";
 	}
 	
-	@GetMapping(value = "/usuarios/{usuarioId}/edit")
+	@GetMapping(value = "/{usuarioId}/edit")
 	public String initUpdateusuarioForm(@PathVariable("usuarioId") int usuarioId, Map<String, Object> model) {
 		if(!esElMismoUserQueElAutenticado(usuarioId)) return "redirect:/noAccess";		
 		Usuario usuarioSolicitado = this.usuarioService.findUsuarioById(usuarioId);
@@ -86,7 +90,7 @@ public class UsuarioController {
 		return VIEWS_USUARIO_CREATE_OR_UPDATE_FORM;
 	}
 
-	@PostMapping(value = "/usuarios/{usuarioId}/edit")
+	@PostMapping(value = "/{usuarioId}/edit")
 	public String processUpdateUsuarioForm(@Valid Usuario usuario, BindingResult result,
 			@PathVariable("usuarioId") int usuarioId, Map<String, Object> model) {			
 		if(!esElMismoUserQueElAutenticado(usuarioId)) return "redirect:/noAccess";
@@ -102,10 +106,25 @@ public class UsuarioController {
 	}	
 	
 	
-	@GetMapping(value="/usuarios/profile")
-	public String editProfile(Map<String, Object> model) {
+	@GetMapping(value="/editProfile")
+	public String editProfile(Map<String, Object> model){
 		Usuario usuarioEditado = this.usuarioService.getLoggedUsuario();
 		if(usuarioEditado!=null) return "redirect:/usuarios/"+usuarioEditado.getId()+"/edit";
 		else return "redirect:/noAccess";
+	}
+
+	@GetMapping(value="/perfil")
+	public String getProfile(Map<String, Object> model){
+		Usuario usuario = this.usuarioService.getLoggedUsuario();
+		return "redirect:/usuarios/" + usuario.getId() + "/perfil";
+	}
+
+	@GetMapping(value="/{usuarioId}/perfil")
+	public String mostrarPerfil(@PathVariable("usuarioId") int usuarioId, Map<String, Object> model){
+		Usuario u = usuarioService.findUsuarioById(usuarioId);
+		model.put("usuario",u);
+		model.put("now",LocalDateTime.now());
+		
+		return VIEWS_USUARIO_PROFILE;
 	}
 }

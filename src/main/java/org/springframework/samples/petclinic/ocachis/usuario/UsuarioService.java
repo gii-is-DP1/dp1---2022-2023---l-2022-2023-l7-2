@@ -77,7 +77,7 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Usuario findUsuarioById(int id){
         return this.usuarioRepository.findById(id);
     }

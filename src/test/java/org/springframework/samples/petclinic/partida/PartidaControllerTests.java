@@ -71,7 +71,6 @@ class PartidaControllerTests {
 		pp.setCodigoPartida(30);
 		pp.setEstado(TipoEstadoPartida.CREADA);
 		given(this.partidaService.findByIdParchis(TEST_PARTIDAPARCHIS_ID)).willReturn(pp);
-
 	}
 
 	@WithMockUser(value = "spring")

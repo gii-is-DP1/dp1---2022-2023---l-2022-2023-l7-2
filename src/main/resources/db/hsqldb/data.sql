@@ -106,6 +106,7 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04',
 
 INSERT INTO users(username,password,enabled) VALUES ('usuario','usuario',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (10,'usuario','jugador');
+
 INSERT INTO usuarios(id,nombre,apellido,username) VALUES(1,'nombreUsuario','apellidoUsuario','usuario');
 
 INSERT INTO users(username,password,enabled) VALUES ('usuario1','aaa',TRUE);
@@ -559,3 +560,20 @@ INSERT INTO partida_parchis_casillas(partida_parchis_id, casillas_id) VALUES
 (1, 102),
 (1, 103),
 (1, 104);
+
+
+UPDATE usuarios 
+SET OCA_DURACION_MAXIMA = 0,
+OCA_DURACION_MEDIA = 0,
+OCA_DURACION_MINIMA = 0,
+OCA_DURACION_TOTAL = 0, 
+OCA_PARTIDAS_GANADAS = 0,
+OCA_PARTIDAS_JUGADAS = 0,
+OCA_VECES_CAIDO_EN_MUERTE = 0,
+PARCHIS_DURACION_MAXIMA = 0, 
+PARCHIS_DURACION_MEDIA = 0, 
+PARCHIS_DURACION_MINIMA = 0,
+PARCHIS_DURACION_TOTAL = 0, 
+PARCHIS_FICHAS_COMIDAS = 0, 
+PARCHIS_PARTIDAS_GANADAS = 0, 
+PARCHIS_PARTIDAS_JUGADAS = 0;

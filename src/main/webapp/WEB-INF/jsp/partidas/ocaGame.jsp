@@ -29,7 +29,7 @@
         
         <form:form class="form-horizontal" id="tirar-dado-form"
             method="post" action="/sala/${partidaOca.id}/playOca">
-            <button class="btn btn-default">Tirar dado</button>
+            <button class="btn btn-default" onClick="this.form.submit(); this.disabled=true; this.innerText='Jugando...'; ">Tirar dado</button>
         </form:form>
             
     </c:if>

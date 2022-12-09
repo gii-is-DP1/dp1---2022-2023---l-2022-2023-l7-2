@@ -54,6 +54,17 @@ public class Estadisticas{
 	public Integer ocaDuracionMedia; 
 
 	public Integer ocaVecesCaidoEnMuerte;
+
+
+	public void updateEstadisticasOca(Integer duracion, Boolean esGanador, Integer vecesCaidoEnMuerte){
+		this.ocaPartidasJugadas++;
+		if(esGanador) this.ocaPartidasGanadas++;
+		this.ocaDuracionTotal += duracion;
+		if(duracion > this.ocaDuracionMaxima) this.ocaDuracionMaxima = duracion;
+		if(duracion < this.ocaDuracionMinima || this.ocaDuracionMinima == 0) this.ocaDuracionMinima = duracion;
+		this.ocaDuracionMedia = this.ocaDuracionTotal / this.ocaPartidasJugadas;
+		this.ocaVecesCaidoEnMuerte += vecesCaidoEnMuerte;
+	}
 	
 	@Override
 	public String toString() {

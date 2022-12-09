@@ -64,6 +64,11 @@ private PartidaOca partidaOca;
 public String toString(){
     return "usuarioId: " + usuario.getId() + " color: " + color.toString();
 }
+
+
+public void finalizarPartidaOca(Integer duracion, Boolean esGanador, Integer vecesCaidoEnMuerte) {
+    this.usuario.actualizarEstadisticasOca(duracion, esGanador, vecesCaidoEnMuerte);
+}
 }   
 
 
