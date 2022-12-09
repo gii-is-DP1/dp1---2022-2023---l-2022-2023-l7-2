@@ -33,7 +33,7 @@ public class LogroServiceTest {
     LogroService ls;
 
     @Test
-	void shouldFindLogrotWithCorrectId() {
+	void shouldFindLogroWithCorrectId() {
 		Logro logro1 = this.ls.findById(1);
 		assertThat(logro1.getNombre()).isEqualTo("Jugador Oca Junior");
 		assertThat(logro1.getDescripcion()).isEqualTo("Juega 10 partidas de la Oca");
@@ -63,13 +63,11 @@ public class LogroServiceTest {
 	
 		assertThat(logro.getId().longValue()).isNotEqualTo(0);
         int numeroLogrosFinal = this.ls.findAllLogros().size();
-		assertThat(numeroLogrosFinal).isEqualTo(numeroLogrosInicial +1);
-		
-        
+		assertThat(numeroLogrosFinal).isEqualTo(numeroLogrosInicial +1);        
     }
+    
     @Test
-    void shouldThrowMultiplesMetas(){
-      
+    void shouldThrowMultiplesMetas(){  
 		Logro logro = new Logro();
 		logro.setNombre("Test Logro Incorrecto");
 		logro.setDescripcion("Logro de prueba para inserción");
@@ -78,8 +76,8 @@ public class LogroServiceTest {
         estadisticas.setOcaPartidasJugadas(2);
 		logro.setEstadisticasACumplir(estadisticas);
 		assertThrows(MultiplesMetasDefinidasException.class, () -> ls.saveLogro(logro),"Permite establecer varias metas");
-
     }
+    
     @Test
     void shouldThrowMetaNegativa(){
  

@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 
 
@@ -21,6 +23,7 @@ public class User{
 	@Id
 	String username;
 
+	@Size(min = 5)
 	String password;
 	
 	boolean enabled;

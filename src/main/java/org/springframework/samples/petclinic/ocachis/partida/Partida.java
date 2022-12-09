@@ -1,8 +1,11 @@
 package org.springframework.samples.petclinic.ocachis.partida;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.ManyToMany;
@@ -12,7 +15,8 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import org.springframework.samples.petclinic.model.BaseEntity;
-
+import org.springframework.samples.petclinic.model.Color;
+import org.springframework.samples.petclinic.ocachis.casilla.Casilla;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,11 +26,12 @@ import lombok.Setter;
 @MappedSuperclass
 public class Partida extends BaseEntity{
 
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer codigoPartida;
 	
 	//@NotEmpty
-	private LocalDateTime fechaCreacion = LocalDateTime.now();
+	private LocalDateTime fechaCreacion;
+
+	private LocalDateTime fechaFinalizacion;
 	/* 
 	@NotEmpty*/
 	private TipoEstadoPartida estado = TipoEstadoPartida.CREADA;
@@ -38,13 +43,20 @@ public class Partida extends BaseEntity{
 	@OneToOne
 	private Usuario ganador;
 	
-	private Integer numeroTurnos=0;
+	private Color ColorJugadorActual=Color.ROJO;
 	
 	@Min(value=2)
 	@Max(value=4)
 	private Integer maxJugadores;
 
 	@ManyToMany
-	private Collection<Usuario> usuariosObservadores;
+	private List<Usuario> usuariosObservadores;
+
+
+	private static Integer generadorCodigoPartida=115;
+	public static Integer getNuevoCodigoPartida(){
+		return generadorCodigoPartida++;
+	}
+	
 }
 

@@ -33,19 +33,34 @@
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span>Salas</span>
 				</petclinic:menuItem>
+
+				<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
+					title="veterinarians">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span>Veterinarians</span>
+				</petclinic:menuItem>
+
+				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
+					title="trigger a RuntimeException to see how it is handled">
+					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+					<span>Error</span>
+				</petclinic:menuItem>
 			</sec:authorize>
 
-				<petclinic:menuItem active="${name eq 'logro'}"
-						url="/logro/listLogros" title="Logros">
-						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-						<span>Logros</span>
-				</petclinic:menuItem>
-				
-				<petclinic:menuItem active="${name eq 'partida'}"
-						url="/sala/create" title="Crear Partida">
-						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-						<span>Crear Partida</span>
-				</petclinic:menuItem>
+			<sec:authorize access="hasAuthority('admin')">
+					<petclinic:menuItem active="${name eq 'admin'}"
+						url="/admin/listPartidas" title="Panel de admin" dropdown="${true}">
+						<ul class="dropdown-menu">
+							<li><a href="<c:url value="/admin/listPartidas/" />">Listado
+									Partidas</a></li>
+							<li class="divider"></li>
+							<li><a href="<c:url value="/admin/listUsuarios" />">Listado
+									Usuarios
+									
+							</a></li>
+						</ul>
+					</petclinic:menuItem>
+			</sec:authorize>
 
 			<sec:authorize access="hasAuthority('admin')">
 					<petclinic:menuItem active="${name eq 'admin'}"
@@ -78,7 +93,26 @@
 							class="glyphicon glyphicon-chevron-down"></span>
 					</a>
 						<ul class="dropdown-menu">
-							<li><a href="<c:url value="/" />">Editar usuario</a></li>
+							<li>
+								<div class="navbar-login">
+									<div class="row">
+										<div class="col-lg-4">
+											<p class="text-center">
+												<span class="glyphicon glyphicon-user icon-size"></span>
+											</p>
+										</div>
+										<div class="col-lg-8">
+											<p class="text-left">
+												<strong><sec:authentication property="name" /></strong>
+											</p>
+											<p class="text-left">
+												<a href="<c:url value="/logout" />"
+													class="btn btn-primary btn-block btn-sm">Logout</a>
+											</p>
+										</div>
+									</div>
+								</div>
+							</li>
 							<li class="divider"></li>
 							<li><a href="<c:url value="/logout" />">Logout</a></li>
 						</ul>

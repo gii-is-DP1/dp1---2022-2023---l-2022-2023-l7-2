@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class CasillaParchis extends BaseEntity{
+public class CasillaParchis extends Casilla{
 
 	@NotBlank
     private TipoCasillaParchis tipoCasillaParchis;
