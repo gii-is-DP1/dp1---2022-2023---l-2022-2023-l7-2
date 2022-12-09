@@ -36,7 +36,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/sala")
 public class PartidaController {
 
-	private String REFRESH_SEECONDS = "4";
+	private String REFRESH_SEECONDS = "1";
 	private PartidaService partidaService;
 	private UsuarioService usuarioService;
 	private JugadorService jugadorService;
