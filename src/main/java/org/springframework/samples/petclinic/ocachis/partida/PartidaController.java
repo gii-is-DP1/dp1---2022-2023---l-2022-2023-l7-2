@@ -363,39 +363,10 @@ public class PartidaController {
 		}
 		return "redirect:/sala/";
 	}
-	//jugar PARCHIS
-	@GetMapping("/{partidaParchisId}/playParchis")
-	public String jugarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model,HttpServletResponse response,RedirectAttributes redirectAttributes){
-		PartidaParchis partida = partidaService.findByIdParchis(partidaParchisId);
-		Usuario u = this.usuarioService.getLoggedUsuario();
-		Jugador j = this.jugadorService.findJugadorOca(u.getId(), partida.getId());
-		model.put("partidaParchis", partida);
-
-		if(partida.getEstado()==TipoEstadoPartida.TERMINADA){
-			return "redirect:/sala/" + partidaParchisId + "/resumen";
-
-		}else if(partida.getEstado()==TipoEstadoPartida.CREADA){
-			redirectAttributes.addFlashAttribute("message", "La partida aun no ha empezado");
-			return "redirect:/sala/" + partidaParchisId + "/showParchis";
-		}
-
-		if(j!=null){
-			model.put("modo","jugador");
-			model.put("jugadorAutenticado", j);
-		}else if(partida.getUsuariosObservadores().contains(u)){
-			model.put("modo","observador");
-		}
-		response.addHeader("Refresh", REFRESH_SEECONDS);
-		model.put("now", new Date());
-		model.put("modo", "Parchis");
-		return VIEWS_JUGAR_PARCHIS;
-
-
-	}
+	
 
 
 	//jugar OCA
- 
 	@GetMapping(value="/{partidaOcaId}/playOca")
 	public String jugarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model,HttpServletResponse response, RedirectAttributes redirectAttributes){
 		PartidaOca partida = partidaService.findByIdOca(partidaOcaId);
@@ -418,8 +389,6 @@ public class PartidaController {
 			model.put("modo","observador");
 		}
 		response.addHeader("Refresh", REFRESH_SEECONDS);
-		int dado = partidaService.mostrarNumDado();
-		model.put("numDado",dado);
 		model.put("now", new Date());
 		return VIEWS_JUGAR_OCA;
 	}
@@ -441,14 +410,57 @@ public class PartidaController {
 		return "redirect:/sala/" + partidaOcaId + "/playOca";
 	}
 
+	
+	//jugar PARCHIS
+	@GetMapping("/{partidaParchisId}/playParchis")
+	public String jugarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model,HttpServletResponse response,RedirectAttributes redirectAttributes){
+		PartidaParchis partida = partidaService.findByIdParchis(partidaParchisId);
+		Usuario u = this.usuarioService.getLoggedUsuario();
+		Jugador j = this.jugadorService.findJugadorParchis(u.getId(), partida.getId());
+		model.put("partidaParchis", partida);
+
+		if(partida.getEstado()==TipoEstadoPartida.TERMINADA){
+			return "redirect:/sala/" + partidaParchisId + "/resumen";
+
+		}else if(partida.getEstado()==TipoEstadoPartida.CREADA){
+			redirectAttributes.addFlashAttribute("message", "La partida aun no ha empezado");
+			return "redirect:/sala/" + partidaParchisId + "/showParchis";
+		}
+
+		if(j!=null){
+			model.put("modo","jugador");
+			model.put("jugadorAutenticado", j);
+		}else if(partida.getUsuariosObservadores().contains(u)){
+			model.put("modo","observador");
+		}
+		//response.addHeader("Refresh", REFRESH_SEECONDS);
+		model.put("now", new Date());
+		model.put("modo", "Parchis");
+		return VIEWS_JUGAR_PARCHIS;
+
+
+	}
+	
 	@PostMapping(value="/{partidaParchisId}/playParchis")
 	public String tirarDadosPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId,
-					 ModelMap model, HttpServletResponse response){
+					 ModelMap model, HttpServletResponse response,  RedirectAttributes redirectAttributes){
 		
 		PartidaParchis partida = partidaService.findByIdParchis(partidaParchisId);
 		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorParchis(u.getId(), partida.getId());
+		
 		Collection<FichaParchis> fichas = j.getFichasParchis();
+		
+		int dado = partidaService.TirarNumDado();
+		redirectAttributes.addFlashAttribute("numDado", dado);
+
+		ArrayList<FichaParchis> fichasQuePuedenMoverse = new ArrayList<>();
+		for(FichaParchis f: fichas){
+			if(partida.sePuedeMover(f,dado)){
+				fichasQuePuedenMoverse.add(f);
+			}
+		}
+		redirectAttributes.addFlashAttribute("fichasQueSePuedenMover", fichasQuePuedenMoverse);
 
 		if(j.getColor() != partida.getColorJugadorActual()){
 				return "redirect:/noAccess";

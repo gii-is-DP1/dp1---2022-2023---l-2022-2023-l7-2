@@ -44,5 +44,12 @@ public class CasillaParchis extends Casilla{
             return "vertical";
         else return "horizontal";
     }
-     
+    public Boolean esMeta(){
+       if(tipoCasillaParchis == TipoCasillaParchis.CASAROJO || 
+       tipoCasillaParchis == TipoCasillaParchis.CASAAMARILLO || 
+       tipoCasillaParchis == TipoCasillaParchis.CASAVERDE || 
+       tipoCasillaParchis == TipoCasillaParchis.CASAAZUL)
+        return true;
+        return false;
+    }
 }

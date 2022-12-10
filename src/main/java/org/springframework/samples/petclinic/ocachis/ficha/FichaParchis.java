@@ -93,5 +93,4 @@ public class FichaParchis extends Ficha{
 		result += " Coordenadas: " + getCoordenadas().getX() + " | " + getCoordenadas().getY();
 		return result;
 	}
-
 }

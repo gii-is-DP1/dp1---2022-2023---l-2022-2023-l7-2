@@ -344,7 +344,7 @@ public class PartidaService {
 		partida.setDuracion(duracionInMinutes);
 	}
 
-	public int mostrarNumDado(){
+	public int TirarNumDado(){
 		int numDado =(int) (Math.random()*6 +1);
 		return numDado;
 	}
