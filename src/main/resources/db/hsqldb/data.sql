@@ -559,3 +559,32 @@ INSERT INTO partida_parchis_casillas(partida_parchis_id, casillas_id) VALUES
 (1, 102),
 (1, 103),
 (1, 104);
+
+
+INSERT INTO ficha_parchis(id, color, esta_en_casa, esta_en_la_meta, casilla_actual_id) VALUES 
+(1,0, true, false, 103),
+(2,0, true, false, 103),
+(3,0, true, false, 103),
+(4,0, true, false, 103),
+(5,1, true, false, 101),
+(6,1, true, false, 101),
+(7,1, true, false, 101),
+(8,1, true, false, 101),
+(9,2, true, false, 104),
+(10,2,true, false, 104),
+(11,2,true, false, 104),
+(12,2,true, false, 104);
+
+INSERT INTO jugador_fichas_parchis(jugador_id,fichas_parchis_id) VALUES
+(8,1),
+(8,2),
+(8,3),
+(8,4),
+(9,5),
+(9,6),
+(9,7),
+(9,8),
+(10,9),
+(10,10),
+(10,11),
+(10,12);

@@ -235,7 +235,7 @@ public class PartidaService {
 	}
 
 	@Transactional
-    public void jugar(PartidaOca partida, FichaOca ficha, Jugador j) {
+    public void jugarOca(PartidaOca partida, FichaOca ficha, Jugador j) {
 			
 		
 		if(j.getNumTurnosBloqueadoRestantesOca()>0){
@@ -343,4 +343,11 @@ public class PartidaService {
 		Integer duracionInMinutes = (int)duracion.getSeconds() /60;
 		partida.setDuracion(duracionInMinutes);
 	}
+
+	public int mostrarNumDado(){
+		int numDado =(int) (Math.random()*6 +1);
+		return numDado;
+	}
+
+	
 }

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaService;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
+import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaService;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.jugador.JugadorService;
@@ -386,6 +387,7 @@ public class PartidaController {
 		}
 		response.addHeader("Refresh", REFRESH_SEECONDS);
 		model.put("now", new Date());
+		model.put("modo", "Parchis");
 		return VIEWS_JUGAR_PARCHIS;
 
 
@@ -416,6 +418,8 @@ public class PartidaController {
 			model.put("modo","observador");
 		}
 		response.addHeader("Refresh", REFRESH_SEECONDS);
+		int dado = partidaService.mostrarNumDado();
+		model.put("numDado",dado);
 		model.put("now", new Date());
 		return VIEWS_JUGAR_OCA;
 	}
@@ -433,8 +437,26 @@ public class PartidaController {
 		if(j.getColor() != partida.getColorJugadorActual()){
 				return "redirect:/noAccess";
 		}		
-		partidaService.jugar(partida, ficha, j);
+		partidaService.jugarOca(partida, ficha, j);
 		return "redirect:/sala/" + partidaOcaId + "/playOca";
+	}
+
+	@PostMapping(value="/{partidaParchisId}/playParchis")
+	public String tirarDadosPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId,
+					 ModelMap model, HttpServletResponse response){
+		
+		PartidaParchis partida = partidaService.findByIdParchis(partidaParchisId);
+		Usuario u = this.usuarioService.getLoggedUsuario();
+		Jugador j = this.jugadorService.findJugadorParchis(u.getId(), partida.getId());
+		Collection<FichaParchis> fichas = j.getFichasParchis();
+
+		if(j.getColor() != partida.getColorJugadorActual()){
+				return "redirect:/noAccess";
+		}		
+		//partidaService.jugarParchis(partida, fichas, j);
+		
+		
+		return "redirect:/sala/" + partidaParchisId + "/playParchis";
 	}
 
 	@GetMapping("/{partidaOcaId}/resumen")
