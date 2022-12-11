@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotBlank;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import lombok.Getter;
 import lombok.Setter;

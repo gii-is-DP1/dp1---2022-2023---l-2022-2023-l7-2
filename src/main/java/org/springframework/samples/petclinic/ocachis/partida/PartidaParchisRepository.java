@@ -14,8 +14,6 @@ public interface PartidaParchisRepository extends CrudRepository<PartidaParchis,
     
     @Query("SELECT parchis from PartidaParchis parchis where parchis.estado=0 OR parchis.estado=1")
     Collection<PartidaParchis> findEsperaParchis();
-    
     PartidaParchis save(PartidaParchis p);
-
     
 }

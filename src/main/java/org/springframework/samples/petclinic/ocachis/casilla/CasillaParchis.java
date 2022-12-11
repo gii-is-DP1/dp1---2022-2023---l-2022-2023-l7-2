@@ -5,7 +5,8 @@ import java.util.Map;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,6 @@ public class CasillaParchis extends Casilla{
 
     private static Map<Integer,Coordenadas> coordenadas = inicializarMapa();
 
-	@NotBlank
     private TipoCasillaParchis tipoCasillaParchis;
 
     @OneToMany(mappedBy="casillaActual")
