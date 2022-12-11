@@ -70,9 +70,10 @@ public class PartidaParchis extends Partida{
 
 
     public boolean sePuedeMover(FichaParchis ficha, int dado) {
-		if(ficha.isEstaEnCasa() && dado!=5){
+		if(ficha.isEstaEnCasa() && dado != 5){
 			return false;
-		} 
+		}
+
 		List<CasillaParchis> l = getCasillasPorLasQuePasa(ficha, dado);
 		for(CasillaParchis c: l){
 			if(c.getBloqueada()){
@@ -82,32 +83,57 @@ public class PartidaParchis extends Partida{
         return true;
     }
 
-public List<CasillaParchis> getCasillasPorLasQuePasa(FichaParchis ficha, Integer dado){
-	ArrayList<CasillaParchis> result = new ArrayList<>();
-	Integer numero = ficha.getCasillaActual().getNumero();
-	int movimientos = dado;
-	Boolean haRebotado = false;
-	while(movimientos>0){
-		numero = getSiguienteNumero(numero, ficha.getColor(), haRebotado);
-		CasillaParchis casilla = this.getCasillaConNumero(numero);
-		if(casilla.esMeta()) haRebotado = true;
-		result.add(casilla);
-		movimientos--;
+	public List<CasillaParchis> getCasillasPorLasQuePasa(FichaParchis ficha, Integer dado){
+		ArrayList<CasillaParchis> result = new ArrayList<>();
+		Integer numero = ficha.getCasillaActual().getNumero();
+		int movimientos = dado;
+		Boolean haRebotado = false;
+		while(movimientos>0){
+			numero = getSiguienteNumero(numero, ficha.getColor(), haRebotado);
+			CasillaParchis casilla = this.getCasillaConNumero(numero);
+			if(casilla.esMeta()) haRebotado = true;
+			result.add(casilla);
+			movimientos--;
+		}
+		return result;
+
 	}
-	return result;
 
-}
+	public Integer getSiguienteNumero(Integer numeroInicial, Color color, Boolean rebote){
+		Integer res = numeroInicial + 1;
+		if(rebote) res = numeroInicial - 1;
+		if(color==Color.ROJO && numeroInicial==34) res = 85;
+		else if(color==Color.AMARILLO && numeroInicial==68) res = 69;
+		else if(color==Color.VERDE && numeroInicial==51) res = 93;
+		else if(color==Color.AZUL && numeroInicial==17) res = 77;
+		if(numeroInicial == 68 && color != Color.AMARILLO) res = 1;
+		if(numeroInicial == 101) res = 5;
+		if(numeroInicial == 102) res = 22;
+		if(numeroInicial == 103) res = 39;
+		if(numeroInicial == 104) res = 56;
+		return res;
+	}
 
-public Integer getSiguienteNumero(Integer numeroInicial, Color color, Boolean rebote){
-	Integer res = numeroInicial + 1;
-	if(rebote) res = numeroInicial - 1;
-	if(color==Color.ROJO && numeroInicial==34) res = 85;
-	else if(color==Color.AMARILLO && numeroInicial==68) res = 69;
-	else if(color==Color.VERDE && numeroInicial==51) res = 93;
-	else if(color==Color.AZUL && numeroInicial==17) res = 77;
-	if(numeroInicial == 68 && color != Color.AMARILLO) res = 1;
-	return res;
-}
+	public void pasarTurno(){
+		switch(this.getColorJugadorActual()){
+			case ROJO:
+				this.setColorJugadorActual(Color.AMARILLO);
+				
+				break;
+			case AMARILLO:
+				if(this.getJugadores().size()==2) this.setColorJugadorActual(Color.ROJO);
+				else this.setColorJugadorActual(Color.VERDE);
+				break;
+			case VERDE:
+				if(this.getJugadores().size()==3) this.setColorJugadorActual(Color.ROJO);
+				else this.setColorJugadorActual(Color.AZUL);
+				break;
+			case AZUL:
+				this.setColorJugadorActual(Color.ROJO);
+				break;
+		}
+		this.addLog("TURNO DEL JUGADOR " + this.getColorJugadorActual());
+	}
 
 
 

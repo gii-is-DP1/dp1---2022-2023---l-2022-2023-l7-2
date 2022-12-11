@@ -41,6 +41,8 @@ public class CasillaParchis extends Casilla{
         posiciones.put(56,new Coordenadas(145,407));
         //salida amarilla
         posiciones.put(5, new Coordenadas(400, 530));
+        //salida azul
+        posiciones.put(22, new Coordenadas(532, 242));
         //salida roja
         posiciones.put(39, new Coordenadas(240,143));
         
@@ -54,24 +56,23 @@ public class CasillaParchis extends Casilla{
         posiciones.put(8, new Coordenadas(400, 436));
 
         //9-16
-         posiciones.put(9, new Coordenadas(240, 436));
-        posiciones.put(10, new Coordenadas(212, 436));
-        posiciones.put(11, new Coordenadas(180, 436));
-        posiciones.put(12, new Coordenadas(145, 436));
-        posiciones.put(13, new Coordenadas(114, 436));
-        posiciones.put(14, new Coordenadas(79, 436));
-        posiciones.put(15, new Coordenadas(45, 436));
-        posiciones.put(16, new Coordenadas(15, 436));
-        posiciones.put(17, new Coordenadas(15, 436));
+         posiciones.put(9, new Coordenadas(436, 400));
+        posiciones.put(10, new Coordenadas(468, 400));
+        posiciones.put(11, new Coordenadas(500, 400));
+        posiciones.put(12, new Coordenadas(532, 400));
+        posiciones.put(13, new Coordenadas(564, 400));
+        posiciones.put(14, new Coordenadas(596, 400));
+        posiciones.put(15, new Coordenadas(630, 400));
+        posiciones.put(16, new Coordenadas(662, 400));
 
         //18-25
-        posiciones.put(18, new Coordenadas(400, 662));
-        posiciones.put(19, new Coordenadas(400, 630));
-        posiciones.put(20, new Coordenadas(400, 598));
-        posiciones.put(21, new Coordenadas(400, 566));
-        posiciones.put(22, new Coordenadas(400, 500));
-        posiciones.put(23, new Coordenadas(400, 468));
-        posiciones.put(24, new Coordenadas(400, 436));
+        posiciones.put(18, new Coordenadas(662, 242));
+        posiciones.put(19, new Coordenadas(630, 242));
+        posiciones.put(20, new Coordenadas(596, 242));
+        posiciones.put(21, new Coordenadas(564, 242));
+        posiciones.put(23, new Coordenadas(500, 242));
+        posiciones.put(24, new Coordenadas(468, 242));
+        posiciones.put(25, new Coordenadas(436, 242));
 
         //26-33
         posiciones.put(26, new Coordenadas(400, 242));
@@ -82,8 +83,7 @@ public class CasillaParchis extends Casilla{
         posiciones.put(31, new Coordenadas(400, 80));
         posiciones.put(32, new Coordenadas(400, 47));
         posiciones.put(33, new Coordenadas(400, 15));
-        posiciones.put(34, new Coordenadas(320, 15));
-
+        
         //35-42
         posiciones.put(35, new Coordenadas(240,15));
         posiciones.put(36, new Coordenadas(240,47));
@@ -102,8 +102,7 @@ public class CasillaParchis extends Casilla{
         posiciones.put(48, new Coordenadas(79, 242));
         posiciones.put(49, new Coordenadas(45, 242));
         posiciones.put(50, new Coordenadas(15, 242));
-        posiciones.put(51, new Coordenadas(15, 325));
-
+        
         //52-59
         posiciones.put(52,new Coordenadas(15,407));
         posiciones.put(53,new Coordenadas(45,407));
@@ -122,7 +121,49 @@ public class CasillaParchis extends Casilla{
         posiciones.put(65, new Coordenadas(248, 598));
         posiciones.put(66, new Coordenadas(248, 630));
         posiciones.put(67, new Coordenadas(248, 662));
+        
+        //No funciona en los pasillos el tema de horizontal y vertical?!
+        //pasillo amarillo
         posiciones.put(68, new Coordenadas(324, 662));
+        posiciones.put(69, new Coordenadas(324, 630));
+        posiciones.put(70, new Coordenadas(324, 598));
+        posiciones.put(71, new Coordenadas(324, 566));
+        posiciones.put(72, new Coordenadas(324, 530));
+        posiciones.put(73, new Coordenadas(324, 500));
+        posiciones.put(74, new Coordenadas(324, 468));
+        posiciones.put(75, new Coordenadas(324, 436));
+
+        //pasillo azul
+        posiciones.put(17, new Coordenadas(662, 321));
+        posiciones.put(77, new Coordenadas(630, 321));
+        posiciones.put(78, new Coordenadas(596, 321));
+        posiciones.put(79, new Coordenadas(564, 321));
+        posiciones.put(80, new Coordenadas(532, 321));
+        posiciones.put(81, new Coordenadas(500, 321));
+        posiciones.put(82, new Coordenadas(468, 321));
+        posiciones.put(83, new Coordenadas(436, 321));
+
+        //pasillo rojo
+        posiciones.put(34, new Coordenadas(320, 15));
+        posiciones.put(85, new Coordenadas(320,47));
+        posiciones.put(86, new Coordenadas(320,80));
+        posiciones.put(87, new Coordenadas(320,112));
+        posiciones.put(88, new Coordenadas(320,143));
+        posiciones.put(89, new Coordenadas(320,175));
+        posiciones.put(90, new Coordenadas(320,210));
+        posiciones.put(91, new Coordenadas(320,242));
+
+        //pasillo verde --no funciona
+        posiciones.put(51, new Coordenadas(15, 325));
+
+        //meta amarilla
+        posiciones.put(76, new Coordenadas(324, 375));
+        //meta azul
+        posiciones.put(84, new Coordenadas(375, 321));
+        //meta roja
+        posiciones.put(92, new Coordenadas(320, 278));
+        //meta verde -- no funciona
+        posiciones.put(100, new Coordenadas(324, 325));
 
         return posiciones;
 	 }

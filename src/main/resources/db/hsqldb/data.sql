@@ -370,7 +370,7 @@ INSERT INTO casilla_parchis(id, numero, bloqueada, tipo_casilla_parchis) VALUES
 (31, 31, false, 0),
 (32, 32, false, 0),
 (33, 33, false, 0),
-(34, 34, false, 1),
+(34, 34, true, 1),
 (35, 35, false, 0),
 (36, 36, false, 0),
 (37, 37, false, 0),
@@ -562,16 +562,16 @@ INSERT INTO partida_parchis_casillas(partida_parchis_id, casillas_id) VALUES
 
 
 INSERT INTO ficha_parchis(id, color, esta_en_casa, esta_en_la_meta, casilla_actual_id) VALUES 
-(1,0, true, false, 34),
-(2,0, true, false, 34),
+(1,0, false, false, 34),
+(2,0, false, false, 34),
 (3,0, true, false, 103),
-(4,0, true, false, 103),
-(5,1, true, false, 9),
-(6,1, true, false, 9),
+(4,0, false, false, 37),
+(5,1, false, false, 9),
+(6,1, false, false, 9),
 (7,1, true, false, 101),
 (8,1, true, false, 101),
-(9,2, true, false, 51),
-(10,2,true, false, 51),
+(9,2, false, false, 51),
+(10,2,false, false, 51),
 (11,2,true, false, 104),
 (12,2,true, false, 104);
 

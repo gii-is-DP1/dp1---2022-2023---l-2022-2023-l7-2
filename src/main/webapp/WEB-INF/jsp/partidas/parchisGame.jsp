@@ -1,6 +1,6 @@
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ page import="org.springframework.samples.petclinic.model.Color"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -14,7 +14,7 @@
 <petclinic:layout pageName="game" title="Jugando al parchis">
     
     <h1>vista: ${modo}</h1>
-    <h1>   El dado ha sacado el numero: ${numDado}    </h1>
+    <h1>   El dado ha sacado el numero: ${dado}    </h1>
     <h1>Es el turno del jugador ${partidaParchis.colorJugadorActual}</h1>
    
 <petclinic:parchisBoard tablero="${partidaParchis}"></petclinic:parchisBoard>
@@ -39,6 +39,15 @@
         <form:form class="form-horizontal" id="tirar-dado-form"
             method="post" action="/sala/${partidaParchis.id}/playParchis">
             <button class="btn btn-default">Tirar dado</button>
+
+            <c:forEach  items="${jugadorAutenticado.fichasParchis}" var="fichaJugador">
+                <c:if test="${fichasQueSePuedenMover.contains(fichaJugador)}">
+                    <form:hidden path="ficha" value="${fichaJugador}"></form:hidden>
+                    <!--<input type="hidden" name="ficha" id="ficha" value="${fichaJugador}">-->
+                    <button class="btn btn-default">${fichaJugador.id}</button>
+                </c:if>
+            </c:forEach>
+       
         </form:form>
             
     </c:if>
@@ -47,8 +56,16 @@
 
     <br>
     <br>
-    
+    dado: ${dado}
+    fichasQueSePuedenMover: ${fichasQueSePuedenMover}
+
+     
+
+    <h1>${ficha.id}</h1>
     <h1>Resumen:</h1>
+
+
+     
     
 </petclinic:layout>
 
@@ -60,4 +77,12 @@
 var dado = tirarDado();
 console.log(dado);
 
+</script>
+
+<script>
+
+    function guardarIdFicha(){
+        
+    }
+    
 </script>

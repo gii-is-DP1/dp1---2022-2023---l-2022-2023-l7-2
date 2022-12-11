@@ -3,12 +3,14 @@ package org.springframework.samples.petclinic.ocachis.partida;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Collection;
 import java.util.Date;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaService;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
@@ -427,8 +429,9 @@ public class PartidaController {
 	
 	@PostMapping(value="/{partidaParchisId}/playParchis")
 	public String tirarDadosPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId,
-					 ModelMap model, HttpServletResponse response,  RedirectAttributes redirectAttributes){
+					 ModelMap model, HttpServletResponse response,  RedirectAttributes redirectAttributes, @Param("ficha") FichaParchis ficha){
 		
+
 		PartidaParchis partida = partidaService.findByIdParchis(partidaParchisId);
 		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorParchis(u.getId(), partida.getId());
@@ -439,13 +442,9 @@ public class PartidaController {
 
 		Collection<FichaParchis> fichas = j.getFichasParchis();
 		int dado = partidaService.TirarNumDado();
-		ArrayList<FichaParchis> fichasQuePuedenMoverse = new ArrayList<>();
-		for(FichaParchis f: fichas){
-			if(partida.sePuedeMover(f, dado)){
-				fichasQuePuedenMoverse.add(f);
-			}
-		}
+		List<FichaParchis> fichasQuePuedenMoverse = j.getFichasQuePuedenMoverse(dado);
 
+		model.put("ficha", new FichaParchis());
 		model.put("fichasQueSePuedenMover", fichasQuePuedenMoverse);
 		model.put("now", new Date());
 		model.put("dado", dado);
