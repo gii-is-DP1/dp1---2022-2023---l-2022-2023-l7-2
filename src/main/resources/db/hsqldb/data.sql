@@ -566,12 +566,12 @@ INSERT INTO ficha_parchis(id, color, esta_en_casa, esta_en_la_meta, casilla_actu
 (2,0, true, false, 34),
 (3,0, true, false, 103),
 (4,0, true, false, 103),
-(5,1, true, false, 8),
-(6,1, true, false, 8),
+(5,1, true, false, 9),
+(6,1, true, false, 9),
 (7,1, true, false, 101),
 (8,1, true, false, 101),
-(9,2, true, false, 52),
-(10,2,true, false, 52),
+(9,2, true, false, 51),
+(10,2,true, false, 51),
 (11,2,true, false, 104),
 (12,2,true, false, 104);
 

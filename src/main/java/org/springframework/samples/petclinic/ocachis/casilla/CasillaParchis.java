@@ -53,6 +53,26 @@ public class CasillaParchis extends Casilla{
         posiciones.put(7, new Coordenadas(400, 468));
         posiciones.put(8, new Coordenadas(400, 436));
 
+        //9-16
+         posiciones.put(9, new Coordenadas(240, 436));
+        posiciones.put(10, new Coordenadas(212, 436));
+        posiciones.put(11, new Coordenadas(180, 436));
+        posiciones.put(12, new Coordenadas(145, 436));
+        posiciones.put(13, new Coordenadas(114, 436));
+        posiciones.put(14, new Coordenadas(79, 436));
+        posiciones.put(15, new Coordenadas(45, 436));
+        posiciones.put(16, new Coordenadas(15, 436));
+        posiciones.put(17, new Coordenadas(15, 436));
+
+        //18-25
+        posiciones.put(18, new Coordenadas(400, 662));
+        posiciones.put(19, new Coordenadas(400, 630));
+        posiciones.put(20, new Coordenadas(400, 598));
+        posiciones.put(21, new Coordenadas(400, 566));
+        posiciones.put(22, new Coordenadas(400, 500));
+        posiciones.put(23, new Coordenadas(400, 468));
+        posiciones.put(24, new Coordenadas(400, 436));
+
         //26-33
         posiciones.put(26, new Coordenadas(400, 242));
         posiciones.put(27, new Coordenadas(400, 210));
@@ -73,14 +93,25 @@ public class CasillaParchis extends Casilla{
         posiciones.put(41, new Coordenadas(240,210));
         posiciones.put(42, new Coordenadas(240,242));
 
+        //43-50
+        posiciones.put(43, new Coordenadas(240, 242));
+        posiciones.put(44, new Coordenadas(212, 242));
+        posiciones.put(45, new Coordenadas(180, 242));
+        posiciones.put(46, new Coordenadas(145, 242));
+        posiciones.put(47, new Coordenadas(114, 242));
+        posiciones.put(48, new Coordenadas(79, 242));
+        posiciones.put(49, new Coordenadas(45, 242));
+        posiciones.put(50, new Coordenadas(15, 242));
+        posiciones.put(51, new Coordenadas(15, 325));
+
         //52-59
         posiciones.put(52,new Coordenadas(15,407));
-        posiciones.put(53,new Coordenadas(145,407));
-        posiciones.put(54,new Coordenadas(145,407));
-        posiciones.put(55,new Coordenadas(145,407));
-        posiciones.put(57,new Coordenadas(145,407));
-        posiciones.put(58,new Coordenadas(145,407));
-        posiciones.put(59,new Coordenadas(145,407));
+        posiciones.put(53,new Coordenadas(45,407));
+        posiciones.put(54,new Coordenadas(79,407));
+        posiciones.put(55,new Coordenadas(114,407));
+        posiciones.put(57,new Coordenadas(180,407));
+        posiciones.put(58,new Coordenadas(212,407));
+        posiciones.put(59,new Coordenadas(240,407));
 
         //60-67
         posiciones.put(60, new Coordenadas(248, 436));

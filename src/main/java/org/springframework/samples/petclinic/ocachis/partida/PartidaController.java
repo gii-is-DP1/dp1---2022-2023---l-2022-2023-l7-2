@@ -413,10 +413,11 @@ public class PartidaController {
 		if(j!=null){
 			model.put("modo","jugador");
 			model.put("jugadorAutenticado", j);
+			if(partida.getColorJugadorActual()!=j.getColor()) response.addHeader("Refresh", REFRESH_SEECONDS);
 		}else if(partida.getUsuariosObservadores().contains(u)){
 			model.put("modo","observador");
+			response.addHeader("Refresh", REFRESH_SEECONDS);
 		}
-		//response.addHeader("Refresh", REFRESH_SEECONDS);
 		model.put("now", new Date());
 		model.put("modo", "Parchis");
 		return VIEWS_JUGAR_PARCHIS;
@@ -431,27 +432,28 @@ public class PartidaController {
 		PartidaParchis partida = partidaService.findByIdParchis(partidaParchisId);
 		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorParchis(u.getId(), partida.getId());
-		
-		Collection<FichaParchis> fichas = j.getFichasParchis();
-		
-		int dado = partidaService.TirarNumDado();
-		redirectAttributes.addFlashAttribute("numDado", dado);
+		model.put("partidaParchis", partida);
+		if(j.getColor() != partida.getColorJugadorActual()){
+				return "redirect:/noAccess";
+		}
 
+		Collection<FichaParchis> fichas = j.getFichasParchis();
+		int dado = partidaService.TirarNumDado();
 		ArrayList<FichaParchis> fichasQuePuedenMoverse = new ArrayList<>();
 		for(FichaParchis f: fichas){
-			if(partida.sePuedeMover(f,dado)){
+			if(partida.sePuedeMover(f, dado)){
 				fichasQuePuedenMoverse.add(f);
 			}
 		}
-		redirectAttributes.addFlashAttribute("fichasQueSePuedenMover", fichasQuePuedenMoverse);
 
-		if(j.getColor() != partida.getColorJugadorActual()){
-				return "redirect:/noAccess";
-		}		
+		model.put("fichasQueSePuedenMover", fichasQuePuedenMoverse);
+		model.put("now", new Date());
+		model.put("dado", dado);
+		model.put("modo", "Parchis");
+		model.put("modo","jugador");
+		model.put("jugadorAutenticado", j);
 		//partidaService.jugarParchis(partida, fichas, j);
-		
-		
-		return "redirect:/sala/" + partidaParchisId + "/playParchis";
+		return VIEWS_JUGAR_PARCHIS;
 	}
 
 	@GetMapping("/{partidaOcaId}/resumen")
