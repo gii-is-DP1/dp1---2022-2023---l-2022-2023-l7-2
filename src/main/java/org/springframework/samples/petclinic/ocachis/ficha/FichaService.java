@@ -13,11 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FichaService {
-    private FichaOcaRepository fichaOcaRepository;
+    private FichaOcaRepository2 fichaOcaRepository;
     private FichaParchisRepository fichaParchisRepository;
 
     @Autowired
-    public FichaService(FichaOcaRepository fichaOcaRepository, FichaParchisRepository fichaParchisRepository){
+    public FichaService(FichaOcaRepository2 fichaOcaRepository, FichaParchisRepository fichaParchisRepository){
         this.fichaOcaRepository = fichaOcaRepository;
         this.fichaParchisRepository = fichaParchisRepository;
     }
