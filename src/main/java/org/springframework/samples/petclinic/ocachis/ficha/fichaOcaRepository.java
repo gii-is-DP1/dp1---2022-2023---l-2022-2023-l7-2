@@ -8,6 +8,5 @@ public interface FichaOcaRepository extends CrudRepository<FichaOca,Integer>{
 
     
     
-
-    
 }
+    
