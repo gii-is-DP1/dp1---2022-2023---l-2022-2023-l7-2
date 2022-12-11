@@ -1,9 +1,6 @@
 package org.springframework.samples.petclinic.ocachis.casilla;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

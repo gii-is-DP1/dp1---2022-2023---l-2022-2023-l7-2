@@ -1,22 +1,15 @@
 package org.springframework.samples.petclinic.ocachis.partida;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.model.Color;
-import org.springframework.samples.petclinic.ocachis.casilla.Casilla;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import lombok.Getter;
 import lombok.Setter;

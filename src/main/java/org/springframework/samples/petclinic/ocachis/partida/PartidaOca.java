@@ -14,7 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
-import org.springframework.samples.petclinic.ocachis.casilla.Coordenadas;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 
 

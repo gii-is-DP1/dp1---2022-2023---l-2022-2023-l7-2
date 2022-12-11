@@ -14,8 +14,6 @@ import javax.persistence.OneToMany;
 
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaParchis;
-import org.springframework.samples.petclinic.ocachis.casilla.Coordenadas;
-import org.springframework.samples.petclinic.ocachis.casilla.TipoCasillaParchis;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 
@@ -36,7 +34,7 @@ public class PartidaParchis extends Partida{
 
 
 	@ElementCollection
-	@CollectionTable(name="log")
+	@CollectionTable(name="logParchis")
 	protected List<String> log = inicializarLog();
 
 	private List<String> inicializarLog(){
