@@ -7,6 +7,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 import org.springframework.samples.petclinic.model.Color;
+import org.springframework.samples.petclinic.ocachis.ficha.Ficha;
+import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
+import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaOca;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaParchis;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaService;
@@ -97,4 +100,25 @@ public class PartidaServiceTests {
 		PartidaOca po = this.ls.crearPartidaOca(2);
 		assertThat(this.ls.hayAlguienEnElPozo(po).equals(false));
 	}
+
+	@Test
+	void shouldReturnTrueHayAlguienEnElPozo(){
+		PartidaOca po = this.ls.crearPartidaOca(2);
+		po.getCasillaConNumero(31).añadirFicha(new FichaOca());
+		assertThat(this.ls.hayAlguienEnElPozo(po).equals(true));
+	}
+
+	@Test
+	void shouldLiberarFichasDelPozo(){
+		PartidaOca po = this.ls.crearPartidaOca(2);
+		Jugador j = new Jugador();
+		j.setColor(Color.ROJO);
+		j.setNumTurnosBloqueadoRestantesOca(100);
+		FichaOca f = new FichaOca();
+		f.setColor(Color.ROJO);
+		po.getCasillaConNumero(31).añadirFicha(f);
+		this.ls.liberarFichasPozo(po);
+		assertThat(j.getNumTurnosBloqueadoRestantesOca() == 0);
+	}
+
 }
