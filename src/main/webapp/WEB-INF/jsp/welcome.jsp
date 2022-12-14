@@ -6,7 +6,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <!-- %@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %-->  
 
-<petclinic:layout pageName="Inicio">
+<petclinic:layout pageName="Inicio" title="Inicio ">
     <h2><fmt:message key="welcome"/></h2>
     <div class="row">
         <h2>Project ${title}</h2>

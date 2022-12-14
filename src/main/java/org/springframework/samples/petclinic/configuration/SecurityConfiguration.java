@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -38,16 +37,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/users/new").permitAll()
 				.antMatchers("/session/**").permitAll()
 				.antMatchers("/noAccess").permitAll()
-				.antMatchers("/sala/**").permitAll()
+				
+				
 				.antMatchers("/admin/**").hasAnyAuthority("admin")
 				.antMatchers("/owners/**").hasAnyAuthority("owner","admin")				
 				.antMatchers("/vets/**").authenticated()
+				
+
+				.antMatchers("/sala/**").authenticated()
+
 				.antMatchers("/usuarios/nuevo").permitAll()
-				.antMatchers("/usuarios/**").permitAll()
-				.antMatchers("/usuarios/**/edit").permitAll() //aqui va admin y jugador
-                .antMatchers("/logro/listLogros").permitAll()
+				.antMatchers("/usuarios/**").authenticated()
+                
+				.antMatchers("/logro/listLogros").permitAll()
 				.antMatchers("/logro/new").hasAnyAuthority("admin")
 				.antMatchers("/logro/**/edit").hasAnyAuthority("admin")
+				
 				.antMatchers("/listUsuarios").hasAnyAuthority("admin")
 				.antMatchers("/listUsuarios/**").hasAnyAuthority("admin")
 				.antMatchers("/listPartidas").hasAnyAuthority("admin")
