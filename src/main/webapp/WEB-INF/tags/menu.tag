@@ -34,18 +34,20 @@
 					<span>Salas</span>
 				</petclinic:menuItem>
 			</sec:authorize>
-
+			
 				<petclinic:menuItem active="${name eq 'logro'}"
 						url="/logro/listLogros" title="Logros">
 						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 						<span>Logros</span>
 				</petclinic:menuItem>
-				
+
+				<sec:authorize access="isAuthenticated()">
 				<petclinic:menuItem active="${name eq 'partida'}"
 						url="/sala/create" title="Crear Partida">
 						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 						<span>Crear Partida</span>
 				</petclinic:menuItem>
+			</sec:authorize>
 
 			<sec:authorize access="hasAuthority('admin')">
 					<petclinic:menuItem active="${name eq 'admin'}"
@@ -78,7 +80,9 @@
 							class="glyphicon glyphicon-chevron-down"></span>
 					</a>
 						<ul class="dropdown-menu">
-							<li><a href="<c:url value="/" />">Editar usuario</a></li>
+							<li><a href="<c:url value="/usuarios/editProfile" />">Editar usuario</a></li>
+							<li class="divider"></li>
+							<li><a href="<c:url value="/usuarios/perfil" />">Mi perfil</a></li>
 							<li class="divider"></li>
 							<li><a href="<c:url value="/logout" />">Logout</a></li>
 						</ul>

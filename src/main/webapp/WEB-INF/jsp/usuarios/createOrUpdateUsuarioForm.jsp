@@ -6,12 +6,15 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-
 <%-- Esta vista requiere de los siguientes parametros:
 	-usuario, de tipo Usuario: es el usuario que se edita. Si se va a crear un usuario hay que pasarlo vacio como new Usuario()
-	-edit, de tipo Boolean: sirve para saber si se está editando o no un usuario --%>
+--%>
 
-<petclinic:layout pageName="usuarios">
+
+<c:if test="${usuario['new']}"><c:set var = "title"  value = "Nuevo Usuario"/></c:if>
+<c:if test="${!usuario['new']}"><c:set var = "title"  value = "Editar Usuario"/></c:if>
+
+<petclinic:layout pageName="usuarios" title="${title}">
     <h2> 
         <c:if test="${usuario['new']}">Nuevo </c:if> Usuario
     </h2>
@@ -21,7 +24,7 @@
         <div class="form-group has-feedback">
             <petclinic:inputField label="Nombre" name="nombre"/>
             <petclinic:inputField label="Apellido" name="apellido"/>
-           <c:if test="${!edit}">
+           <c:if test="${usuario['new']}">
            <petclinic:inputField label="Username" name="user.username"/>
 
             <petclinic:inputField label="Contraseña" name="user.password"/>
@@ -40,11 +43,13 @@
             </div>
         </div>
     </form:form>
-    <div class="row">
-    	<div class="col-auto align-self-center">Ya tienes una cuenta?</div>
-   	</div>
-   	<div class="row">
-
-    	<div class="col-auto align-self-center"><a href="<c:url value="/login" />">Iniciar sesión</a></div>
-   	</div>
+    
+    <c:if test="${usuario['new']}">
+	    <div class="row">
+	    	<div class="col-auto align-self-center">Ya tienes una cuenta?</div>
+	   	</div>
+	   	<div class="row">
+	    	<div class="col-auto align-self-center"><a href="<c:url value="/login" />">Iniciar sesión</a></div>
+	   	</div>
+   	</c:if>
 </petclinic:layout>

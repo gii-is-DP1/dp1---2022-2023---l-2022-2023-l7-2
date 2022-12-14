@@ -7,7 +7,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<petclinic:layout pageName="logros">
+<petclinic:layout pageName="logros" title="admin - Nnuevo logro">
     <h2>
         <c:if test="${logro['new']}">Nuevo </c:if> Logro
         

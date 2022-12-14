@@ -57,13 +57,7 @@ public class Usuario extends BaseEntity {
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
 
-	/*@Override
-	public String toString() {
-		return "Usuario [nombre=" + nombre +
-				", apellido=" + apellido +
-		", estadisticas=" + estadisticas.toString() +
-				", user=" + user.getUsername() + " | " + user.getPassword() +
-			"]";
-	}*/
-
+    public void actualizarEstadisticasOca(Integer duracion, Boolean esGanador, Integer vecesCaidoEnMuerte) {
+        estadisticas.updateEstadisticasOca(duracion, esGanador, vecesCaidoEnMuerte);
+}
 }
