@@ -42,8 +42,6 @@
 
             <c:forEach  items="${jugadorAutenticado.fichasParchis}" var="fichaJugador">
                 <c:if test="${fichasQueSePuedenMover.contains(fichaJugador)}">
-                    <form:hidden path="ficha" value="${fichaJugador}"></form:hidden>
-                    <!--<input type="hidden" name="ficha" id="ficha" value="${fichaJugador}">-->
                     <button class="btn btn-default">${fichaJugador.id}</button>
                 </c:if>
             </c:forEach>
@@ -61,7 +59,7 @@
 
      
 
-    <h1>${ficha.id}</h1>
+    
     <h1>Resumen:</h1>
 
 
