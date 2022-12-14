@@ -10,6 +10,7 @@ public class CasillaService {
     
 
     private CasillaOcaRepository casillaOcaRepository;
+    private CasillaParchisRepository casillaParchisRepository;
 
     @Autowired
     public CasillaService(CasillaOcaRepository casillaOcaRepository){
@@ -25,6 +26,12 @@ public class CasillaService {
     @Transactional
     public CasillaOca saveCasillaOca(CasillaOca casilla){
         CasillaOca c = casillaOcaRepository.save(casilla);
+        return c;
+    }
+
+    @Transactional
+    public CasillaParchis saveCasillaParchis(CasillaParchis casilla){
+        CasillaParchis c = casillaParchisRepository.save(casilla);
         return c;
     }
 

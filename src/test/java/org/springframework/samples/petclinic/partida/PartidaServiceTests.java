@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
+import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaOca;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaParchis;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaService;
@@ -72,4 +73,28 @@ public class PartidaServiceTests {
         int numeroPartidaParchisFinal = this.ls.findAllParchis().size();
 		assertThat(numeroPartidaParchisFinal).isEqualTo(numeroPartidaParchisInicial +1);
     }
+
+	@Test
+	void shouldInitializePartidaOca(){
+		PartidaOca po = this.ls.crearPartidaOca(2);
+		assertThat(po.getEstado().equals(TipoEstadoPartida.CREADA));
+		assertThat(po.getMaxJugadores().equals(2));
+		assertThat(po.getColorJugadorActual().equals(Color.ROJO));
+		assertThat(po.getCasillas().size() == 63);
+	}
+
+	@Test
+	void shouldInitializePartidaParchis(){
+		PartidaParchis pp = this.ls.crearPartidaParchis(2);
+		assertThat(pp.getEstado().equals(TipoEstadoPartida.CREADA));
+		assertThat(pp.getMaxJugadores().equals(2));
+		assertThat(pp.getColorJugadorActual().equals(Color.ROJO));
+		assertThat(pp.getCasillas().size() == 104);
+	}
+
+	@Test 
+	void shouldReturnFalseHayAlguienEnElPozo(){
+		PartidaOca po = this.ls.crearPartidaOca(2);
+		assertThat(this.ls.hayAlguienEnElPozo(po).equals(false));
+	}
 }

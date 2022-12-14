@@ -402,6 +402,7 @@ public class PartidaService {
 			else if(i==102)casilla.setTipoCasillaParchis(TipoCasillaParchis.CASAAZUL);
 			else if(i==103)casilla.setTipoCasillaParchis(TipoCasillaParchis.CASAROJO);
 			else if(i==104)casilla.setTipoCasillaParchis(TipoCasillaParchis.CASAVERDE);
+			//this.casillaService.saveCasillaParchis(casilla);
 			casillas.add(casilla);
 		}
 		partida.setCasillas(casillas);
