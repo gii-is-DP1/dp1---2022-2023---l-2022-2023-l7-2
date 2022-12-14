@@ -68,6 +68,10 @@ public String toString(){
     return "usuarioId: " + usuario.getId() + " color: " + color.toString();
 }
 
+    public void finalizarPartidaOca(Integer duracion) {
+        this.usuario.actualizarEstadisticasOca(duracion, this.esGanador, this.vecesCaidoEnMuerte);
+    }
+
 
     public List<FichaParchis> getFichasQuePuedenMoverse(Integer dado){
         ArrayList<FichaParchis> result = new ArrayList<>();

@@ -27,7 +27,7 @@
            <c:if test="${usuario['new']}">
            <petclinic:inputField label="Username" name="user.username"/>
 
-            <petclinic:inputField label="Contraseña" name="user.password"/>
+            <petclinic:inputField label="ContraseÃ±a" name="user.password"/>
            </c:if>            
         </div>
         <div class="form-group">
@@ -49,7 +49,7 @@
 	    	<div class="col-auto align-self-center">Ya tienes una cuenta?</div>
 	   	</div>
 	   	<div class="row">
-	    	<div class="col-auto align-self-center"><a href="<c:url value="/login" />">Iniciar sesión</a></div>
+	    	<div class="col-auto align-self-center"><a href="<c:url value="/login" />">Iniciar sesiÃ³n</a></div>
 	   	</div>
    	</c:if>
 </petclinic:layout>
