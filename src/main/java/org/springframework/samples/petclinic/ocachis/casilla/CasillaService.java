@@ -13,11 +13,12 @@ public class CasillaService {
     private CasillaParchisRepository casillaParchisRepository;
 
     @Autowired
-    public CasillaService(CasillaOcaRepository casillaOcaRepository){
+    public CasillaService(CasillaOcaRepository casillaOcaRepository, CasillaParchisRepository casillaParchisRepository){
         this.casillaOcaRepository = casillaOcaRepository;
+        this.casillaParchisRepository =  casillaParchisRepository;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Iterable<CasillaOca> findAllForPartidaOca(Integer partidaOcaId){
         // return casillaOcaRepository.findAllForPartidaOca(partidaOcaId);
         return casillaOcaRepository.findAll();

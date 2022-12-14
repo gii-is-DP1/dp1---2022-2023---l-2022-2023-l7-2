@@ -8,6 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
+import org.springframework.samples.petclinic.model.Color;
+import org.springframework.samples.petclinic.ocachis.casilla.CasillaService;
+import org.springframework.samples.petclinic.ocachis.ficha.FichaService;
 import org.springframework.samples.petclinic.ocachis.jugador.JugadorService;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaController;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaOca;
@@ -26,15 +31,18 @@ import org.springframework.samples.petclinic.ocachis.user.AuthoritiesService;
 import org.springframework.samples.petclinic.ocachis.usuario.UsuarioService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 
 
 @WebMvcTest(controllers = PartidaController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
+@WebAppConfiguration
 class PartidaControllerTests {
 
+
 	private static final int TEST_PARTIDAOCA_ID = 41;
-	private static final int TEST_PARTIDAPARCHIS_ID = 41;
+	private static final int TEST_PARTIDAPARCHIS_ID = 42;
 
 	@Autowired
 	private PartidaController partidaController;
@@ -50,7 +58,7 @@ class PartidaControllerTests {
 
 	@MockBean
 	private AuthoritiesService authoritiesService;
-
+	
 	@Autowired
 	private MockMvc mockMvc;
 
@@ -64,18 +72,21 @@ class PartidaControllerTests {
 		po.setId(TEST_PARTIDAOCA_ID);
 		po.setCodigoPartida(30);
 		po.setEstado(TipoEstadoPartida.CREADA);
+		po.setColorJugadorActual(Color.ROJO);
+		po.setJugadores(new ArrayList<>());
 		given(this.partidaService.findByIdOca(TEST_PARTIDAOCA_ID)).willReturn(po);
 		
 		pp = new PartidaParchis();
 		pp.setId(TEST_PARTIDAPARCHIS_ID);
-		pp.setCodigoPartida(30);
+		pp.setCodigoPartida(31);
 		pp.setEstado(TipoEstadoPartida.CREADA);
 		given(this.partidaService.findByIdParchis(TEST_PARTIDAPARCHIS_ID)).willReturn(pp);
 
 	}
 
-	@WithMockUser(value = "spring")
+	
 	@Test
+	@WithMockUser(value = "spring")
 	void testcrearPartidaHtml() throws Exception {
 		mockMvc.perform(get("/sala/create")).andExpect(status().isOk()).andExpect(model().attributeExists("procesarPartidaForm"))
 				.andExpect(view().name("partidas/createPartidaForm"));
@@ -87,6 +98,7 @@ class PartidaControllerTests {
 		mockMvc.perform(post("/sala/create").param("tipo", "parchis").param("maxJugadores", "3").with(csrf()))
 		.andExpect(status().is3xxRedirection());
 	}
+	
 
     @WithMockUser(value = "spring")
 	@Test

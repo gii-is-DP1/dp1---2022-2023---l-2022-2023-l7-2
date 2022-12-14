@@ -24,25 +24,25 @@ public class PartidaServiceTests {
     @Test
 	void shouldFindPartidatWithCorrectId() {
 		PartidaOca po = this.ls.findByIdOca(1);
-		assertThat(po.getCodigoPartida()).isEqualTo(22);
+		assertThat(po.getCodigoPartida()).isEqualTo(100);
 		assertThat(po.getMaxJugadores()).isEqualTo(3);
 
 		PartidaParchis pp = this.ls.findByIdParchis(1);
-		assertThat(pp.getCodigoPartida()).isEqualTo(27);
+		assertThat(pp.getCodigoPartida()).isEqualTo(103);
 		assertThat(pp.getMaxJugadores()).isEqualTo(4);
 	}
     @Test
 	void shouldFindAllPartidasOca() {
 		Collection<PartidaOca> pos = this.ls.findAllOca();
         PartidaOca po = EntityUtils.getById(pos, PartidaOca.class, 1);
-		assertThat(po.getCodigoPartida()).isEqualTo(22);
+		assertThat(po.getCodigoPartida()).isEqualTo(100);
 		assertThat(po.getMaxJugadores()).isEqualTo(3);
 	}
 	@Test
 	void shouldFindAllPartidasParchis() {
 		Collection<PartidaParchis> pps = this.ls.findAllParchis();
 		PartidaParchis pp = EntityUtils.getById(pps, PartidaParchis.class, 1);
-		assertThat(pp.getCodigoPartida()).isEqualTo(27);
+		assertThat(pp.getCodigoPartida()).isEqualTo(103);
 		assertThat(pp.getMaxJugadores()).isEqualTo(4);
 	}
     @Test 

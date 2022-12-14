@@ -2,7 +2,6 @@ package org.springframework.samples.petclinic.ocachis.partida;
 
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Collection;
 import java.util.Date;
@@ -12,10 +11,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Color;
-import org.springframework.samples.petclinic.ocachis.casilla.CasillaService;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
-import org.springframework.samples.petclinic.ocachis.ficha.FichaService;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.jugador.JugadorService;
 import org.springframework.samples.petclinic.ocachis.partida.exceptions.PartidaLlenaException;
@@ -41,17 +38,12 @@ public class PartidaController {
 	private PartidaService partidaService;
 	private UsuarioService usuarioService;
 	private JugadorService jugadorService;
-	private CasillaService casillaService;
-	private FichaService fichaService;
-
 	@Autowired
 	public PartidaController(PartidaService partidaService, UsuarioService usuarioService,
-			JugadorService jugadorService, CasillaService casillaService, FichaService fichaService) {
+			JugadorService jugadorService) {
 		this.partidaService = partidaService;
 		this.usuarioService = usuarioService;
 		this.jugadorService = jugadorService;
-		this.casillaService = casillaService;
-		this.fichaService = fichaService;
 	}
 
 	@InitBinder
