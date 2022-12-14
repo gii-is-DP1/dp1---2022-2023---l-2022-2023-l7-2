@@ -429,7 +429,7 @@ public class PartidaController {
 	
 	@PostMapping(value="/{partidaParchisId}/playParchis")
 	public String tirarDadosPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId,
-					 ModelMap model, HttpServletResponse response,  RedirectAttributes redirectAttributes, @Param("ficha") FichaParchis ficha){
+					 ModelMap model, HttpServletResponse response,  RedirectAttributes redirectAttributes){
 		
 
 		PartidaParchis partida = partidaService.findByIdParchis(partidaParchisId);
@@ -444,7 +444,6 @@ public class PartidaController {
 		int dado = partidaService.TirarNumDado();
 		List<FichaParchis> fichasQuePuedenMoverse = j.getFichasQuePuedenMoverse(dado);
 
-		model.put("ficha", new FichaParchis());
 		model.put("fichasQueSePuedenMover", fichasQuePuedenMoverse);
 		model.put("now", new Date());
 		model.put("dado", dado);
