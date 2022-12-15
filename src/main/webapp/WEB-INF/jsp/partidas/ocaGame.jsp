@@ -21,7 +21,6 @@
     <br>
     Jugador autenticado: ${jugadorAutenticado}
 
-    Color jugador autenticado : ${jugadorAutenticado.color}
     <br>
     colorJugador actual : ${partidaOca.colorJugadorActual}
 

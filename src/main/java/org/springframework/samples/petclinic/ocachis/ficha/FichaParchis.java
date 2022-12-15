@@ -89,7 +89,8 @@ public class FichaParchis extends Ficha{
 		String result="";
 		result +="FICHA: ";
 		result += getColor().toString();
-		result+= " Posicion en la casilla: " + casillaActual.getFichas().indexOf(this);
+		result += " Casilla " + casillaActual.getNumero();
+		result += " Posicion en la casilla: " + casillaActual.getFichas().indexOf(this);
 		result += " Coordenadas: " + getCoordenadas().getX() + " | " + getCoordenadas().getY();
 		return result;
 	}

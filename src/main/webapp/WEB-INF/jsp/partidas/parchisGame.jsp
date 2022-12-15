@@ -4,10 +4,9 @@
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
 
@@ -21,17 +20,18 @@
    
     <br>
     Jugador autenticado: ${jugadorAutenticado}
- 
-    Color jugador autenticado : ${jugadorAutenticado.color}
     <br>
     colorJugador actual : ${partidaParchis.colorJugadorActual}
     <br>
-    ${partidaParchis.jugadores.get(0).fichasParchis}
     <br>
-    ${partidaParchis.jugadores.get(1).fichasParchis}
-    <br>
-    ${partidaParchis.jugadores.get(2).fichasParchis}
-
+    JUGADORES:<br>
+    <c:forEach items="${partidaParchis.jugadores}" var="jugador">
+        ${jugador.color}<br>
+        <c:forEach items="${jugador.fichasParchis}" var="ficha">
+            &nbsp;&nbsp;&nbsp;&nbsp;-${ficha}<br>
+        </c:forEach>
+        <br>
+    </c:forEach>
   
 
     <c:if test="${jugadorAutenticado.color == partidaParchis.colorJugadorActual}"> 

@@ -161,12 +161,12 @@ class PartidaControllerTests {
 	@Test
 	void testEmpezarPartidaParchis() throws Exception {
 		mockMvc.perform(get("/sala/{partidaParchisId}/startParchis", TEST_PARTIDAPARCHIS_ID)).andExpect(status().is3xxRedirection())
-				.andExpect(redirectedUrl("/sala/42/playParchis")).andExpect(status().isFound());
+				.andExpect(redirectedUrl("/sala/"+TEST_PARTIDAPARCHIS_ID+"/playParchis")).andExpect(status().isFound());
 	}
  @WithMockUser(value = "spring")
 	@Test
 	void testEmpezarPartidaOca() throws Exception {
 		mockMvc.perform(get("/sala/{partidaOcaId}/startOca", TEST_PARTIDAOCA_ID)).andExpect(status().is3xxRedirection())
-				.andExpect(redirectedUrl("/sala/41/playOca")).andExpect(status().isFound());
+				.andExpect(redirectedUrl("/sala/" + TEST_PARTIDAOCA_ID + "/playOca")).andExpect(status().isFound());
 	}
 }

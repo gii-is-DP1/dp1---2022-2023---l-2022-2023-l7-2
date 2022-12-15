@@ -49,12 +49,12 @@
                                 </table>
 
 
+                                
                                 <c:choose>
-                                  
-                                    <c:when test="${partidaParchis != null}">
+                                    
+                                    <c:when test="${partidaParchis != null}">                 
                                         <c:choose>
-                                   
-                                            <c:when test="&{partidaParchis.estado==TipoEstadoPartida.CREADA}">
+                                            <c:when test="${partidaParchis.estado==TipoEstadoPartida.CREADA}">
                                                 <c:if
                                                     test="${partidaParchis.jugadores.size()>=2 && usuarioAutenticado.id == partidaParchis.jugadores.get(0).getUsuario().getId()}">
                                                     <spring:url value="/sala/{partidaParchisId}/startParchis"
@@ -65,6 +65,7 @@
                                                     <a href="${fn:escapeXml(parchisStartUrl)}"
                                                         class="btn btn-default">Empezar Partida</a>
                                                 </c:if>
+
                                                 <spring:url value="/sala/{partidaParchisId}/abandonarParchis"
                                                     var="parchisAbandonarUrl">
                                                     <spring:param name="partidaParchisId"
@@ -74,7 +75,7 @@
                                                     class="btn btn-default">Abandonar Partida</a>
                                             </c:when>
 
-                                            <c:when test="&{partidaParchis.estado==TipoEstadoPartida.JUGANDO}">
+                                            <c:when test="${partidaParchis.estado==TipoEstadoPartida.JUGANDO}">
                                                 <spring:url value="/sala/{partidaParchisId}/playParchis"
                                                     var="parchisJugarUrl">
                                                     <spring:param name="partidaParchisId"
@@ -85,11 +86,9 @@
                                             </c:when>
                                         </c:choose>
                                     </c:when>
-
-                                
+    
                                     <c:when test="${partidaOca != null}">
                                         <c:choose>
-                       
                                             <c:when test="${partidaOca.estado==TipoEstadoPartida.CREADA}">
                                                 <c:if
                                                     test="${partidaOca.jugadores.size()>=2 && usuarioAutenticado.id == partidaOca.jugadores.get(0).getUsuario().getId()}">
@@ -121,5 +120,8 @@
                                             </c:when>
                                         </c:choose>
                                     </c:when>
+                              
                                 </c:choose>
+                             
+
                             </petclinic:layout>

@@ -15,35 +15,29 @@
         <c:choose>
             <c:when test="${jugador.color eq 'ROJO'}">
                  
-                <img id="FichaRoja1" src="/resources/images/FichaRoja.jpg"          data-x="${jugador.getFichasParchis().get(0).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(0).getCoordenadas().getY()}" style="display:hidden">
-                <img id="FichaRoja2" src="/resources/images/FichaRoja.jpg"          data-x="${jugador.getFichasParchis().get(1).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(1).getCoordenadas().getY()}" style="display:hidden">
-                <img id="FichaRoja3" src="/resources/images/FichaRoja.jpg"          data-x="${jugador.getFichasParchis().get(2).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(2).getCoordenadas().getY()}" style="display:hidden">
-                <img id="FichaRoja4" src="/resources/images/FichaRoja.jpg"          data-x="${jugador.getFichasParchis().get(3).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(3).getCoordenadas().getY()}" style="display:hidden">
+                <img id="FichaRoja1" src="/resources/images/FichaRoja.jpg"          data-x="${jugador.getFichasParchis().get(0).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(0).getCoordenadas().getY()}" style="display:none">
+                <img id="FichaRoja2" src="/resources/images/FichaRoja.jpg"          data-x="${jugador.getFichasParchis().get(1).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(1).getCoordenadas().getY()}" style="display:none">
+                <img id="FichaRoja3" src="/resources/images/FichaRoja.jpg"          data-x="${jugador.getFichasParchis().get(2).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(2).getCoordenadas().getY()}" style="display:none">
+                <img id="FichaRoja4" src="/resources/images/FichaRoja.jpg"          data-x="${jugador.getFichasParchis().get(3).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(3).getCoordenadas().getY()}" style="display:none">
                 
-                <!--
-                <img id="FichaRoja1" src="/resources/images/FichaRoja.jpg"          data-x="0" data-y="0"   style="display:hidden">
-                <img id="FichaRoja2" src="/resources/images/FichaRoja.jpg"          data-x="0" data-y="100" style="display:hidden">
-                <img id="FichaRoja3" src="/resources/images/FichaRoja.jpg"          data-x="0" data-y="150" style="display:hidden">
-                <img id="FichaRoja4" src="/resources/images/FichaRoja.jpg"          data-x="0" data-y="200" style="display:hidden">
-                --!>
             </c:when>
             <c:when test="${jugador.color eq 'AMARILLO'}">
-                <img id="FichaAmarilla1" src="/resources/images/FichaAmarilla2.jpg" data-x="${jugador.getFichasParchis().get(0).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(0).getCoordenadas().getY()}" style="display:hidden">
-                <img id="FichaAmarilla2" src="/resources/images/FichaAmarilla2.jpg" data-x="${jugador.getFichasParchis().get(1).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(1).getCoordenadas().getY()}" style="display:hidden">
-                <img id="FichaAmarilla3" src="/resources/images/FichaAmarilla2.jpg" data-x="${jugador.getFichasParchis().get(2).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(2).getCoordenadas().getY()}" style="display:hidden">
-                <img id="FichaAmarilla4" src="/resources/images/FichaAmarilla2.jpg" data-x="${jugador.getFichasParchis().get(3).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(3).getCoordenadas().getY()}" style="display:hidden">
+                <img id="FichaAmarilla1" src="/resources/images/FichaAmarilla2.jpg" data-x="${jugador.getFichasParchis().get(0).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(0).getCoordenadas().getY()}" style="display:none">
+                <img id="FichaAmarilla2" src="/resources/images/FichaAmarilla2.jpg" data-x="${jugador.getFichasParchis().get(1).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(1).getCoordenadas().getY()}" style="display:none">
+                <img id="FichaAmarilla3" src="/resources/images/FichaAmarilla2.jpg" data-x="${jugador.getFichasParchis().get(2).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(2).getCoordenadas().getY()}" style="display:none">
+                <img id="FichaAmarilla4" src="/resources/images/FichaAmarilla2.jpg" data-x="${jugador.getFichasParchis().get(3).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(3).getCoordenadas().getY()}" style="display:none">
             </c:when>
             <c:when test="${jugador.color eq 'VERDE'}">
-                <img id="FichaVerde1" src="/resources/images/FichaVerde.jpg"        data-x="${jugador.getFichasParchis().get(0).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(0).getCoordenadas().getY()}" style="display:hidden">
-                <img id="FichaVerde2" src="/resources/images/FichaVerde.jpg"        data-x="${jugador.getFichasParchis().get(1).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(1).getCoordenadas().getY()}" style="display:hidden">
-                <img id="FichaVerde3" src="/resources/images/FichaVerde.jpg"        data-x="${jugador.getFichasParchis().get(2).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(2).getCoordenadas().getY()}" style="display:hidden">
-                <img id="FichaVerde4" src="/resources/images/FichaVerde.jpg"        data-x="${jugador.getFichasParchis().get(3).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(3).getCoordenadas().getY()}" style="display:hidden">
+                <img id="FichaVerde1" src="/resources/images/FichaVerde.jpg"        data-x="${jugador.getFichasParchis().get(0).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(0).getCoordenadas().getY()}" style="display:none">
+                <img id="FichaVerde2" src="/resources/images/FichaVerde.jpg"        data-x="${jugador.getFichasParchis().get(1).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(1).getCoordenadas().getY()}" style="display:none">
+                <img id="FichaVerde3" src="/resources/images/FichaVerde.jpg"        data-x="${jugador.getFichasParchis().get(2).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(2).getCoordenadas().getY()}" style="display:none">
+                <img id="FichaVerde4" src="/resources/images/FichaVerde.jpg"        data-x="${jugador.getFichasParchis().get(3).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(3).getCoordenadas().getY()}" style="display:none">
             </c:when>
            <c:when test="${jugador.color eq 'AZUL'}">
-                <img id="FichaAzul1" src="/resources/images/FichaAzul.jpg"          data-x="${jugador.getFichasParchis().get(0).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(0).getCoordenadas().getY()}" style="display:hidden">
-                <img id="FichaAzul2" src="/resources/images/FichaAzul.jpg"          data-x="${jugador.getFichasParchis().get(1).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(1).getCoordenadas().getY()}" style="display:hidden">
-                <img id="FichaAzul3" src="/resources/images/FichaAzul.jpg"          data-x="${jugador.getFichasParchis().get(2).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(2).getCoordenadas().getY()}" style="display:hidden">
-                <img id="FichaAzul4" src="/resources/images/FichaAzul.jpg"          data-x="${jugador.getFichasParchis().get(3).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(3).getCoordenadas().getY()}" style="display:hidden">
+                <img id="FichaAzul1" src="/resources/images/FichaAzul.jpg"          data-x="${jugador.getFichasParchis().get(0).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(0).getCoordenadas().getY()}" style="display:none">
+                <img id="FichaAzul2" src="/resources/images/FichaAzul.jpg"          data-x="${jugador.getFichasParchis().get(1).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(1).getCoordenadas().getY()}" style="display:none">
+                <img id="FichaAzul3" src="/resources/images/FichaAzul.jpg"          data-x="${jugador.getFichasParchis().get(2).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(2).getCoordenadas().getY()}" style="display:none">
+                <img id="FichaAzul4" src="/resources/images/FichaAzul.jpg"          data-x="${jugador.getFichasParchis().get(3).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(3).getCoordenadas().getY()}" style="display:none">
             </c:when>
         </c:choose>
    
