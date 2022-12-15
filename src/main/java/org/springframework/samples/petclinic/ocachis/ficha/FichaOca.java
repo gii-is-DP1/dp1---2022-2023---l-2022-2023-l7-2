@@ -6,7 +6,6 @@ import javax.persistence.ManyToOne;
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
 import org.springframework.samples.petclinic.ocachis.casilla.Coordenadas;
-import javax.persistence.CascadeType;
 import lombok.Getter;
 import lombok.Setter;
 

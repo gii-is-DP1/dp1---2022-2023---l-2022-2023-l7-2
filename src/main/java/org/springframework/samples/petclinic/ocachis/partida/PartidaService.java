@@ -6,13 +6,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
+import org.springframework.samples.petclinic.ocachis.casilla.CasillaParchis;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaService;
 import org.springframework.samples.petclinic.ocachis.casilla.TipoCasillaOca;
+import org.springframework.samples.petclinic.ocachis.casilla.TipoCasillaParchis;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
+import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaService;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.stereotype.Service;
@@ -77,6 +79,7 @@ public class PartidaService {
 		partida.setEstado(TipoEstadoPartida.CREADA);
 		partida.setJugadores(new ArrayList<Jugador>());
 		partida.setUsuariosObservadores(new ArrayList<>());
+		partida.setFechaCreacion(LocalDateTime.now());
 		inicializarCasillasOca(partida);
 
 		partida = partidaOcaRepository.save(partida);
@@ -235,7 +238,7 @@ public class PartidaService {
 	}
 
 	@Transactional
-    public void jugar(PartidaOca partida, FichaOca ficha, Jugador j) {
+    public void jugarOca(PartidaOca partida, FichaOca ficha, Jugador j) {
 			
 		
 		if(j.getNumTurnosBloqueadoRestantesOca()>0){
@@ -317,9 +320,8 @@ public class PartidaService {
 			case FINAL:
 				casillaFinal = casillaInicialMasDado;
 				partida.setEstado(TipoEstadoPartida.TERMINADA);
-				finalizarPartidaOca(partida,j);
-				
 				partida.addLog("El jugador " + j.getColor() + " ha ganado la partida");
+				finalizarPartidaOca(partida,j);
 		}
 
 		fichaService.moverFichaOca(ficha, casillaFinal, j);
@@ -338,9 +340,71 @@ public class PartidaService {
 
 	public void finalizarPartidaOca(PartidaOca partida, Jugador jugadorGanador){
 		partida.setGanador(jugadorGanador.getUsuario());
+		jugadorGanador.setEsGanador(true);
 		partida.setFechaFinalizacion(LocalDateTime.now());
 		Duration duracion =Duration.between(partida.getFechaCreacion(), partida.getFechaFinalizacion());
 		Integer duracionInMinutes = (int)duracion.getSeconds() /60;
 		partida.setDuracion(duracionInMinutes);
+		for(Jugador j:partida.getJugadores()){
+			j.finalizarPartidaOca(duracionInMinutes);
+	}
+	}
+
+	public int TirarNumDado(){
+		int numDado =(int) (Math.random()*6 +1);
+		return numDado;
+	}
+
+
+
+    public PartidaParchis crearPartidaParchis(Integer maxJugadores) {
+        PartidaParchis partida = new PartidaParchis();
+		partida.setMaxJugadores(maxJugadores);
+		partida.setCodigoPartida(Partida.getNuevoCodigoPartida());
+		partida.setColorJugadorActual(Color.ROJO);
+		partida.setEstado(TipoEstadoPartida.CREADA);
+		partida.setFechaCreacion(LocalDateTime.now());
+		partida.setJugadores(new ArrayList<Jugador>());
+		partida.setUsuariosObservadores(new ArrayList<>());
+		inicializarCasillasParchis(partida);
+		partida = partidaParchisRepository.save(partida);
+		return partida;
+    }
+
+
+
+	private void inicializarCasillasParchis(PartidaParchis partida) {
+		ArrayList<CasillaParchis> casillas = new ArrayList<>();
+		for(int i=1;i<=104;i++){
+			CasillaParchis casilla = new CasillaParchis();
+			casilla.setNumero(i);
+			casilla.setBloqueada(false);
+			casilla.setFichas(new ArrayList<FichaParchis>());
+			if(i<=68){
+				if(i==5)casilla.setTipoCasillaParchis(TipoCasillaParchis.INCIOAMARILLO);
+				else if(i==22)casilla.setTipoCasillaParchis(TipoCasillaParchis.INCIOAZUL);
+				else if(i==39)casilla.setTipoCasillaParchis(TipoCasillaParchis.INCIOROJO);
+				else if(i==56)casilla.setTipoCasillaParchis(TipoCasillaParchis.INCIOVERDE);
+				else if(i==12 || i==17 || i == 29 || i == 34 || i == 46 || i == 51 || i == 63 || i == 68)casilla.setTipoCasillaParchis(TipoCasillaParchis.SEGURO);
+				else casilla.setTipoCasillaParchis(TipoCasillaParchis.NORMAL);
+			}
+			else if(i>=69 && i<=75)casilla.setTipoCasillaParchis(TipoCasillaParchis.PASILLOAMARILLO);
+			else if(i>=77 && i<=83)casilla.setTipoCasillaParchis(TipoCasillaParchis.PASILLOAZUL);
+			else if(i>=85 && i<=91)casilla.setTipoCasillaParchis(TipoCasillaParchis.PASILLOROJO);
+			else if(i>=93 && i<=99)casilla.setTipoCasillaParchis(TipoCasillaParchis.PASILLOVERDE);
+
+			else if(i==76)casilla.setTipoCasillaParchis(TipoCasillaParchis.FINALAMARILLO);
+			else if(i==84)casilla.setTipoCasillaParchis(TipoCasillaParchis.FINALAZUL);
+			else if(i==92)casilla.setTipoCasillaParchis(TipoCasillaParchis.FINALROJO);
+			else if(i==100)casilla.setTipoCasillaParchis(TipoCasillaParchis.FINALVERDE);
+
+			else if(i==101)casilla.setTipoCasillaParchis(TipoCasillaParchis.CASAAMARILLO);
+			else if(i==102)casilla.setTipoCasillaParchis(TipoCasillaParchis.CASAAZUL);
+			else if(i==103)casilla.setTipoCasillaParchis(TipoCasillaParchis.CASAROJO);
+			else if(i==104)casilla.setTipoCasillaParchis(TipoCasillaParchis.CASAVERDE);
+			//this.casillaService.saveCasillaParchis(casilla);
+			casillas.add(casilla);
+		}
+		partida.setCasillas(casillas);
 	}
 }

@@ -33,6 +33,16 @@
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span>Salas</span>
 				</petclinic:menuItem>
+<<<<<<< HEAD
+=======
+			</sec:authorize>
+			
+				<petclinic:menuItem active="${name eq 'logro'}"
+						url="/logro/listLogros" title="Logros">
+						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+						<span>Logros</span>
+				</petclinic:menuItem>
+>>>>>>> master
 
 				<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
 					title="veterinarians">
@@ -93,6 +103,7 @@
 							class="glyphicon glyphicon-chevron-down"></span>
 					</a>
 						<ul class="dropdown-menu">
+<<<<<<< HEAD
 							<li>
 								<div class="navbar-login">
 									<div class="row">
@@ -113,6 +124,11 @@
 									</div>
 								</div>
 							</li>
+=======
+							<li><a href="<c:url value="/usuarios/editProfile" />">Editar usuario</a></li>
+							<li class="divider"></li>
+							<li><a href="<c:url value="/usuarios/perfil" />">Mi perfil</a></li>
+>>>>>>> master
 							<li class="divider"></li>
 							<li><a href="<c:url value="/logout" />">Logout</a></li>
 						</ul>

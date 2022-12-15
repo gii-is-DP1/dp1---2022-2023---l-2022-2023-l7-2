@@ -14,28 +14,36 @@
         <!--${jugador}-->
         <c:choose>
             <c:when test="${jugador.color eq 'ROJO'}">
-                <c:forEach items="${jugador.fichasParchis}" var="fichaParchis">
-                <img id="FichaRoja" src="/resources/images/FichaRoja.jpg" data-x=0 data-y=0 style="display:hidden">
-                <!--rojo: ${fichaParchis.getCoordenadas().getX()} - ${fichaParchis.getCoordenadas().getY()}-->
-                </c:forEach>
+                 
+                <img id="FichaRoja1" src="/resources/images/FichaRoja.jpg"          data-x="${jugador.getFichasParchis().get(0).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(0).getCoordenadas().getY()}" style="display:hidden">
+                <img id="FichaRoja2" src="/resources/images/FichaRoja.jpg"          data-x="${jugador.getFichasParchis().get(1).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(1).getCoordenadas().getY()}" style="display:hidden">
+                <img id="FichaRoja3" src="/resources/images/FichaRoja.jpg"          data-x="${jugador.getFichasParchis().get(2).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(2).getCoordenadas().getY()}" style="display:hidden">
+                <img id="FichaRoja4" src="/resources/images/FichaRoja.jpg"          data-x="${jugador.getFichasParchis().get(3).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(3).getCoordenadas().getY()}" style="display:hidden">
+                
+                <!--
+                <img id="FichaRoja1" src="/resources/images/FichaRoja.jpg"          data-x="0" data-y="0"   style="display:hidden">
+                <img id="FichaRoja2" src="/resources/images/FichaRoja.jpg"          data-x="0" data-y="100" style="display:hidden">
+                <img id="FichaRoja3" src="/resources/images/FichaRoja.jpg"          data-x="0" data-y="150" style="display:hidden">
+                <img id="FichaRoja4" src="/resources/images/FichaRoja.jpg"          data-x="0" data-y="200" style="display:hidden">
+                --!>
             </c:when>
             <c:when test="${jugador.color eq 'AMARILLO'}">
-                <c:forEach items="${jugador.fichasParchis}" var="fichaParchis">
-                <img id="FichaAmarilla" src="/resources/images/FichaAmarilla.jpg" data-x=0 data-y=0 style="display:hidden">
-                <!--amarillo: ${fichaParchis.getCoordenadas().getX()} - ${fichaParchis.getCoordenadas().getY()}-->
-                </c:forEach>
+                <img id="FichaAmarilla1" src="/resources/images/FichaAmarilla2.jpg" data-x="${jugador.getFichasParchis().get(0).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(0).getCoordenadas().getY()}" style="display:hidden">
+                <img id="FichaAmarilla2" src="/resources/images/FichaAmarilla2.jpg" data-x="${jugador.getFichasParchis().get(1).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(1).getCoordenadas().getY()}" style="display:hidden">
+                <img id="FichaAmarilla3" src="/resources/images/FichaAmarilla2.jpg" data-x="${jugador.getFichasParchis().get(2).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(2).getCoordenadas().getY()}" style="display:hidden">
+                <img id="FichaAmarilla4" src="/resources/images/FichaAmarilla2.jpg" data-x="${jugador.getFichasParchis().get(3).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(3).getCoordenadas().getY()}" style="display:hidden">
             </c:when>
             <c:when test="${jugador.color eq 'VERDE'}">
-                <c:forEach items="${jugador.fichasParchis}" var="fichaParchis">
-                <img id="FichaVerde" src="/resources/images/FichaVerde.jpg" data-x=0 data-y=0 style="display:hidden">
-                <!--verde: ${fichaParchis.getCoordenadas().getX()} - ${fichaParchis.getCoordenadas().getY()}-->
-                </c:forEach>
+                <img id="FichaVerde1" src="/resources/images/FichaVerde.jpg"        data-x="${jugador.getFichasParchis().get(0).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(0).getCoordenadas().getY()}" style="display:hidden">
+                <img id="FichaVerde2" src="/resources/images/FichaVerde.jpg"        data-x="${jugador.getFichasParchis().get(1).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(1).getCoordenadas().getY()}" style="display:hidden">
+                <img id="FichaVerde3" src="/resources/images/FichaVerde.jpg"        data-x="${jugador.getFichasParchis().get(2).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(2).getCoordenadas().getY()}" style="display:hidden">
+                <img id="FichaVerde4" src="/resources/images/FichaVerde.jpg"        data-x="${jugador.getFichasParchis().get(3).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(3).getCoordenadas().getY()}" style="display:hidden">
             </c:when>
            <c:when test="${jugador.color eq 'AZUL'}">
-                <c:forEach items="${jugador.fichasParchis}" var="fichaParchis">
-                <img id="FichaAzul" src="/resources/images/FichaAzul.jpg" data-x=0 data-y=0 style="display:hidden">
-                <!--azul: ${fichaParchis.getCoordenadas().getX()} - ${fichaParchis.getCoordenadas().getY()}-->
-                </c:forEach>
+                <img id="FichaAzul1" src="/resources/images/FichaAzul.jpg"          data-x="${jugador.getFichasParchis().get(0).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(0).getCoordenadas().getY()}" style="display:hidden">
+                <img id="FichaAzul2" src="/resources/images/FichaAzul.jpg"          data-x="${jugador.getFichasParchis().get(1).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(1).getCoordenadas().getY()}" style="display:hidden">
+                <img id="FichaAzul3" src="/resources/images/FichaAzul.jpg"          data-x="${jugador.getFichasParchis().get(2).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(2).getCoordenadas().getY()}" style="display:hidden">
+                <img id="FichaAzul4" src="/resources/images/FichaAzul.jpg"          data-x="${jugador.getFichasParchis().get(3).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(3).getCoordenadas().getY()}" style="display:hidden">
             </c:when>
         </c:choose>
    
@@ -51,31 +59,43 @@
             var image = document.getElementById('source');
             ctx.drawImage(image, 0, 0, 700, 700);
 
-         var fichaRoja = document.getElementById("FichaRoja");
-            ctx.drawImage(fichaRoja,
-                            fichaRoja.getAttribute("data-x"),
-                            fichaRoja.getAttribute("data-y"),
-                            24,24);
+        const fichasRojas = ['FichaRoja1', 'FichaRoja2', 'FichaRoja3', 'FichaRoja4'];
+        const fichasAmarillas = ['FichaAmarilla1','FichaAmarilla2','FichaAmarilla3','FichaAmarilla4'];
+        const fichasVerdes = ['FichaVerde1','FichaVerde2','FichaVerde3','FichaVerde4'];
+        const fichasAzules = ['FichaAzul1','FichaAzul2','FichaAzul3','FichaAzul4'];
 
-            var fichaAmarilla = document.getElementById("FichaAmarilla");
-            ctx.drawImage(fichaAmarilla,
-                            fichaAmarilla.getAttribute("data-x"),
-                            fichaAmarilla.getAttribute("data-y"),
-                            24,24);
+        for(id of fichasRojas){
+            var ficha = document.getElementById(id);
+            ctx.drawImage(ficha,
+                    ficha.getAttribute("data-x"),
+                    ficha.getAttribute("data-y"),
+                    24,24);
+            }
 
-            var fichaVerde = document.getElementById("FichaVerde");
-            ctx.drawImage(fichaVerde,
-                            fichaVerde.getAttribute("data-x"),
-                            fichaVerde.getAttribute("data-y"),
-                            24,24);
-
-            var fichaAzul = document.getElementById("FichaAzul");
-            ctx.drawImage(fichaAzul,
-                            fichaAzul.getAttribute("data-x"),
-                            fichaAzul.getAttribute("data-y"),
-                            24,24);   
-        }
-
-            
+        for(id of fichasAmarillas){
+            var ficha = document.getElementById(id);
+            ctx.drawImage(ficha,
+                    ficha.getAttribute("data-x"),
+                    ficha.getAttribute("data-y"),
+                    24,24);
+            }
+        for(id of fichasVerdes){
+            var ficha = document.getElementById(id);
+            ctx.drawImage(ficha,
+                    ficha.getAttribute("data-x"),
+                    ficha.getAttribute("data-y"),
+                    24,24);
+            }
+            for(id of fichasAzules){
+            var ficha = document.getElementById(id);
+            ctx.drawImage(ficha,
+                    ficha.getAttribute("data-x"),
+                    ficha.getAttribute("data-y"),
+                    24,24);
+            }
+        }      
         window.onload =drawBoard();
+
+
+        
         </script> 

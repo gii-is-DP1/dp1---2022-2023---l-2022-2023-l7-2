@@ -370,7 +370,7 @@ INSERT INTO casilla_parchis(id, numero, bloqueada, tipo_casilla_parchis) VALUES
 (31, 31, false, 0),
 (32, 32, false, 0),
 (33, 33, false, 0),
-(34, 34, false, 1),
+(34, 34, true, 1),
 (35, 35, false, 0),
 (36, 36, false, 0),
 (37, 37, false, 0),
@@ -559,3 +559,51 @@ INSERT INTO partida_parchis_casillas(partida_parchis_id, casillas_id) VALUES
 (1, 102),
 (1, 103),
 (1, 104);
+<<<<<<< HEAD
+=======
+
+
+INSERT INTO ficha_parchis(id, color, esta_en_casa, esta_en_la_meta, casilla_actual_id) VALUES 
+(1,0, false, false, 34),
+(2,0, false, false, 34),
+(3,0, true, false, 103),
+(4,0, false, false, 37),
+(5,1, false, false, 9),
+(6,1, false, false, 9),
+(7,1, true, false, 101),
+(8,1, true, false, 101),
+(9,2, false, false, 51),
+(10,2,false, false, 51),
+(11,2,true, false, 104),
+(12,2,true, false, 104);
+
+INSERT INTO jugador_fichas_parchis(jugador_id,fichas_parchis_id) VALUES
+(8,1),
+(8,2),
+(8,3),
+(8,4),
+(9,5),
+(9,6),
+(9,7),
+(9,8),
+(10,9),
+(10,10),
+(10,11),
+(10,12);
+
+UPDATE usuarios 
+SET OCA_DURACION_MAXIMA = 0,
+OCA_DURACION_MEDIA = 0,
+OCA_DURACION_MINIMA = 0,
+OCA_DURACION_TOTAL = 0, 
+OCA_PARTIDAS_GANADAS = 0,
+OCA_PARTIDAS_JUGADAS = 0,
+OCA_VECES_CAIDO_EN_MUERTE = 0,
+PARCHIS_DURACION_MAXIMA = 0, 
+PARCHIS_DURACION_MEDIA = 0, 
+PARCHIS_DURACION_MINIMA = 0,
+PARCHIS_DURACION_TOTAL = 0, 
+PARCHIS_FICHAS_COMIDAS = 0, 
+PARCHIS_PARTIDAS_GANADAS = 0, 
+PARCHIS_PARTIDAS_JUGADAS = 0;
+>>>>>>> master

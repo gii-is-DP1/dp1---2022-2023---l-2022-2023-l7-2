@@ -122,4 +122,8 @@
                                         </c:choose>
                                     </c:when>
                                 </c:choose>
+<<<<<<< HEAD
                             </petclinic:layout>
+=======
+                            </petclinic:layout>
+>>>>>>> master

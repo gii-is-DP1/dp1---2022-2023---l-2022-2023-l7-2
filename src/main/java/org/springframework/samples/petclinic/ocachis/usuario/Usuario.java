@@ -56,4 +56,8 @@ public class Usuario extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
+
+    public void actualizarEstadisticasOca(Integer duracion, Boolean esGanador, Integer vecesCaidoEnMuerte) {
+        estadisticas.updateEstadisticasOca(duracion, esGanador, vecesCaidoEnMuerte);
+}
 }

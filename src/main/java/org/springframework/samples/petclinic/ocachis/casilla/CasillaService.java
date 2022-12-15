@@ -1,9 +1,6 @@
 package org.springframework.samples.petclinic.ocachis.casilla;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,13 +10,15 @@ public class CasillaService {
     
 
     private CasillaOcaRepository casillaOcaRepository;
+    private CasillaParchisRepository casillaParchisRepository;
 
     @Autowired
-    public CasillaService(CasillaOcaRepository casillaOcaRepository){
+    public CasillaService(CasillaOcaRepository casillaOcaRepository, CasillaParchisRepository casillaParchisRepository){
         this.casillaOcaRepository = casillaOcaRepository;
+        this.casillaParchisRepository =  casillaParchisRepository;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Iterable<CasillaOca> findAllForPartidaOca(Integer partidaOcaId){
         // return casillaOcaRepository.findAllForPartidaOca(partidaOcaId);
         return casillaOcaRepository.findAll();
@@ -28,6 +27,12 @@ public class CasillaService {
     @Transactional
     public CasillaOca saveCasillaOca(CasillaOca casilla){
         CasillaOca c = casillaOcaRepository.save(casilla);
+        return c;
+    }
+
+    @Transactional
+    public CasillaParchis saveCasillaParchis(CasillaParchis casilla){
+        CasillaParchis c = casillaParchisRepository.save(casilla);
         return c;
     }
 
