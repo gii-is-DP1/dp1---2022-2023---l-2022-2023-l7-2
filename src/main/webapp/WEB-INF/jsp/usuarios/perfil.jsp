@@ -74,6 +74,6 @@
 
         </tbody>
     </table>
-   
-    
+
+
 </petclinic:layout>

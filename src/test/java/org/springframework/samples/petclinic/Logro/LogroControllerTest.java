@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,6 @@ import org.springframework.samples.petclinic.ocachis.logro.Logro;
 import org.springframework.samples.petclinic.ocachis.logro.LogroController;
 import org.springframework.samples.petclinic.ocachis.logro.LogroService;
 import org.springframework.samples.petclinic.ocachis.user.AuthoritiesService;
-import org.springframework.samples.petclinic.ocachis.user.UserService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -52,7 +50,6 @@ class LogroControllerTest {
 
 	@BeforeEach
 	void setup() {
-
 		logro = new Logro();
 		logro.setId(TEST_LOGRO_ID);
 		logro.setNombre("Test Logro Controller");

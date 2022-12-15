@@ -27,7 +27,7 @@
            <c:if test="${usuario['new']}">
            <petclinic:inputField label="Username" name="user.username"/>
 
-            <petclinic:inputField label="Contrase�a" name="user.password"/>
+            <petclinic:inputField label="Contraseña" name="user.password"/>
            </c:if>            
         </div>
         <div class="form-group">

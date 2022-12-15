@@ -30,7 +30,7 @@ public class UsuarioController {
 	
 	private static final String VIEWS_USUARIO_CREATE_OR_UPDATE_FORM = "usuarios/createOrUpdateUsuarioForm";
 	private static final String VIEWS_USUARIO_PROFILE ="usuarios/perfil";
-	
+ 
 	private final UsuarioService usuarioService;
 	private final UserService userService;
 
@@ -124,7 +124,6 @@ public class UsuarioController {
 		Usuario u = usuarioService.findUsuarioById(usuarioId);
 		model.put("usuario",u);
 		model.put("now",LocalDateTime.now());
-		
 		return VIEWS_USUARIO_PROFILE;
 	}
 }

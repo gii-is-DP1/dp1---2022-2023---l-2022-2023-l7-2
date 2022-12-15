@@ -55,7 +55,6 @@ public class Estadisticas{
 
 	public Integer ocaVecesCaidoEnMuerte;
 
-
 	public void updateEstadisticasOca(Integer duracion, Boolean esGanador, Integer vecesCaidoEnMuerte){
 		this.ocaPartidasJugadas++;
 		if(esGanador) this.ocaPartidasGanadas++;

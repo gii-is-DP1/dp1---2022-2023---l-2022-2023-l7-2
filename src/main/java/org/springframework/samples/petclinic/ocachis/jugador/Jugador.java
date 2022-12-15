@@ -3,7 +3,10 @@ package  org.springframework.samples.petclinic.ocachis.jugador;
 
 
 import java.util.Collection;
-
+import java.util.stream.Collectors;
+import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -65,10 +68,25 @@ public String toString(){
     return "usuarioId: " + usuario.getId() + " color: " + color.toString();
 }
 
+    public void finalizarPartidaOca(Integer duracion) {
+        this.usuario.actualizarEstadisticasOca(duracion, this.esGanador, this.vecesCaidoEnMuerte);
+    }
 
-public void finalizarPartidaOca(Integer duracion, Boolean esGanador, Integer vecesCaidoEnMuerte) {
-    this.usuario.actualizarEstadisticasOca(duracion, esGanador, vecesCaidoEnMuerte);
-}
+
+    public List<FichaParchis> getFichasQuePuedenMoverse(Integer dado){
+        ArrayList<FichaParchis> result = new ArrayList<>();
+        if(dado == 5 && fichasParchis.stream().anyMatch(fp->fp.isEstaEnCasa())){
+            return fichasParchis.stream().filter(fp->fp.isEstaEnCasa()).collect(Collectors.toList());
+        }else if(dado == 6 && fichasParchis.stream().anyMatch(fp->fp.getCasillaActual().getBloqueada())) {
+            return fichasParchis.stream().filter(fp->fp.getCasillaActual().getBloqueada()).collect(Collectors.toList());
+        }else{
+            for(FichaParchis fp: fichasParchis){
+                if(partidaParchis.sePuedeMover(fp,dado)) result.add(fp);
+            }
+        }
+
+        return result;
+    }
 }   
 
 
