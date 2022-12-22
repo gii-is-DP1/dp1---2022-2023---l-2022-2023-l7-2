@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Color;
@@ -17,8 +18,10 @@ import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaService;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
+import org.springframework.samples.petclinic.ocachis.jugador.JugadorService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.webjars.NotFoundException;
 
 //import antlr.collections.List;
 @Service
@@ -27,15 +30,17 @@ public class PartidaService {
     private PartidaParchisRepository partidaParchisRepository;
 	private FichaService fichaService;
 	private CasillaService casillaService;
+	private JugadorService jugadorService;
 
     
     @Autowired
 	public PartidaService(PartidaOcaRepository partidaOcaRepository, PartidaParchisRepository partidaParchisRepository,
-	FichaService fichaService, CasillaService casillaService){
+	FichaService fichaService, CasillaService casillaService, JugadorService jugadorService){
 		this.partidaOcaRepository = partidaOcaRepository;
         this.partidaParchisRepository = partidaParchisRepository;
 		this.fichaService = fichaService;
 		this.casillaService = casillaService;
+		this.jugadorService = jugadorService;
 	}
 
 
@@ -99,16 +104,12 @@ public class PartidaService {
     public Collection<PartidaOca> findEsperaOca(){
         return partidaOcaRepository.findEsperaOca();
     }
+
     public Collection<PartidaParchis> findEsperaParchis(){
         return partidaParchisRepository.findEsperaParchis();
     }
-    public PartidaOca findByIdOca(int id){
-        return partidaOcaRepository.findById(id);
-    }
+
    
-    public PartidaParchis findByIdParchis(int id){
-        return partidaParchisRepository.findById(id);
-    }
     public PartidaOca saveOca(PartidaOca p){
         return partidaOcaRepository.save(p);
     }
@@ -133,7 +134,9 @@ public class PartidaService {
 	
 	@Transactional(readOnly = true)
 	public PartidaParchis findPartidaParchisById(int id){
-		return this.partidaParchisRepository.findById(id);
+		Optional<PartidaParchis> partida = this.partidaParchisRepository.findById(id);
+		if(!partida.isPresent()) throw new NotFoundException("La partida no se ha encontrado");
+		return partida.get();
 	}
 
 	private CasillaOca funcionOca(PartidaOca partida, CasillaOca casillaInicial, Jugador j){
@@ -406,5 +409,17 @@ public class PartidaService {
 			casillas.add(casilla);
 		}
 		partida.setCasillas(casillas);
+	}
+
+
+
+	public void jugarParchis(PartidaParchis partida, Integer fichaId, Integer jugadorId, Integer dado) {
+		FichaParchis ficha = fichaService.findFichaParchis(fichaId);
+		Jugador jugador = jugadorService.findById(jugadorId).get();
+		CasillaParchis casillaFinal = partida.getCasillaFinal(ficha, dado);
+
+		fichaService.moverFichaParchis(ficha, casillaFinal, jugador);
+
+		
 	}
 }

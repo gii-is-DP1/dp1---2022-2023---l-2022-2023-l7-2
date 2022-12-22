@@ -4,6 +4,7 @@ package org.springframework.samples.petclinic.ocachis.ficha;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
+import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaParchis;
 import org.springframework.samples.petclinic.ocachis.casilla.Coordenadas;
 import org.springframework.samples.petclinic.ocachis.casilla.TipoCasillaParchis;
@@ -35,8 +36,14 @@ public class FichaParchis extends Ficha{
 	@ManyToOne
 	private CasillaParchis casillaActual;
 
+	public FichaParchis(){}
+	public FichaParchis(Color color, CasillaParchis casillaActual) {
+		this.color=color;
+		this.casillaActual=casillaActual;
+    }
 
-	public Coordenadas getCoordenadas(){
+
+    public Coordenadas getCoordenadas(){
 		Coordenadas coordCasillaActual = this.getCasillaActual().getCoordenadas();
 		Coordenadas result = new Coordenadas(coordCasillaActual.getX(),coordCasillaActual.getY());
 		Integer posicionDentroDeLaCasilla = casillaActual.getFichas().indexOf(this);

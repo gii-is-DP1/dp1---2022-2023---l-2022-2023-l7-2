@@ -186,4 +186,19 @@ public class PartidaParchis extends Partida{
 
 		return null;
 	}
+
+
+    public CasillaParchis getCasillaFinal(FichaParchis ficha, Integer dado) {
+		Integer numero = ficha.getCasillaActual().getNumero();
+		int movimientos = dado;
+		Boolean haRebotado = false;
+		CasillaParchis result = null;
+		while(movimientos>0){
+			numero = getSiguienteNumero(numero, ficha.getColor(), haRebotado);
+			result = this.getCasillaConNumero(numero);
+			if(result.esMeta()) haRebotado = true;
+			movimientos--;
+		}
+		return result;
+    }
 }

@@ -16,7 +16,7 @@
     <h1>   El dado ha sacado el numero: ${dado}    </h1>
     <h1>Es el turno del jugador ${partidaParchis.colorJugadorActual}</h1>
    
-<petclinic:parchisBoard tablero="${partidaParchis}"></petclinic:parchisBoard>
+<petclinic:parchisBoard tablero="${partidaParchis}" fichasQueSePuedenMover="${fichasQueSePuedenMover}" jugadorAutenticado="${jugadorAutenticado}"></petclinic:parchisBoard>
    
     <br>
     Jugador autenticado: ${jugadorAutenticado}
@@ -38,15 +38,23 @@
         
         <form:form class="form-horizontal" id="tirar-dado-form"
             method="post" action="/sala/${partidaParchis.id}/playParchis">
-            <button class="btn btn-default">Tirar dado</button>
-
-            <c:forEach  items="${jugadorAutenticado.fichasParchis}" var="fichaJugador">
-                <c:if test="${fichasQueSePuedenMover.contains(fichaJugador)}">
-                    <button class="btn btn-default">${fichaJugador.id}</button>
-                </c:if>
-            </c:forEach>
-       
+            <button class="btn btn-default">Tirar dado</button>     
         </form:form>
+        
+        <br>
+
+        <c:forEach  items="${jugadorAutenticado.fichasParchis}" var="fichaJugador">
+                <c:if test="${fichasQueSePuedenMover.contains(fichaJugador)}">
+                   <form:form modelAttribute="MoverFichaParchisForm"> 
+                        <form:input type="hidden" path="jugadorId" name="jugadorId" value="${jugadorAutenticado.id}"></form:input>
+                        <form:input type="hidden" path="fichaId" name="fichaId" value="${fichaJugador.id}"></form:input>
+                        <form:input type="hidden" path="dado" name="dado" value="${dado}"></form:input>
+                        
+                        <button type="submit" class="btn btn-default">Mover ficha en casilla ${fichaJugador.casillaActual.numero}</button>
+                   </form:form>
+                </c:if>
+
+            </c:forEach>
             
     </c:if>
     

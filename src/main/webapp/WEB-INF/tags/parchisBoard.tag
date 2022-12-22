@@ -1,20 +1,41 @@
 <%@ attribute name="tablero" required="false" rtexprvalue="true" type="org.springframework.samples.petclinic.ocachis.partida.PartidaParchis"
  description="parchisBoard to be rendered" %>
 
+<%@ attribute name="fichasQueSePuedenMover" required="false" type="java.util.ArrayList" %>
+
+<%@ attribute name="jugadorAutenticado" required="false" type="org.springframework.samples.petclinic.ocachis.jugador.Jugador" %>
+
  <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 
 
  <div class="row">
     <div class="col-auto align-self-center">
+        fqspm: ${fichasQueSePuedenMover}<br>
         <canvas id="canvas" width="700" height="700"></canvas>
     </div>  
  </div>
     <img id="source" src="/resources/images/Parchis.jpg" style="display:none">
+
+<c:if test="${not empty fichasQueSePuedenMover}"> 
+
+    <h1>Hay fichas que se pueden mover</h1>
+    <c:choose>
+        <c:when test="${jugadorAutenticado.color eq 'ROJO'}">
+        </c:when>
+        <c:when test="${jugadorAutenticado.color eq 'AMARILLO'}">
+        </c:when>
+        <c:when test="${jugadorAutenticado.color eq 'VERDE'}">
+        </c:when>
+        <c:when test="${jugadorAutenticado.color eq 'AZUL'}">
+        </c:when>
+    </c:choose>
+</c:if>
+
+
     <!--<c:forEach items="${tablero.jugadores}" var="jugador">
         <!--${jugador}-->
         <c:choose>
             <c:when test="${jugador.color eq 'ROJO'}">
-                 
                 <img id="FichaRoja1" src="/resources/images/FichaRoja.jpg"          data-x="${jugador.getFichasParchis().get(0).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(0).getCoordenadas().getY()}" style="display:none">
                 <img id="FichaRoja2" src="/resources/images/FichaRoja.jpg"          data-x="${jugador.getFichasParchis().get(1).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(1).getCoordenadas().getY()}" style="display:none">
                 <img id="FichaRoja3" src="/resources/images/FichaRoja.jpg"          data-x="${jugador.getFichasParchis().get(2).getCoordenadas().getX()}" data-y="${jugador.getFichasParchis().get(2).getCoordenadas().getY()}" style="display:none">

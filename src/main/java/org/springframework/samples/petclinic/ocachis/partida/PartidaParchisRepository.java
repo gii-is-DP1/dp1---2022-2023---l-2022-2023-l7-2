@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface PartidaParchisRepository extends CrudRepository<PartidaParchis, Integer> {
 
     Collection<PartidaParchis> findAll();
-    PartidaParchis findById(int id);
     
     @Query("SELECT parchis from PartidaParchis parchis where parchis.estado=0 OR parchis.estado=1")
     Collection<PartidaParchis> findEsperaParchis();

@@ -13,6 +13,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
+import org.springframework.samples.petclinic.ocachis.ficha.FichaService;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.jugador.JugadorService;
 import org.springframework.samples.petclinic.ocachis.partida.exceptions.PartidaLlenaException;
@@ -24,6 +25,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -145,7 +147,7 @@ public class PartidaController {
 	
 	@GetMapping("/{partidaOcaId}/ocaJoin")
 	public String unirsePartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model, RedirectAttributes redirectAttributes) {
-		PartidaOca partidaOca = partidaService.findByIdOca(partidaOcaId);
+		PartidaOca partidaOca = partidaService.findPartidaOcaById(partidaOcaId);
 		Jugador newJugador = new Jugador();
 		model.put("jugadores", partidaOca.getJugadores());
 		model.put("jugador", newJugador);
@@ -156,7 +158,7 @@ public class PartidaController {
 	@PostMapping("/{partidaOcaId}/ocaJoin")
 	public String createEnJoinSalaOca(@PathVariable("partidaOcaId") int partidaOcaId, @Valid Jugador jugador,
 			ModelMap model, RedirectAttributes redirectAttributes) {
-		PartidaOca p = partidaService.findByIdOca(partidaOcaId);
+		PartidaOca p = partidaService.findPartidaOcaById(partidaOcaId);
 		Collection<Jugador> jugadores = p.getJugadores();
 		Boolean dentro = false;
 		// Crear jugador
@@ -211,7 +213,7 @@ public class PartidaController {
 
 	@GetMapping("/{partidaOcaId}/showOca")
 	public String showPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model,  HttpServletResponse response) {
-		PartidaOca partidaOca = partidaService.findByIdOca(partidaOcaId);
+		PartidaOca partidaOca = partidaService.findPartidaOcaById(partidaOcaId);
 		response.addHeader("Refresh", REFRESH_SEECONDS);
 		model.put("jugadores", partidaOca.getJugadores());
 		model.put("usuarioAutenticado", usuarioService.getLoggedUsuario());
@@ -224,7 +226,7 @@ public class PartidaController {
 	
 	@GetMapping("/{partidaParchisId}/parchisJoin")
 	public String unirsePartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model, RedirectAttributes redirectAttributes) {
-		PartidaParchis partidaParchis = partidaService.findByIdParchis(partidaParchisId);
+		PartidaParchis partidaParchis = partidaService.findPartidaParchisById(partidaParchisId);
 		Jugador newJugador = new Jugador();
 		model.put("jugadores", partidaParchis.getJugadores());
 		model.put("jugador", newJugador);
@@ -237,7 +239,7 @@ public class PartidaController {
 	public String createEnJoinSalaParchis(@PathVariable("partidaParchisId") int partidaParchisId,
 			@Valid Jugador jugador, ModelMap model, RedirectAttributes redirectAttributes) {
 		
-		PartidaParchis p = partidaService.findByIdParchis(partidaParchisId);
+		PartidaParchis p = partidaService.findPartidaParchisById(partidaParchisId);
 		Collection<Jugador> jugadores = p.getJugadores();
 		Boolean dentro = false;
 		// Crear jugador
@@ -272,7 +274,7 @@ public class PartidaController {
 
 	@GetMapping("/{partidaParchisId}/showParchis")
 	public String showPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model, HttpServletResponse response) {
-		PartidaParchis partidaParchis = partidaService.findByIdParchis(partidaParchisId);
+		PartidaParchis partidaParchis = partidaService.findPartidaParchisById(partidaParchisId);
 		response.addHeader("Refresh", REFRESH_SEECONDS);
 		model.put("jugadores", partidaParchis.getJugadores());
 		model.put("usuarioAutenticado", usuarioService.getLoggedUsuario());
@@ -286,7 +288,7 @@ public class PartidaController {
 	@GetMapping("/{partidaOcaId}/startOca")
 	public String initEmpezarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model, HttpServletResponse response) {
 		response.addHeader("Refresh", REFRESH_SEECONDS);
-		PartidaOca partidaOca = partidaService.findByIdOca(partidaOcaId);
+		PartidaOca partidaOca = partidaService.findPartidaOcaById(partidaOcaId);
 		model.put("partidaOca", partidaOca);
 		return processEmpezarPartidaOca(partidaOcaId, partidaOca, model);
 	}
@@ -302,7 +304,7 @@ public class PartidaController {
 	
 	@GetMapping("/{partidaParchisId}/startParchis")
 	public String initEmpezarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model) {
-		PartidaParchis partidaParchis = partidaService.findByIdParchis(partidaParchisId);
+		PartidaParchis partidaParchis = partidaService.findPartidaParchisById(partidaParchisId);
 		model.put("partidaParchis", partidaParchis);
 		return processEmpezarPartidaParchis(partidaParchisId, partidaParchis, model);
 	}
@@ -343,13 +345,14 @@ public class PartidaController {
 	
 
 
+
 	//jugar OCA
 	@GetMapping(value="/{partidaOcaId}/playOca")
 	public String jugarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model,HttpServletResponse response, RedirectAttributes redirectAttributes){
-		PartidaOca partida = partidaService.findByIdOca(partidaOcaId);
+		
+		PartidaOca partida = partidaService.findPartidaOcaById(partidaOcaId);
 		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorOca(u.getId(), partida.getId());
-		model.put("partidaOca", partida);
 
 		if(partida.getEstado()==TipoEstadoPartida.TERMINADA){
 			return "redirect:/sala/" + partidaOcaId + "/resumen";
@@ -362,10 +365,12 @@ public class PartidaController {
 		if(j!=null){
 			model.put("modo","jugador");
 			model.put("jugadorAutenticado", j);
+			if(partida.getColorJugadorActual()!=j.getColor()) response.addHeader("Refresh", REFRESH_SEECONDS);
 		}else if(partida.getUsuariosObservadores().contains(u)){
 			model.put("modo","observador");
 		}
-		response.addHeader("Refresh", REFRESH_SEECONDS);
+
+		model.put("partidaOca", partida);
 		model.put("now", new Date());
 		return VIEWS_JUGAR_OCA;
 	}
@@ -375,7 +380,7 @@ public class PartidaController {
 	public String tirarDadosPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId,
 					 ModelMap model, HttpServletResponse response){
 		
-		PartidaOca partida = partidaService.findByIdOca(partidaOcaId);
+		PartidaOca partida = partidaService.findPartidaOcaById(partidaOcaId);
 		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorOca(u.getId(), partida.getId());
 		FichaOca ficha = j.getFichaOca();
@@ -391,10 +396,10 @@ public class PartidaController {
 	//jugar PARCHIS
 	@GetMapping("/{partidaParchisId}/playParchis")
 	public String jugarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model,HttpServletResponse response,RedirectAttributes redirectAttributes){
-		PartidaParchis partida = partidaService.findByIdParchis(partidaParchisId);
+		PartidaParchis partida = partidaService.findPartidaParchisById(partidaParchisId);
 		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorParchis(u.getId(), partida.getId());
-		model.put("partidaParchis", partida);
+		
 
 		if(partida.getEstado()==TipoEstadoPartida.TERMINADA){
 			return "redirect:/sala/" + partidaParchisId + "/resumen";
@@ -412,43 +417,48 @@ public class PartidaController {
 			model.put("modo","observador");
 			response.addHeader("Refresh", REFRESH_SEECONDS);
 		}
-		model.put("now", new Date());
-		model.put("modo", "Parchis");
+		model.put("partidaParchis", partida);
+		model.put("now", new Date());	
 		return VIEWS_JUGAR_PARCHIS;
 
 
 	}
 	
 	@PostMapping(value="/{partidaParchisId}/playParchis")
-	public String tirarDadosPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId,
+	public String tirarDadosPartidaParchis(@ModelAttribute("MoverFichaParchisForm") MoverFichaParchisForm mfpf, @PathVariable("partidaParchisId") int partidaParchisId,
 					 ModelMap model, HttpServletResponse response,  RedirectAttributes redirectAttributes){
 		
 
-		PartidaParchis partida = partidaService.findByIdParchis(partidaParchisId);
+		PartidaParchis partida = partidaService.findPartidaParchisById(partidaParchisId);
 		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorParchis(u.getId(), partida.getId());
 		model.put("partidaParchis", partida);
+		model.put("now", new Date());
+		model.put("modo","jugador");
+		model.put("jugadorAutenticado", j);
+		
 		if(j.getColor() != partida.getColorJugadorActual()){
 				return "redirect:/noAccess";
 		}
 
-		Collection<FichaParchis> fichas = j.getFichasParchis();
-		int dado = partidaService.TirarNumDado();
+		//procesar movimiento de ficha
+		if(mfpf.getJugadorId()!=null && mfpf.getJugadorId()!=null){
+			//model.put("modo","Formulario obtenido");
+			partidaService.jugarParchis(partida, mfpf.getFichaId(), mfpf.getJugadorId(),mfpf.getDado());
+		}else{ //tirar dado y mostrar opciones
+			int dado = partidaService.TirarNumDado();
 		List<FichaParchis> fichasQuePuedenMoverse = j.getFichasQuePuedenMoverse(dado);
-
 		model.put("fichasQueSePuedenMover", fichasQuePuedenMoverse);
-		model.put("now", new Date());
 		model.put("dado", dado);
-		model.put("modo", "Parchis");
-		model.put("modo","jugador");
-		model.put("jugadorAutenticado", j);
+		}
+
 		//partidaService.jugarParchis(partida, fichas, j);
 		return VIEWS_JUGAR_PARCHIS;
 	}
 
 	@GetMapping("/{partidaOcaId}/resumen")
 	public String terminadaPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model, HttpServletResponse response){
-		PartidaOca partida = partidaService.findByIdOca(partidaOcaId);
+		PartidaOca partida = partidaService.findPartidaOcaById(partidaOcaId);
 		
 		model.put("partidaOca", partida);
 		return VIEWS_PARTIDAOCA_TERMINADA;

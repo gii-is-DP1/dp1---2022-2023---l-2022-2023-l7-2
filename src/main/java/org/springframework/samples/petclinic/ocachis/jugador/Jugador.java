@@ -68,6 +68,14 @@ public String toString(){
     return "usuarioId: " + usuario.getId() + " color: " + color.toString();
 }
 
+    public void addFichaParchis(FichaParchis f){
+        this.fichasParchis.add(f);
+    }
+
+    public void deleteFichaParchis(FichaParchis f){
+        this.fichasParchis.remove(f);
+    }
+
     public void finalizarPartidaOca(Integer duracion) {
         this.usuario.actualizarEstadisticasOca(duracion, this.esGanador, this.vecesCaidoEnMuerte);
     }

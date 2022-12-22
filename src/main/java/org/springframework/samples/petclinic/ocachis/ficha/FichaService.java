@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
+import org.springframework.samples.petclinic.ocachis.casilla.CasillaParchis;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaOca;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaParchis;
@@ -83,7 +84,31 @@ public class FichaService {
         return fichas;
     }
 
-    private FichaParchis saveFichaParchis(FichaParchis ficha) {
+    @Transactional
+    public FichaParchis saveFichaParchis(FichaParchis ficha) {
         return fichaParchisRepository.save(ficha);
     }
+
+    @Transactional(readOnly = true)
+    public FichaParchis findFichaParchis(Integer id){
+        return fichaParchisRepository.findById(id).get();
+    }
+
+    @Transactional
+    public void moverFichaParchis(FichaParchis ficha, CasillaParchis casillaFinal, Jugador jugador) {
+        //Borramos ficha antigua
+		jugador.deleteFichaParchis(ficha);
+		removeFichaParchis(ficha);
+
+		//Creamos ficha nueva
+		FichaParchis f = new FichaParchis(jugador.getColor(), casillaFinal);
+		f = saveFichaParchis(f);
+		jugador.addFichaParchis(f);	
+    }
+
+    private void removeFichaParchis(FichaParchis ficha) {
+        fichaParchisRepository.delete(ficha);
+    }
+
+
 }

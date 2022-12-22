@@ -79,13 +79,13 @@ class PartidaControllerTests {
 		po.setEstado(TipoEstadoPartida.CREADA);
 		po.setColorJugadorActual(Color.ROJO);
 		po.setJugadores(new ArrayList<>());
-		given(this.partidaService.findByIdOca(TEST_PARTIDAOCA_ID)).willReturn(po);
+		given(this.partidaService.findPartidaOcaById(TEST_PARTIDAOCA_ID)).willReturn(po);
 		
 		pp = new PartidaParchis();
 		pp.setId(TEST_PARTIDAPARCHIS_ID);
 		pp.setCodigoPartida(31);
 		pp.setEstado(TipoEstadoPartida.CREADA);
-		given(this.partidaService.findByIdParchis(TEST_PARTIDAPARCHIS_ID)).willReturn(pp);
+		given(this.partidaService.findPartidaParchisById(TEST_PARTIDAPARCHIS_ID)).willReturn(pp);
 
 		u = new Usuario();
 		u.setId(500);
