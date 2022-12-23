@@ -145,6 +145,14 @@ INSERT INTO authorities(id,username,authority) VALUES (19,'aaaaa','jugador');
 INSERT INTO usuarios(id,nombre,apellido,username) VALUES(10,'NoJugador','NoJugador','aaaaa');
 
 
+--Solicitudes 
+
+INSERT INTO solicitud (id,usuario_invitado_id,usuario_solicitud_id,estado) VALUES (1,3,4,0);
+INSERT INTO solicitud (id,usuario_invitado_id,usuario_solicitud_id,estado) VALUES (2,3,1,1);
+INSERT INTO solicitud (id,usuario_invitado_id,usuario_solicitud_id,estado) VALUES (3,3,5,2);
+INSERT INTO solicitud (id,usuario_invitado_id,usuario_solicitud_id,estado) VALUES (4,3,6,3);
+
+
 --INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (1,0,1,1);
 --INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (2,2,2,1);
 --INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (5,2,2,1);

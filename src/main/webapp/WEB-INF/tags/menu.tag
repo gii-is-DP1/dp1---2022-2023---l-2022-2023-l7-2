@@ -49,6 +49,20 @@
 				</petclinic:menuItem>
 			</sec:authorize>
 
+				<sec:authorize access="isAuthenticated()">
+					<petclinic:menuItem active="${name eq 'amigos'}"
+						url="/solicitud" title="Amigos" dropdown="${true}">
+						<ul class="dropdown-menu">
+							<li><a href="<c:url value="/solicitud/amigos" />">Amigos</a></li>
+							<li class="divider"></li>
+							<li><a href="<c:url value="/solicitud/pendientes" />">Solicitudes Pendientes
+									
+							</a></li>
+						</ul>
+					</petclinic:menuItem>
+			</sec:authorize>
+
+
 			<sec:authorize access="hasAuthority('admin')">
 					<petclinic:menuItem active="${name eq 'admin'}"
 						url="/admin/listPartidas" title="Panel de admin" dropdown="${true}">
