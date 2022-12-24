@@ -148,9 +148,11 @@ INSERT INTO usuarios(id,nombre,apellido,username) VALUES(10,'NoJugador','NoJugad
 --Solicitudes 
 
 INSERT INTO solicitud (id,usuario_invitado_id,usuario_solicitud_id,estado) VALUES (1,3,4,0);
-INSERT INTO solicitud (id,usuario_invitado_id,usuario_solicitud_id,estado) VALUES (2,3,1,1);
-INSERT INTO solicitud (id,usuario_invitado_id,usuario_solicitud_id,estado) VALUES (3,3,5,2);
-INSERT INTO solicitud (id,usuario_invitado_id,usuario_solicitud_id,estado) VALUES (4,3,6,3);
+INSERT INTO solicitud (id,usuario_invitado_id,usuario_solicitud_id,estado) VALUES (2,3,7,0);
+INSERT INTO solicitud (id,usuario_invitado_id,usuario_solicitud_id,estado) VALUES (3,3,2,0);
+INSERT INTO solicitud (id,usuario_invitado_id,usuario_solicitud_id,estado) VALUES (4,3,1,1);
+INSERT INTO solicitud (id,usuario_invitado_id,usuario_solicitud_id,estado) VALUES (5,3,5,2);
+INSERT INTO solicitud (id,usuario_invitado_id,usuario_solicitud_id,estado) VALUES (6,3,6,3);
 
 
 --INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (1,0,1,1);

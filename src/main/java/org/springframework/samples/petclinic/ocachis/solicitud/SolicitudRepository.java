@@ -13,8 +13,10 @@ import org.springframework.data.repository.query.Param;
 @Repository
 public interface SolicitudRepository extends CrudRepository<Solicitud,Integer>{
     Collection<Solicitud> findAll();
-    @Query("SELECT solicitud FROM Solicitud solicitud WHERE solicitud.id=:solicitudId")
-     Optional<Solicitud> findById(@Param("solicitudId") Integer solicitudId);
+   
+     Solicitud findById(int id);
+
+     Solicitud save(Solicitud s);
     
     @Query("SELECT solicitud FROM Solicitud solicitud WHERE (solicitud.usuarioInvitado.id=:usuarioId OR solicitud.usuarioSolicitud.id=:usuarioId) AND solicitud.tipoEstado=1")
     Collection<Solicitud> findAllAmigos(@Param("usuarioId") Integer usuarioId);

@@ -95,4 +95,7 @@ public class UsuarioService {
 		 return this.findUsuarioByUsername(username);
 	}
 
+	public Collection<Usuario> findFiltroApodo(String apodo,int id){
+		return this.usuarioRepository.findFiltroApodo(apodo, id);
+	  }
 }
