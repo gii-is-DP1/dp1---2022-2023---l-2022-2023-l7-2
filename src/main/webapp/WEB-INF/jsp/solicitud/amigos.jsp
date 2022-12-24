@@ -19,7 +19,7 @@
             <th style="width: 150px;">Apodo</th>
             <th style="width: 200px;">Nombre</th>
             <th style="width: 120px">Apellido</th>
-            <th></th>
+            <th style="width: 100px"></th>
            
         </tr>
         </thead>
@@ -59,6 +59,7 @@
             <th style="width: 150px;">Apodo</th>
             <th style="width: 200px;">Nombre</th>
             <th style="width: 120px">Apellido</th>
+            <th style="width:100px"></th>
            
         </tr>
         </thead>
@@ -67,13 +68,22 @@
             <tr>
                 <td>
                     
-                   <c:out value="${amigo.user.username}"/></a>
+                   <c:out value="${amigo.key.user.username}"/>
                 </td>
                 <td>
-                    <c:out value="${amigo.nombre}"/>
+                    <c:out value="${amigo.key.nombre}"/>
                 </td>
                 <td>
-                    <c:out value="${amigo.apellido}"/>
+                    <c:out value="${amigo.key.apellido}"/>
+                </td>
+                <td>
+                    <c:if test="${amigo.value}">
+                        <spring:url value="/solicitud/amigos/{usuarioId}/espectar" var="espectarUsuarioUrl">
+                            <spring:param name="usuarioId" value="${amigo.key.id}"/>
+                        </spring:url>
+                        <a href="${fn:escapeXml(espectarUsuarioUrl)}">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                    </c:if>
                 </td>
                     
             </tr>

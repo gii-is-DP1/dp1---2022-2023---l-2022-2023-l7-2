@@ -98,4 +98,6 @@ public class UsuarioService {
 	public Collection<Usuario> findFiltroApodo(String apodo,int id){
 		return this.usuarioRepository.findFiltroApodo(apodo, id);
 	  }
+
+	
 }

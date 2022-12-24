@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.samples.petclinic.ocachis.jugador.JugadorService;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.samples.petclinic.ocachis.usuario.UsuarioService;
 import org.springframework.stereotype.Controller;
@@ -23,11 +24,13 @@ public class SolicitudController {
 
     private SolicitudService solicitudService;
     private UsuarioService usuarioService;
+    private JugadorService jugadorService;
 
     @Autowired
-    public SolicitudController(SolicitudService solicitudService, UsuarioService usuarioService){
+    public SolicitudController(SolicitudService solicitudService, UsuarioService usuarioService,JugadorService jugadorService){
         this.solicitudService = solicitudService;
         this.usuarioService = usuarioService;
+        this.jugadorService = jugadorService;
     }
     @GetMapping(value="/amigos")
     public String listarAmigos(@Param("apodoFiltro") String apodoFiltro,Map<String,Object> model){
@@ -37,7 +40,7 @@ public class SolicitudController {
         Collection<Usuario> usuariosFiltrado = this.usuarioService.findFiltroApodo(apodoFiltro,usuario.getId());
         model.put("filtrados", usuariosFiltrado);
         }
-       Collection<Usuario> amigos = solicitudService.findAllAmigos(usuario.getId());
+       Map<Usuario,Boolean> amigos = solicitudService.findAllAmigos(usuario.getId());
 		model.put("amigos", amigos);
 		return VIEWS_AMIGOS;
     }
@@ -65,10 +68,27 @@ public class SolicitudController {
         return  "redirect:/solicitud/pendientes";
     }
     @GetMapping(value="/amigos/{usuarioId}/agregar")
-    public String agregarUsuario(@PathVariable("usuarioId") int usuarioInvitadoId, Map<String,Object> model){
+    public String agregarUsuario(@PathVariable("usuarioId") int usuarioInvitadoId){
         Usuario usuarioSolicitud = usuarioService.getLoggedUsuario();
         this.solicitudService.agregarUsuario(usuarioSolicitud.getId(), usuarioInvitadoId);
         return  "redirect:/solicitud/amigos";
+    }
+    @GetMapping(value="/amigos/{usuarioId}/espectar")
+    public String espectarPartida(@PathVariable("usuarioId") int usuarioId){
+
+        Map<String,Integer> partidaAEspectar = this.jugadorService.findIdPartidaEspectar(usuarioId);
+        String espectarUrl;
+        if(partidaAEspectar.get("parchis")!=null){
+            Integer idPartidaParchis = partidaAEspectar.get("parchis");
+            espectarUrl = "/sala/"+idPartidaParchis+"/playParchis";
+
+        }else{
+            Integer idPartidaOca = partidaAEspectar.get("oca");
+            espectarUrl = "/sala/" +idPartidaOca+"/playOca";
+        }
+        return "redirect:"+espectarUrl;
+
+
     }
     
     
