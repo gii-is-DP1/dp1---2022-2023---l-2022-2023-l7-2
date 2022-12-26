@@ -93,18 +93,21 @@ public class FichaService {
     public FichaParchis findFichaParchis(Integer id){
         return fichaParchisRepository.findById(id).get();
     }
+    
 
     @Transactional
     public void moverFichaParchis(FichaParchis ficha, CasillaParchis casillaFinal, Jugador jugador) {
         
         //Borramos ficha antigua
 		jugador.deleteFichaParchis(ficha);
+        jugador.getPartidaParchis().setUltimaFichaMovida(null);
 		removeFichaParchis(ficha);
 
 		//Creamos ficha nueva
 		FichaParchis f = new FichaParchis(jugador.getColor(), casillaFinal);
 		f = saveFichaParchis(f);
 		jugador.addFichaParchis(f);	
+        jugador.getPartidaParchis().setUltimaFichaMovida(f);
     }
 
     @Transactional

@@ -350,7 +350,7 @@ public class PartidaService {
 		partida.setDuracion(duracionInMinutes);
 		for(Jugador j:partida.getJugadores()){
 			j.finalizarPartidaOca(duracionInMinutes);
-	}
+		}
 	}
 
 	public int TirarNumDado(){
@@ -421,7 +421,17 @@ public class PartidaService {
 		Jugador jugador = jugadorService.findById(jugadorId).get();
 		CasillaParchis casillaFinal = partida.getCasillaFinal(ficha, dado);
 		Boolean haComido = false;
-		 
+		
+		if(dado==6){
+			partida.setVecesSacado6(partida.getVecesSacado6() + 1);
+		}
+
+		if(partida.getVecesSacado6()==3){ // la ultima ficha en mover vuelve a casa
+			mandarFichaACasa(partida, partida.getUltimaFichaMovida());
+			return;
+		}
+
+
 		if(puedeComerFicha(casillaFinal,ficha)){
 			comerFicha(casillaFinal, ficha, partida);
 			jugador.setFichasComidas(jugador.getFichasComidas() + 1);
@@ -430,9 +440,39 @@ public class PartidaService {
 		}
 
 		fichaService.moverFichaParchis(ficha, casillaFinal, jugador);
+		if(casillaFinal.esMeta()){
+			if(verificarFinalPartida(jugador)){
+				finalizarPartidaParchis(partida,jugador);
+			}
+		}
+		
 		if(!haComido) partida.setDado(null);
 
 
+	}
+
+
+
+	private void finalizarPartidaParchis(PartidaParchis partida, Jugador jugadorGanador) {
+		partida.setEstado(TipoEstadoPartida.TERMINADA);
+		partida.setGanador(jugadorGanador.getUsuario());
+		jugadorGanador.setEsGanador(true);
+		partida.setFechaFinalizacion(LocalDateTime.now());
+		Duration duracion =Duration.between(partida.getFechaCreacion(), partida.getFechaFinalizacion());
+		Integer duracionInMinutes = (int)duracion.getSeconds() /60;
+		partida.setDuracion(duracionInMinutes);
+		for(Jugador j:partida.getJugadores()){
+			j.finalizarPartidaParchis(duracionInMinutes);
+		}
+	}
+
+
+
+	private boolean verificarFinalPartida(Jugador jugador) {
+		for(FichaParchis ficha: jugador.getFichasParchis()){
+			if(!ficha.isEstaEnLaMeta()) return false;
+		}
+		return true;
 	}
 
 
@@ -488,29 +528,7 @@ public class PartidaService {
 	private void comerFicha(CasillaParchis casilla, FichaParchis ficha, PartidaParchis partida){
 		for(FichaParchis f : casilla.getFichas()){
 			if(f.getColor()!= ficha.getColor()){
-				CasillaParchis casa = null;
-				Jugador jugador = null;
-				for(Jugador j: partida.getJugadores()){
-					if(j.getFichasParchis().contains(f)){
-						jugador = j;
-						break;
-					} 
-				}
-				switch(f.getColor()){
-					case AMARILLO: 
-						casa=partida.getCasillaConNumero(101);
-						break;					
-					case AZUL:
-						casa=partida.getCasillaConNumero(102);
-						break;
-					case ROJO:
-						casa=partida.getCasillaConNumero(103);
-						break;
-					case VERDE:
-						casa=partida.getCasillaConNumero(104);
-						break;
-				}
-				fichaService.moverFichaParchis(f, casa, jugador);
+				mandarFichaACasa(partida, f);
 				break;
 			}
 		}
@@ -518,9 +536,37 @@ public class PartidaService {
 
 
 	@Transactional
+	public void mandarFichaACasa(PartidaParchis partida, FichaParchis ficha){
+			CasillaParchis casa = null;
+			Jugador jugador = null;
+			for(Jugador j: partida.getJugadores()){
+				if(j.getFichasParchis().contains(ficha)){
+					jugador = j;
+					break;
+				} 
+			}
+			switch(ficha.getColor()){
+				case AMARILLO: 
+					casa=partida.getCasillaConNumero(101);
+					break;					
+				case AZUL:
+					casa=partida.getCasillaConNumero(102);
+					break;
+				case ROJO:
+					casa=partida.getCasillaConNumero(103);
+					break;
+				case VERDE:
+					casa=partida.getCasillaConNumero(104);
+					break;
+			}
+			fichaService.moverFichaParchis(ficha, casa, jugador);
+	}
+
+	@Transactional
 	public int tirarDado(PartidaParchis partida) {
 		if(partida.getDado()==null){
-			partida.setDado((int)(Math.random()*6 +1));
+			// partida.setDado((int)(Math.random()*6 +1));
+			partida.setDado(2);
 		}
 		return partida.getDado();
 	}

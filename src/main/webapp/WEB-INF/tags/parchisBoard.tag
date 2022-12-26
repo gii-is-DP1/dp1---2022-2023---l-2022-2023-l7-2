@@ -31,7 +31,7 @@
         <c:forEach items="${jugadorAutenticado.fichasParchis}" var="ficha" varStatus="loop">
             <c:if test="${fichasQueSePuedenMover.contains(ficha)}">
                 <form id="formMoverFicha${loop.count}" modelAttribute="MoverFichaParchisForm"
-                method="POST" action="/sala/${tablero.id}/playParchis">
+                method="POST" action="/partida/parchis/${tablero.id}/jugar">
                     <input type="hidden" name="jugadorId" value="${jugadorAutenticado.id}">
                     <input type="hidden" name="fichaId" value="${ficha.id}">
                     <input type="hidden" name="dado" value="${dado}">

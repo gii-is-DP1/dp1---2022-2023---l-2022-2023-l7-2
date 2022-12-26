@@ -11,6 +11,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaParchis;
@@ -36,6 +37,9 @@ public class PartidaParchis extends Partida{
 	private Integer dado = null;
 	private Integer tirada = 0;
 	private Integer vecesSacado6 = 0;
+
+	@OneToOne
+	private FichaParchis ultimaFichaMovida;
 
 	@ElementCollection
 	@CollectionTable(name="logParchis")

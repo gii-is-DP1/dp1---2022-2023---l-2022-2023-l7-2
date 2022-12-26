@@ -60,4 +60,8 @@ public class Usuario extends BaseEntity {
     public void actualizarEstadisticasOca(Integer duracion, Boolean esGanador, Integer vecesCaidoEnMuerte) {
         estadisticas.updateEstadisticasOca(duracion, esGanador, vecesCaidoEnMuerte);
 }
+
+    public void actualizarEstadisticasParchis(Integer duracion, Boolean esGanador, Integer fichasComidas) {
+        estadisticas.updateEstadisticasParchis(duracion, esGanador, fichasComidas);
+    }
 }

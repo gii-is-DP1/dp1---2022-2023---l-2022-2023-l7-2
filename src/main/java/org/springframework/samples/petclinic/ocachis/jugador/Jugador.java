@@ -96,6 +96,10 @@ public String toString(){
 
         return result;
     }
+
+    public void finalizarPartidaParchis(Integer duracion) {
+        this.usuario.actualizarEstadisticasParchis(duracion, this.esGanador, this.fichasComidas);
+    }
 }   
 
 

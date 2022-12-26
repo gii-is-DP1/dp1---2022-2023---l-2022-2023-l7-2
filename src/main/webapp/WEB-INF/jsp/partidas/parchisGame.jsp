@@ -11,7 +11,7 @@
 
 
 <petclinic:layout pageName="game" title="Jugando al parchis">
-    
+    <h5>${partidaParchis.estado}</h5>
     <h1>vista: ${modo}</h1>
     <h1>   El dado ha sacado el numero: ${dado}    </h1>
     <h1>Es el turno del jugador ${partidaParchis.colorJugadorActual}</h1>
@@ -38,7 +38,7 @@
     <c:if test="${jugadorAutenticado.color == partidaParchis.colorJugadorActual}"> 
         
         <form:form class="form-horizontal" id="tirar-dado-form"
-            method="post" action="/sala/${partidaParchis.id}/playParchis">
+            method="post" action="/partida/parchis/${partidaParchis.id}/jugar">
             <button class="btn btn-default">Tirar dado</button>     
         </form:form>
         

@@ -101,14 +101,14 @@ class PartidaControllerTests {
 	@Test
 	@WithMockUser(value = "spring")
 	void testcrearPartidaHtml() throws Exception {
-		mockMvc.perform(get("/sala/create")).andExpect(status().isOk()).andExpect(model().attributeExists("procesarPartidaForm"))
+		mockMvc.perform(get("/partida/crear")).andExpect(status().isOk()).andExpect(model().attributeExists("procesarPartidaForm"))
 				.andExpect(view().name("partidas/createPartidaForm"));
 	}
 
     // @WithMockUser(value = "spring")
 	// @Test
 	// void testProcessCrearPartidaSuccess() throws Exception {
-	// 	mockMvc.perform(post("/sala/create").param("tipo", "oca").param("maxJugadores", "3").with(csrf()))
+	// 	mockMvc.perform(post("/partida/crear").param("tipo", "oca").param("maxJugadores", "3").with(csrf()))
 	// 	.andExpect(status().is3xxRedirection());
 	// }
 	
@@ -116,21 +116,21 @@ class PartidaControllerTests {
     @WithMockUser(value = "spring")
 	@Test
 	void testProcessCrearPartidaHasErrors() throws Exception {
-		mockMvc.perform(post("/sala/create").with(csrf()).param("maxJugadores", "4")
+		mockMvc.perform(post("/partida/crear").with(csrf()).param("maxJugadores", "4")
 				).andExpect(status().isOk()).andExpect(model().attributeHasFieldErrors("procesarPartidaForm", "tipo"))			.andExpect(view().name("partidas/createPartidaForm"));
 	}
 
 	@WithMockUser(value = "spring")
 	@Test
 	void testShowSalaListHtml() throws Exception {
-		mockMvc.perform(get("/sala/")).andExpect(status().isOk()).andExpect(model().attributeExists("partidaOca"))
+		mockMvc.perform(get("/partida/")).andExpect(status().isOk()).andExpect(model().attributeExists("partidaOca"))
 				.andExpect(view().name("partidas/salaList"));
 	}
 	/*
 	@WithMockUser(value = "spring")
 	@Test
 	void testcreateEnJoinSalaOcaSuccess() throws Exception {
-		mockMvc.perform(post("/sala/{partidaOcaId}/ocaJoin",TEST_PARTIDAOCA_ID).with(csrf()).param("jugadorId", "6")
+		mockMvc.perform(post("/partida/oca/{partidaOcaId}/entrar",TEST_PARTIDAOCA_ID).with(csrf()).param("jugadorId", "6")
 				.param("color", "ROJO")
 				).andExpect(status().is2xxSuccessful());
 	}
@@ -138,7 +138,7 @@ class PartidaControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testShowOcaHtml() throws Exception {
-		mockMvc.perform(get("/sala/{partidaOcaId}/showOca", TEST_PARTIDAOCA_ID)).andExpect(status().isOk())
+		mockMvc.perform(get("/partida/oca/{partidaOcaId}/espera", TEST_PARTIDAOCA_ID)).andExpect(status().isOk())
 			.andExpect(model().attributeExists("partidaOca"))
 				.andExpect(view().name("partidas/espera"));
 	}
@@ -146,27 +146,27 @@ class PartidaControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testcreateEnJoinSalaParchisSuccess() throws Exception {
-		mockMvc.perform(get("/sala/{partidaParchisId}/parchisJoin", 2)).andExpect(status().is3xxRedirection())
-				.andExpect(redirectedUrl("/sala/2/parchisJoin")).andExpect(status().isFound());
+		mockMvc.perform(get("/partida/parchis/{partidaParchisId}/entrar", 2)).andExpect(status().is3xxRedirection())
+				.andExpect(redirectedUrl("/partida/parchis/2/entrar")).andExpect(status().isFound());
 	}
 	*/
 	@WithMockUser(value = "spring")
 	@Test
 	void testShowParchisHtml() throws Exception {
-		mockMvc.perform(get("/sala/{partidaParchisId}/showParchis", TEST_PARTIDAPARCHIS_ID)).andExpect(status().isOk())
+		mockMvc.perform(get("/partida/parchis/{partidaParchisId}/espera", TEST_PARTIDAPARCHIS_ID)).andExpect(status().isOk())
 			.andExpect(model().attributeExists("partidaParchis"))
 				.andExpect(view().name("partidas/espera"));
 	}
  @WithMockUser(value = "spring")
 	@Test
 	void testEmpezarPartidaParchis() throws Exception {
-		mockMvc.perform(get("/sala/{partidaParchisId}/startParchis", TEST_PARTIDAPARCHIS_ID)).andExpect(status().is3xxRedirection())
-				.andExpect(redirectedUrl("/sala/"+TEST_PARTIDAPARCHIS_ID+"/playParchis")).andExpect(status().isFound());
+		mockMvc.perform(get("/partida/parchis/{partidaParchisId}/empezar", TEST_PARTIDAPARCHIS_ID)).andExpect(status().is3xxRedirection())
+				.andExpect(redirectedUrl("/partida/parchis/"+TEST_PARTIDAPARCHIS_ID+"/jugar")).andExpect(status().isFound());
 	}
  @WithMockUser(value = "spring")
 	@Test
 	void testEmpezarPartidaOca() throws Exception {
-		mockMvc.perform(get("/sala/{partidaOcaId}/startOca", TEST_PARTIDAOCA_ID)).andExpect(status().is3xxRedirection())
-				.andExpect(redirectedUrl("/sala/" + TEST_PARTIDAOCA_ID + "/playOca")).andExpect(status().isFound());
+		mockMvc.perform(get("/partida/oca/{partidaOcaId}/empezar", TEST_PARTIDAOCA_ID)).andExpect(status().is3xxRedirection())
+				.andExpect(redirectedUrl("/partida/oca/" + TEST_PARTIDAOCA_ID + "/jugar")).andExpect(status().isFound());
 	}
 }

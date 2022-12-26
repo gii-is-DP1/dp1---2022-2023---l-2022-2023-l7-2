@@ -49,7 +49,7 @@
                 <td>
                     <c:choose>
                         <c:when test="${partidaOca.estado==TipoEstadoPartida.CREADA}">
-                            <spring:url value="/sala/{partidaOcaId}/ocaJoin" var="ocaJoinUrl">
+                            <spring:url value="/partida/oca/{partidaOcaId}/entrar" var="ocaJoinUrl">
                             <spring:param name="partidaOcaId" value="${partidaOca.id}"/>
                             </spring:url>
                             <a href="${fn:escapeXml(ocaJoinUrl)}" class="btn btn-default">Unirse</a>
@@ -86,7 +86,7 @@
                 <td>
                     <c:choose>
                         <c:when test="${partidaParchis.estado==TipoEstadoPartida.CREADA}">
-                            <spring:url value="/sala/{partidaParchisId}/parchisJoin" var="parchisJoinUrl">
+                            <spring:url value="/partida/parchis/{partidaParchisId}/entrar" var="parchisJoinUrl">
                             <spring:param name="partidaParchisId" value="${partidaParchis.id}"/>
                             </spring:url>
                             <a href="${fn:escapeXml(parchisJoinUrl)}" class="btn btn-default">Unirse</a>
