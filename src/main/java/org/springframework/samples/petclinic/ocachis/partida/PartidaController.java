@@ -223,7 +223,6 @@ public class PartidaController {
 
 	
 	//parchis
-	
 	@GetMapping("/{partidaParchisId}/parchisJoin")
 	public String unirsePartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model, RedirectAttributes redirectAttributes) {
 		PartidaParchis partidaParchis = partidaService.findPartidaParchisById(partidaParchisId);
@@ -236,6 +235,7 @@ public class PartidaController {
 	}
 
 	@PostMapping("/{partidaParchisId}/parchisJoin")
+
 	public String createEnJoinSalaParchis(@PathVariable("partidaParchisId") int partidaParchisId,
 			@Valid Jugador jugador, ModelMap model, RedirectAttributes redirectAttributes) {
 		
@@ -442,11 +442,11 @@ public class PartidaController {
 		}
 
 		//procesar movimiento de ficha
-		if(mfpf.getJugadorId()!=null && mfpf.getJugadorId()!=null){
+		if(mfpf.getJugadorId() != null && mfpf.getJugadorId() != null){
 			//model.put("modo","Formulario obtenido");
 			partidaService.jugarParchis(partida, mfpf.getFichaId(), mfpf.getJugadorId(),mfpf.getDado());
 		}else{ //tirar dado y mostrar opciones
-			int dado = partidaService.TirarNumDado();
+			int dado = partidaService.tirarDado(partida);
 		List<FichaParchis> fichasQuePuedenMoverse = j.getFichasQuePuedenMoverse(dado);
 		model.put("fichasQueSePuedenMover", fichasQuePuedenMoverse);
 		model.put("dado", dado);

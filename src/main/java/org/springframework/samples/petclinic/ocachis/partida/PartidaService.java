@@ -412,14 +412,116 @@ public class PartidaService {
 	}
 
 
+	
+	//*****************************************JUGAR PARCHIS*****************************************
 
+	@Transactional
 	public void jugarParchis(PartidaParchis partida, Integer fichaId, Integer jugadorId, Integer dado) {
 		FichaParchis ficha = fichaService.findFichaParchis(fichaId);
 		Jugador jugador = jugadorService.findById(jugadorId).get();
 		CasillaParchis casillaFinal = partida.getCasillaFinal(ficha, dado);
+		Boolean haComido = false;
+		 
+		if(puedeComerFicha(casillaFinal,ficha)){
+			comerFicha(casillaFinal, ficha, partida);
+			jugador.setFichasComidas(jugador.getFichasComidas() + 1);
+			partida.setDado(20);
+			haComido=true;
+		}
 
 		fichaService.moverFichaParchis(ficha, casillaFinal, jugador);
+		if(!haComido) partida.setDado(null);
 
+
+	}
+
+
+
+	public boolean puedeComerFicha(CasillaParchis casillaFinal, FichaParchis ficha){
+		switch(casillaFinal.getTipoCasillaParchis()){
+			case NORMAL:
+				if(casillaFinal.getNumeroFichas()==1 && 
+					casillaFinal.getFichas().get(0).getColor()!=ficha.getColor())
+					return true;
+				break;
+			case INCIOAMARILLO:
+				if(ficha.getColor()==Color.AMARILLO && casillaFinal.getNumeroFichas() == 2){
+					for(FichaParchis f: casillaFinal.getFichas()){
+						if(f.getColor()!=ficha.getColor()) return true;
+					}
+				}
+				break;
+			case INCIOAZUL:
+				if(ficha.getColor()==Color.AZUL && casillaFinal.getNumeroFichas() == 2){
+					for(FichaParchis f: casillaFinal.getFichas()){
+						if(f.getColor()!=ficha.getColor()) return true;
+					}
+				}
+				break;
+			case INCIOROJO:
+				if(ficha.getColor()==Color.ROJO && casillaFinal.getNumeroFichas() == 2){
+					for(FichaParchis f: casillaFinal.getFichas()){
+						if(f.getColor()!=ficha.getColor()) return true;
+					}
+				}
+				break;
+			case INCIOVERDE:
+				if(ficha.getColor()==Color.VERDE && casillaFinal.getNumeroFichas() == 2){
+					for(FichaParchis f: casillaFinal.getFichas()){
+						if(f.getColor()!=ficha.getColor()) return true;
+					}
+				}
+				break;
+			default:
+				return false;
+		}
 		
+		
+		if(casillaFinal.getTipoCasillaParchis()==TipoCasillaParchis.NORMAL && casillaFinal.getNumeroFichas() == 1)
+			return true;
+		else if (casillaFinal.getTipoCasillaParchis()==TipoCasillaParchis.CASAAMARILLO) return true;
+		else return false;
+		
+	}
+
+	@Transactional
+	private void comerFicha(CasillaParchis casilla, FichaParchis ficha, PartidaParchis partida){
+		for(FichaParchis f : casilla.getFichas()){
+			if(f.getColor()!= ficha.getColor()){
+				CasillaParchis casa = null;
+				Jugador jugador = null;
+				for(Jugador j: partida.getJugadores()){
+					if(j.getFichasParchis().contains(f)){
+						jugador = j;
+						break;
+					} 
+				}
+				switch(f.getColor()){
+					case AMARILLO: 
+						casa=partida.getCasillaConNumero(101);
+						break;					
+					case AZUL:
+						casa=partida.getCasillaConNumero(102);
+						break;
+					case ROJO:
+						casa=partida.getCasillaConNumero(103);
+						break;
+					case VERDE:
+						casa=partida.getCasillaConNumero(104);
+						break;
+				}
+				fichaService.moverFichaParchis(f, casa, jugador);
+				break;
+			}
+		}
+	}
+
+
+	@Transactional
+	public int tirarDado(PartidaParchis partida) {
+		if(partida.getDado()==null){
+			partida.setDado((int)(Math.random()*6 +1));
+		}
+		return partida.getDado();
 	}
 }

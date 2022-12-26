@@ -74,6 +74,7 @@ public String toString(){
 
     public void deleteFichaParchis(FichaParchis f){
         this.fichasParchis.remove(f);
+        f.getCasillaActual().quitarFicha(f);
     }
 
     public void finalizarPartidaOca(Integer duracion) {

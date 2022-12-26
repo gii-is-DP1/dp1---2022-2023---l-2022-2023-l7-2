@@ -33,6 +33,10 @@ public class PartidaParchis extends Partida{
 	private Collection<Jugador> jugadores;
 
 
+	private Integer dado = null;
+	private Integer tirada = 0;
+	private Integer vecesSacado6 = 0;
+
 	@ElementCollection
 	@CollectionTable(name="logParchis")
 	protected List<String> log = inicializarLog();
@@ -68,12 +72,13 @@ public class PartidaParchis extends Partida{
 		return null;
 	}
 
-
     public boolean sePuedeMover(FichaParchis ficha, int dado) {
 		if(ficha.isEstaEnCasa() && dado != 5){
 			return false;
 		}
-
+		if(ficha.isEstaEnLaMeta()){
+			return false;
+		}
 		List<CasillaParchis> l = getCasillasPorLasQuePasa(ficha, dado);
 		for(CasillaParchis c: l){
 			if(c.getBloqueada()){
@@ -118,7 +123,6 @@ public class PartidaParchis extends Partida{
 		switch(this.getColorJugadorActual()){
 			case ROJO:
 				this.setColorJugadorActual(Color.AMARILLO);
-				
 				break;
 			case AMARILLO:
 				if(this.getJugadores().size()==2) this.setColorJugadorActual(Color.ROJO);
@@ -134,9 +138,6 @@ public class PartidaParchis extends Partida{
 		}
 		this.addLog("TURNO DEL JUGADOR " + this.getColorJugadorActual());
 	}
-
-
-
 
 	public List<CasillaParchis> METODORANDOM(FichaParchis ficha, Integer dado){
 		Color color = ficha.getColor();
@@ -189,16 +190,27 @@ public class PartidaParchis extends Partida{
 
 
     public CasillaParchis getCasillaFinal(FichaParchis ficha, Integer dado) {
-		Integer numero = ficha.getCasillaActual().getNumero();
-		int movimientos = dado;
-		Boolean haRebotado = false;
 		CasillaParchis result = null;
-		while(movimientos>0){
-			numero = getSiguienteNumero(numero, ficha.getColor(), haRebotado);
-			result = this.getCasillaConNumero(numero);
-			if(result.esMeta()) haRebotado = true;
-			movimientos--;
+		
+		if(ficha.getCasillaActual().esCasa() && dado==5){ //la ficha sale de casa
+			Integer numeroFinal = getSiguienteNumero(ficha.getCasillaActual().getNumero(), ficha.getColor(), false);
+			result = this.getCasillaConNumero(numeroFinal);
+			return result;
 		}
+
+		else if(ficha.getCasillaActual().esMeta()){ //la ficha esta en la meta y no se mueve
+			result = ficha.getCasillaActual();
+		}else{//la ficha avanza el numero indicado en el dado
+			Integer numero = ficha.getCasillaActual().getNumero();
+			int movimientos = dado;
+			Boolean haRebotado = false;
+			while(movimientos>0){
+				numero = getSiguienteNumero(numero, ficha.getColor(), haRebotado);
+				result = this.getCasillaConNumero(numero);
+				if(result.esMeta()) haRebotado = true;
+				movimientos--;
+			}
+		}		
 		return result;
     }
 }

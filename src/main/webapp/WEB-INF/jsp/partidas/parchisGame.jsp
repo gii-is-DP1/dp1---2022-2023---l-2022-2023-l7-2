@@ -16,7 +16,7 @@
     <h1>   El dado ha sacado el numero: ${dado}    </h1>
     <h1>Es el turno del jugador ${partidaParchis.colorJugadorActual}</h1>
    
-<petclinic:parchisBoard tablero="${partidaParchis}" fichasQueSePuedenMover="${fichasQueSePuedenMover}" jugadorAutenticado="${jugadorAutenticado}"></petclinic:parchisBoard>
+<petclinic:parchisBoard tablero="${partidaParchis}" fichasQueSePuedenMover="${fichasQueSePuedenMover}" dado="${dado}" jugadorAutenticado="${jugadorAutenticado}"></petclinic:parchisBoard>
    
     <br>
     Jugador autenticado: ${jugadorAutenticado}
@@ -24,7 +24,8 @@
     colorJugador actual : ${partidaParchis.colorJugadorActual}
     <br>
     <br>
-    JUGADORES:<br>
+    
+     JUGADORES:<br>
     <c:forEach items="${partidaParchis.jugadores}" var="jugador">
         ${jugador.color}<br>
         <c:forEach items="${jugador.fichasParchis}" var="ficha">
@@ -32,7 +33,7 @@
         </c:forEach>
         <br>
     </c:forEach>
-  
+
 
     <c:if test="${jugadorAutenticado.color == partidaParchis.colorJugadorActual}"> 
         
@@ -50,7 +51,7 @@
                         <form:input type="hidden" path="fichaId" name="fichaId" value="${fichaJugador.id}"></form:input>
                         <form:input type="hidden" path="dado" name="dado" value="${dado}"></form:input>
                         
-                        <button type="submit" class="btn btn-default">Mover ficha en casilla ${fichaJugador.casillaActual.numero}</button>
+                        <button class="btn btn-default">Mover ficha en casilla ${fichaJugador.casillaActual.numero}</button>
                    </form:form>
                 </c:if>
 
@@ -62,33 +63,8 @@
 
     <br>
     <br>
-    dado: ${dado}
     fichasQueSePuedenMover: ${fichasQueSePuedenMover}
 
-     
-
-    
     <h1>Resumen:</h1>
 
-
-     
-    
 </petclinic:layout>
-
-<script>
- function tirarDado() {
-    return Math.floor(Math.random() * 7);
-}
-
-var dado = tirarDado();
-console.log(dado);
-
-</script>
-
-<script>
-
-    function guardarIdFicha(){
-        
-    }
-    
-</script>

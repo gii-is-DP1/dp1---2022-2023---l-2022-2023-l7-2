@@ -158,11 +158,12 @@ INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, ma
 (2, 101, 4, 0, '2013-01-01', 2, 0),
 (3, 102, 4, 0, '2000-12-12', 4, 0);
 
-INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, color_jugador_actual) VALUES
-(1, 103, 5, 1, '2013-01-03', 4, 0),
-(2, 104, 5, 2, '2013-01-03', 4, 0),
-(3, 105, 0, 0, '2022-07-22', 2, 0),
-(4, 106, 0, 0, '2022-07-23', 2, 0);
+
+INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, color_jugador_actual, dado, tirada, veces_sacado6) VALUES
+(1, 103, 5, 1, '2013-01-03', 4, 0, null, 0, 0),
+(2, 104, 5, 2, '2013-01-03', 4, 0, null, 0, 0),
+(3, 105, 0, 0, '2022-07-22', 2, 0, null, 0, 0),
+(4, 106, 0, 0, '2022-07-23', 2, 0, null, 0, 0);
 
 
 
@@ -345,7 +346,7 @@ INSERT INTO casilla_parchis(id, numero, bloqueada, tipo_casilla_parchis) VALUES
 (6, 6, false, 0),
 (7, 7, false, 0),
 (8, 8, false, 0),
-(9, 9, false, 0),
+(9, 9, true, 0),
 (10, 10, false, 0),
 (11, 11, false, 0),
 (12, 12, false, 1),
@@ -375,7 +376,7 @@ INSERT INTO casilla_parchis(id, numero, bloqueada, tipo_casilla_parchis) VALUES
 (36, 36, false, 0),
 (37, 37, false, 0),
 (38, 38, false, 0),
-(39, 39, false, 7),
+(39, 39, true, 7),
 (40, 40, false, 0),
 (41, 41, false, 0),
 (42, 42, false, 0),
@@ -570,8 +571,8 @@ INSERT INTO ficha_parchis(id, color, esta_en_casa, esta_en_la_meta, casilla_actu
 (6,1, false, false, 9),
 (7,1, true, false, 101),
 (8,1, true, false, 101),
-(9,2, false, false, 51),
-(10,2,false, false, 51),
+(9,2, false, false, 39),
+(10,2,false, false, 39),
 (11,2,true, false, 104),
 (12,2,true, false, 104);
 

@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.admin;
+package org.springframework.samples.petclinic.ocachis.admin;
 
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;

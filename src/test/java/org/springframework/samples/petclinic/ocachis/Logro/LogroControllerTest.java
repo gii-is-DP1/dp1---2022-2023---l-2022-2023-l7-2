@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.Logro;
+package org.springframework.samples.petclinic.ocachis.Logro;
 
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;

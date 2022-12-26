@@ -96,6 +96,7 @@ public class FichaService {
 
     @Transactional
     public void moverFichaParchis(FichaParchis ficha, CasillaParchis casillaFinal, Jugador jugador) {
+        
         //Borramos ficha antigua
 		jugador.deleteFichaParchis(ficha);
 		removeFichaParchis(ficha);
@@ -106,6 +107,7 @@ public class FichaService {
 		jugador.addFichaParchis(f);	
     }
 
+    @Transactional
     private void removeFichaParchis(FichaParchis ficha) {
         fichaParchisRepository.delete(ficha);
     }
