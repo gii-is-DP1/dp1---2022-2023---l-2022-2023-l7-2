@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.partida;
+package org.springframework.samples.petclinic.ocachis.partida;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

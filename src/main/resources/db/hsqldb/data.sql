@@ -164,87 +164,28 @@ INSERT INTO solicitud (id,usuario_invitado_id,usuario_solicitud_id,estado) VALUE
 INSERT INTO logro(id,nombre,descripcion,oca_partidas_jugadas) VALUES (1,'Jugador Oca Junior','Juega 10 partidas de la Oca',10);
 
 INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, color_jugador_actual) VALUES
-(1, 100, 3, 0, '2013-01-01', 3, 0),
-(2, 101, 4, 0, '2013-01-01', 2, 0),
-(3, 102, 4, 0, '2000-12-12', 4, 0);
-
-INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, color_jugador_actual) VALUES
-(1, 103, 5, 1, '2013-01-03', 4, 0),
-(2, 104, 5, 2, '2013-01-03', 4, 0),
-(3, 105, 0, 0, '2022-07-22', 2, 0),
-(4, 106, 0, 0, '2022-07-23', 2, 0);
+(1, 100, 3, 0, '2022-12-05', 3, 0),
+(2, 101, 4, 0, '2013-12-02', 2, 0),
+(3, 102, 4, 0, '2000-12-16', 4, 0);
 
 
+INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, color_jugador_actual, dado, tirada, veces_sacado6) VALUES
+(1, 103, 5, 1, '2022-12-25', 4, 0, null, 0, 0),
+(2, 104, 5, 2, '2022-12-24', 4, 0, null, 0, 0),
+(3, 105, 0, 0, '2022-12-23', 2, 0, null, 0, 0),
+(4, 106, 0, 0, '2022-12-22', 2, 0, null, 0, 0);
 
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (1, 1, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (2, 2, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (3, 3, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (4, 4, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (5, 5, 1);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (6, 6, 2);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (7, 7, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (8, 8, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (9, 9, 1);
 
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (10, 10, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (11, 11, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (12, 12, 2);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (13, 13, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (14, 14, 1);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (15, 15, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (16, 16, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (17, 17, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (18, 18, 1);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (19, 19, 3);
 
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (20, 20, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (21, 21, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (22, 22, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (23, 23, 1);
-INSERT INTO casilla_Oca(id, numero, tipo_casilla_oca) VALUES (24, 24, 0);
-INSERT INTO casilla_Oca(id, numero, tipo_casilla_oca) VALUES (25, 25, 0);
-INSERT INTO casilla_Oca(id, numero, tipo_casilla_oca) VALUES (26, 26, 6);
-INSERT INTO casilla_Oca(id, numero, tipo_casilla_oca) VALUES (27, 27, 1);
-INSERT INTO casilla_Oca(id, numero, tipo_casilla_oca) VALUES (28, 28, 0);
-INSERT INTO casilla_Oca(id, numero, tipo_casilla_oca) VALUES (29, 29, 0);
 
-INSERT INTO casilla_Oca(id, numero, tipo_casilla_oca) VALUES (30, 30, 0);
-INSERT INTO casilla_Oca(id, numero, tipo_casilla_oca) VALUES (31, 31, 4);
-INSERT INTO casilla_Oca(id, numero, tipo_casilla_oca) VALUES (32, 32, 1);
-INSERT INTO casilla_Oca(id, numero, tipo_casilla_oca) VALUES (33, 33, 0);
-INSERT INTO casilla_Oca(id, numero, tipo_casilla_oca) VALUES (34, 34, 0);
-INSERT INTO casilla_Oca(id, numero, tipo_casilla_oca) VALUES (35, 35, 0);
-INSERT INTO casilla_Oca(id, numero, tipo_casilla_oca) VALUES (36, 36, 1);
-INSERT INTO casilla_Oca(id, numero, tipo_casilla_oca) VALUES (37, 37, 0);
-INSERT INTO casilla_Oca(id, numero, tipo_casilla_oca) VALUES (38, 38, 0);
-INSERT INTO casilla_Oca(id, numero, tipo_casilla_oca) VALUES (39, 39, 0);
-
-INSERT INTO casilla_Oca(id, numero, tipo_casilla_oca) VALUES (40, 40, 0);
-INSERT INTO casilla_Oca(id, numero, tipo_casilla_oca) VALUES (41, 41, 1);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (42, 42, 7);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (43, 43, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (44, 44, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (45, 45, 1);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (46, 46, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (47, 47, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (48, 48, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (49, 49, 0);
-
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (50, 50, 1);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (51, 51, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (52, 52, 5);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (53, 53, 6);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (54, 54, 1);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (55, 55, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (56, 56, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (57, 57, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (58, 58, 8);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (59, 59, 1);
-
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (60, 60, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (61, 61, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (62, 62, 0);
-INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES (63, 63, 9);
+ INSERT INTO casilla_oca(id, numero, tipo_casilla_oca) VALUES 
+ (1, 1, 0),(2, 2, 0),(3, 3, 0),(4, 4, 0),(5, 5, 1),(6, 6, 2),(7, 7, 0),(8, 8, 0),(9, 9, 1),(10, 10, 0),
+ (11, 11, 0),(12, 12, 2),(13, 13, 0),(14, 14, 1),(15, 15, 0),(16, 16, 0),(17, 17, 0),(18, 18, 1),(19, 19, 3),(20, 20, 0),
+ (21, 21, 0),(22, 22, 0),(23, 23, 1),(24, 24, 0),(25, 25, 0),(26, 26, 6),(27, 27, 1),(28, 28, 0),(29, 29, 0),(30, 30, 0),
+ (31, 31, 4),(32, 32, 1),(33, 33, 0),(34, 34, 0),(35, 35, 0),(36, 36, 1),(37, 37, 0),(38, 38, 0),(39, 39, 0),(40, 40, 0),
+ (41, 41, 1),(42, 42, 7),(43, 43, 0),(44, 44, 0),(45, 45, 1),(46, 46, 0),(47, 47, 0),(48, 48, 0),(49, 49, 0),(50, 50, 1),
+ (51, 51, 0),(52, 52, 5),(53, 53, 6),(54, 54, 1),(55, 55, 0),(56, 56, 0),(57, 57, 0),(58, 58, 8),(59, 59, 1),(60, 60, 0),
+ (61, 61, 0),(62, 62, 0),(63, 63, 9);
 
 INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (1, 0, 2);
 INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (2, 1, 2);
@@ -253,96 +194,26 @@ INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (2, 1, 2);
 
 
 INSERT INTO jugador(id, color, es_ganador, fichas_comidas, veces_caido_en_muerte, ficha_oca_id, partida_oca_id, partida_parchis_id, usuario_id, num_turnos_bloqueado_restantes_oca) VALUES
-                    (6,     0,      FALSE,       0,              0,                 1,              3,      null,                    3, 0);
-INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id,num_turnos_bloqueado_restantes_oca) VALUES
-(7, 1, FALSE, 0, 0, 2, 3, null, 4,0);
--- INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id,num_turnos_bloqueado_restantes_oca) VALUES
--- (12, 2, FALSE, 0, 0, 3, 3, null, 8,0);
--- INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id,num_turnos_bloqueado_restantes_oca) VALUES
--- (13, 3, FALSE, 0, 0, 4, 3, null, 9,0);
-
-
-INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id,num_turnos_bloqueado_restantes_oca) VALUES
-(8, 0, FALSE, 0, 0, null, null, 1, 1,0);
-INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id,num_turnos_bloqueado_restantes_oca) VALUES
-(9, 1, FALSE, 0, 0, null, null, 1, 2,0);
-INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id,num_turnos_bloqueado_restantes_oca) VALUES
-(10, 2, FALSE, 0, 0, null, null, 1, 3,0);
-INSERT INTO jugador(id, color, es_ganador,fichas_comidas,veces_caido_en_muerte,ficha_oca_id,partida_oca_id,partida_parchis_id,usuario_id,num_turnos_bloqueado_restantes_oca) VALUES
+( 6, 0, FALSE, 0, 0, 1, 3, null, 3, 0),
+( 7, 1, FALSE, 0, 0, 2, 3, null, 4, 0),
+-- (12, 2, FALSE, 0, 0, 3, 3, null, 8,0),
+-- (13, 3, FALSE, 0, 0, 4, 3, null, 9,0),
+( 8, 0, FALSE, 0, 0, null, null, 1, 1,0),
+( 9, 1, FALSE, 0, 0, null, null, 1, 2,0),
+-- (10, 2, FALSE, 0, 0, null, null, 1, 3,0),
 (11, 3, FALSE, 0, 0, null, null, 2, 4,0);
 
 -- usuario 1 espectea partida 3(oca)
 INSERT INTO PARTIDA_OCA_USUARIOS_OBSERVADORES VALUES(3,1);
 
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,1);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,2);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,3);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,4);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,5);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,6);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,7);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,8);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,9);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,10);
-
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,11);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,12);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,13);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,14);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,15);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,16);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,17);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,18);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,19);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,20);
-
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,21);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,22);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,23);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,24);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,25);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,26);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,27);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,28);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,29);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3,30);
-
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 31);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 32);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 33);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 34);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 35);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 36);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 37);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 38);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 39);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 40);
-
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 41);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 42);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 43);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 44);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 45);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 46);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 47);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 48);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 49);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 50);
-
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 51);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 52);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 53);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 54);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 55);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 56);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 57);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 58);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 59);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 60);
-
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 61);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 62);
-INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES(3, 63);
+INSERT INTO partida_oca_casillas(partida_oca_id,casillas_id) VALUES
+(3, 1),(3, 2),(3, 3),(3, 4),(3, 5),(3, 6),(3, 7),(3, 8),(3, 9),(3,10),
+(3,11),(3,12),(3,13),(3,14),(3,15),(3,16),(3,17),(3,18),(3,19),(3,20),
+(3,21),(3,22),(3,23),(3,24),(3,25),(3,26),(3,27),(3,28),(3,29),(3,30),
+(3,31),(3,32),(3,33),(3,34),(3,35),(3,36),(3,37),(3,38),(3,39),(3,40),
+(3,41),(3,42),(3,43),(3,44),(3,45),(3,46),(3,47),(3,48),(3,49),(3,50),
+(3,51),(3,52),(3,53),(3,54),(3,55),(3,56),(3,57),(3,58),(3,59),(3,60),
+(3,61),(3,62),(3,63);
 
 
 -- PARTIDA PARCHIS
@@ -380,7 +251,7 @@ INSERT INTO casilla_parchis(id, numero, bloqueada, tipo_casilla_parchis) VALUES
 (31, 31, false, 0),
 (32, 32, false, 0),
 (33, 33, false, 0),
-(34, 34, true, 1),
+(34, 34, false, 1),
 (35, 35, false, 0),
 (36, 36, false, 0),
 (37, 37, false, 0),
@@ -465,139 +336,40 @@ INSERT INTO casilla_parchis(id, numero, bloqueada, tipo_casilla_parchis) VALUES
 (104, 104, false, 5);
 
 INSERT INTO partida_parchis_casillas(partida_parchis_id, casillas_id) VALUES
-(1, 1),
-(1, 2),
-(1, 3),
-(1, 4),
-(1, 5),
-(1, 6),
-(1, 7),
-(1, 8),
-(1, 9),
-(1, 10),
-(1, 11),
-(1, 12),
-(1, 13),
-(1, 14),
-(1, 15),
-(1, 16),
-(1, 17),
-(1, 18),
-(1, 19),
-(1, 20),
-(1, 21),
-(1, 22),
-(1, 23),
-(1, 24),
-(1, 25),
-(1, 26),
-(1, 27),
-(1, 28),
-(1, 29),
-(1, 30),
-(1, 31),
-(1, 32),
-(1, 33),
-(1, 34),
-(1, 35),
-(1, 36),
-(1, 37),
-(1, 38),
-(1, 39),
-(1, 40),
-(1, 41),
-(1, 42),
-(1, 43),
-(1, 44),
-(1, 45),
-(1, 46),
-(1, 47),
-(1, 48),
-(1, 49),
-(1, 50),
-(1, 51),
-(1, 52),
-(1, 53),
-(1, 54),
-(1, 55),
-(1, 56),
-(1, 57),
-(1, 58),
-(1, 59),
-(1, 60),
-(1, 61),
-(1, 62),
-(1, 63),
-(1, 64),
-(1, 65),
-(1, 66),
-(1, 67),
-(1, 68),
-(1, 69),
-(1, 70),
-(1, 71),
-(1, 72),
-(1, 73),
-(1, 74),
-(1, 75),
-(1, 76),
-(1, 77),
-(1, 78),
-(1, 79),
-(1, 80),
-(1, 81),
-(1, 82),
-(1, 83),
-(1, 84),
-(1, 85),
-(1, 86),
-(1, 87),
-(1, 88),
-(1, 89),
-(1, 90),
-(1, 91),
-(1, 92),
-(1, 93),
-(1, 94),
-(1, 95),
-(1, 96),
-(1, 97),
-(1, 98),
-(1, 99),
-(1, 100),
-(1, 101),
-(1, 102),
-(1, 103),
-(1, 104);
+(1, 1),(1, 2),(1, 3),(1, 4),(1, 5),(1, 6),(1, 7),(1, 8),(1, 9),(1, 10),
+(1, 11),(1, 12),(1, 13),(1, 14),(1, 15),(1, 16),(1, 17),(1, 18),(1, 19),(1, 20),
+(1, 21),(1, 22),(1, 23),(1, 24),(1, 25),(1, 26),(1, 27),(1, 28),(1, 29),(1, 30),
+(1, 31),(1, 32),(1, 33),(1, 34),(1, 35),(1, 36),(1, 37),(1, 38),(1, 39),(1, 40),
+(1, 41),(1, 42),(1, 43),(1, 44),(1, 45),(1, 46),(1, 47),(1, 48),(1, 49),(1, 50),
+(1, 51),(1, 52),(1, 53),(1, 54),(1, 55),(1, 56),(1, 57),(1, 58),(1, 59),(1, 60),
+(1, 61),(1, 62),(1, 63),(1, 64),(1, 65),(1, 66),(1, 67),(1, 68),(1, 69),(1, 70),
+(1, 71),(1, 72),(1, 73),(1, 74),(1, 75),(1, 76),(1, 77),(1, 78),(1, 79),(1, 80),
+(1, 81),(1, 82),(1, 83),(1, 84),(1, 85),(1, 86),(1, 87),(1, 88),(1, 89),(1, 90),
+(1, 91),(1, 92),(1, 93),(1, 94),(1, 95),(1, 96),(1, 97),(1, 98),(1, 99),(1, 100),
+(1, 101),(1, 102),(1, 103),(1, 104);
 
 
 INSERT INTO ficha_parchis(id, color, esta_en_casa, esta_en_la_meta, casilla_actual_id) VALUES 
-(1,0, false, false, 34),
-(2,0, false, false, 34),
-(3,0, true, false, 103),
-(4,0, false, false, 37),
-(5,1, false, false, 9),
-(6,1, false, false, 9),
-(7,1, true, false, 101),
-(8,1, true, false, 101),
-(9,2, false, false, 51),
-(10,2,false, false, 51),
-(11,2,true, false, 104),
-(12,2,true, false, 104);
+(1,0, false, false, 39),
+(2,0, false, false, 3),
+(3,0, false, false, 29),
+(4,0, true, false, 103),
+
+(5,1, true, false, 101),
+(6,1, true, false, 101),
+(7,1, false, false, 30),
+(8,1, false, false, 41)
+-- ,(9,2, false, false, 40),
+-- (10,2,false, false, 41),
+-- (11,2,true, false, 104),
+-- (12,2,true, false, 104)
+;
 
 INSERT INTO jugador_fichas_parchis(jugador_id,fichas_parchis_id) VALUES
-(8,1),
-(8,2),
-(8,3),
-(8,4),
-(9,5),
-(9,6),
-(9,7),
-(9,8),
-(10,9),
-(10,10),
-(10,11),
-(10,12);
+(8,1),(8,2),(8,3),(8,4),
+(9,5),(9,6),(9,7),(9,8)
+--,(10,9),(10,10),(10,11),(10,12)
+;
 
 UPDATE usuarios 
 SET OCA_DURACION_MAXIMA = 0,

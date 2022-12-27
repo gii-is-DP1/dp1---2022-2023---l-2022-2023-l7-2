@@ -46,8 +46,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/vets/**").authenticated()
 				
 
-				.antMatchers("/sala/**").authenticated()
-
 				.antMatchers("/usuarios/nuevo").permitAll()
 				.antMatchers("/usuarios/**").authenticated()
 
@@ -55,7 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/logro/listLogros").permitAll()
 				
 
-				.antMatchers("/sala/**").authenticated()
+				.antMatchers("/partida/**").authenticated()
 
 				.antMatchers("/usuarios/nuevo").permitAll()
 				.antMatchers("/usuarios/**").authenticated()

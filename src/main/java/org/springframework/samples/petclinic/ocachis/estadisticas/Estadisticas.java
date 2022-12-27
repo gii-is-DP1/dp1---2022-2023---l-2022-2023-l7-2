@@ -65,6 +65,20 @@ public class Estadisticas{
 		this.ocaVecesCaidoEnMuerte += vecesCaidoEnMuerte;
 	}
 	
+	
+
+    public void updateEstadisticasParchis(Integer duracion, Boolean esGanador, Integer fichasComidas) {
+		this.parchisPartidasJugadas++;
+		if(esGanador) this.parchisPartidasGanadas++;
+		this.parchisDuracionTotal += duracion;
+		if(duracion > this.parchisDuracionMaxima) this.parchisDuracionMaxima = duracion;
+		if(duracion < this.parchisDuracionMinima || this.parchisDuracionMinima == 0) this.parchisDuracionMinima = duracion;
+		this.parchisDuracionMedia = this.parchisDuracionTotal / this.parchisPartidasJugadas;
+		this.parchisFichasComidas += fichasComidas;
+    }
+
+
+
 	@Override
 	public String toString() {
 		return "Estadisticas [parchisPartidasJugadas=" + parchisPartidasJugadas + ", parchisPartidasGanadas="

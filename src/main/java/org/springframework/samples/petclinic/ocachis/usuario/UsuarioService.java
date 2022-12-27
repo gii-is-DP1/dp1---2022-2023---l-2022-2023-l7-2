@@ -72,7 +72,8 @@ public class UsuarioService {
     public Collection<Usuario> findAll(){
         return this.usuarioRepository.findAll();
     }
-    @Transactional
+    
+	@Transactional
     public void deleteUsuarioById(int id){
         usuarioRepository.deleteById(id);
     }

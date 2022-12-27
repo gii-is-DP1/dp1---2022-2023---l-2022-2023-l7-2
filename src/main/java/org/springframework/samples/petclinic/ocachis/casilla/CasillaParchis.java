@@ -174,16 +174,45 @@ public class CasillaParchis extends Casilla{
 
 
      public String getOrientacion(){
-        if(  (numero>= 1 && numero <=8) || (numero>= 26 && numero <=42) || (numero>= 60 && numero <=68))
+        if((numero>= 1 && numero <=8) || (numero>= 26 && numero <=42) || (numero>= 60 && numero <=75) || (numero>= 85 && numero <=91)) 
             return "horizontal";
         else return "vertical";
     }
     public Boolean esMeta(){
-       if(tipoCasillaParchis == TipoCasillaParchis.CASAROJO || 
-       tipoCasillaParchis == TipoCasillaParchis.CASAAMARILLO || 
-       tipoCasillaParchis == TipoCasillaParchis.CASAVERDE || 
-       tipoCasillaParchis == TipoCasillaParchis.CASAAZUL)
-        return true;
-        return false;
+        if(tipoCasillaParchis == TipoCasillaParchis.FINALROJO || 
+        tipoCasillaParchis == TipoCasillaParchis.FINALAMARILLO || 
+        tipoCasillaParchis == TipoCasillaParchis.FINALVERDE || 
+        tipoCasillaParchis == TipoCasillaParchis.FINALAZUL)
+         return true;
+         return false;
+     }
+     public Boolean esCasa(){
+        if(tipoCasillaParchis == TipoCasillaParchis.CASAROJO || 
+        tipoCasillaParchis == TipoCasillaParchis.CASAAMARILLO || 
+        tipoCasillaParchis == TipoCasillaParchis.CASAVERDE || 
+        tipoCasillaParchis == TipoCasillaParchis.CASAAZUL)
+         return true;
+         return false;
+     }
+
+    public void actualizarBloqueado() {
+        if(!esMeta() && !esCasa() && fichas.size()==2){
+            bloqueada=true;
+        }
+        else bloqueada=false;
     }
+
+    public void añadirFicha(FichaParchis f){
+        this.fichas.add(f);
+        actualizarBloqueado();
+    }
+    public void quitarFicha(FichaParchis f){
+        this.fichas.remove(f);
+        actualizarBloqueado();
+    }
+
+    public Integer getNumeroFichas(){
+        return this.fichas.size();
+    }
+
 }

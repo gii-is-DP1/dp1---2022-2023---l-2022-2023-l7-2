@@ -40,6 +40,14 @@ public class FichaParchis extends Ficha{
 	public FichaParchis(Color color, CasillaParchis casillaActual) {
 		this.color=color;
 		this.casillaActual=casillaActual;
+		this.casillaActual.añadirFicha(this);
+		this.casillaActual.actualizarBloqueado();
+		
+		if(casillaActual.esMeta()) this.estaEnLaMeta=true;
+		else this.estaEnLaMeta=false;
+
+		if(casillaActual.esCasa()) this.estaEnCasa = true;
+		else this.estaEnCasa = false;
     }
 
 

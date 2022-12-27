@@ -28,7 +28,7 @@
 					<span>Inicio</span>
 				</petclinic:menuItem>
 			<sec:authorize access="isAuthenticated()">
-				<petclinic:menuItem active="${name eq 'salas'}" url="/sala/"
+				<petclinic:menuItem active="${name eq 'salas'}" url="/partida/"
 					title="Salas de Juego">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span>Salas</span>
@@ -43,7 +43,7 @@
 
 				<sec:authorize access="isAuthenticated()">
 				<petclinic:menuItem active="${name eq 'partida'}"
-						url="/sala/create" title="Crear Partida">
+						url="/partida/crear" title="Crear Partida">
 						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 						<span>Crear Partida</span>
 				</petclinic:menuItem>

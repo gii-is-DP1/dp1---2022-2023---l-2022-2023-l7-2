@@ -27,7 +27,7 @@
     <c:if test="${jugadorAutenticado.color == partidaOca.colorJugadorActual}"> 
         
         <form:form class="form-horizontal" id="tirar-dado-form"
-            method="post" action="/sala/${partidaOca.id}/playOca">
+            method="post" action="/partida/oca/${partidaOca.id}/jugar">
             <button class="btn btn-default" onClick="this.form.submit(); this.disabled=true; this.innerText='Jugando...'; ">Tirar dado</button>
         </form:form>
             
