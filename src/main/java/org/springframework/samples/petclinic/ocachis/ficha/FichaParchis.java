@@ -101,6 +101,7 @@ public class FichaParchis extends Ficha{
 	
 
 	public String toString(){
+		
 		String result="";
 		result +="FICHA: ";
 		result += getColor().toString();

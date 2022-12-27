@@ -452,7 +452,7 @@ public class PartidaController {
 			}
 			return "redirect:/partida/parchis/{partidaParchisId}/jugar";
 		}
-		
+
 		return "redirect:/partida/parchis/{partidaParchisId}/jugar";
 	}
 

@@ -419,6 +419,10 @@ public class PartidaService {
 
 	@Transactional
 	public void jugarParchis(PartidaParchis partida, Integer fichaId, Integer jugadorId, Integer dado) {
+		if(fichaId == -1){ //pasar turno
+			partida.pasarTurno();
+			return;
+		}
 		FichaParchis ficha = fichaService.findFichaParchis(fichaId);
 		Jugador jugador = jugadorService.findById(jugadorId).get();
 		CasillaParchis casillaFinal = partida.getCasillaFinal(ficha, dado);
@@ -572,8 +576,8 @@ public class PartidaService {
 	@Transactional
 	public int tirarDado(PartidaParchis partida) {
 		if(partida.getDado()==null){
-			partida.setDado((int)(Math.random()*6 +1));
-			// partida.setDado(5);
+			//partida.setDado((int)(Math.random()*6 +1));
+			partida.setDado(6);
 		}
 		return partida.getDado();
 	}

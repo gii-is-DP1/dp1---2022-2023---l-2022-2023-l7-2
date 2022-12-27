@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 
 import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.model.Color;
+import org.springframework.samples.petclinic.ocachis.casilla.CasillaParchis;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaOca;
@@ -93,11 +94,6 @@ public String toString(){
             for(FichaParchis fp: fichasParchis){
                 if(partidaParchis.sePuedeMover(fp,dado)) result.add(fp);
             }
-        }
-        if(result.size()==0){//no hay fichas movibles
-            FichaParchis f = new FichaParchis();
-            f.setId(-1);
-            result.add(f);
         }
         return result;
     }
