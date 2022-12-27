@@ -11,6 +11,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
+import org.springframework.samples.petclinic.ocachis.solicitud.Solicitud;
+import org.springframework.samples.petclinic.ocachis.solicitud.SolicitudRepository;
 import org.springframework.samples.petclinic.ocachis.user.AuthoritiesService;
 import org.springframework.samples.petclinic.ocachis.user.User;
 import org.springframework.samples.petclinic.ocachis.user.UserService;
@@ -28,16 +30,18 @@ public class UsuarioService {
 	private static final Integer LONGITUD_MINIMA_PASSWORD = 5;
 	
 	private UsuarioRepository usuarioRepository;
+	private SolicitudRepository solicitudRepository;
 	
 	private UserService userService;
 	
 	private AuthoritiesService authoritiesService;
 	
 	@Autowired
-	public UsuarioService(UsuarioRepository usuarioRepository, UserService userService, AuthoritiesService authoritiesService) {
+	public UsuarioService(UsuarioRepository usuarioRepository, UserService userService, AuthoritiesService authoritiesService,SolicitudRepository solicitudRepository) {
 		this.usuarioRepository = usuarioRepository;
 		this.userService = userService;
 		this.authoritiesService = authoritiesService;
+		this.solicitudRepository = solicitudRepository;
 	}
 
 	@Transactional(rollbackFor = {DuplicateUsernameException.class, InvalidPasswordException.class, InvalidUsernameException.class})
@@ -97,7 +101,17 @@ public class UsuarioService {
 	}
 
 	public Collection<Usuario> findFiltroApodo(String apodo,int id){
-		return this.usuarioRepository.findFiltroApodo(apodo, id);
+		  Collection<Solicitud> solicitudes = this.solicitudRepository.findAllAmigos(id);
+		  Collection<Usuario> usuarios =  this.usuarioRepository.findFiltroApodo(apodo, id);
+		  for(Solicitud solicitud: solicitudes){
+			if(usuarios.contains(solicitud.getUsuarioInvitado()) ){
+				usuarios.remove(solicitud.getUsuarioInvitado());
+			}
+			else if(usuarios.contains(solicitud.getUsuarioSolicitud())){
+				usuarios.remove(solicitud.getUsuarioSolicitud());
+			}
+		  }
+		return usuarios;
 	  }
 
 	

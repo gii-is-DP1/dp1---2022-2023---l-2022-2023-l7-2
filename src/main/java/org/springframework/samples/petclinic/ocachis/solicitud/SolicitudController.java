@@ -10,6 +10,7 @@ import org.springframework.samples.petclinic.ocachis.jugador.JugadorService;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.samples.petclinic.ocachis.usuario.UsuarioService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -74,20 +75,17 @@ public class SolicitudController {
         return  "redirect:/solicitud/amigos";
     }
     @GetMapping(value="/amigos/{usuarioId}/espectar")
-    public String espectarPartida(@PathVariable("usuarioId") int usuarioId){
+    public String espectarPartida(@PathVariable("usuarioId") int usuarioId,Map<String,Object> model){
 
         Map<String,Integer> partidaAEspectar = this.jugadorService.findIdPartidaEspectar(usuarioId);
-        String espectarUrl;
-        if(partidaAEspectar.get("parchis")!=null){
-            Integer idPartidaParchis = partidaAEspectar.get("parchis");
-            espectarUrl = "/sala/"+idPartidaParchis+"/playParchis";
+        Boolean sePuedeEspectar = this.solicitudService.sePuedeEspectar(usuarioId, partidaAEspectar);
+        if(sePuedeEspectar){
 
-        }else{
-            Integer idPartidaOca = partidaAEspectar.get("oca");
-            espectarUrl = "/sala/" +idPartidaOca+"/playOca";
-        }
+           String espectarUrl= this.solicitudService.obtenerUrlEspectar(partidaAEspectar);
         return "redirect:"+espectarUrl;
-
+    }
+    model.put("message", "No eres amigo de todos los jugadores de la partida");
+    return listarAmigos(null,model);
 
     }
     

@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -12,6 +13,9 @@ public interface PartidaOcaRepository extends CrudRepository<PartidaOca, Integer
     Collection<PartidaOca> findAll();
     @Query("SELECT pO FROM PartidaOca pO WHERE pO.estado = 0 OR pO.estado = 1")
     Collection<PartidaOca> findEsperaOca();
+  
     PartidaOca findById(int id);
+    @Query("SELECT oca FROM PartidaOca oca WHERE oca.id=:id")
+    PartidaOca findByIdNoOptional(@Param("id") int id);
     PartidaOca save(PartidaOca p);
 }
