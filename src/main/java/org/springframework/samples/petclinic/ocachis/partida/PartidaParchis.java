@@ -34,6 +34,7 @@ public class PartidaParchis extends Partida{
 	private Collection<Jugador> jugadores;
 
 
+	
 	private Integer dado = null;
 	private Integer tirada = 0;
 	private Integer vecesSacado6 = 0;
@@ -51,7 +52,6 @@ public class PartidaParchis extends Partida{
 		return result;
 	}
 	
-
 	public void addLog(String newLog){
 
 		if(newLog.startsWith("TURNO DEL JUGADOR")){
@@ -110,16 +110,22 @@ public class PartidaParchis extends Partida{
 
 	public Integer getSiguienteNumero(Integer numeroInicial, Color color, Boolean rebote){
 		Integer res = numeroInicial + 1;
-		if(rebote) res = numeroInicial - 1;
-		if(color==Color.ROJO && numeroInicial==34) res = 85;
+		if(rebote){
+			res = numeroInicial - 1;
+			if(numeroInicial == 77) res= 17;
+			if(numeroInicial == 85) res= 34;
+			if(numeroInicial == 93) res= 51;
+		}
+	
+		else if(color==Color.ROJO && numeroInicial==34) res = 85;
 		else if(color==Color.AMARILLO && numeroInicial==68) res = 69;
 		else if(color==Color.VERDE && numeroInicial==51) res = 93;
 		else if(color==Color.AZUL && numeroInicial==17) res = 77;
-		if(numeroInicial == 68 && color != Color.AMARILLO) res = 1;
-		if(numeroInicial == 101) res = 5;
-		if(numeroInicial == 102) res = 22;
-		if(numeroInicial == 103) res = 39;
-		if(numeroInicial == 104) res = 56;
+		else if(numeroInicial == 68 && color != Color.AMARILLO) res = 1;
+		else if(numeroInicial == 101) res = 5;
+		else if(numeroInicial == 102) res = 22;
+		else if(numeroInicial == 103) res = 39;
+		else if(numeroInicial == 104) res = 56;
 		return res;
 	}
 
@@ -141,6 +147,8 @@ public class PartidaParchis extends Partida{
 				break;
 		}
 		this.addLog("TURNO DEL JUGADOR " + this.getColorJugadorActual());
+		this.setDado(null);
+		this.setVecesSacado6(0);
 	}
 
 	public List<CasillaParchis> METODORANDOM(FichaParchis ficha, Integer dado){

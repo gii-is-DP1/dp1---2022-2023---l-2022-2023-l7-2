@@ -81,11 +81,32 @@ public String toString(){
         this.usuario.actualizarEstadisticasOca(duracion, this.esGanador, this.vecesCaidoEnMuerte);
     }
 
-
     public List<FichaParchis> getFichasQuePuedenMoverse(Integer dado){
+        List<FichaParchis> result = new ArrayList<>();
+        if(dado == 5 && fichasParchis.stream().anyMatch(fp->fp.isEstaEnCasa() && partidaParchis.sePuedeMover(fp,dado))){
+            result = fichasParchis.stream().filter(fp->fp.isEstaEnCasa() && partidaParchis.sePuedeMover(fp,dado)).collect(Collectors.toList());
+        }else if(dado == 6 && fichasParchis.stream().anyMatch(fp->fp.getCasillaActual().getBloqueada() && partidaParchis.sePuedeMover(fp,dado))){
+            result = fichasParchis.stream().filter(fp->fp.getCasillaActual().getBloqueada() && partidaParchis.sePuedeMover(fp,dado)).collect(Collectors.toList());
+        }
+
+        if(result.size()==0){//no se puede sacar ficha ni mover bloqueo
+            for(FichaParchis fp: fichasParchis){
+                if(partidaParchis.sePuedeMover(fp,dado)) result.add(fp);
+            }
+        }
+        if(result.size()==0){//no hay fichas movibles
+            FichaParchis f = new FichaParchis();
+            f.setId(-1);
+            result.add(f);
+        }
+        return result;
+    }
+
+    public List<FichaParchis> getFichasQuePuedenMoverseAntiguo(Integer dado){
         ArrayList<FichaParchis> result = new ArrayList<>();
         if(dado == 5 && fichasParchis.stream().anyMatch(fp->fp.isEstaEnCasa())){
             return fichasParchis.stream().filter(fp->fp.isEstaEnCasa()).collect(Collectors.toList());
+
         }else if(dado == 6 && fichasParchis.stream().anyMatch(fp->fp.getCasillaActual().getBloqueada())) {
             return fichasParchis.stream().filter(fp->fp.getCasillaActual().getBloqueada()).collect(Collectors.toList());
         }else{
@@ -99,7 +120,7 @@ public String toString(){
 
     public void finalizarPartidaParchis(Integer duracion) {
         this.usuario.actualizarEstadisticasParchis(duracion, this.esGanador, this.fichasComidas);
-    }
+    }                           
 }   
 
 

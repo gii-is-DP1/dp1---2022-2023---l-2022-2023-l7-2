@@ -12,6 +12,7 @@
 
 <petclinic:layout pageName="game" title="Jugando al parchis">
     <h5>${partidaParchis.estado}</h5>
+    ${debug}
     <h1>vista: ${modo}</h1>
     <h1>   El dado ha sacado el numero: ${dado}    </h1>
     <h1>Es el turno del jugador ${partidaParchis.colorJugadorActual}</h1>
@@ -44,18 +45,25 @@
         
         <br>
 
-        <c:forEach  items="${jugadorAutenticado.fichasParchis}" var="fichaJugador">
-                <c:if test="${fichasQueSePuedenMover.contains(fichaJugador)}">
-                   <form:form modelAttribute="MoverFichaParchisForm"> 
-                        <form:input type="hidden" path="jugadorId" name="jugadorId" value="${jugadorAutenticado.id}"></form:input>
-                        <form:input type="hidden" path="fichaId" name="fichaId" value="${fichaJugador.id}"></form:input>
-                        <form:input type="hidden" path="dado" name="dado" value="${dado}"></form:input>
-                        
-                        <button class="btn btn-default">Mover ficha en casilla ${fichaJugador.casillaActual.numero}</button>
-                   </form:form>
-                </c:if>
+        <c:if test="${fichasQueSePuedenMover.size() == 1 && fichasQueSePuedenMover.get(0).getId() == -1}">
+            <form:form modelAttribute="MoverFichaParchisForm"> 
+                <form:input type="hidden" path="jugadorId" name="jugadorId" value="${jugadorAutenticado.id}"></form:input>
+                <form:input type="hidden" path="fichaId" name="fichaId" value="${fichasQueSePuedenMover.get(0).id}"></form:input>
+                <form:input type="hidden" path="dado" name="dado" value="${dado}"></form:input>
+                <button class="btn btn-default">Pasar turno</button>
+            </form:form>
+        </c:if>
+        <c:forEach  items="${fichasQueSePuedenMover}" var="fichaMovible">
+            
+            <form:form modelAttribute="MoverFichaParchisForm"> 
+                <form:input type="hidden" path="jugadorId" name="jugadorId" value="${jugadorAutenticado.id}"></form:input>
+                <form:input type="hidden" path="fichaId" name="fichaId" value="${fichaMovible.id}"></form:input>
+                <form:input type="hidden" path="dado" name="dado" value="${dado}"></form:input>
+                
+                <button class="btn btn-default">Mover ficha en casilla ${fichaMovible.casillaActual.numero}</button>
+            </form:form>
 
-            </c:forEach>
+        </c:forEach>
             
     </c:if>
     

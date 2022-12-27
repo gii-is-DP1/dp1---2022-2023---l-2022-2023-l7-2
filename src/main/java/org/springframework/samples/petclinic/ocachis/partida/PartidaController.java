@@ -390,7 +390,7 @@ public class PartidaController {
 		
 
 		if(partida.getEstado()==TipoEstadoPartida.TERMINADA){
-			return "redirect:/partida/" + partidaParchisId + "/resumen";
+			return "redirect:/partida/parchis/" + partidaParchisId + "/resumen";
 
 		}else if(partida.getEstado()==TipoEstadoPartida.CREADA){
 			redirectAttributes.addFlashAttribute("message", "La partida aun no ha empezado");
@@ -422,22 +422,38 @@ public class PartidaController {
 		model.put("now", new Date());
 		model.put("modo","jugador");
 		model.put("jugadorAutenticado", j);
-		
+		model.put("debug", "raro");
 		if(j.getColor() != partida.getColorJugadorActual()){
 				return "redirect:/noAccess";
 		}
 
-		//procesar movimiento de ficha
-		if(mfpf.getJugadorId() != null && mfpf.getJugadorId() != null){
-			partidaService.jugarParchis(partida, mfpf.getFichaId(), mfpf.getJugadorId(),mfpf.getDado());
 
-		}else{ //tirar dado y mostrar opciones
+		//El dado no tiene valor --> El jugador tira el dado para ver que saca
+		if(partida.getDado()==null){ 
 			int dado = partidaService.tirarDado(partida);
-		List<FichaParchis> fichasQuePuedenMoverse = j.getFichasQuePuedenMoverse(dado);
-		model.put("fichasQueSePuedenMover", fichasQuePuedenMoverse);
-		model.put("dado", dado);
+			List<FichaParchis> fichasQuePuedenMoverse = j.getFichasQuePuedenMoverse(dado);
+			model.put("fichasQueSePuedenMover", fichasQuePuedenMoverse);
+			model.put("dado", dado);
+			model.put("debug", "dadoNull");
+			return VIEWS_JUGAR_PARCHIS;
 		}
-		return VIEWS_JUGAR_PARCHIS;
+		
+		//El dado tiene un valor y se ha movido ficha --> procesar movimiento de ficha
+		if(mfpf.getJugadorId() != null && mfpf.getJugadorId() != null){
+			partidaService.jugarParchis(partida, mfpf.getFichaId(), mfpf.getJugadorId(),mfpf.getDado());	
+			redirectAttributes.addFlashAttribute("debug", "fichaMovida");
+			if(partida.getDado()!=null){//El dado tiene valor despues de mover --> el jugador tiene que volver a mover por que ha comido, sacado 6 o metido ficha
+				int dado = partidaService.tirarDado(partida);
+				List<FichaParchis> fichasQuePuedenMoverse = j.getFichasQuePuedenMoverse(dado);
+				model.put("fichasQueSePuedenMover", fichasQuePuedenMoverse);
+				model.put("dado", dado);
+				model.put("debug", "volverATirar");
+				return VIEWS_JUGAR_PARCHIS;
+			}
+			return "redirect:/partida/parchis/{partidaParchisId}/jugar";
+		}
+		
+		return "redirect:/partida/parchis/{partidaParchisId}/jugar";
 	}
 
 	@GetMapping("/oca/{partidaOcaId}/resumen")
