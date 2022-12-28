@@ -38,6 +38,7 @@ public class PartidaParchis extends Partida{
 	private Integer dado = null;
 	private Integer tirada = 0;
 	private Integer vecesSacado6 = 0;
+	private Boolean ultimoSacado6 = false;
 
 	@OneToOne
 	private FichaParchis ultimaFichaMovida;

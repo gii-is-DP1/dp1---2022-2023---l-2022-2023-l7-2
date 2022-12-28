@@ -134,7 +134,7 @@ public class PartidaService {
 	
 	@Transactional(readOnly = true)
 	public PartidaParchis findPartidaParchisById(int id){
-		Optional<PartidaParchis> partida = this.partidaParchisRepository.findById(id);
+		Optional<PartidaParchis> partida =this.partidaParchisRepository.findById(id);
 		if(!partida.isPresent()) throw new NotFoundException("La partida no se ha encontrado");
 		return partida.get();
 	}
@@ -430,6 +430,7 @@ public class PartidaService {
 		Boolean haMetidoFicha = false;
 		if(dado==6){
 			partida.setVecesSacado6(partida.getVecesSacado6() + 1);
+			partida.setUltimoSacado6(true);
 		}
 		if(partida.getVecesSacado6()==3){ // la ultima ficha en mover vuelve a casa
 			mandarFichaACasa(partida, partida.getUltimaFichaMovida());
@@ -454,9 +455,15 @@ public class PartidaService {
 		}
 		
 		if(!haComido && !haMetidoFicha){
-			partida.setDado(null);
-			if(dado!=6)partida.pasarTurno();
-		} 
+			if(dado!=6 && (dado!=20 && !partida.getUltimoSacado6()) 
+				&& (dado !=10 && !partida.getUltimoSacado6())){
+					
+				partida.setUltimoSacado6(false);
+				partida.pasarTurno();			
+			}
+		partida.setDado(null);
+		}
+
 
 	}
 
