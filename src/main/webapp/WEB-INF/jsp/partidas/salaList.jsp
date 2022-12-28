@@ -8,8 +8,12 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="partidas" title="Lista de partidas">
+    <h2>Unirse por codigo</h2>
+    <form class="form-inline" th:action="@{partida}">
+        <input type="text" name="codigo" id="codigo" th:value="${codigo}" placeholder="Introduzca codigo" required>
+     <input type="submit" class="btn btn-primary mb-2" value="Buscar">
+    </form>
     <h2>Partidas</h2>
-
     <table id="partidasTable" class="table table-striped">
         <thead>
         <tr>

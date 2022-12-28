@@ -18,6 +18,8 @@ public interface PartidaParchisRepository extends CrudRepository<PartidaParchis,
    
     @Query("SELECT parchis from PartidaParchis parchis where parchis.id=:id")
     PartidaParchis findByIdNoOptional(@Param("id") int id);
+    @Query("SELECT parchis from PartidaParchis parchis where parchis.codigoPartida=:codigo")
+    Optional<PartidaParchis> findByCodigo(@Param("codigo") int codigo);
     PartidaParchis save(PartidaParchis p);
     
 }

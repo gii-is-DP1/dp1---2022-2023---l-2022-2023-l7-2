@@ -3,12 +3,14 @@ package org.springframework.samples.petclinic.ocachis.partida;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Collection;
 import java.util.Date;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
@@ -29,6 +31,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+
 
 @Controller
 @RequestMapping("/partida")
@@ -78,11 +82,31 @@ public class PartidaController {
 	//lista de salas
 	
 	@GetMapping("/")
-	public ModelAndView showSalaList() {
-		ModelAndView mav = new ModelAndView(VIEWS_SALAS);
-		mav.addObject("partidaOca", partidaService.findEsperaOca());
-		mav.addObject("partidaParchis", partidaService.findEsperaParchis());
-		return mav;
+	public String showSalaList(@Param("codigo") Integer codigo,ModelMap model,RedirectAttributes redirectAttributes) {
+		if(!(codigo==null )){
+			Optional<PartidaParchis> partidaParchis = this.partidaService.findParchisByCodigo(codigo);
+			Optional<PartidaOca> partidaOca = this.partidaService.findOcaByCodigo(codigo);
+			if(partidaParchis.isPresent()){
+				Integer idPartidaParchis = partidaParchis.get().getId();
+				
+				return unirsePartidaParchis(idPartidaParchis, model, redirectAttributes);
+			}
+			else if(partidaOca.isPresent()){
+				
+				Integer idPartidaOca = partidaOca.get().getId();
+				
+				return unirsePartidaOca(idPartidaOca,  model, redirectAttributes);
+				
+				
+			}
+			else{
+
+			}
+		}
+		
+		model.put("partidaOca", partidaService.findEsperaOca());
+		model.put("partidaParchis", partidaService.findEsperaParchis());
+		return VIEWS_SALAS;
 	}
 
 	//create

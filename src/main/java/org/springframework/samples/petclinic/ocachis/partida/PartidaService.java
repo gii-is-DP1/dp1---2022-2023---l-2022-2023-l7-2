@@ -588,4 +588,13 @@ public class PartidaService {
 		}
 		return partida.getDado();
 	}
+
+	@Transactional(readOnly = true)
+	public Optional<PartidaParchis> findParchisByCodigo(Integer codigo){
+		return this.partidaParchisRepository.findByCodigo(codigo);
+	}
+	@Transactional(readOnly = true)
+	public Optional<PartidaOca> findOcaByCodigo(Integer codigo){
+		return this.partidaOcaRepository.findByCodigo(codigo);
+	}
 }
