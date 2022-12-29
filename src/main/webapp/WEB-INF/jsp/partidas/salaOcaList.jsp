@@ -9,11 +9,12 @@
 
 <petclinic:layout pageName="partidas" title="Lista de partidas">
     <h2>Unirse por codigo</h2>
+   
     <form class="form-inline" th:action="@{partida}">
         <input type="text" name="codigo" id="codigo" th:value="${codigo}" placeholder="Introduzca codigo" required>
      <input type="submit" class="btn btn-primary mb-2" value="Buscar">
     </form>
-    <h2>Partidas</h2>
+    <h2>Partidas de Oca</h2>
     <table id="partidasTable" class="table table-striped">
         <thead>
         <tr>
@@ -26,7 +27,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${partidaOca}" var="partidaOca">
+        <c:forEach items="${partidaOca.content}" var="partidaOca">
             <tr>
                 <td>
                     <c:out value="Sala ${partidaOca.codigoPartida}"/>
@@ -63,42 +64,18 @@
 
             </tr>
         </c:forEach>
-        <c:forEach items="${partidaParchis}" var="partidaParchis">
-            <tr>
-                <td>
-                    <c:out value="Sala ${partidaParchis.codigoPartida}"></c:out>
-                </td>
-
-                <td>
-                    Parchis
-                </td>
-
-                <td style="display:hidden"></td>
-
-                <td>
-                    <c:out value="${partidaParchis.jugadores.size()}/${partidaParchis.maxJugadores}"></c:out>
-                </td>
-
-                <td>
-                    <c:out value="${partidaParchis.estado}"></c:out>
-                </td>
-
-                <td>
-                    <c:out value="${partidaParchis.fechaCreacion}"></c:out>
-                </td>
-
-                <td>
-                    <c:choose>
-                        <c:when test="${partidaParchis.estado==TipoEstadoPartida.CREADA}">
-                            <spring:url value="/partida/parchis/{partidaParchisId}/entrar" var="parchisJoinUrl">
-                            <spring:param name="partidaParchisId" value="${partidaParchis.id}"/>
-                            </spring:url>
-                            <a href="${fn:escapeXml(parchisJoinUrl)}" class="btn btn-default">Unirse</a>
-                        </c:when>                   
-                    </c:choose>             
-                </td>
-            </tr>
-        </c:forEach>
         </tbody>
     </table>
+    <c:if test="${numPagina > 0}">
+        <spring:url value="/partida/oca/listar/{numPagina}" var="enlaceAnterior">
+            <spring:param name="numPagina" value="${numPagina-1}"/>
+        </spring:url>
+        <a href="${fn:escapeXml(enlaceAnterior)}" class="btn btn-default">Anterior</a>
+    </c:if>
+    <c:if test="${numTotalPaginas-1 > numPagina}">
+        <spring:url value="/partida/oca/listar/{numPagina}" var="enlaceSiguiente">
+            <spring:param name="numPagina" value="${numPagina+1}"/>
+        </spring:url>
+        <a href="${fn:escapeXml(enlaceSiguiente)}" class="btn btn-default">Siguiente</a>
+    </c:if>
 </petclinic:layout>

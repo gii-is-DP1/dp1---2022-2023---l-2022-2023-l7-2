@@ -161,7 +161,8 @@ INSERT INTO solicitud (id,usuario_invitado_id,usuario_solicitud_id,estado) VALUE
 --INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (3,0,1,2);
 --INSERT INTO jugador(id,color,usuario_id,partida_parchis_id) values (4,1,2,2);
 
-INSERT INTO logro(id,nombre,descripcion,oca_partidas_jugadas) VALUES (1,'Jugador Oca Junior','Juega 10 partidas de la Oca',10);
+INSERT INTO logro(id,nombre,descripcion,oca_partidas_jugadas) VALUES (1,'Jugador Oca Junior','Juega 5 partidas de la Oca',5);
+INSERT INTO logro(id,nombre,descripcion,oca_partidas_jugadas) VALUES (2,'Jugador Oca Senior','Juega 10 partidas de la Oca',15);
 
 INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, color_jugador_actual) VALUES
 (1, 100, 3, 0, '2022-12-05', 3, 0),

@@ -7,6 +7,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
@@ -101,14 +104,13 @@ public class PartidaService {
 		return this.partidaParchisRepository.findAll();
 	}
 
-    public Collection<PartidaOca> findEsperaOca(){
-        return partidaOcaRepository.findEsperaOca();
+    public Page<PartidaOca> findEsperaOca(Pageable p){
+        return partidaOcaRepository.findEsperaOca(p);
     }
 
-    public Collection<PartidaParchis> findEsperaParchis(){
-        return partidaParchisRepository.findEsperaParchis();
+    public Page<PartidaParchis> findEsperaParchis(Pageable p){
+        return partidaParchisRepository.findEsperaParchis(p);
     }
-
    
     public PartidaOca saveOca(PartidaOca p){
         return partidaOcaRepository.save(p);

@@ -9,6 +9,10 @@ import java.util.Date;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Color;
@@ -55,7 +59,8 @@ public class PartidaController {
 		dataBinder.setDisallowedFields("id");
 	}
 
-	private static final String VIEWS_SALAS = "partidas/salaList";
+	private static final String VIEWS_OCA_SALAS = "partidas/salaOcaList";
+	private static final String VIEWS_PARCHIS_SALAS = "partidas/salaParchisList";
 	private static final String VIEWS_ESPERA = "partidas/espera";
 	private static final String CREATE_SALAS = "partidas/createPartidaForm";
 	private static final String VIEWS_JUGAR_OCA = "partidas/ocaGame";
@@ -81,32 +86,58 @@ public class PartidaController {
 	
 	//lista de salas
 	
-	@GetMapping("/")
-	public String showSalaList(@Param("codigo") Integer codigo,ModelMap model,RedirectAttributes redirectAttributes) {
-		if(!(codigo==null )){
-			Optional<PartidaParchis> partidaParchis = this.partidaService.findParchisByCodigo(codigo);
+	@GetMapping("/oca/listar/{numPagina}")
+	public String showSalaOcaList(@Param("codigo") Integer codigo,ModelMap model,RedirectAttributes redirectAttributes,@PathVariable("numPagina") Integer numPagina) {
+		if(!(codigo==null)){
 			Optional<PartidaOca> partidaOca = this.partidaService.findOcaByCodigo(codigo);
-			if(partidaParchis.isPresent()){
-				Integer idPartidaParchis = partidaParchis.get().getId();
-				
-				return unirsePartidaParchis(idPartidaParchis, model, redirectAttributes);
-			}
-			else if(partidaOca.isPresent()){
+			if(partidaOca.isPresent()){
 				
 				Integer idPartidaOca = partidaOca.get().getId();
 				
 				return unirsePartidaOca(idPartidaOca,  model, redirectAttributes);
+			} else{
+				Pageable pageable = PageRequest.of(0,5);
+				Page<PartidaOca> partidasOca = partidaService.findEsperaOca(pageable);
+				Integer numPaginas = partidasOca.getTotalPages();
+				model.put("partidaOca", partidaService.findEsperaOca(pageable));
+				model.put("message","La partida a la que estás intentando unirte no existe.");
+				model.put("numTotalPaginas",numPaginas);
+				return VIEWS_OCA_SALAS;
 				
-				
-			}
-			else{
-
 			}
 		}
-		
-		model.put("partidaOca", partidaService.findEsperaOca());
-		model.put("partidaParchis", partidaService.findEsperaParchis());
-		return VIEWS_SALAS;
+		Pageable pageable = PageRequest.of(numPagina,5);
+		Page<PartidaOca> partidasOca = partidaService.findEsperaOca(pageable);
+		model.put("partidaOca", partidaService.findEsperaOca(pageable));
+		Integer numPaginas = partidasOca.getTotalPages();
+		model.put("numTotalPaginas",numPaginas);
+		return VIEWS_OCA_SALAS;
+	}
+
+	@GetMapping("/parchis/listar/{numPagina}")
+	public String showSalaParchisList(@Param("codigo") Integer codigo,ModelMap model,RedirectAttributes redirectAttributes,@PathVariable("numPagina") Integer numPagina) {
+		if(!(codigo==null)){
+			Optional<PartidaParchis> partidaParchis = this.partidaService.findParchisByCodigo(codigo);
+			if(partidaParchis.isPresent()){
+				Integer idPartidaParchis = partidaParchis.get().getId();
+				
+				return unirsePartidaParchis(idPartidaParchis, model, redirectAttributes);
+			} else{
+				Pageable pageable = PageRequest.of(0,5);
+				Page<PartidaParchis> partidasParchis = partidaService.findEsperaParchis(pageable);
+				Integer numPaginas = partidasParchis.getTotalPages();
+				model.put("partidaParchis", partidaParchis);
+				model.put("message","La partida a la que estás intentando unirte no existe.");
+				model.put("numTotalPaginas",numPaginas);
+				return VIEWS_PARCHIS_SALAS;
+			}
+		}
+		Pageable pageable = PageRequest.of(numPagina,5);
+		Page<PartidaParchis> partidasParchis = partidaService.findEsperaParchis(pageable);
+		Integer numPaginas = partidasParchis.getTotalPages();
+		model.put("partidaParchis", partidasParchis);
+		model.put("numTotalPaginas",numPaginas);
+		return VIEWS_PARCHIS_SALAS;
 	}
 
 	//create
@@ -143,7 +174,7 @@ public class PartidaController {
 			}
 			catch(PartidaLlenaException e){
 				redirectAttributes.addFlashAttribute("message", "La partida está llena");
-				return "redirect:/partida/";
+				return "redirect:/partida/oca/listar/0";
 			}
 			return "redirect:/partida/oca/" + partida.getId() + "/espera";
 		
@@ -155,11 +186,11 @@ public class PartidaController {
 			}
 			catch(PartidaLlenaException e){
 				redirectAttributes.addFlashAttribute("message", "La partida está llena");
-				return "redirect:/partida/";
+				return "redirect:/partida/parchis/listar/0";
 			}
 			return "redirect:/partida/parchis/" + partida.getId() + "/espera";
 		} else { // ni oca ni parchis
-			return "redirect:/partida/";
+			return "redirect:/";
 		}
 
 	}
@@ -224,7 +255,7 @@ public class PartidaController {
 			}
 			catch(PartidaLlenaException e){
 				redirectAttributes.addFlashAttribute("message", "La partida está llena");
-				return "redirect:/partida/";
+				return "redirect:/partida/oca/listar/0";
 			}
 		}
 		return "redirect:/partida/oca/" + partidaOcaId + "/espera";
@@ -263,10 +294,11 @@ public class PartidaController {
 		// Crear jugador
 		Usuario u = usuarioService.getLoggedUsuario();
 		if(estaJugando(u.getId())) {
+			Pageable pageable = PageRequest.of(0,1);
 			model.put("message", "Estas jugando ya en una partida");
-			model.put("partidaOca", partidaService.findEsperaOca());
-			model.put("partidaParchis", partidaService.findEsperaParchis());
-			return VIEWS_SALAS;
+			model.put("partidaOca", partidaService.findEsperaOca(pageable));
+			model.put("partidaParchis", partidaService.findEsperaParchis(pageable));
+			return VIEWS_PARCHIS_SALAS;
 		}
 		for (Jugador j : jugadores) {
 			if (j.getUsuario().getId().equals(u.getId())) {
@@ -281,7 +313,7 @@ public class PartidaController {
 			}
 			catch(PartidaLlenaException e){
 				redirectAttributes.addFlashAttribute("message", "La partida está llena");
-				return "redirect:/partida/";
+				return "redirect:/partida/parchis/listar/0";
 			}
 		}
 		return "redirect:/partida/parchis/" +partidaParchisId + "/espera";
@@ -334,7 +366,7 @@ public class PartidaController {
 
 	//abandonar
 	
-	@GetMapping("oca/{partidaOcaId}/abandonar")
+	@GetMapping("/oca/{partidaOcaId}/abandonar")
 	public String abandonarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model) {
 		Usuario u = usuarioService.getLoggedUsuario();
 		Jugador jugadorAEliminar = jugadorService.findJugadorOca(u.getId(), partidaOcaId);
@@ -342,7 +374,7 @@ public class PartidaController {
 		if (jugadorAEliminar.getColor() == Color.ROJO) {
 			partidaService.borrarPartidaOca(partidaOcaId);
 		}
-		return "redirect:/partida/";
+		return "redirect:/partida/oca/listar/0";
 	}
 	
 	@GetMapping("/parchis/{partidaParchisId}/abandonar")
@@ -353,7 +385,7 @@ public class PartidaController {
 		if (jugadorAEliminar.getColor() == Color.ROJO) {
 			partidaService.borrarPartidaParchis(partidaParchisId);
 		}
-		return "redirect:/partida/";
+		return "redirect:/partida/parchis/listar/0";
 	}
 	
 

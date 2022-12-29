@@ -28,11 +28,16 @@
 					<span>Inicio</span>
 				</petclinic:menuItem>
 			<sec:authorize access="isAuthenticated()">
-				<petclinic:menuItem active="${name eq 'salas'}" url="/partida/"
-					title="Salas de Juego">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Salas</span>
-				</petclinic:menuItem>
+
+			
+				<petclinic:menuItem active="${name eq 'salas'}"
+						url="/partida/" title="Salas" dropdown="${true}">
+						<ul class="dropdown-menu">
+							<li><a href="<c:url value="/partida/oca/listar/0" />">Salas oca</a></li>
+							<li class="divider"></li>
+							<li><a href="<c:url value="/partida/parchis/listar/0" />">Salas parchis</a></li>
+						</ul>
+					</petclinic:menuItem>
 			</sec:authorize>
 			
 				<petclinic:menuItem active="${name eq 'logro'}"
@@ -56,7 +61,6 @@
 							<li><a href="<c:url value="/solicitud/amigos" />">Amigos</a></li>
 							<li class="divider"></li>
 							<li><a href="<c:url value="/solicitud/pendientes" />">Solicitudes Pendientes
-									
 							</a></li>
 						</ul>
 					</petclinic:menuItem>
