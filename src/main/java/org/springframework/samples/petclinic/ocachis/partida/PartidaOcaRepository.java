@@ -22,5 +22,8 @@ public interface PartidaOcaRepository extends CrudRepository<PartidaOca, Integer
     PartidaOca findByIdNoOptional(@Param("id") int id);
     @Query("SELECT oca FROM PartidaOca oca Where oca.codigoPartida=:codigo")
     Optional<PartidaOca> findByCodigo(@Param("codigo") int codigo);
+
+    @Query("SELECT oca FROM PartidaOca oca")
+    Page<PartidaOca> findAllPageable(Pageable p);
     PartidaOca save(PartidaOca p);
 }

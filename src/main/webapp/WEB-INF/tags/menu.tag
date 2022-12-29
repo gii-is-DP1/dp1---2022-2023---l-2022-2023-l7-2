@@ -35,7 +35,7 @@
 						<ul class="dropdown-menu">
 							<li><a href="<c:url value="/partida/oca/listar/0" />">Salas oca</a></li>
 							<li class="divider"></li>
-							<li><a href="<c:url value="/partida/parchis/listar/0" />">Salas parchis</a></li>
+							<li><a href="<c:url value="/partida/parchis/0" />">Salas parchis</a></li>
 						</ul>
 					</petclinic:menuItem>
 			</sec:authorize>
@@ -71,13 +71,12 @@
 					<petclinic:menuItem active="${name eq 'admin'}"
 						url="/admin/listPartidas" title="Panel de admin" dropdown="${true}">
 						<ul class="dropdown-menu">
-							<li><a href="<c:url value="/admin/listPartidas/" />">Listado
-									Partidas</a></li>
+							<li><a href="<c:url value="/admin/listPartidas/parchis/0" />">Listado Parchis</a></li>
+							
+							<li><a href="<c:url value="/admin/listPartidas/oca/0" />">Listado Oca</a></li>
+							
 							<li class="divider"></li>
-							<li><a href="<c:url value="/admin/listUsuarios" />">Listado
-									Usuarios
-									
-							</a></li>
+							<li><a href="<c:url value="/admin/listUsuarios" />">Listado Usuarios</a></li>
 						</ul>
 					</petclinic:menuItem>
 			</sec:authorize>

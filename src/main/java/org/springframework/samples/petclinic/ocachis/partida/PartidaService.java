@@ -98,6 +98,14 @@ public class PartidaService {
 	public Collection<PartidaOca> findAllOca(){
 		return this.partidaOcaRepository.findAll();
 	}
+	@Transactional(readOnly = true)
+	public Page<PartidaOca> findAllPageableOca(Pageable p){
+		return this.partidaOcaRepository.findAllPageable(p);
+	}
+	@Transactional(readOnly = true)
+	public Page<PartidaParchis> findAllPageableParchis(Pageable p){
+		return this.partidaParchisRepository.findAllPageable(p);
+	}
 
 	@Transactional(readOnly = true)
 	public Collection<PartidaParchis> findAllParchis(){
