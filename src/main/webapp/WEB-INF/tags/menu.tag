@@ -102,6 +102,8 @@
 							<li><a href="<c:url value="/usuarios/perfil" />">Mi perfil</a></li>
 							<li class="divider"></li>
 							<li><a href="<c:url value="/logout" />">Logout</a></li>
+							<li class="divider"></li>
+							<li><a href="<c:url value="/miestadisticas" />">Mis Estadisticas</a></li>
 						</ul>
 					
 						</li>

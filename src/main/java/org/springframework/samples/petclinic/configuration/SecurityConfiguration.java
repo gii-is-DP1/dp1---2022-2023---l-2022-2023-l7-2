@@ -51,6 +51,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 				
 				.antMatchers("/logro/listLogros").permitAll()
+
+				.antMatchers("/miestadisticas").authenticated()
 				
 
 				.antMatchers("/partida/**").authenticated()
