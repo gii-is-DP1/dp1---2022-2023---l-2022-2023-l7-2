@@ -22,6 +22,7 @@ import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaService;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.jugador.JugadorService;
+import org.springframework.samples.petclinic.ocachis.logro.LogroService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
@@ -34,16 +35,18 @@ public class PartidaService {
 	private FichaService fichaService;
 	private CasillaService casillaService;
 	private JugadorService jugadorService;
+	private LogroService logroService;
 
     
     @Autowired
 	public PartidaService(PartidaOcaRepository partidaOcaRepository, PartidaParchisRepository partidaParchisRepository,
-	FichaService fichaService, CasillaService casillaService, JugadorService jugadorService){
+	FichaService fichaService, CasillaService casillaService, JugadorService jugadorService, LogroService logroService){
 		this.partidaOcaRepository = partidaOcaRepository;
         this.partidaParchisRepository = partidaParchisRepository;
 		this.fichaService = fichaService;
 		this.casillaService = casillaService;
 		this.jugadorService = jugadorService;
+		this.logroService = logroService;
 	}
 
 
@@ -268,7 +271,7 @@ public class PartidaService {
 
 		Integer numeroCasillaInicial = casillaInicial.getNumero();
 
-		int dado =(int) (Math.random()*6+1);
+		int dado =this.TirarNumDado();
 		partida.addLog("El jugador " + j.getColor() + " ha sacado " + dado + " en el dado");
 
 		Integer numeroCasillaInicialMasDado = numeroCasillaInicial + dado;
@@ -361,12 +364,18 @@ public class PartidaService {
 		for(Jugador j:partida.getJugadores()){
 			j.finalizarPartidaOca(duracionInMinutes);
 		}
+		try {
+			logroService.actualizarLogrosOca(partida);
+		} catch (IllegalAccessException e) {
+		}
 	}
 
 	public int TirarNumDado(){
 		int numDado =(int) (Math.random()*6 +1);
+		numDado= 1;
 		return numDado;
 	}
+
 
 
 
@@ -381,6 +390,7 @@ public class PartidaService {
 		partida.setFechaCreacion(LocalDateTime.now());
 		partida.setJugadores(new ArrayList<Jugador>());
 		partida.setUsuariosObservadores(new ArrayList<>());
+		partida.setUltimoSacado6(false);
 		inicializarCasillasParchis(partida);
 		partida = partidaParchisRepository.save(partida);
 		return partida;
@@ -422,8 +432,6 @@ public class PartidaService {
 		}
 		partida.setCasillas(casillas);
 	}
-
-
 	
 	//*****************************************JUGAR PARCHIS*****************************************
 
@@ -438,10 +446,15 @@ public class PartidaService {
 		CasillaParchis casillaFinal = partida.getCasillaFinal(ficha, dado);
 		Boolean haComido = false;
 		Boolean haMetidoFicha = false;
+
 		if(dado==6){
 			partida.setVecesSacado6(partida.getVecesSacado6() + 1);
 			partida.setUltimoSacado6(true);
 		}
+		if(dado != 20 && dado !=10 && dado != 6){
+			partida.setUltimoSacado6(false);
+		}
+
 		if(partida.getVecesSacado6()==3){ // la ultima ficha en mover vuelve a casa
 			mandarFichaACasa(partida, partida.getUltimaFichaMovida());
 			partida.pasarTurno();
@@ -463,12 +476,10 @@ public class PartidaService {
 			partida.setDado(10);
 			haMetidoFicha = true;
 		}
+
 		
 		if(!haComido && !haMetidoFicha){
-			if(dado!=6 && (dado!=20 && !partida.getUltimoSacado6()) 
-				&& (dado !=10 && !partida.getUltimoSacado6())){
-					
-				partida.setUltimoSacado6(false);
+			if(dado!=6 && !partida.getUltimoSacado6()){
 				partida.pasarTurno();			
 			}
 		partida.setDado(null);
@@ -489,6 +500,10 @@ public class PartidaService {
 		partida.setDuracion(duracionInMinutes);
 		for(Jugador j:partida.getJugadores()){
 			j.finalizarPartidaParchis(duracionInMinutes);
+		}
+		try {
+			logroService.actualizarLogrosParchis(partida);
+		} catch (IllegalAccessException e) {
 		}
 	}
 
@@ -541,15 +556,13 @@ public class PartidaService {
 			default:
 				return false;
 		}
+
+		return false;
 		
-		
-		if(casillaFinal.getTipoCasillaParchis()==TipoCasillaParchis.NORMAL && casillaFinal.getNumeroFichas() == 1)
-			return true;
-		else if (casillaFinal.getTipoCasillaParchis()==TipoCasillaParchis.CASAAMARILLO) return true;
-		else return false;
-		
+
 	}
 
+	
 	@Transactional
 	private void comerFicha(CasillaParchis casilla, FichaParchis ficha, PartidaParchis partida){
 		for(FichaParchis f : casilla.getFichas()){
@@ -593,8 +606,8 @@ public class PartidaService {
 	@Transactional
 	public int tirarDado(PartidaParchis partida) {
 		if(partida.getDado()==null){
-			//partida.setDado((int)(Math.random()*6 +1));
-			partida.setDado(6);
+			partida.setDado((int)(Math.random()*6 +1));
+			partida.setDado(1);
 		}
 		return partida.getDado();
 	}

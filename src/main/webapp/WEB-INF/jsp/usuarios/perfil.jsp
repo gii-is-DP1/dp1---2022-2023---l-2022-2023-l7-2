@@ -6,6 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ page import="org.springframework.samples.petclinic.ocachis.usuario.Usuario"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <petclinic:layout pageName="usuarios" title="Mi perfil - ${usuario.getUser().getUsername()}">
        <h1><center>${usuario.getUser().getUsername()}</center></h1>
@@ -76,4 +77,29 @@
     </table>
 
 
+    <br>
+    <br>
+
+    <h3>Mis logros</h3>
+
+    <table id="logrosTable" class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 50px;">Nombre</th>
+            <th style="width: 200px">Descripción</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${usuario.logros}" var="logro">
+            <tr>
+                <td>
+                    <c:out value="${logro.nombre}"></c:out>
+                </td>
+                <td>
+                    <c:out value="${logro.descripcion}"></c:out>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 </petclinic:layout>

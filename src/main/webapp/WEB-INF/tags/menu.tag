@@ -35,7 +35,7 @@
 						<ul class="dropdown-menu">
 							<li><a href="<c:url value="/partida/oca/listar/0" />">Salas oca</a></li>
 							<li class="divider"></li>
-							<li><a href="<c:url value="/partida/parchis/0" />">Salas parchis</a></li>
+							<li><a href="<c:url value="/partida/parchis/listar/0" />">Salas parchis</a></li>
 						</ul>
 					</petclinic:menuItem>
 			</sec:authorize>

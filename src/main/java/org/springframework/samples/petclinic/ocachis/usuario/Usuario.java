@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.ocachis.usuario;
 
 
 import java.util.Collection;
+import java.lang.reflect.Field;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
@@ -63,5 +64,26 @@ public class Usuario extends BaseEntity {
 
     public void actualizarEstadisticasParchis(Integer duracion, Boolean esGanador, Integer fichasComidas) {
         estadisticas.updateEstadisticasParchis(duracion, esGanador, fichasComidas);
+    }
+
+    public boolean cumpleLogro(Logro l) throws IllegalAccessException{
+        Boolean res = false;
+        Field[] campos = l.getEstadisticasACumplir().getClass().getDeclaredFields();
+        for(Field c : campos){
+            if(
+            ((Integer) c.get(l.getEstadisticasACumplir()) != null) && 
+            ((Integer) c.get(l.getEstadisticasACumplir()) != 0) && 
+             (Integer) c.get(this.estadisticas) >= (Integer) c.get(l.getEstadisticasACumplir())){
+                res = true;
+            }
+            
+            
+        }
+
+        return res;
+    }
+
+    public void addLogro(Logro l) {
+        this.logros.add(l);
     }
 }

@@ -150,6 +150,7 @@ public class PartidaParchis extends Partida{
 		this.addLog("TURNO DEL JUGADOR " + this.getColorJugadorActual());
 		this.setDado(null);
 		this.setVecesSacado6(0);
+		this.setUltimoSacado6(false);
 	}
 
 	public List<CasillaParchis> METODORANDOM(FichaParchis ficha, Integer dado){

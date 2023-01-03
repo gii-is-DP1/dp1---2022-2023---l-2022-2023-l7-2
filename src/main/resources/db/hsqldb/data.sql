@@ -163,18 +163,20 @@ INSERT INTO solicitud (id,usuario_invitado_id,usuario_solicitud_id,estado) VALUE
 
 INSERT INTO logro(id,nombre,descripcion,oca_partidas_jugadas) VALUES (1,'Jugador Oca Junior','Juega 5 partidas de la Oca',5);
 INSERT INTO logro(id,nombre,descripcion,oca_partidas_jugadas) VALUES (2,'Jugador Oca Senior','Juega 10 partidas de la Oca',15);
+INSERT INTO logro(id,nombre,descripcion, parchis_partidas_jugadas) VALUES (3,'Tu primerita partida parchis','Juega tu primera partida del Parchis',1);
+INSERT INTO logro(id,nombre,descripcion, oca_partidas_jugadas) VALUES (4,'Tu primerita partida oca','Juega tu primera partida de la Oca',1);
 
 INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, color_jugador_actual) VALUES
 (1, 100, 3, 0, '2022-12-05', 3, 0),
 (2, 101, 4, 0, '2013-12-02', 2, 0),
-(3, 102, 4, 0, '2000-12-16', 4, 0);
+(3, 102, 4, 0, '2023-12-16', 4, 0);
 
 
-INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, color_jugador_actual, dado, tirada, veces_sacado6) VALUES
-(1, 103, 5, 1, '2022-12-25', 4, 1, null, 0, 0),
-(2, 104, 5, 2, '2022-12-24', 4, 0, null, 0, 0),
-(3, 105, 0, 0, '2022-12-23', 2, 0, null, 0, 0),
-(4, 106, 0, 0, '2022-12-22', 2, 0, null, 0, 0);
+INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, color_jugador_actual, dado, tirada, veces_sacado6,	ULTIMO_SACADO6) VALUES
+(1, 103, 5, 1, '2022-12-25', 4, 1, null, 0, 0, 0),
+(2, 104, 5, 2, '2022-12-24', 4, 0, null, 0, 0, 0),
+(3, 105, 0, 0, '2022-12-23', 2, 0, null, 0, 0, 0),
+(4, 106, 0, 0, '2022-12-22', 2, 0, null, 0, 0, 0);
 
 
 
@@ -188,8 +190,8 @@ INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion
  (51, 51, 0),(52, 52, 5),(53, 53, 6),(54, 54, 1),(55, 55, 0),(56, 56, 0),(57, 57, 0),(58, 58, 8),(59, 59, 1),(60, 60, 0),
  (61, 61, 0),(62, 62, 0),(63, 63, 9);
 
-INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (1, 0, 2);
-INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (2, 1, 2);
+INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (1, 0, 62);
+INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (2, 1, 61);
 -- INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (3, 2, 1);
 -- INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (4, 3, 1);
 
@@ -254,10 +256,10 @@ INSERT INTO casilla_parchis(id, numero, bloqueada, tipo_casilla_parchis) VALUES
 (33, 33, false, 0),
 (34, 34, false, 1),
 (35, 35, false, 0),
-(36, 36, true, 0),
+(36, 36, false, 0),
 (37, 37, false, 0),
 (38, 38, false, 0),
-(39, 39, true, 7),
+(39, 39, false, 7),
 (40, 40, false, 0),
 (41, 41, false, 0),
 (42, 42, false, 0),
@@ -356,10 +358,10 @@ INSERT INTO ficha_parchis(id, color, esta_en_casa, esta_en_la_meta, casilla_actu
 (3,0, false, false, 42),
 (4,0, true, false, 103),
 
-(5,1, false, false, 25),
-(6,1, true, false, 101),
-(7,1, false, false, 36),
-(8,1, false, false, 36)
+(5,1, false, false, 7),
+(6,1, false, false, 6),
+(7,1, false, false, 75),
+(8,1, false, false, 74)
 -- ,(9,2, false, false, 40),
 -- (10,2,false, false, 41),
 -- (11,2,true, false, 104),

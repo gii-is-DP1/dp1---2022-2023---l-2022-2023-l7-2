@@ -31,5 +31,4 @@ public class EstadisticasController {
         model.put("apodoUsuario",usuario.getUser().getUsername());
         return VIEWS_ESTADISTICAS_USUARIO;       
     }
-    
 }

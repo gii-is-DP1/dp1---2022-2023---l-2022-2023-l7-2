@@ -1,6 +1,6 @@
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ page import="org.springframework.samples.petclinic.model.Color"%>
-
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
