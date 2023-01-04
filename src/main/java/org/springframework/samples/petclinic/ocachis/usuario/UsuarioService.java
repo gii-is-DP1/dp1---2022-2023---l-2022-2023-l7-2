@@ -2,9 +2,9 @@ package org.springframework.samples.petclinic.ocachis.usuario;
 
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.util.Collection;
 import java.util.Optional;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -114,5 +114,19 @@ public class UsuarioService {
 		return usuarios;
 	  }
 
-	
+	public List<Usuario> Top5ParchisFichasComidas(){
+		return usuarioRepository.findTop5ByOrderByEstadisticasParchisFichasComidasDesc();
+	}
+
+	public List<Usuario> Top5OcaVecesCaidoEnMuerte(){
+		return usuarioRepository.findTop5ByOrderByEstadisticasOcaVecesCaidoEnMuerteDesc();
+	}
+
+	public List<Usuario> Top5ParchisPartidasGanadas(){
+		return usuarioRepository.findTop5ByOrderByEstadisticasParchisPartidasGanadasDesc();
+	}
+
+	public List<Usuario> Top5OcaPartidasGanadas(){
+		return usuarioRepository.findTop5ByOrderByEstadisticasOcaPartidasGanadasDesc();
+	}
 }

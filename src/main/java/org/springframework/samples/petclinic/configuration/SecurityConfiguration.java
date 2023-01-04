@@ -54,6 +54,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 				.antMatchers("/miestadisticas").authenticated()
 				
+				.antMatchers("/estadisticasGlobales").permitAll()
 
 				.antMatchers("/partida/**").authenticated()
 

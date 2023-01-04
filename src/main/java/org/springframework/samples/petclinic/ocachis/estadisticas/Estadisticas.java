@@ -27,6 +27,8 @@ public class Estadisticas{
 		this.ocaDuracionMedia = 0;
 	}
 
+	
+
 	public Integer parchisPartidasJugadas;
 
 	public Integer parchisPartidasGanadas;

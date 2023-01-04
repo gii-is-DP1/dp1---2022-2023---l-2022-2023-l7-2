@@ -26,14 +26,14 @@ public class LogroServiceTest {
 	void shouldFindLogroWithCorrectId() {
 		Logro logro1 = this.ls.findById(1);
 		assertThat(logro1.getNombre()).isEqualTo("Jugador Oca Junior");
-		assertThat(logro1.getDescripcion()).isEqualTo("Juega 10 partidas de la Oca");
+		assertThat(logro1.getDescripcion()).isEqualTo("Juega 5 partidas de la Oca");
 	}
     @Test
 	void shouldFindAllLogros() {
 		Collection<Logro> logros = this.ls.findAllLogros();
         Logro logro = EntityUtils.getById(logros, Logro.class, 1);
 		assertThat(logro.getNombre()).isEqualTo("Jugador Oca Junior");
-		assertThat(logro.getDescripcion()).isEqualTo("Juega 10 partidas de la Oca");
+		assertThat(logro.getDescripcion()).isEqualTo("Juega 5 partidas de la Oca");
 	}
     @Test 
     void shouldSaveLogro() {

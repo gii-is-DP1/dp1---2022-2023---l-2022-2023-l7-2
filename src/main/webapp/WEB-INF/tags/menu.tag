@@ -5,7 +5,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
 <%@ attribute name="name" required="true" rtexprvalue="true"
-	description="Name of the active menu: home, owners, vets or error"%>
+	description="Name of the active menu"%>
 
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container">
@@ -27,9 +27,8 @@
 					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 					<span>Inicio</span>
 				</petclinic:menuItem>
-			<sec:authorize access="isAuthenticated()">
 
-			
+			<sec:authorize access="isAuthenticated()">
 				<petclinic:menuItem active="${name eq 'salas'}"
 						url="/partida/" title="Salas" dropdown="${true}">
 						<ul class="dropdown-menu">
@@ -53,6 +52,12 @@
 						<span>Crear Partida</span>
 				</petclinic:menuItem>
 			</sec:authorize>
+
+				<petclinic:menuItem active="${name eq 'estadisticas'}"
+						url="/estadisticasGlobales" title="Estadisticas">
+						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+						<span>Estadisticas</span>
+				</petclinic:menuItem>
 
 				<sec:authorize access="isAuthenticated()">
 					<petclinic:menuItem active="${name eq 'amigos'}"
@@ -102,8 +107,7 @@
 							<li><a href="<c:url value="/usuarios/perfil" />">Mi perfil</a></li>
 							<li class="divider"></li>
 							<li><a href="<c:url value="/logout" />">Logout</a></li>
-							<li class="divider"></li>
-							<li><a href="<c:url value="/miestadisticas" />">Mis Estadisticas</a></li>
+							
 						</ul>
 					
 						</li>

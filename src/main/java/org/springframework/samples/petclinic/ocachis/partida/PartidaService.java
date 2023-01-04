@@ -17,6 +17,7 @@ import org.springframework.samples.petclinic.ocachis.casilla.CasillaParchis;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaService;
 import org.springframework.samples.petclinic.ocachis.casilla.TipoCasillaOca;
 import org.springframework.samples.petclinic.ocachis.casilla.TipoCasillaParchis;
+import org.springframework.samples.petclinic.ocachis.estadisticasGlobales.EstadisticasGlobalesService;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaService;
@@ -36,17 +37,20 @@ public class PartidaService {
 	private CasillaService casillaService;
 	private JugadorService jugadorService;
 	private LogroService logroService;
+	private EstadisticasGlobalesService estadisticasGlobalesService;
 
     
     @Autowired
 	public PartidaService(PartidaOcaRepository partidaOcaRepository, PartidaParchisRepository partidaParchisRepository,
-	FichaService fichaService, CasillaService casillaService, JugadorService jugadorService, LogroService logroService){
+	FichaService fichaService, CasillaService casillaService, JugadorService jugadorService, LogroService logroService,
+	EstadisticasGlobalesService estadisticasGlobalesService){
 		this.partidaOcaRepository = partidaOcaRepository;
         this.partidaParchisRepository = partidaParchisRepository;
 		this.fichaService = fichaService;
 		this.casillaService = casillaService;
 		this.jugadorService = jugadorService;
 		this.logroService = logroService;
+		this.estadisticasGlobalesService = estadisticasGlobalesService;
 	}
 
 
@@ -368,6 +372,7 @@ public class PartidaService {
 			logroService.actualizarLogrosOca(partida);
 		} catch (IllegalAccessException e) {
 		}
+		estadisticasGlobalesService.updateEstadisticasGlobalesPartidaOca(partida);
 	}
 
 	public int TirarNumDado(){
@@ -512,6 +517,9 @@ public class PartidaService {
 			logroService.actualizarLogrosParchis(partida);
 		} catch (IllegalAccessException e) {
 		}
+
+		estadisticasGlobalesService.updateEstadisticasGlobalesPartidaParchis(partida);
+
 	}
 
 
