@@ -23,4 +23,12 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
 
 	@Query("SELECT usuario FROM Usuario usuario WHERE usuario.user.username LIKE %:apodo% AND usuario.id !=:usuarioId ")
 	Collection<Usuario> findFiltroApodo(@Param("apodo") String apodo,@Param("usuarioId") int id);
+
+	Collection<Usuario> findTop5ByOrderByEstadisticasParchisFichasComidasDesc();
+	
+	Collection<Usuario> findTop5ByOrderByEstadisticasOcaVecesCaidoEnMuerteDesc();
+	
+	Collection<Usuario> findTop5ByOrderByEstadisticasParchisPartidasGanadasDesc();
+	
+	Collection<Usuario> findTop5ByOrderByEstadisticasOcaPartidasGanadasDesc();
 }

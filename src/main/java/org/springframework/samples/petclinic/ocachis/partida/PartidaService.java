@@ -439,6 +439,7 @@ public class PartidaService {
 	public void jugarParchis(PartidaParchis partida, Integer fichaId, Integer jugadorId, Integer dado) {
 		if(fichaId == -1){ //pasar turno
 			partida.pasarTurno();
+			partida.addLog("Pasa turno");
 			return;
 		}
 		FichaParchis ficha = fichaService.findFichaParchis(fichaId);
@@ -457,11 +458,14 @@ public class PartidaService {
 
 		if(partida.getVecesSacado6()==3){ // la ultima ficha en mover vuelve a casa
 			mandarFichaACasa(partida, partida.getUltimaFichaMovida());
+			partida.addLog("Pierde turno por sacar 6 tres veces");
 			partida.pasarTurno();
 			return;
 		}
 
 		if(puedeComerFicha(casillaFinal,ficha)){
+			partida.addLog("Se ha comido una ficha en la casilla " + ficha.getCasillaActual() + "! Se cuenta 20");
+
 			comerFicha(casillaFinal, ficha, partida);
 			jugador.setFichasComidas(jugador.getFichasComidas() + 1);
 			partida.setDado(20);
@@ -469,7 +473,9 @@ public class PartidaService {
 		}
 
 		fichaService.moverFichaParchis(ficha, casillaFinal, jugador);
+		partida.addLog("Mueve una ficha hasta la casilla " + casillaFinal.getNumero());
 		if(casillaFinal.esMeta()){
+			partida.addLog("Ha metido una ficha en casa! Se cuenta 10");
 			if(verificarFinalPartida(jugador)){
 				finalizarPartidaParchis(partida,jugador);
 			}
@@ -491,6 +497,7 @@ public class PartidaService {
 
 
 	private void finalizarPartidaParchis(PartidaParchis partida, Jugador jugadorGanador) {
+		partida.addLog("El jugador " +jugadorGanador.getColor() + " ha ganado la partida! ENHORABUENA!!");
 		partida.setEstado(TipoEstadoPartida.TERMINADA);
 		partida.setGanador(jugadorGanador.getUsuario());
 		jugadorGanador.setEsGanador(true);
@@ -600,6 +607,7 @@ public class PartidaService {
 					break;
 			}
 			fichaService.moverFichaParchis(ficha, casa, jugador);
+			
 	}
 
 
@@ -607,8 +615,10 @@ public class PartidaService {
 	public int tirarDado(PartidaParchis partida) {
 		if(partida.getDado()==null){
 			partida.setDado((int)(Math.random()*6 +1));
-			partida.setDado(1);
+			// partida.setDado(1);
+			partida.addLog("Ha sacado " + partida.getDado());
 		}
+
 		return partida.getDado();
 	}
 

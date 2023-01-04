@@ -56,9 +56,9 @@ public class PartidaParchis extends Partida{
 	public void addLog(String newLog){
 
 		if(newLog.startsWith("TURNO DEL JUGADOR")){
-			log.add(0, newLog);
+			log.add(newLog);
 		}
-		else log.add(0, "&nbsp;&nbsp;&nbsp;&nbsp;" + newLog);
+		else log.add("&nbsp;&nbsp;&nbsp;&nbsp;" + newLog);
 	}
 
 	public String printLog(){

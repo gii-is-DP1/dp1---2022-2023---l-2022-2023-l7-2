@@ -83,5 +83,5 @@
     fichasQueSePuedenMover: ${fichasQueSePuedenMover}
 
     <h1>Resumen:</h1>
-
+    ${partidaParchis.printLog()}
 </petclinic:layout>
