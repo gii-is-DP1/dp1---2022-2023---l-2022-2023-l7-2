@@ -355,11 +355,11 @@ INSERT INTO partida_parchis_casillas(partida_parchis_id, casillas_id) VALUES
 INSERT INTO ficha_parchis(id, color, esta_en_casa, esta_en_la_meta, casilla_actual_id) VALUES 
 (1,0, false, false, 39),
 (2,0, false, false, 3),
-(3,0, false, false, 42),
+(3,0, false, false, 55),
 (4,0, true, false, 103),
 
-(5,1, false, false, 7),
-(6,1, false, false, 6),
+(5,1, false, false, 73),
+(6,1, false, false, 54),
 (7,1, false, false, 75),
 (8,1, false, false, 74)
 -- ,(9,2, false, false, 40),

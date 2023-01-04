@@ -110,87 +110,88 @@
                                     </table>
 
 
-                                    <div style="display: block;">
-                                        <h2>Ranking Partidas Ganadas</h2>
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <th>OCA</th>
-                                                <th>PARCHIS</th>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
+
+                                    <h2>Ranking Partidas Ganadas</h2>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <th>OCA</th>
+                                            <th>PARCHIS</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tbody>
+                                                            <c:forEach items="${estadisticaGlobal.ocaRankingJugadores}"
+                                                                var="usuario">
+                                                                <tr>
+                                                                    <td>
+                                                                        <c:out value="${usuario.user.username}">
+                                                                        </c:out>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <c:out
+                                                                            value="${usuario.estadisticas.ocaPartidasGanadas}">
+                                                                        </c:out>
+                                                                    </td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+
+                                                <td>
+                                                    <table>
+                                                        <tbody>
+                                                            <c:forEach
+                                                                items="${estadisticaGlobal.parchisRankingJugadores}"
+                                                                var="usuario">
+                                                                <tr>
+                                                                    <td>
+                                                                        <c:out value="${usuario.user.username}">
+                                                                        </c:out>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <c:out
+                                                                            value="${usuario.estadisticas.parchisPartidasGanadas}">
+                                                                        </c:out>
+                                                                    </td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+
+                                    <br>
+                                    <br>
+
+
+                                    <h2>Ranking Fichas Comidas y Muertes</h2>
+
+                                    <table id="rankingParchis" class="table table-striped">
+                                        <thead>
+                                            <tr>
+
+                                                <th>Fichas Comidas</th>
+                                                <th>Veces Caido en Muerte</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <c:forEach items="${estadisticaGlobal.parchisFichasComidas}"
+                                                        var="usuario">
                                                         <table>
                                                             <tbody>
-                                                                <c:forEach
-                                                                    items="${estadisticaGlobal.ocaRankingJugadores}"
-                                                                    var="usuario">
-                                                                    <tr>
-                                                                        <td>
-                                                                            <c:out value="${usuario.user.username}">
-                                                                            </c:out>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <c:out
-                                                                                value="${usuario.estadisticas.ocaPartidasGanadas}">
-                                                                            </c:out>
-                                                                        </td>
-                                                                    </tr>
-                                                                </c:forEach>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-
-                                                    <td>
-                                                        <table>
-                                                            <tbody>
-                                                                <c:forEach
-                                                                    items="${estadisticaGlobal.parchisRankingJugadores}"
-                                                                    var="usuario">
-                                                                    <tr>
-                                                                        <td>
-                                                                            <c:out value="${usuario.user.username}">
-                                                                            </c:out>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <c:out
-                                                                                value="${usuario.estadisticas.parchisPartidasGanadas}">
-                                                                            </c:out>
-                                                                        </td>
-                                                                    </tr>
-                                                                </c:forEach>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-
-                                                </tr>
-                                            </tbody>
-                                        </table>
-
-                                        <br>
-                                        <br>
-
-                                        <h2>Ranking Fichas Comidas y Muertes</h2>
-
-                                        <table id="rankingParchis" class="table table-striped">
-                                            <thead>
-                                                <tr>
-
-                                                    <th>Fichas Comidas</th>
-                                                    <th>Veces Caido en Muerte</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <c:forEach items="${estadisticaGlobal.parchisFichasComidas}"
-                                                            var="usuario">
-                                                            <table>
-                                                                <tbody>
                                                                 <tr>
                                                                     <td>
                                                                         <c:out value="${usuario.user.username}"></c:out>
@@ -204,16 +205,16 @@
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
-                                                            </table>
-                                                        </c:forEach>
-                                                    </td>
+                                                        </table>
+                                                    </c:forEach>
+                                                </td>
 
-                                                    <td>
-                                                        <c:forEach items="${estadisticaGlobal.ocaVecesCaidoEnMuerte}"
-                                                            var="usuario">
+                                                <td>
+                                                    <c:forEach items="${estadisticaGlobal.ocaVecesCaidoEnMuerte}"
+                                                        var="usuario">
 
-                                                            <table>
-                                                                <tbody>
+                                                        <table>
+                                                            <tbody>
                                                                 <tr>
                                                                     <td>
                                                                         <c:out value="${usuario.user.username}"></c:out>
@@ -227,15 +228,15 @@
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
-                                                            </table>
-                                                        </c:forEach>
+                                                        </table>
+                                                    </c:forEach>
 
-                                                    </td>
-                                                </tr>
+                                                </td>
+                                            </tr>
 
 
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                        </tbody>
+                                    </table>
+
 
                                 </petclinic:layout>
