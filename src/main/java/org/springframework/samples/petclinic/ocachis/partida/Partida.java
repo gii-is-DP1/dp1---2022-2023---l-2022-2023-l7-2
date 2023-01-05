@@ -50,6 +50,7 @@ public class Partida extends BaseEntity{
 	public static Integer getNuevoCodigoPartida(){
 		return generadorCodigoPartida++;
 	}
-	
+
+	protected Long fechaHoraUltimoMovimiento;	
 }
 

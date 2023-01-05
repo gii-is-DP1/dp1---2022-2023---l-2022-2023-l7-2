@@ -190,8 +190,8 @@ INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion
  (51, 51, 0),(52, 52, 5),(53, 53, 6),(54, 54, 1),(55, 55, 0),(56, 56, 0),(57, 57, 0),(58, 58, 8),(59, 59, 1),(60, 60, 0),
  (61, 61, 0),(62, 62, 0),(63, 63, 9);
 
-INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (1, 0, 62);
-INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (2, 1, 61);
+INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (1, 0, 1);
+INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (2, 1, 1);
 -- INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (3, 2, 1);
 -- INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (4, 3, 1);
 

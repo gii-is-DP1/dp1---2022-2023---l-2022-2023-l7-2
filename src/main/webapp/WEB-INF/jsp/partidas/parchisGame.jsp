@@ -77,6 +77,8 @@
     </c:if>
     
 
+    
+
 
     <br>
     <br>
@@ -85,3 +87,43 @@
     <h1>Resumen:</h1>
     ${partidaParchis.printLog()}
 </petclinic:layout>
+
+<div id="fechaHoraUltimoMovimiento" data-fechaHoraUltimoMovimiento="${partidaParchis.getFechaHoraUltimoMovimiento()}"></div>
+    
+<c:if test="${jugadorAutenticado.color == partidaParchis.colorJugadorActual}">
+        <form id="pasarTurnoForm" modelAttribute="MoverFichaParchisForm"
+                method="POST" action="/partida/parchis/${partidaParchis.id}/jugar">
+            <input type="hidden" name="jugadorId" value="${jugadorAutenticado.id}">
+            <input type="hidden" name="fichaId" value="-1">
+            <input type="hidden" name="dado" value="1">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form>
+
+
+</c:if>
+
+<script>
+
+
+    function pasarTurno(){
+        let pasarTurnoFormDOM = document.getElementById("pasarTurnoForm");
+        pasarTurnoFormDOM.submit();
+    }
+
+
+    let fechaHoraUltimoMovimiento = parseInt(document.getElementById("fechaHoraUltimoMovimiento").getAttribute("data-fechaHoraUltimoMovimiento"));
+    console.log(fechaHoraUltimoMovimiento);
+
+    let now = Date.now();
+   
+    console.log(now);
+    let tiempoDelTurnoPasado = (now-fechaHoraUltimoMovimiento)/1000 + 3600;
+    let tiempoDelTurnoRestante = 10 - tiempoDelTurnoPasado;
+    console.log("tiempoRestante: " +tiempoDelTurnoRestante);
+    let tiempoDelTurnoRestanteMillis = tiempoDelTurnoRestante*1000;
+    console.log("tiempoDelTurnoRestanteMillis: " + tiempoDelTurnoRestanteMillis);
+     if(tiempoDelTurnoRestanteMillis>0){
+        //setTimeout(pasarTurno, tiempoDelTurnoRestanteMillis);    
+     }
+
+</script>

@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.ocachis.partida;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -259,7 +260,7 @@ public class PartidaService {
 
 	@Transactional
     public void jugarOca(PartidaOca partida, FichaOca ficha, Jugador j) {
-			
+		partida.setFechaHoraUltimoMovimiento(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());	
 		
 		if(j.getNumTurnosBloqueadoRestantesOca()>0){
 			j.setNumTurnosBloqueadoRestantesOca(j.getNumTurnosBloqueadoRestantesOca()-1);
@@ -442,6 +443,7 @@ public class PartidaService {
 
 	@Transactional
 	public void jugarParchis(PartidaParchis partida, Integer fichaId, Integer jugadorId, Integer dado) {
+		partida.setFechaHoraUltimoMovimiento(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
 		if(fichaId == -1){ //pasar turno
 			partida.pasarTurno();
 			partida.addLog("Pasa turno");

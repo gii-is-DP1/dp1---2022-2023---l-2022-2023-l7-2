@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.ocachis.partida;
 
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 import java.util.Collection;
@@ -415,7 +416,7 @@ public class PartidaController {
 			model.put("modo","observador");
 		}
 		model.put("partidaOca", partida);
-		model.put("now", new Date());
+		model.put("now", LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
 		return VIEWS_JUGAR_OCA;
 	}
 
@@ -462,7 +463,7 @@ public class PartidaController {
 			response.addHeader("Refresh", REFRESH_SEECONDS);
 		}
 		model.put("partidaParchis", partida);
-		model.put("now", new Date());	
+		//model.put("now", new Date());	
 		return VIEWS_JUGAR_PARCHIS;
 	}
 	
@@ -475,12 +476,28 @@ public class PartidaController {
 		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorParchis(u.getId(), partida.getId());
 		model.put("partidaParchis", partida);
-		model.put("now", new Date());
+		model.put("now", LocalDateTime.now());
 		model.put("modo","jugador");
 		model.put("jugadorAutenticado", j);
 		model.put("debug", "raro");
 		if(j.getColor() != partida.getColorJugadorActual()){
 				return "redirect:/noAccess";
+		}
+
+
+		//El dado tiene un valor y se ha movido ficha --> procesar movimiento de ficha
+		if(mfpf.getJugadorId() != null && mfpf.getFichaId() != null){
+			partidaService.jugarParchis(partida, mfpf.getFichaId(), mfpf.getJugadorId(),mfpf.getDado());	
+			redirectAttributes.addFlashAttribute("debug", "fichaMovida");
+			if(partida.getDado()!=null){//El dado tiene valor despues de mover --> el jugador tiene que volver a mover por que ha comido, sacado 6 o metido ficha
+				int dado = partidaService.tirarDado(partida);
+				List<FichaParchis> fichasQuePuedenMoverse = j.getFichasQuePuedenMoverse(dado);
+				model.put("fichasQueSePuedenMover", fichasQuePuedenMoverse);
+				model.put("dado", dado);
+				model.put("debug", "volverATirar");
+				return VIEWS_JUGAR_PARCHIS;
+			}
+			return "redirect:/partida/parchis/{partidaParchisId}/jugar";
 		}
 
 
@@ -494,20 +511,7 @@ public class PartidaController {
 			return VIEWS_JUGAR_PARCHIS;
 		}
 		
-		//El dado tiene un valor y se ha movido ficha --> procesar movimiento de ficha
-		if(mfpf.getJugadorId() != null && mfpf.getJugadorId() != null){
-			partidaService.jugarParchis(partida, mfpf.getFichaId(), mfpf.getJugadorId(),mfpf.getDado());	
-			redirectAttributes.addFlashAttribute("debug", "fichaMovida");
-			if(partida.getDado()!=null){//El dado tiene valor despues de mover --> el jugador tiene que volver a mover por que ha comido, sacado 6 o metido ficha
-				int dado = partidaService.tirarDado(partida);
-				List<FichaParchis> fichasQuePuedenMoverse = j.getFichasQuePuedenMoverse(dado);
-				model.put("fichasQueSePuedenMover", fichasQuePuedenMoverse);
-				model.put("dado", dado);
-				model.put("debug", "volverATirar");
-				return VIEWS_JUGAR_PARCHIS;
-			}
-			return "redirect:/partida/parchis/{partidaParchisId}/jugar";
-		}
+		
 
 		return "redirect:/partida/parchis/{partidaParchisId}/jugar";
 	}

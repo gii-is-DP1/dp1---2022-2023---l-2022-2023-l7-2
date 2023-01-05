@@ -78,6 +78,7 @@
 <script>
 
         const arrayCentrosFichasConNombre = []
+
         function canvasClicked(canvas, event) {
                 const rect = canvas.getBoundingClientRect()
                 const x = event.clientX - rect.left
@@ -125,4 +126,8 @@
             drawBoard()
         }
         window.onload = main();
+
+
+        
+
         </script> 
