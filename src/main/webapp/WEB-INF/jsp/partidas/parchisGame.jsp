@@ -17,6 +17,9 @@
     <h1>   El dado ha sacado el numero: ${dado}    </h1>
     <h1>Es el turno del jugador ${partidaParchis.colorJugadorActual}</h1>
    
+
+    <div id="divAlerta10SecRestantes" class="alert alert-danger" role="alert" style="display:none;">
+      </div>
 <petclinic:parchisBoard tablero="${partidaParchis}" fichasQueSePuedenMover="${fichasQueSePuedenMover}" dado="${dado}" jugadorAutenticado="${jugadorAutenticado}"></petclinic:parchisBoard>
    
     <br>
@@ -118,12 +121,26 @@
    
     console.log(now);
     let tiempoDelTurnoPasado = (now-fechaHoraUltimoMovimiento)/1000 + 3600;
-    let tiempoDelTurnoRestante = 10 - tiempoDelTurnoPasado;
+    let tiempoDelTurnoRestante = 30 - tiempoDelTurnoPasado;
     console.log("tiempoRestante: " +tiempoDelTurnoRestante);
     let tiempoDelTurnoRestanteMillis = tiempoDelTurnoRestante*1000;
     console.log("tiempoDelTurnoRestanteMillis: " + tiempoDelTurnoRestanteMillis);
      if(tiempoDelTurnoRestanteMillis>0){
-        //setTimeout(pasarTurno, tiempoDelTurnoRestanteMillis);    
+        setTimeout(pasarTurno, tiempoDelTurnoRestanteMillis);   
+        
+        if(tiempoDelTurnoRestanteMillis>10000){
+        setTimeout(function(){
+                document.getElementById("divAlerta10SecRestantes").innerText="Le quedan 10 segundos. Si no juega se pasará su turno";
+                document.getElementById("divAlerta10SecRestantes").style.display="block";
+
+            }, tiempoDelTurnoRestanteMillis - 10000);    
+     }else{
+        document.getElementById("divAlerta10SecRestantes").innerText="Le quedan menos de 10 segundos. Si no juega se pasará su turno";
+                document.getElementById("divAlerta10SecRestantes").style.display="block";
      }
+
+
+     }
+     
 
 </script>

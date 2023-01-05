@@ -41,7 +41,7 @@
         </c:forEach>
     </c:if>
 </c:if>
-
+<div id="colorJugadorAutenticado" data-color="${jugadorAutenticado.color}"></div>
 
     <c:forEach items="${tablero.jugadores}" var="jugador">
         <c:choose>
@@ -78,6 +78,12 @@
 <script>
 
         const arrayCentrosFichasConNombre = []
+        const colorJugadorAutenticado = document.getElementById("colorJugadorAutenticado").getAttribute("data-color");
+        const codigoColor = colorJugadorAutenticado.slice(0,3).toLowerCase();
+
+        function getCodigoColorFromFichaId(id){
+            return id.slice(5,8).toLowerCase();
+        }
 
         function canvasClicked(canvas, event) {
                 const rect = canvas.getBoundingClientRect()
@@ -85,10 +91,13 @@
                 const y = event.clientY - rect.top
                 console.log("x: " + x + " y: " + y)
                 for(ficha of arrayCentrosFichasConNombre){
+
+
+                    var id=ficha[1];
                     var coordenadas = ficha[0];
-                    if(Math.sqrt((coordenadas[0]-x)*(coordenadas[0]-x) + (coordenadas[1]-y)*(coordenadas[1]-y)) < 12){
-                        const fichaDOM = document.getElementById(ficha[1]);
-                        const formDOM = document.getElementById("formMoverFicha" + ficha[1].charAt(ficha[1].length - 1))
+                    if(codigoColor === getCodigoColorFromFichaId(id)
+                        && Math.sqrt((coordenadas[0]-x)*(coordenadas[0]-x) + (coordenadas[1]-y)*(coordenadas[1]-y)) < 12){
+                        const formDOM = document.getElementById("formMoverFicha" + id.charAt(id.length - 1))
                         formDOM.submit()
                     }
                 }
