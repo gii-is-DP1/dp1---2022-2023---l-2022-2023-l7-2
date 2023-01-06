@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.ocachis.solicitud;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 
@@ -22,6 +23,8 @@ public class SolicitudController {
     
     private static final String VIEWS_AMIGOS = "solicitud/amigos";
 	private static final String VIEWS_PENDIENTES = "solicitud/pendientes";
+    private static final String VIEWS_USUARIO_PROFILE ="usuarios/perfil";
+ 
 
     private SolicitudService solicitudService;
     private UsuarioService usuarioService;
@@ -89,7 +92,22 @@ public class SolicitudController {
 
     }
     
-    
+    @GetMapping(value="/{usuarioId}/perfilAmigo")
+	public String mostrarPefilAmigo(@PathVariable("usuarioId") int usuarioId,Map<String,Object> model){
+
+		Usuario usuarioLoggeado= this.usuarioService.getLoggedUsuario();
+		Usuario amigo = usuarioService.findUsuarioById(usuarioId);
+		if(this.solicitudService.sonAmigos(amigo.getId(),usuarioLoggeado.getId())){
+
+			model.put("usuario",amigo);
+			model.put("now",LocalDateTime.now());
+			return VIEWS_USUARIO_PROFILE;
+
+		}
+        
+		return listarAmigos(null, model);
+		
+	}
 
     
 }

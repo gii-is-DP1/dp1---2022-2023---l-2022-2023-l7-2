@@ -9,6 +9,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.ocachis.solicitud.SolicitudService;
 import org.springframework.samples.petclinic.ocachis.user.AuthoritiesService;
 import org.springframework.samples.petclinic.ocachis.user.User;
 import org.springframework.samples.petclinic.ocachis.user.UserService;
@@ -33,11 +34,13 @@ public class UsuarioController {
  
 	private final UsuarioService usuarioService;
 	private final UserService userService;
+	private final SolicitudService solicitudService;
 
 	@Autowired
-	public UsuarioController(UsuarioService usuarioService, UserService userService, AuthoritiesService authoritiesService) {
+	public UsuarioController(UsuarioService usuarioService, UserService userService, AuthoritiesService authoritiesService,SolicitudService solicitudService) {
 		this.usuarioService = usuarioService;
 		this.userService = userService;
+		this.solicitudService = solicitudService;
 	}
 	
 	@InitBinder
@@ -126,4 +129,7 @@ public class UsuarioController {
 		model.put("now",LocalDateTime.now());
 		return VIEWS_USUARIO_PROFILE;
 	}
+
+	
+
 }

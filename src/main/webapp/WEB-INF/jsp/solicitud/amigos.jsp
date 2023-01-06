@@ -60,7 +60,9 @@
             <th style="width: 150px;">Apodo</th>
             <th style="width: 200px;">Nombre</th>
             <th style="width: 120px">Apellido</th>
-            <th style="width:100px"></th>
+            <th style="width: 100px">Espectar</th>
+            <th style="width: 100px">Visitar Perfil</th>
+           
            
         </tr>
         </thead>
@@ -85,6 +87,13 @@
                         <a href="${fn:escapeXml(espectarUsuarioUrl)}">
                         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                     </c:if>
+                </td>
+                <td>
+                    <spring:url value="/usuarios/{usuarioId}/perfilAmigo" var="perfilAmigoUrl">
+                        <spring:param name="usuarioId" value="${amigo.key.id}"/>
+                        </spring:url>
+                        <a href="${fn:escapeXml(perfilAmigoUrl)}" class="btn btn-default">Ver Perfil</a>
+
                 </td>
                     
             </tr>

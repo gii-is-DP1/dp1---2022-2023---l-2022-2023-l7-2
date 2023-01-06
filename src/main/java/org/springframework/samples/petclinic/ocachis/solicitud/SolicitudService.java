@@ -134,6 +134,15 @@ public class SolicitudService {
             return espectarUrl;
         }
 
-
+        public Boolean sonAmigos(Integer amigoId, Integer usuarioId){
+            Collection<Solicitud> solicitudes =  this.solicitudRepository.findAllAmigos(usuarioId);
+            Boolean sonAmigos = false;
+            for(Solicitud solicitud : solicitudes){
+                if(solicitud.getUsuarioInvitado().getId()==amigoId || solicitud.getUsuarioSolicitud().getId()==amigoId){
+                    sonAmigos = true;
+                }
+            }
+            return sonAmigos;
+        }
 
 }

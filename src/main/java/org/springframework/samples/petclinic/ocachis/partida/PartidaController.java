@@ -217,11 +217,11 @@ public class PartidaController {
 		
 		// Crear jugador
 		Usuario u = usuarioService.getLoggedUsuario();
-		Collection<Jugador> jugadores1 = jugadorService.findAllJugadoresForUsuario(u.getId());
+		Collection<Jugador> jugadoresUsuario = jugadorService.findAllJugadoresForUsuario(u.getId());
 
 		// Detecta si el usuario está en una partida, y si lo está, al tratar de unirse a una sala lo redirigá a la sala o partida en el que ya se encuentra
 		if (estaJugando(u.getId())) {
-			for (Jugador j : jugadores1) {
+			for (Jugador j : jugadoresUsuario) {
 			if (j.getPartidaOca() != null && j.getPartidaOca().getEstado() == TipoEstadoPartida.JUGANDO) {
 				var partidaActual = j.getPartidaOca().getId();
 				redirectAttributes.addFlashAttribute("message", "Estas jugando ya en una partida. Se te ha redirigido a ella");
@@ -294,6 +294,28 @@ public class PartidaController {
 		Boolean dentro = false;
 		// Crear jugador
 		Usuario u = usuarioService.getLoggedUsuario();
+		Collection<Jugador> jugadoresUsuario = jugadorService.findAllJugadoresForUsuario(u.getId());
+		if (estaJugando(u.getId())) {
+			for (Jugador j : jugadoresUsuario) {
+			if (j.getPartidaOca() != null && j.getPartidaOca().getEstado() == TipoEstadoPartida.JUGANDO) {
+				var partidaActual = j.getPartidaOca().getId();
+				redirectAttributes.addFlashAttribute("message", "Estas jugando ya en una partida. Se te ha redirigido a ella");
+				return "redirect:/partida/oca/" + partidaActual + "/jugar";
+			} else if (j.getPartidaOca() != null && j.getPartidaOca().getEstado() == TipoEstadoPartida.CREADA) {
+				var partidaActual = j.getPartidaOca().getId();
+				redirectAttributes.addFlashAttribute("message", "Ya estas en una sala. Se te ha redirigido a ella");
+				return "redirect:/partida/oca/" + partidaActual + "/espera";
+			} else if (j.getPartidaParchis() != null && (j.getPartidaParchis().getEstado() == TipoEstadoPartida.JUGANDO)) {
+				var partidaActual = j.getPartidaParchis().getId();
+				redirectAttributes.addFlashAttribute("message", "Estas jugando ya en una partida. Se te ha redirigido a ella");
+				return "redirect:/partida/parchis/" + partidaActual + "/jugar";
+			} else if (j.getPartidaParchis() != null && (j.getPartidaParchis().getEstado() == TipoEstadoPartida.CREADA)) {
+				var partidaActual = j.getPartidaParchis().getId();
+				redirectAttributes.addFlashAttribute("message", "Ya estas en una sala. Se te ha redirigido a ella");
+				return "redirect:/partida/parchis" + partidaActual + "/espera";
+			}}
+		}
+
 		if(estaJugando(u.getId())) {
 			Pageable pageable = PageRequest.of(0,1);
 			model.put("message", "Estas jugando ya en una partida");
