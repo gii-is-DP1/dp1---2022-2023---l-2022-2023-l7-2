@@ -9,10 +9,6 @@
     <spring:url value="/resources/images/pets.png" var="petsImage"/>
     <img src="${petsImage}"/>
     <H1>ERROR</H1>
-    <c:if test="${empty exception.message}">
-        <h2>Something happened...</h2>
-    </c:if>
-    
-    <h2>${exception.message}</h2>
+    <h2>Error interno del servidor, disculpe las molestias</h2>
 
 </petclinic:layout>

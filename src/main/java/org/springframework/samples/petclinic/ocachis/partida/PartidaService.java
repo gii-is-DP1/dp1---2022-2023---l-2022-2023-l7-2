@@ -153,12 +153,12 @@ public class PartidaService {
 	@Transactional(readOnly = true)
 	public PartidaParchis findPartidaParchisById(int id){
 		Optional<PartidaParchis> partida =this.partidaParchisRepository.findById(id);
-		if(!partida.isPresent()) throw new NotFoundException("La partida no se ha encontrado");
+		if(!partida.isPresent()) return null;
 		return partida.get();
 	}
 
 	private CasillaOca funcionOca(PartidaOca partida, CasillaOca casillaInicial, Jugador j){
-		
+
 		CasillaOca casillaFinal = null;
 		switch(casillaInicial.getNumero()){
 			case 5:

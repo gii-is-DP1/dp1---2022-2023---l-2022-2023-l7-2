@@ -8,11 +8,6 @@
 
     <spring:url value="/resources/images/pets.png" var="petsImage"/>
     <img src="${petsImage}"/>
-    <H1>ERROR</H1>
-    <c:if test="${empty exception.message}">
-        <h2>Something happened...</h2>
-    </c:if>
-    
-    <h2>${exception.message}</h2>
-
+    <H1>ERROR 404</H1>
+    <h2>La página que busca no existe</h2>
 </petclinic:layout>
