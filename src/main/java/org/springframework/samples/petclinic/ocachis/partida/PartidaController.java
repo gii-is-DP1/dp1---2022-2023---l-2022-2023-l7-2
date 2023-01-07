@@ -4,6 +4,7 @@ package org.springframework.samples.petclinic.ocachis.partida;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Collection;
 import java.util.Date;
@@ -416,11 +417,17 @@ public class PartidaController {
 
 	//jugar OCA
 	@GetMapping(value="/oca/{partidaOcaId}/jugar")
-	public String jugarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model,HttpServletResponse response, RedirectAttributes redirectAttributes){
+	public String jugarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model,HttpServletResponse response, RedirectAttributes redirectAttributes,@Param("mensaje") String mensaje){
 		
 		PartidaOca partida = partidaService.findPartidaOcaById(partidaOcaId);
 		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorOca(u.getId(), partida.getId());
+
+		if(mensaje!=null){
+			partida.addMensaje(mensaje,j);
+			this.partidaService.saveOca(partida);
+			
+		}
 
 		if(partida.getEstado()==TipoEstadoPartida.TERMINADA){
 			return "redirect:/partida/oca/" + partidaOcaId + "/resumen";
@@ -462,10 +469,15 @@ public class PartidaController {
 	
 	//jugar PARCHIS
 	@GetMapping("/parchis/{partidaParchisId}/jugar")
-	public String jugarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model,HttpServletResponse response,RedirectAttributes redirectAttributes){
+	public String jugarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model,HttpServletResponse response,RedirectAttributes redirectAttributes,@Param("mensaje") String mensaje){
 		PartidaParchis partida = partidaService.findPartidaParchisById(partidaParchisId);
 		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorParchis(u.getId(), partida.getId());
+		if(mensaje!=null){
+			partida.addMensaje(mensaje,j);
+			this.partidaService.saveParchis(partida);
+			
+		}
 		
 
 		if(partida.getEstado()==TipoEstadoPartida.TERMINADA){
@@ -537,6 +549,8 @@ public class PartidaController {
 
 		return "redirect:/partida/parchis/{partidaParchisId}/jugar";
 	}
+	
+	
 
 	@GetMapping("/oca/{partidaOcaId}/resumen")
 	public String terminadaPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model, HttpServletResponse response){

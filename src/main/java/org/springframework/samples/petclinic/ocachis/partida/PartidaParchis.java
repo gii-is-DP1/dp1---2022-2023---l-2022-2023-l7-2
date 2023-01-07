@@ -44,6 +44,28 @@ public class PartidaParchis extends Partida{
 	private FichaParchis ultimaFichaMovida;
 
 	@ElementCollection
+	@CollectionTable(name="chatParchis")
+	protected List<String> chatParchis;
+
+	
+	public void addMensaje(String mensaje,Jugador jugador){
+		String mensajeFinal ="";
+		String username = jugador.getUsuario().getUser().getUsername();
+		Color color = jugador.getColor();
+		mensajeFinal = mensajeFinal + username +"("+color.toString()+"): " + mensaje;
+		chatParchis.add(mensajeFinal);
+	}
+	public String printChatParchis(){
+		String chat = "";
+		List<String> aux = new ArrayList<>(chatParchis);
+		
+		for(String s: aux){
+			chat += s + "<br>";
+		}  
+		return chat;
+	}
+
+	@ElementCollection
 	@CollectionTable(name="logParchis")
 	protected List<String> log = inicializarLog();
 
@@ -70,6 +92,8 @@ public class PartidaParchis extends Partida{
 		}  
 		return result;
 	}
+
+	
 
 	public CasillaParchis getCasillaConNumero(Integer numero){
 		Optional<CasillaParchis> opt = this.getCasillas().stream().filter(c->c.getNumero().equals(numero)).findFirst();

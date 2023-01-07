@@ -13,6 +13,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 
@@ -33,7 +34,27 @@ public class PartidaOca extends Partida{
 	@OneToMany(mappedBy="partidaOca", cascade = CascadeType.ALL)
 	private Collection<Jugador> jugadores;
 
+	@ElementCollection
+	@CollectionTable(name="chatOca")
+	protected List<String> chatOca;
 
+	
+	public void addMensaje(String mensaje,Jugador jugador){
+		String mensajeFinal ="";
+		String username = jugador.getUsuario().getUser().getUsername();
+		Color color = jugador.getColor();
+		mensajeFinal = mensajeFinal + username +"("+color.toString()+"): " + mensaje;
+		chatOca.add(mensajeFinal);
+	}
+	public String printChatOca(){
+		String chat = "";
+		List<String> aux = new ArrayList<>(chatOca);
+		
+		for(String s: aux){
+			chat += s + "<br>";
+		}  
+		return chat;
+	}
 	@ElementCollection
 	@CollectionTable(name="log")
 	protected List<String> log = inicializarLog();

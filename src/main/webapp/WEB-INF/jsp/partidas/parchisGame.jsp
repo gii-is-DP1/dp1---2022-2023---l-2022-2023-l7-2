@@ -89,6 +89,19 @@
 
     <h1>Resumen:</h1>
     ${partidaParchis.printLog()}
+    <h2> <c:out value="CHAT"></c:out></h2>
+    ${partidaParchis.printChatParchis()}
+
+    <spring:url value="/partida/parchis/{partidaParchisId}/jugar"
+    var="chatParchisUrl">
+    <spring:param name="partidaParchisId"
+        value="${partidaParchis.id}" />
+       
+</spring:url>
+    <form class="form-inline" th:action="@{${fn:escapeXml(chatParchisUrl)}}">
+        <input type="text" name="mensaje" id="mensaje" th:value="${mensaje}" placeholder="Introduzca mensaje" required>
+     <input type="submit" class="btn btn-primary mb-2" value="Enviar">
+    </form>
 </petclinic:layout>
 
 <div id="fechaHoraUltimoMovimiento" data-fechaHoraUltimoMovimiento="${partidaParchis.getFechaHoraUltimoMovimiento()}"></div>

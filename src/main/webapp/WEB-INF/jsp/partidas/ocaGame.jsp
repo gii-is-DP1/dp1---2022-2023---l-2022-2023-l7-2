@@ -7,6 +7,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
 
@@ -54,7 +55,20 @@
     <br>
     <h1>Resumen:</h1>
     ${partidaOca.printLog()}
+    <h2> <c:out value="CHAT"></c:out></h2>
 
+    ${partidaOca.printChatOca()}
+    <spring:url value="/partida/oca/{partidaOcaId}/jugar"
+    var="chatOcaUrl">
+    <spring:param name="partidaOcaId"
+        value="${partidaOca.id}" />
+       
+   
+</spring:url>
+<form class="form-inline" th:action="@{${fn:escapeXml(chatOcaUrl)}}">
+    <input type="text" name="mensaje" id="mensaje" th:value="${mensaje}" placeholder="Introduzca mensaje" required>
+ <input type="submit" class="btn btn-primary mb-2" value="Enviar">
+</form>
 
     <c:if test="${jugadorAutenticado.color == partidaOca.colorJugadorActual}">
         <form id="pasarTurnoForm" method="post" action="/partida/oca/${partidaOca.id}/jugar">
