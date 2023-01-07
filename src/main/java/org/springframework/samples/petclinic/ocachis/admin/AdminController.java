@@ -100,6 +100,19 @@ public class AdminController {
         
         return "redirect:/admin/listUsuarios";
     }
+
+    @GetMapping("/listUsuarios/{usuarioId}/reset")
+    public String resetearUsuario(@PathVariable("usuarioId") int usuarioId, ModelMap model){
+        Usuario u = this.usuarioService.findUsuarioById(usuarioId);
+        if(u != null){
+            usuarioService.resetearUsuario(u);
+            model.put("message","Se han reseteado las estadisticas del usuario con éxito");
+        }else{
+            model.put("message","El usuario no existe");
+        }
+        
+        return "redirect:/admin/listUsuarios";
+    }
     
 
     @GetMapping("/listPartidas/partidaOca/{partidaOcaId}/delete")

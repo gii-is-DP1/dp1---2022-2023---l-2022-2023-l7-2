@@ -195,6 +195,15 @@ public class CasillaParchis extends Casilla{
          return false;
      }
 
+     public Boolean esPasillo(){
+         if(tipoCasillaParchis == TipoCasillaParchis.PASILLOROJO || 
+        tipoCasillaParchis == TipoCasillaParchis.PASILLOAMARILLO || 
+        tipoCasillaParchis == TipoCasillaParchis.PASILLOVERDE || 
+        tipoCasillaParchis == TipoCasillaParchis.PASILLOAZUL)
+         return true;
+         return false; 
+     }
+
     public void actualizarBloqueado() {
         if(!esMeta() && !esCasa() && fichas.size()==2){
             bloqueada=true;

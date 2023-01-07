@@ -33,20 +33,20 @@ import org.webjars.NotFoundException;
 @Service
 public class PartidaService {
 	private PartidaOcaRepository partidaOcaRepository;
-    private PartidaParchisRepository partidaParchisRepository;
+	private PartidaParchisRepository partidaParchisRepository;
 	private FichaService fichaService;
 	private CasillaService casillaService;
 	private JugadorService jugadorService;
 	private LogroService logroService;
 	private EstadisticasGlobalesService estadisticasGlobalesService;
 
-    
-    @Autowired
+	@Autowired
 	public PartidaService(PartidaOcaRepository partidaOcaRepository, PartidaParchisRepository partidaParchisRepository,
-	FichaService fichaService, CasillaService casillaService, JugadorService jugadorService, LogroService logroService,
-	EstadisticasGlobalesService estadisticasGlobalesService){
+			FichaService fichaService, CasillaService casillaService, JugadorService jugadorService,
+			LogroService logroService,
+			EstadisticasGlobalesService estadisticasGlobalesService) {
 		this.partidaOcaRepository = partidaOcaRepository;
-        this.partidaParchisRepository = partidaParchisRepository;
+		this.partidaParchisRepository = partidaParchisRepository;
 		this.fichaService = fichaService;
 		this.casillaService = casillaService;
 		this.jugadorService = jugadorService;
@@ -54,31 +54,47 @@ public class PartidaService {
 		this.estadisticasGlobalesService = estadisticasGlobalesService;
 	}
 
-
-	
-	public void inicializarCasillasOca(PartidaOca partida){
+	public void inicializarCasillasOca(PartidaOca partida) {
 		List<Integer> numerosCasillasOca = new ArrayList<>();
-		numerosCasillasOca.add(5); numerosCasillasOca.add(9); numerosCasillasOca.add(14);
-		numerosCasillasOca.add(18); numerosCasillasOca.add(23); numerosCasillasOca.add(27);
-		numerosCasillasOca.add(32); numerosCasillasOca.add(36); numerosCasillasOca.add(41);
-		numerosCasillasOca.add(45); numerosCasillasOca.add(50); numerosCasillasOca.add(54);
+		numerosCasillasOca.add(5);
+		numerosCasillasOca.add(9);
+		numerosCasillasOca.add(14);
+		numerosCasillasOca.add(18);
+		numerosCasillasOca.add(23);
+		numerosCasillasOca.add(27);
+		numerosCasillasOca.add(32);
+		numerosCasillasOca.add(36);
+		numerosCasillasOca.add(41);
+		numerosCasillasOca.add(45);
+		numerosCasillasOca.add(50);
+		numerosCasillasOca.add(54);
 		numerosCasillasOca.add(59);
 		List<CasillaOca> casillas = new ArrayList<CasillaOca>();
-		
-		for(int i = 1; i<=63; i++){
+
+		for (int i = 1; i <= 63; i++) {
 			CasillaOca casilla = new CasillaOca();
 			casilla.setNumero(i);
 			casilla.setFichas(new ArrayList<FichaOca>());
-			if(numerosCasillasOca.contains(i)) casilla.setTipoCasillaOca(TipoCasillaOca.OCA);
-			else if(i == 6 || i==12) casilla.setTipoCasillaOca(TipoCasillaOca.PUENTE);
-			else if(i == 19) casilla.setTipoCasillaOca(TipoCasillaOca.POSADA);
-			else if(i == 26 || i==53) casilla.setTipoCasillaOca(TipoCasillaOca.DADOS);
-			else if(i == 31) casilla.setTipoCasillaOca(TipoCasillaOca.POZO);
-			else if(i == 42) casilla.setTipoCasillaOca(TipoCasillaOca.LABERINTO);
-			else if(i == 52) casilla.setTipoCasillaOca(TipoCasillaOca.CARCEL);
-			else if(i == 58) casilla.setTipoCasillaOca(TipoCasillaOca.MUERTE);
-			else if(i == 63) casilla.setTipoCasillaOca(TipoCasillaOca.FINAL);
-			else casilla.setTipoCasillaOca(TipoCasillaOca.NORMAL);
+			if (numerosCasillasOca.contains(i))
+				casilla.setTipoCasillaOca(TipoCasillaOca.OCA);
+			else if (i == 6 || i == 12)
+				casilla.setTipoCasillaOca(TipoCasillaOca.PUENTE);
+			else if (i == 19)
+				casilla.setTipoCasillaOca(TipoCasillaOca.POSADA);
+			else if (i == 26 || i == 53)
+				casilla.setTipoCasillaOca(TipoCasillaOca.DADOS);
+			else if (i == 31)
+				casilla.setTipoCasillaOca(TipoCasillaOca.POZO);
+			else if (i == 42)
+				casilla.setTipoCasillaOca(TipoCasillaOca.LABERINTO);
+			else if (i == 52)
+				casilla.setTipoCasillaOca(TipoCasillaOca.CARCEL);
+			else if (i == 58)
+				casilla.setTipoCasillaOca(TipoCasillaOca.MUERTE);
+			else if (i == 63)
+				casilla.setTipoCasillaOca(TipoCasillaOca.FINAL);
+			else
+				casilla.setTipoCasillaOca(TipoCasillaOca.NORMAL);
 			casilla = casillaService.saveCasillaOca(casilla);
 			casillas.add(casilla);
 		}
@@ -87,7 +103,7 @@ public class PartidaService {
 	}
 
 	@Transactional
-	public PartidaOca crearPartidaOca(Integer maxJugadores){
+	public PartidaOca crearPartidaOca(Integer maxJugadores) {
 		PartidaOca partida = new PartidaOca();
 		partida.setMaxJugadores(maxJugadores);
 		partida.setCodigoPartida(Partida.getNuevoCodigoPartida());
@@ -103,112 +119,127 @@ public class PartidaService {
 	}
 
 	@Transactional(readOnly = true)
-	public Collection<PartidaOca> findAllOca(){
+	public Collection<PartidaOca> findAllOca() {
 		return this.partidaOcaRepository.findAll();
 	}
+
 	@Transactional(readOnly = true)
-	public Page<PartidaOca> findAllPageableOca(Pageable p){
+	public Page<PartidaOca> findAllPageableOca(Pageable p) {
 		return this.partidaOcaRepository.findAllPageable(p);
 	}
+
 	@Transactional(readOnly = true)
-	public Page<PartidaParchis> findAllPageableParchis(Pageable p){
+	public Page<PartidaParchis> findAllPageableParchis(Pageable p) {
 		return this.partidaParchisRepository.findAllPageable(p);
 	}
 
 	@Transactional(readOnly = true)
-	public Collection<PartidaParchis> findAllParchis(){
+	public Collection<PartidaParchis> findAllParchis() {
 		return this.partidaParchisRepository.findAll();
 	}
 
-    public Page<PartidaOca> findEsperaOca(Pageable p){
-        return partidaOcaRepository.findEsperaOca(p);
-    }
+	public Page<PartidaOca> findEsperaOca(Pageable p) {
+		return partidaOcaRepository.findEsperaOca(p);
+	}
 
-    public Page<PartidaParchis> findEsperaParchis(Pageable p){
-        return partidaParchisRepository.findEsperaParchis(p);
-    }
-   
-    public PartidaOca saveOca(PartidaOca p){
-        return partidaOcaRepository.save(p);
-    }
-    public PartidaParchis saveParchis(PartidaParchis p){
-        return partidaParchisRepository.save(p);
-    }
+	public Page<PartidaParchis> findEsperaParchis(Pageable p) {
+		return partidaParchisRepository.findEsperaParchis(p);
+	}
+
+	public PartidaOca saveOca(PartidaOca p) {
+		return partidaOcaRepository.save(p);
+	}
+
+	public PartidaParchis saveParchis(PartidaParchis p) {
+		return partidaParchisRepository.save(p);
+	}
 
 	@Transactional
-	public void borrarPartidaOca(int id){
+	public void borrarPartidaOca(int id) {
 		this.partidaOcaRepository.deleteById(id);
 	}
 
 	@Transactional
-	public void borrarPartidaParchis(int id){
+	public void borrarPartidaParchis(int id) {
 		this.partidaParchisRepository.deleteById(id);
 	}
 
 	@Transactional(readOnly = true)
-	public PartidaOca findPartidaOcaById(int id){
+	public PartidaOca findPartidaOcaById(int id) {
 		return this.partidaOcaRepository.findById(id);
 	}
-	
+
 	@Transactional(readOnly = true)
 	public PartidaParchis findPartidaParchisById(int id){
 		Optional<PartidaParchis> partida =this.partidaParchisRepository.findById(id);
-		if(!partida.isPresent()) throw new NotFoundException("La partida no se ha encontrado");
+		if(!partida.isPresent()) return null;
 		return partida.get();
 	}
 
-	private CasillaOca funcionOca(PartidaOca partida, CasillaOca casillaInicial, Jugador j){
-		
+	private CasillaOca funcionOca(PartidaOca partida, CasillaOca casillaInicial, Jugador j) {
+
 		CasillaOca casillaFinal = null;
-		switch(casillaInicial.getNumero()){
+		switch (casillaInicial.getNumero()) {
 			case 5:
 				casillaFinal = partida.getCasillaConNumero(9);
-				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 9");
+				partida.addLog(
+						"'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 9");
 				return casillaFinal;
 			case 9:
 				casillaFinal = partida.getCasillaConNumero(14);
-				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 14");
+				partida.addLog(
+						"'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 14");
 				return casillaFinal;
 			case 14:
 				casillaFinal = partida.getCasillaConNumero(18);
-				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 18");	
+				partida.addLog(
+						"'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 18");
 				return casillaFinal;
 			case 18:
 				casillaFinal = partida.getCasillaConNumero(23);
-				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 23");
+				partida.addLog(
+						"'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 23");
 				return casillaFinal;
 			case 23:
 				casillaFinal = partida.getCasillaConNumero(27);
-				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 27");
+				partida.addLog(
+						"'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 27");
 				return casillaFinal;
 			case 27:
 				casillaFinal = partida.getCasillaConNumero(32);
-				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 32");
+				partida.addLog(
+						"'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 32");
 				return casillaFinal;
 			case 32:
 				casillaFinal = partida.getCasillaConNumero(36);
-				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 36");
+				partida.addLog(
+						"'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 36");
 				return casillaFinal;
 			case 36:
 				casillaFinal = partida.getCasillaConNumero(41);
-				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 41");
+				partida.addLog(
+						"'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 41");
 				return casillaFinal;
 			case 41:
 				casillaFinal = partida.getCasillaConNumero(45);
-				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 45");
+				partida.addLog(
+						"'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 45");
 				return casillaFinal;
 			case 45:
 				casillaFinal = partida.getCasillaConNumero(50);
-				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 50");
+				partida.addLog(
+						"'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 50");
 				return casillaFinal;
 			case 50:
 				casillaFinal = partida.getCasillaConNumero(54);
-				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 54");
+				partida.addLog(
+						"'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 54");
 				return casillaFinal;
 			case 54:
-			
+
 				casillaFinal = partida.getCasillaConNumero(59);
-				partida.addLog("'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 59");
+				partida.addLog(
+						"'De oca en oca y tiro porque me toca' - El jugador " + j.getColor() + " va a la casilla 59");
 				return casillaFinal;
 			case 59:
 				casillaFinal = partida.getCasillaConNumero(59);
@@ -218,38 +249,43 @@ public class PartidaService {
 		return casillaFinal;
 	}
 
-	public Boolean hayAlguienEnElPozo(PartidaOca partida){
+	public Boolean hayAlguienEnElPozo(PartidaOca partida) {
 		return partida.getCasillaConNumero(31).getFichas().size() > 0;
 	}
 
-	public void liberarFichasPozo(PartidaOca partida){
+	public void liberarFichasPozo(PartidaOca partida) {
 		List<Color> coloresEnElPozo = new ArrayList<Color>();
 		CasillaOca pozo = partida.getCasillaConNumero(31);
-		
-		for(FichaOca ficha : pozo.getFichas()){
+
+		for (FichaOca ficha : pozo.getFichas()) {
 			coloresEnElPozo.add(ficha.getColor());
 		}
 
-		for(Jugador j: partida.getJugadores()){
-			if(coloresEnElPozo.contains(j.getColor())) j.setNumTurnosBloqueadoRestantesOca(0);
+		for (Jugador j : partida.getJugadores()) {
+			if (coloresEnElPozo.contains(j.getColor()))
+				j.setNumTurnosBloqueadoRestantesOca(0);
 			partida.addLog("El jugador " + j.getColor() + " ha salido del pozo");
 		}
-	
+
 	}
 
-	public void pasarTurno(PartidaOca partida){
-		switch(partida.getColorJugadorActual()){
+	public void pasarTurno(PartidaOca partida) {
+		switch (partida.getColorJugadorActual()) {
 			case ROJO:
 				partida.setColorJugadorActual(Color.AMARILLO);
-				
+
 				break;
 			case AMARILLO:
-				if(partida.getJugadores().size()==2) partida.setColorJugadorActual(Color.ROJO);
-				else partida.setColorJugadorActual(Color.VERDE);
+				if (partida.getJugadores().size() == 2)
+					partida.setColorJugadorActual(Color.ROJO);
+				else
+					partida.setColorJugadorActual(Color.VERDE);
 				break;
 			case VERDE:
-				if(partida.getJugadores().size()==3) partida.setColorJugadorActual(Color.ROJO);
-				else partida.setColorJugadorActual(Color.AZUL);
+				if (partida.getJugadores().size() == 3)
+					partida.setColorJugadorActual(Color.ROJO);
+				else
+					partida.setColorJugadorActual(Color.AZUL);
 				break;
 			case AZUL:
 				partida.setColorJugadorActual(Color.ROJO);
@@ -259,49 +295,55 @@ public class PartidaService {
 	}
 
 	@Transactional
-    public void jugarOca(PartidaOca partida, FichaOca ficha, Jugador j) {
-		partida.setFechaHoraUltimoMovimiento(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());	
-		
-		if(j.getNumTurnosBloqueadoRestantesOca()>0){
-			j.setNumTurnosBloqueadoRestantesOca(j.getNumTurnosBloqueadoRestantesOca()-1);
-			if(j.getNumTurnosBloqueadoRestantesOca()==0) partida.addLog("El jugador " + j.getColor() + " ya no está bloqueado y puede volver a jugar");
-			else if(j.getNumTurnosBloqueadoRestantesOca()==1) partida.addLog("Al jugador " + j.getColor() + " le queda 1 turno bloqueado");
-			else partida.addLog("Al jugador " + j.getColor() + " le quedan "+ j.getNumTurnosBloqueadoRestantesOca() + " turnos bloqueados");
+	public void jugarOca(PartidaOca partida, FichaOca ficha, Jugador j) {
+		partida.setFechaHoraUltimoMovimiento(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
+
+		if (j.getNumTurnosBloqueadoRestantesOca() > 0) {
+			j.setNumTurnosBloqueadoRestantesOca(j.getNumTurnosBloqueadoRestantesOca() - 1);
+			if (j.getNumTurnosBloqueadoRestantesOca() == 0)
+				partida.addLog("El jugador " + j.getColor() + " ya no está bloqueado y puede volver a jugar");
+			else if (j.getNumTurnosBloqueadoRestantesOca() == 1)
+				partida.addLog("Al jugador " + j.getColor() + " le queda 1 turno bloqueado");
+			else
+				partida.addLog("Al jugador " + j.getColor() + " le quedan " + j.getNumTurnosBloqueadoRestantesOca()
+						+ " turnos bloqueados");
 			pasarTurno(partida);
 			return;
 		}
 
 		Boolean volverATirar = false;
-		CasillaOca casillaInicial =  ficha.getCasillaActual();
+		CasillaOca casillaInicial = ficha.getCasillaActual();
 
 		Integer numeroCasillaInicial = casillaInicial.getNumero();
 
-		int dado =this.TirarNumDado();
+		int dado = this.TirarNumDado();
 		partida.addLog("El jugador " + j.getColor() + " ha sacado " + dado + " en el dado");
 
 		Integer numeroCasillaInicialMasDado = numeroCasillaInicial + dado;
-		if(numeroCasillaInicialMasDado > 63){
-			int dif = numeroCasillaInicialMasDado -63;
-			numeroCasillaInicialMasDado = 63-dif;
-			partida.addLog("El jugador " + j.getColor() + " ha rebotado hasta la casilla " + numeroCasillaInicialMasDado);
+		if (numeroCasillaInicialMasDado > 63) {
+			int dif = numeroCasillaInicialMasDado - 63;
+			numeroCasillaInicialMasDado = 63 - dif;
+			partida.addLog(
+					"El jugador " + j.getColor() + " ha rebotado hasta la casilla " + numeroCasillaInicialMasDado);
 		}
-		
+
 		CasillaOca casillaInicialMasDado = partida.getCasillaConNumero(numeroCasillaInicialMasDado);
 		CasillaOca casillaFinal = null;
-		
-		switch(casillaInicialMasDado.getTipoCasillaOca()){
+
+		switch (casillaInicialMasDado.getTipoCasillaOca()) {
 			case NORMAL:
 				casillaFinal = casillaInicialMasDado;
 				break;
-				
-			case OCA: 
+
+			case OCA:
 				casillaFinal = funcionOca(partida, casillaInicialMasDado, j);
 				volverATirar = true;
 				break;
 			case PUENTE:
 				casillaFinal = partida.getCasillaConNumero(19);
 				j.setNumTurnosBloqueadoRestantesOca(1);
-				partida.addLog("El jugador " + j.getColor() + " ha caido en puente y va a la posada. Está 1 turno bloqueado");
+				partida.addLog(
+						"El jugador " + j.getColor() + " ha caido en puente y va a la posada. Está 1 turno bloqueado");
 				break;
 
 			case POSADA:
@@ -309,8 +351,8 @@ public class PartidaService {
 				j.setNumTurnosBloqueadoRestantesOca(1);
 				partida.addLog("El jugador " + j.getColor() + " ha caido en la posada. Está 1 turno bloqueado");
 				break;
-				
-			case LABERINTO: 
+
+			case LABERINTO:
 				casillaFinal = partida.getCasillaConNumero(30);
 				partida.addLog("El jugador " + j.getColor() + " ha caido en el laberinto y va a la casilla 30");
 				break;
@@ -318,20 +360,22 @@ public class PartidaService {
 			case POZO:
 				casillaFinal = casillaInicialMasDado;
 				j.setNumTurnosBloqueadoRestantesOca(4);
-				partida.addLog("El jugador " + j.getColor() + " ha caido en el pozo. Está 4 turnos bloqueado o hasta que otro jugador pase por la casilla.");
-				break;
-				
-			case DADOS: 
-				casillaFinal = partida.getCasillaConNumero(numeroCasillaInicialMasDado + 8);
-				partida.addLog("El jugador " + j.getColor() + " ha caido en dados, avanza la suma de los digitos de la casilla dados");
+				partida.addLog("El jugador " + j.getColor()
+						+ " ha caido en el pozo. Está 4 turnos bloqueado o hasta que otro jugador pase por la casilla.");
 				break;
 
-			case MUERTE: 
+			case DADOS:
+				casillaFinal = partida.getCasillaConNumero(numeroCasillaInicialMasDado + 8);
+				partida.addLog("El jugador " + j.getColor()
+						+ " ha caido en dados, avanza la suma de los digitos de la casilla dados");
+				break;
+
+			case MUERTE:
 				casillaFinal = partida.getCasillaConNumero(1);
 				j.setVecesCaidoEnMuerte(j.getVecesCaidoEnMuerte() + 1);
 				partida.addLog("El jugador " + j.getColor() + " ha muerto ඞ. Vuelve a la casilla 1");
 				break;
-			
+
 			case CARCEL:
 				casillaFinal = casillaInicialMasDado;
 				j.setNumTurnosBloqueadoRestantesOca(2);
@@ -342,31 +386,31 @@ public class PartidaService {
 				casillaFinal = casillaInicialMasDado;
 				partida.setEstado(TipoEstadoPartida.TERMINADA);
 				partida.addLog("El jugador " + j.getColor() + " ha ganado la partida");
-				finalizarPartidaOca(partida,j);
+				finalizarPartidaOca(partida, j);
 		}
 
 		fichaService.moverFichaOca(ficha, casillaFinal, j);
 
-		if(hayAlguienEnElPozo(partida)){
+		if (hayAlguienEnElPozo(partida)) {
 			Integer numeroCasillaFinal = casillaFinal.getNumero();
-			if(numeroCasillaInicial < 31 && numeroCasillaFinal > 31){
+			if (numeroCasillaInicial < 31 && numeroCasillaFinal > 31) {
 				liberarFichasPozo(partida);
 			}
 		}
-		
-		if(!volverATirar){
+
+		if (!volverATirar) {
 			pasarTurno(partida);
 		}
-	}		
+	}
 
-	public void finalizarPartidaOca(PartidaOca partida, Jugador jugadorGanador){
+	public void finalizarPartidaOca(PartidaOca partida, Jugador jugadorGanador) {
 		partida.setGanador(jugadorGanador.getUsuario());
 		jugadorGanador.setEsGanador(true);
 		partida.setFechaFinalizacion(LocalDateTime.now());
-		Duration duracion =Duration.between(partida.getFechaCreacion(), partida.getFechaFinalizacion());
-		Integer duracionInMinutes = (int)duracion.getSeconds() /60;
+		Duration duracion = Duration.between(partida.getFechaCreacion(), partida.getFechaFinalizacion());
+		Integer duracionInMinutes = (int) duracion.getSeconds() / 60;
 		partida.setDuracion(duracionInMinutes);
-		for(Jugador j:partida.getJugadores()){
+		for (Jugador j : partida.getJugadores()) {
 			j.finalizarPartidaOca(duracionInMinutes);
 		}
 		try {
@@ -376,19 +420,14 @@ public class PartidaService {
 		estadisticasGlobalesService.updateEstadisticasGlobalesPartidaOca(partida);
 	}
 
-	public int TirarNumDado(){
-		int numDado =(int) (Math.random()*6 +1);
-		numDado= 1;
+	public int TirarNumDado() {
+		int numDado = (int) (Math.random() * 6 + 1);
+		numDado = 1;
 		return numDado;
 	}
 
-
-
-
-
-
-    public PartidaParchis crearPartidaParchis(Integer maxJugadores) {
-        PartidaParchis partida = new PartidaParchis();
+	public PartidaParchis crearPartidaParchis(Integer maxJugadores) {
+		PartidaParchis partida = new PartidaParchis();
 		partida.setMaxJugadores(maxJugadores);
 		partida.setCodigoPartida(Partida.getNuevoCodigoPartida());
 		partida.setColorJugadorActual(Color.ROJO);
@@ -400,51 +439,67 @@ public class PartidaService {
 		inicializarCasillasParchis(partida);
 		partida = partidaParchisRepository.save(partida);
 		return partida;
-    }
-
-
+	}
 
 	private void inicializarCasillasParchis(PartidaParchis partida) {
 		ArrayList<CasillaParchis> casillas = new ArrayList<>();
-		for(int i=1;i<=104;i++){
+		for (int i = 1; i <= 104; i++) {
 			CasillaParchis casilla = new CasillaParchis();
 			casilla.setNumero(i);
 			casilla.setBloqueada(false);
 			casilla.setFichas(new ArrayList<FichaParchis>());
-			if(i<=68){
-				if(i==5)casilla.setTipoCasillaParchis(TipoCasillaParchis.INCIOAMARILLO);
-				else if(i==22)casilla.setTipoCasillaParchis(TipoCasillaParchis.INCIOAZUL);
-				else if(i==39)casilla.setTipoCasillaParchis(TipoCasillaParchis.INCIOROJO);
-				else if(i==56)casilla.setTipoCasillaParchis(TipoCasillaParchis.INCIOVERDE);
-				else if(i==12 || i==17 || i == 29 || i == 34 || i == 46 || i == 51 || i == 63 || i == 68)casilla.setTipoCasillaParchis(TipoCasillaParchis.SEGURO);
-				else casilla.setTipoCasillaParchis(TipoCasillaParchis.NORMAL);
-			}
-			else if(i>=69 && i<=75)casilla.setTipoCasillaParchis(TipoCasillaParchis.PASILLOAMARILLO);
-			else if(i>=77 && i<=83)casilla.setTipoCasillaParchis(TipoCasillaParchis.PASILLOAZUL);
-			else if(i>=85 && i<=91)casilla.setTipoCasillaParchis(TipoCasillaParchis.PASILLOROJO);
-			else if(i>=93 && i<=99)casilla.setTipoCasillaParchis(TipoCasillaParchis.PASILLOVERDE);
+			if (i <= 68) {
+				if (i == 5)
+					casilla.setTipoCasillaParchis(TipoCasillaParchis.INCIOAMARILLO);
+				else if (i == 22)
+					casilla.setTipoCasillaParchis(TipoCasillaParchis.INCIOAZUL);
+				else if (i == 39)
+					casilla.setTipoCasillaParchis(TipoCasillaParchis.INCIOROJO);
+				else if (i == 56)
+					casilla.setTipoCasillaParchis(TipoCasillaParchis.INCIOVERDE);
+				else if (i == 12 || i == 17 || i == 29 || i == 34 || i == 46 || i == 51 || i == 63 || i == 68)
+					casilla.setTipoCasillaParchis(TipoCasillaParchis.SEGURO);
+				else
+					casilla.setTipoCasillaParchis(TipoCasillaParchis.NORMAL);
+			} else if (i >= 69 && i <= 75)
+				casilla.setTipoCasillaParchis(TipoCasillaParchis.PASILLOAMARILLO);
+			else if (i >= 77 && i <= 83)
+				casilla.setTipoCasillaParchis(TipoCasillaParchis.PASILLOAZUL);
+			else if (i >= 85 && i <= 91)
+				casilla.setTipoCasillaParchis(TipoCasillaParchis.PASILLOROJO);
+			else if (i >= 93 && i <= 99)
+				casilla.setTipoCasillaParchis(TipoCasillaParchis.PASILLOVERDE);
 
-			else if(i==76)casilla.setTipoCasillaParchis(TipoCasillaParchis.FINALAMARILLO);
-			else if(i==84)casilla.setTipoCasillaParchis(TipoCasillaParchis.FINALAZUL);
-			else if(i==92)casilla.setTipoCasillaParchis(TipoCasillaParchis.FINALROJO);
-			else if(i==100)casilla.setTipoCasillaParchis(TipoCasillaParchis.FINALVERDE);
+			else if (i == 76)
+				casilla.setTipoCasillaParchis(TipoCasillaParchis.FINALAMARILLO);
+			else if (i == 84)
+				casilla.setTipoCasillaParchis(TipoCasillaParchis.FINALAZUL);
+			else if (i == 92)
+				casilla.setTipoCasillaParchis(TipoCasillaParchis.FINALROJO);
+			else if (i == 100)
+				casilla.setTipoCasillaParchis(TipoCasillaParchis.FINALVERDE);
 
-			else if(i==101)casilla.setTipoCasillaParchis(TipoCasillaParchis.CASAAMARILLO);
-			else if(i==102)casilla.setTipoCasillaParchis(TipoCasillaParchis.CASAAZUL);
-			else if(i==103)casilla.setTipoCasillaParchis(TipoCasillaParchis.CASAROJO);
-			else if(i==104)casilla.setTipoCasillaParchis(TipoCasillaParchis.CASAVERDE);
-			//this.casillaService.saveCasillaParchis(casilla);
+			else if (i == 101)
+				casilla.setTipoCasillaParchis(TipoCasillaParchis.CASAAMARILLO);
+			else if (i == 102)
+				casilla.setTipoCasillaParchis(TipoCasillaParchis.CASAAZUL);
+			else if (i == 103)
+				casilla.setTipoCasillaParchis(TipoCasillaParchis.CASAROJO);
+			else if (i == 104)
+				casilla.setTipoCasillaParchis(TipoCasillaParchis.CASAVERDE);
+			// this.casillaService.saveCasillaParchis(casilla);
 			casillas.add(casilla);
 		}
 		partida.setCasillas(casillas);
 	}
-	
-	//*****************************************JUGAR PARCHIS*****************************************
+
+	// *****************************************JUGAR
+	// PARCHIS*****************************************
 
 	@Transactional
 	public void jugarParchis(PartidaParchis partida, Integer fichaId, Integer jugadorId, Integer dado) {
 		partida.setFechaHoraUltimoMovimiento(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
-		if(fichaId == -1){ //pasar turno
+		if (fichaId == -1) { // pasar turno
 			partida.pasarTurno();
 			partida.addLog("Pasa turno");
 			return;
@@ -455,22 +510,24 @@ public class PartidaService {
 		Boolean haComido = false;
 		Boolean haMetidoFicha = false;
 
-		if(dado==6){
+		if (dado == 6) {
 			partida.setVecesSacado6(partida.getVecesSacado6() + 1);
 			partida.setUltimoSacado6(true);
 		}
-		if(dado != 20 && dado !=10 && dado != 6){
+		if (dado != 20 && dado != 10 && dado != 6) {
 			partida.setUltimoSacado6(false);
 		}
 
-		if(partida.getVecesSacado6()==3){ // la ultima ficha en mover vuelve a casa
-			mandarFichaACasa(partida, partida.getUltimaFichaMovida());
+		if (partida.getVecesSacado6() == 3) {
+			if (!partida.getUltimaFichaMovida().getCasillaActual().esPasillo()) {
+				mandarFichaACasa(partida, partida.getUltimaFichaMovida()); // la ultima ficha en mover vuelve a casa
+			}
 			partida.addLog("Pierde turno por sacar 6 tres veces");
 			partida.pasarTurno();
 			return;
 		}
 
-		if(puedeComerFicha(casillaFinal,ficha)){
+	if(puedeComerFicha(casillaFinal,ficha)){
 			partida.addLog("Se ha comido una ficha en la casilla " + ficha.getCasillaActual() + "! Se cuenta 20");
 
 			comerFicha(casillaFinal, ficha, partida);
@@ -501,8 +558,6 @@ public class PartidaService {
 
 	}
 
-
-
 	private void finalizarPartidaParchis(PartidaParchis partida, Jugador jugadorGanador) {
 		partida.addLog("El jugador " +jugadorGanador.getColor() + " ha ganado la partida! ENHORABUENA!!");
 		partida.setEstado(TipoEstadoPartida.TERMINADA);
@@ -524,49 +579,50 @@ public class PartidaService {
 
 	}
 
-
-
 	private boolean verificarFinalPartida(Jugador jugador) {
-		for(FichaParchis ficha: jugador.getFichasParchis()){
-			if(!ficha.isEstaEnLaMeta()) return false;
+		for (FichaParchis ficha : jugador.getFichasParchis()) {
+			if (!ficha.isEstaEnLaMeta())
+				return false;
 		}
 		return true;
 	}
 
-
-
-	public boolean puedeComerFicha(CasillaParchis casillaFinal, FichaParchis ficha){
-		switch(casillaFinal.getTipoCasillaParchis()){
+	public boolean puedeComerFicha(CasillaParchis casillaFinal, FichaParchis ficha) {
+		switch (casillaFinal.getTipoCasillaParchis()) {
 			case NORMAL:
-				if(casillaFinal.getNumeroFichas()==1 && 
-					casillaFinal.getFichas().get(0).getColor()!=ficha.getColor())
+				if (casillaFinal.getNumeroFichas() == 1 &&
+						casillaFinal.getFichas().get(0).getColor() != ficha.getColor())
 					return true;
 				break;
 			case INCIOAMARILLO:
-				if(ficha.getColor()==Color.AMARILLO && casillaFinal.getNumeroFichas() == 2){
-					for(FichaParchis f: casillaFinal.getFichas()){
-						if(f.getColor()!=ficha.getColor()) return true;
+				if (ficha.getColor() == Color.AMARILLO && casillaFinal.getNumeroFichas() == 2) {
+					for (FichaParchis f : casillaFinal.getFichas()) {
+						if (f.getColor() != ficha.getColor())
+							return true;
 					}
 				}
 				break;
 			case INCIOAZUL:
-				if(ficha.getColor()==Color.AZUL && casillaFinal.getNumeroFichas() == 2){
-					for(FichaParchis f: casillaFinal.getFichas()){
-						if(f.getColor()!=ficha.getColor()) return true;
+				if (ficha.getColor() == Color.AZUL && casillaFinal.getNumeroFichas() == 2) {
+					for (FichaParchis f : casillaFinal.getFichas()) {
+						if (f.getColor() != ficha.getColor())
+							return true;
 					}
 				}
 				break;
 			case INCIOROJO:
-				if(ficha.getColor()==Color.ROJO && casillaFinal.getNumeroFichas() == 2){
-					for(FichaParchis f: casillaFinal.getFichas()){
-						if(f.getColor()!=ficha.getColor()) return true;
+				if (ficha.getColor() == Color.ROJO && casillaFinal.getNumeroFichas() == 2) {
+					for (FichaParchis f : casillaFinal.getFichas()) {
+						if (f.getColor() != ficha.getColor())
+							return true;
 					}
 				}
 				break;
 			case INCIOVERDE:
-				if(ficha.getColor()==Color.VERDE && casillaFinal.getNumeroFichas() == 2){
-					for(FichaParchis f: casillaFinal.getFichas()){
-						if(f.getColor()!=ficha.getColor()) return true;
+				if (ficha.getColor() == Color.VERDE && casillaFinal.getNumeroFichas() == 2) {
+					for (FichaParchis f : casillaFinal.getFichas()) {
+						if (f.getColor() != ficha.getColor())
+							return true;
 					}
 				}
 				break;
@@ -575,57 +631,52 @@ public class PartidaService {
 		}
 
 		return false;
-		
 
 	}
 
-	
 	@Transactional
-	private void comerFicha(CasillaParchis casilla, FichaParchis ficha, PartidaParchis partida){
-		for(FichaParchis f : casilla.getFichas()){
-			if(f.getColor()!= ficha.getColor()){
+	private void comerFicha(CasillaParchis casilla, FichaParchis ficha, PartidaParchis partida) {
+		for (FichaParchis f : casilla.getFichas()) {
+			if (f.getColor() != ficha.getColor()) {
 				mandarFichaACasa(partida, f);
 				break;
 			}
 		}
 	}
 
-	
-
 	@Transactional
-	public void mandarFichaACasa(PartidaParchis partida, FichaParchis ficha){
-			CasillaParchis casa = null;
-			Jugador jugador = null;
-			for(Jugador j: partida.getJugadores()){
-				if(j.getFichasParchis().contains(ficha)){
-					jugador = j;
-					break;
-				} 
+	public void mandarFichaACasa(PartidaParchis partida, FichaParchis ficha) {
+		CasillaParchis casa = null;
+		Jugador jugador = null;
+		for (Jugador j : partida.getJugadores()) {
+			if (j.getFichasParchis().contains(ficha)) {
+				jugador = j;
+				break;
 			}
-			switch(ficha.getColor()){
-				case AMARILLO: 
-					casa=partida.getCasillaConNumero(101);
-					break;					
-				case AZUL:
-					casa=partida.getCasillaConNumero(102);
-					break;
-				case ROJO:
-					casa=partida.getCasillaConNumero(103);
-					break;
-				case VERDE:
-					casa=partida.getCasillaConNumero(104);
-					break;
-			}
-			fichaService.moverFichaParchis(ficha, casa, jugador);
-			
-	}
+		}
+		switch (ficha.getColor()) {
+			case AMARILLO:
+				casa = partida.getCasillaConNumero(101);
+				break;
+			case AZUL:
+				casa = partida.getCasillaConNumero(102);
+				break;
+			case ROJO:
+				casa = partida.getCasillaConNumero(103);
+				break;
+			case VERDE:
+				casa = partida.getCasillaConNumero(104);
+				break;
+		}
+		fichaService.moverFichaParchis(ficha, casa, jugador);
 
+	}
 
 	@Transactional
 	public int tirarDado(PartidaParchis partida) {
-		if(partida.getDado()==null){
-			partida.setDado((int)(Math.random()*6 +1));
-			// partida.setDado(1);
+		if (partida.getDado() == null) {
+			// partida.setDado((int)(Math.random()*6 +1));
+			partida.setDado(6);
 			partida.addLog("Ha sacado " + partida.getDado());
 		}
 
@@ -633,11 +684,12 @@ public class PartidaService {
 	}
 
 	@Transactional(readOnly = true)
-	public Optional<PartidaParchis> findParchisByCodigo(Integer codigo){
+	public Optional<PartidaParchis> findParchisByCodigo(Integer codigo) {
 		return this.partidaParchisRepository.findByCodigo(codigo);
 	}
+
 	@Transactional(readOnly = true)
-	public Optional<PartidaOca> findOcaByCodigo(Integer codigo){
+	public Optional<PartidaOca> findOcaByCodigo(Integer codigo) {
 		return this.partidaOcaRepository.findByCodigo(codigo);
 	}
 }
