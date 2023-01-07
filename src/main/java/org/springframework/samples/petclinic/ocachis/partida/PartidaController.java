@@ -215,12 +215,12 @@ public class PartidaController {
 		Collection<Jugador> jugadores = p.getJugadores();
 		Boolean dentro = false;
 		
-		// Crear jugador
+		
 		Usuario u = usuarioService.getLoggedUsuario();
-		Collection<Jugador> jugadoresUsuario = jugadorService.findAllJugadoresForUsuario(u.getId());
-
+		
 		// Detecta si el usuario está en una partida, y si lo está, al tratar de unirse a una sala lo redirigá a la sala o partida en el que ya se encuentra
 		if (estaJugando(u.getId())) {
+			Collection<Jugador> jugadoresUsuario = jugadorService.findAllJugadoresForUsuario(u.getId());
 			for (Jugador j : jugadoresUsuario) {
 			if (j.getPartidaOca() != null && j.getPartidaOca().getEstado() == TipoEstadoPartida.JUGANDO) {
 				var partidaActual = j.getPartidaOca().getId();
@@ -294,8 +294,8 @@ public class PartidaController {
 		Boolean dentro = false;
 		// Crear jugador
 		Usuario u = usuarioService.getLoggedUsuario();
-		Collection<Jugador> jugadoresUsuario = jugadorService.findAllJugadoresForUsuario(u.getId());
 		if (estaJugando(u.getId())) {
+			Collection<Jugador> jugadoresUsuario = jugadorService.findAllJugadoresForUsuario(u.getId());
 			for (Jugador j : jugadoresUsuario) {
 			if (j.getPartidaOca() != null && j.getPartidaOca().getEstado() == TipoEstadoPartida.JUGANDO) {
 				var partidaActual = j.getPartidaOca().getId();
@@ -539,15 +539,37 @@ public class PartidaController {
 	}
 
 	@GetMapping("/oca/{partidaOcaId}/resumen")
-	public String terminadaPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model, HttpServletResponse response){
+	public String terminadaPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model, HttpServletResponse response, RedirectAttributes redirectAttributes){
 		PartidaOca partida = partidaService.findPartidaOcaById(partidaOcaId);
+		
+		if(partida.getEstado()==TipoEstadoPartida.CREADA){
+			redirectAttributes.addFlashAttribute("message", "La partida todavia no ha empezado");
+			return "redirect:/oca/"+partida.getId()+"/espera";
+		}
+		else if(partida.getEstado()==TipoEstadoPartida.JUGANDO){
+			redirectAttributes.addFlashAttribute("message", "La partida se está jugando");
+			return "redirect:/oca/"+partida.getId()+"/jugar";
+		}
+
+
 		model.put("partidaOca", partida);
 		return VIEWS_PARTIDAOCA_TERMINADA;
 	}
 
 	@GetMapping("/parchis/{partidaParchisId}/resumen")
-	public String terminadaPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model, HttpServletResponse response){
+	public String terminadaPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model, HttpServletResponse response, RedirectAttributes redirectAttributes){
 		PartidaParchis partida = partidaService.findPartidaParchisById(partidaParchisId);
+
+	if(partida.getEstado()==TipoEstadoPartida.CREADA){
+			redirectAttributes.addFlashAttribute("message", "La partida todavia no ha empezado");
+			return "redirect:/parchis/"+partida.getId()+"/espera";
+		}
+		else if(partida.getEstado()==TipoEstadoPartida.JUGANDO){
+			redirectAttributes.addFlashAttribute("message", "La partida se está jugando");
+			return "redirect:/parchis/"+partida.getId()+"/jugar";
+		}
+
+
 		model.put("partidaOca", partida);
 		return VIEWS_PARTIDAOCA_TERMINADA;
 	}

@@ -31,10 +31,11 @@ public class UsuarioService {
 	
 	private UsuarioRepository usuarioRepository;
 	private SolicitudRepository solicitudRepository;
-	
+
 	private UserService userService;
 	
 	private AuthoritiesService authoritiesService;
+
 	
 	@Autowired
 	public UsuarioService(UsuarioRepository usuarioRepository, UserService userService, AuthoritiesService authoritiesService,SolicitudRepository solicitudRepository) {
@@ -60,7 +61,12 @@ public class UsuarioService {
 		authoritiesService.saveAuthorities(usuario.getUser().getUsername(), "jugador");
 	}
 
-	
+	@Transactional
+	public void resetearUsuario(Usuario u){
+		u.resetEstadisticas();
+		usuarioRepository.save(u);
+	}
+
 	@Transactional
 	public void updateUsuario(@Valid Usuario usuario) {
 		usuarioRepository.updateUsuario(usuario.getId(), usuario.getNombre(), usuario.getApellido());

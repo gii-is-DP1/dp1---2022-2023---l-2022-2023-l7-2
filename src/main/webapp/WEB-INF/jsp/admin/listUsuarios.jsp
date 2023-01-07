@@ -15,6 +15,7 @@
             <th style="width: 200px;">Nombre</th>
             <th style="width: 120px">Apellido</th>
             <th style="width: 50px"></th>
+            <th style="width: 50px"></th>
         </tr>
         </thead>
         <tbody>
@@ -38,6 +39,14 @@
                     </spring:url>
                     <a href="${fn:escapeXml(usuarioDeleteUrl)}">
                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                </a>
+                </td>
+                <td>
+                    <spring:url value="listUsuarios/{usuarioId}/reset" var="usuarioResetUrl">
+                        <spring:param name="usuarioId" value="${usuario.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(usuarioResetUrl)}">
+                    <span class="glyphicon glyphicon-fire" aria-hidden="true"></span></a>
                 </a>
                 </td>
       
