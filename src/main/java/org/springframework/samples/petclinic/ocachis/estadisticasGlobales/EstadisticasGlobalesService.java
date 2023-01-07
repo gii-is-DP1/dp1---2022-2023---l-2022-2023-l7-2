@@ -32,7 +32,22 @@ public class EstadisticasGlobalesService {
         if(eg==null){
             eg = new EstadisticasGlobales();
             eg.setId(1);
-            eg.setEstadisticasGlobales(new Estadisticas());
+            Estadisticas e = new Estadisticas();
+            e.setParchisPartidasJugadas(repository.getSumaParchisJugadas());
+            e.setParchisDuracionMaxima(repository.getParchisDuracionMaxima());
+            e.setParchisDuracionMedia(repository.getParchisDuracionMedia());
+            e.setParchisDuracionMinima(repository.getParchisDuracionMinima());
+            e.setParchisDuracionTotal(repository.getSumaParchisDuracionTotal());
+            e.setParchisFichasComidas(repository.getSumaParchisFichasComidas());
+
+            e.setOcaPartidasJugadas(repository.getSumaOcaJugadas());
+            e.setOcaDuracionMaxima(repository.getOcaDuracionMaxima());
+            e.setOcaDuracionMedia(repository.getOcaDuracionMedia());
+            e.setOcaDuracionMinima(repository.getOcaDuracionMinima());
+            e.setOcaDuracionTotal(repository.getSumaOcaDuracionTotal());
+            e.setOcaVecesCaidoEnMuerte(repository.getSumaOcaVecesCaidoEnMuerte());
+
+            eg.setEstadisticasGlobales(e);
             eg.setOcaRankingJugadores(usuarioService.Top5OcaPartidasGanadas());
             eg.setOcaVecesCaidoEnMuerte(usuarioService.Top5OcaVecesCaidoEnMuerte());
             eg.setParchisRankingJugadores(usuarioService.Top5ParchisPartidasGanadas());
