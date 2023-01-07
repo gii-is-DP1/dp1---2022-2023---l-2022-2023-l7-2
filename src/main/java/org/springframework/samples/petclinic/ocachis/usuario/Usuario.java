@@ -58,9 +58,14 @@ public class Usuario extends BaseEntity {
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
 
+    public void resetEstadisticas(){
+        estadisticas.resetEstadisticas();
+        this.logros.clear();
+    }
+
     public void actualizarEstadisticasOca(Integer duracion, Boolean esGanador, Integer vecesCaidoEnMuerte) {
         estadisticas.updateEstadisticasOca(duracion, esGanador, vecesCaidoEnMuerte);
-}
+    }
 
     public void actualizarEstadisticasParchis(Integer duracion, Boolean esGanador, Integer fichasComidas) {
         estadisticas.updateEstadisticasParchis(duracion, esGanador, fichasComidas);

@@ -66,6 +66,23 @@ public class Estadisticas{
 		this.ocaDuracionMedia = this.ocaDuracionTotal / this.ocaPartidasJugadas;
 		this.ocaVecesCaidoEnMuerte += vecesCaidoEnMuerte;
 	}
+
+	public void resetEstadisticas(){
+		this.parchisPartidasJugadas = 0;
+		this.parchisPartidasGanadas = 0;
+		this.parchisFichasComidas = 0;
+		this.ocaPartidasJugadas = 0;
+		this.ocaPartidasGanadas = 0;
+		this.ocaVecesCaidoEnMuerte = 0;
+		this.parchisDuracionTotal = 0;
+		this.parchisDuracionMinima = 0;
+		this.parchisDuracionMaxima = 0;
+		this.parchisDuracionMedia = 0;
+		this.ocaDuracionTotal = 0;
+		this.ocaDuracionMinima = 0;
+		this.ocaDuracionMaxima = 0;
+		this.ocaDuracionMedia = 0;
+	}
 	
 	
 
