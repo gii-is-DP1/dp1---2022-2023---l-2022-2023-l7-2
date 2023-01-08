@@ -92,22 +92,7 @@ public class SolicitudController {
 
     }
     
-    @GetMapping(value="/{usuarioId}/perfilAmigo")
-	public String mostrarPefilAmigo(@PathVariable("usuarioId") int usuarioId,Map<String,Object> model){
-
-		Usuario usuarioLoggeado= this.usuarioService.getLoggedUsuario();
-		Usuario amigo = usuarioService.findUsuarioById(usuarioId);
-		if(this.solicitudService.sonAmigos(amigo.getId(),usuarioLoggeado.getId())){
-
-			model.put("usuario",amigo);
-			model.put("now",LocalDateTime.now());
-			return VIEWS_USUARIO_PROFILE;
-
-		}
-        
-		return listarAmigos(null, model);
-		
-	}
+    
 
     
 }

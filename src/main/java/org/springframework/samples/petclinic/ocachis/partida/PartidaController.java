@@ -421,6 +421,7 @@ public class PartidaController {
 			
 		}
 
+
 		if(partida.getEstado()==TipoEstadoPartida.TERMINADA){
 			redirectAttributes.addFlashAttribute("message", "La partida ya ha terminado");
 			return "redirect:/partida/oca/" + partidaOcaId + "/resumen";
@@ -428,11 +429,11 @@ public class PartidaController {
 			redirectAttributes.addFlashAttribute("message", "La partida aun no ha empezado");
 			return "redirect:/partida/oca/" + partidaOcaId + "/espera";
 		}
-
+		response.addHeader("Refresh", REFRESH_SEECONDS);
 		if(j!=null){
 			model.put("modo","jugador");
 			model.put("jugadorAutenticado", j);
-			if(partida.getColorJugadorActual()!=j.getColor()) response.addHeader("Refresh", REFRESH_SEECONDS);
+			if(partida.getColorJugadorActual()==j.getColor()) response.setHeader("Refresh", "30000");
 		}else if(partida.getUsuariosObservadores().contains(u)){
 			model.put("modo","observador");
 		}
@@ -463,17 +464,17 @@ public class PartidaController {
 	//jugar PARCHIS
 	@GetMapping("/parchis/{partidaParchisId}/jugar")
 	public String jugarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model,HttpServletResponse response,RedirectAttributes redirectAttributes,@Param("mensaje") String mensaje){
+		
 		PartidaParchis partida = partidaService.findPartidaParchisById(partidaParchisId);
 		if(partida==null) throw new ResourceNotFoundException("La partida no existe");
 		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorParchis(u.getId(), partida.getId());
+
 		if(mensaje!=null){
 			partida.addMensaje(mensaje,j);
 			this.partidaService.saveParchis(partida);
-			
 		}
 		
-
 		if(partida.getEstado()==TipoEstadoPartida.TERMINADA){
 			redirectAttributes.addFlashAttribute("message", "La partida ya ha terminado");
 			return "redirect:/partida/parchis/" + partidaParchisId + "/resumen";
@@ -483,13 +484,14 @@ public class PartidaController {
 			return "redirect:/partida/parchis/" + partidaParchisId + "/espera";
 		}
 
+		response.addHeader("Refresh", REFRESH_SEECONDS);
+		
 		if(j!=null){
 			model.put("modo","jugador");
 			model.put("jugadorAutenticado", j);
-			if(partida.getColorJugadorActual()!=j.getColor()) response.addHeader("Refresh", REFRESH_SEECONDS);
+			if(partida.getColorJugadorActual()==j.getColor()) response.setHeader("Refresh", "30000");
 		}else if(partida.getUsuariosObservadores().contains(u)){
 			model.put("modo","observador");
-			response.addHeader("Refresh", REFRESH_SEECONDS);
 		}
 		model.put("partidaParchis", partida);
 		//model.put("now", new Date());	
@@ -500,6 +502,7 @@ public class PartidaController {
 	public String tirarDadosPartidaParchis(@ModelAttribute("MoverFichaParchisForm") MoverFichaParchisForm mfpf, @PathVariable("partidaParchisId") int partidaParchisId,
 					 ModelMap model, HttpServletResponse response,  RedirectAttributes redirectAttributes){
 		
+						
 
 		PartidaParchis partida = partidaService.findPartidaParchisById(partidaParchisId);
 		if(partida==null) throw new ResourceNotFoundException("La partida no existe");

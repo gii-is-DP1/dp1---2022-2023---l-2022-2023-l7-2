@@ -47,7 +47,8 @@
                 </td>
 
                 <td>
-                    <c:out value="${partidaParchis.fechaCreacion}"></c:out>
+                    
+                    <c:out value="${partidaParchis.printFechaCreacion()}"></c:out>
                 </td>
 
                 <td>

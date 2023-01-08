@@ -11,35 +11,29 @@
 
 
 <petclinic:layout pageName="game" title="Jugando al parchis">
-    <h5>${partidaParchis.estado}</h5>
-    ${debug}
     <h1>vista: ${modo}</h1>
-    <h1>   El dado ha sacado el numero: ${dado}    </h1>
+    <c:if test="${not empty dado}"><h1> El dado ha sacado el numero: ${dado}</h1></c:if>
     <h1>Es el turno del jugador ${partidaParchis.colorJugadorActual}</h1>
    
-
-    <div id="divAlerta10SecRestantes" class="alert alert-danger" role="alert" style="display:none;">
-      </div>
-<petclinic:parchisBoard tablero="${partidaParchis}" fichasQueSePuedenMover="${fichasQueSePuedenMover}" dado="${dado}" jugadorAutenticado="${jugadorAutenticado}"></petclinic:parchisBoard>
-   
-    <br>
-    Jugador autenticado: ${jugadorAutenticado}
-    <br>
-    colorJugador actual : ${partidaParchis.colorJugadorActual}
-    <br>
-    <br>
-    
-     JUGADORES:<br>
-    <c:forEach items="${partidaParchis.jugadores}" var="jugador">
-        ${jugador.color}<br>
-        <c:forEach items="${jugador.fichasParchis}" var="ficha">
-            &nbsp;&nbsp;&nbsp;&nbsp;-${ficha}<br>
-        </c:forEach>
-        <br>
-    </c:forEach>
-
-
     <c:if test="${jugadorAutenticado.color == partidaParchis.colorJugadorActual }"> 
+    <div id="divAlerta10SecRestantes" class="alert alert-danger" role="alert" style="display:none;"></div>
+    </c:if>
+    
+      <div style="display: flex; flex-wrap: wrap; width: 75vw;">
+        <div style="width: 810px;">
+            <petclinic:parchisBoard tablero="${partidaParchis}" fichasQueSePuedenMover="${fichasQueSePuedenMover}" dado="${dado}" jugadorAutenticado="${jugadorAutenticado}"></petclinic:parchisBoard>
+    
+
+
+        </div>
+        <div style="width: 30%;">
+            <c:forEach items="${partidaParchis.jugadores}" var="jugador">
+                <petclinic:jugador jugador="${jugador}"></petclinic:jugador>
+                <br>
+            </c:forEach>
+            
+            <h3>Tiempo restante: <span id="countdown"></span></h3>
+            <c:if test="${jugadorAutenticado.color == partidaParchis.colorJugadorActual }"> 
         <c:if test="${empty dado}">
         <form:form class="form-horizontal" id="tirar-dado-form"
             method="post" action="/partida/parchis/${partidaParchis.id}/jugar">
@@ -58,8 +52,7 @@
                 </form:form>
             </c:when> 
         <c:otherwise>
-            <c:forEach  items="${fichasQueSePuedenMover}" var="fichaMovible">
-            
+            <c:forEach  items="${fichasQueSePuedenMover}" var="fichaMovible">        
                 <form:form modelAttribute="MoverFichaParchisForm"> 
                     <form:input type="hidden" path="jugadorId" name="jugadorId" value="${jugadorAutenticado.id}"></form:input>
                     <form:input type="hidden" path="fichaId" name="fichaId" value="${fichaMovible.id}"></form:input>
@@ -78,30 +71,58 @@
         
             
     </c:if>
+
+        </div>
+
+    </div>
+    
+    
+
+
     
 
     
+   
+    
+    
+
+    
+    
+
+    <table class="table table-striped">
+        <tr>
+            <td style="width: 50%;">
+                <h1>
+                    <center>Resumen:</center>
+                </h1>
+                ${partidaParchis.printLog()}
+            </td>
+            <td style="width: 50%;">
+                <h1>
+                    <center><h1> <c:out value="Chat"></c:out></h1></center>
+                </h1>
+               
+                
+                <div style="width: 35em;">
+                    <div style="height:100px; overflow:auto">
+                        ${partidaParchis.printChatParchis()}
+                        <spring:url value="/partida/parchis/{partidaParchisId}/jugar"
+                         var="chatParchisUrl">
+                        <spring:param name="partidaParchisId"
+                         value="${partidaParchis.id}" />
+                        </spring:url>
+                    </div>
+                   <form class="form-inline" th:action="@{${fn:escapeXml(chatParchisUrl)}}">
+                            <input type="text" name="mensaje" id="mensaje" th:value="${mensaje}" placeholder="Introduzca mensaje" required>
+                         <input type="submit" class="btn btn-primary mb-2" value="Enviar">
+                        </form>
+                   
+                </div>
+            </td>
+        </tr>
+    </table>
 
 
-    <br>
-    <br>
-    fichasQueSePuedenMover: ${fichasQueSePuedenMover}
-
-    <h1>Resumen:</h1>
-    ${partidaParchis.printLog()}
-    <h2> <c:out value="CHAT"></c:out></h2>
-    ${partidaParchis.printChatParchis()}
-
-    <spring:url value="/partida/parchis/{partidaParchisId}/jugar"
-    var="chatParchisUrl">
-    <spring:param name="partidaParchisId"
-        value="${partidaParchis.id}" />
-       
-</spring:url>
-    <form class="form-inline" th:action="@{${fn:escapeXml(chatParchisUrl)}}">
-        <input type="text" name="mensaje" id="mensaje" th:value="${mensaje}" placeholder="Introduzca mensaje" required>
-     <input type="submit" class="btn btn-primary mb-2" value="Enviar">
-    </form>
 </petclinic:layout>
 
 <div id="fechaHoraUltimoMovimiento" data-fechaHoraUltimoMovimiento="${partidaParchis.getFechaHoraUltimoMovimiento()}"></div>
@@ -125,13 +146,9 @@
         let pasarTurnoFormDOM = document.getElementById("pasarTurnoForm");
         pasarTurnoFormDOM.submit();
     }
-
-
     let fechaHoraUltimoMovimiento = parseInt(document.getElementById("fechaHoraUltimoMovimiento").getAttribute("data-fechaHoraUltimoMovimiento"));
     console.log(fechaHoraUltimoMovimiento);
-
     let now = Date.now();
-   
     console.log(now);
     let tiempoDelTurnoPasado = (now-fechaHoraUltimoMovimiento)/1000 + 3600;
     let tiempoDelTurnoRestante = 30 - tiempoDelTurnoPasado;
@@ -154,6 +171,19 @@
 
 
      }
+
+     var totalTime = parseInt(tiempoDelTurnoRestante);
+    updateClock()
+
+    function updateClock() {
+        document.getElementById('countdown').innerHTML = totalTime;
+        if (totalTime == 0) {
+            console.log('Final');
+        } else {
+            totalTime -= 1;
+            setTimeout("updateClock()", 1000);
+        }
+    }
      
 
 </script>

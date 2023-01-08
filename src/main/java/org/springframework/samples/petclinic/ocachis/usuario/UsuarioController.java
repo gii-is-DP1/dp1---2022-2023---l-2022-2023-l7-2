@@ -125,11 +125,19 @@ public class UsuarioController {
 	@GetMapping(value="/{usuarioId}/perfil")
 	public String mostrarPerfil(@PathVariable("usuarioId") int usuarioId, Map<String, Object> model){
 		Usuario u = usuarioService.findUsuarioById(usuarioId);
+		Usuario usuarioLogeado = this.usuarioService.getLoggedUsuario();
+		if(!(usuarioId==usuarioLogeado.getId() || this.solicitudService.sonAmigos(usuarioId, usuarioLogeado.getId())))
+		return "redirect:/noAccess";
+
+
+
 		model.put("usuario",u);
 		model.put("now",LocalDateTime.now());
+	
 		return VIEWS_USUARIO_PROFILE;
+			
+			
 	}
 
-	
 
 }

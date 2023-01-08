@@ -48,7 +48,7 @@
                 </td>
 
                 <td>
-                    <c:out value="${partidaOca.fechaCreacion}"></c:out>
+                    <c:out value="${partidaOca.printFechaCreacion()}"></c:out>
                 </td>
                 
                 <td>

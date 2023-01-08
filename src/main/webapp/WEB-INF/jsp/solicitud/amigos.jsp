@@ -89,7 +89,7 @@
                     </c:if>
                 </td>
                 <td>
-                    <spring:url value="/usuarios/{usuarioId}/perfilAmigo" var="perfilAmigoUrl">
+                    <spring:url value="/usuarios/{usuarioId}/perfil" var="perfilAmigoUrl">
                         <spring:param name="usuarioId" value="${amigo.key.id}"/>
                         </spring:url>
                         <a href="${fn:escapeXml(perfilAmigoUrl)}" class="btn btn-default">Ver Perfil</a>
