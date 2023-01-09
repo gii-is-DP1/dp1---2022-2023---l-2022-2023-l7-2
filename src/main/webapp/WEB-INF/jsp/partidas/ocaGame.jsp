@@ -107,53 +107,42 @@
                                                 </td>
                                             </tr>
                                         </table>
-
-
-
-                                        <c:if test="${jugadorAutenticado.color == partidaOca.colorJugadorActual}">
-                                            <form id="pasarTurnoForm" method="post"
-                                                action="/partida/oca/${partidaOca.id}/jugar">
-                                                <input type="hidden" name="${_csrf.parameterName}"
-                                                    value="${_csrf.token}" />
-                                            </form>
-                                        </c:if>
-
                                         <script>
-
-
-                                            function pasarTurno() {
-                                                let pasarTurnoFormDOM = document.getElementById("pasarTurnoForm");
-                                                pasarTurnoFormDOM.submit();
-                                            }
-
 
                                             let fechaHoraUltimoMovimiento = parseInt(document.getElementById("fechaHoraUltimoMovimiento").getAttribute("data-fechaHoraUltimoMovimiento"));
                                             console.log(fechaHoraUltimoMovimiento);
 
                                             let now = Date.now();
-
                                             console.log(now);
                                             let tiempoDelTurnoPasado = (now - fechaHoraUltimoMovimiento) / 1000 + 3600;
                                             let tiempoDelTurnoRestante = 30 - tiempoDelTurnoPasado;
                                             let tiempoDelTurnoRestanteMillis = tiempoDelTurnoRestante * 1000;
 
                                             if (tiempoDelTurnoRestanteMillis > 0) {
-                                                setTimeout(pasarTurno, tiempoDelTurnoRestanteMillis);
-
+                                                setTimeout(function(){location.reload();},tiempoDelTurnoRestanteMillis);
                                                 if (tiempoDelTurnoRestanteMillis > 10000) {
-                                                    setTimeout(function () {
+                                                    try{
+                                                        setTimeout(function () {
                                                         document.getElementById("divAlerta10SecRestantes").innerText = "Le quedan 10 segundos. Si no juega se pasará su turno";
                                                         document.getElementById("divAlerta10SecRestantes").style.display = "block";
 
                                                     }, tiempoDelTurnoRestanteMillis - 10000);
+                                                    }catch(error){
+                                                        console.error(error);
+                                                    }   
+                                                   
                                                 } else {
-                                                    document.getElementById("divAlerta10SecRestantes").innerText = "Le quedan menos de 10 segundos. Si no juega se pasará su turno";
-                                                    document.getElementById("divAlerta10SecRestantes").style.display = "block";
+                                                    try{
+                                                        document.getElementById("divAlerta10SecRestantes").innerText = "Le quedan menos de 10 segundos. Si no juega se pasará su turno";
+                                                        document.getElementById("divAlerta10SecRestantes").style.display = "block";
+                                                    }catch(error){
+                                                        console.error(error);
+                                                    }
                                                 }
                                             }
 
                                             var totalTime = parseInt(tiempoDelTurnoRestante);
-                                            updateClock()
+                                            updateClock();
 
                                             function updateClock() {
                                                 document.getElementById('countdown').innerHTML = totalTime;
@@ -164,8 +153,5 @@
                                                     setTimeout("updateClock()", 1000);
                                                 }
                                             }
-
-
-
                                         </script>
                                     </petclinic:layout>

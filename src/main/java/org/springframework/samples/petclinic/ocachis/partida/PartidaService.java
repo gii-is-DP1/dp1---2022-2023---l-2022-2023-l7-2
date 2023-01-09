@@ -40,6 +40,8 @@ public class PartidaService {
 	private LogroService logroService;
 	private EstadisticasGlobalesService estadisticasGlobalesService;
 
+	private static final Integer DURACION_TURNO_MILIS = 30000;
+
 	@Autowired
 	public PartidaService(PartidaOcaRepository partidaOcaRepository, PartidaParchisRepository partidaParchisRepository,
 			FichaService fichaService, CasillaService casillaService, JugadorService jugadorService,
@@ -269,7 +271,7 @@ public class PartidaService {
 
 	}
 
-	public void pasarTurno(PartidaOca partida) {
+	public void pasarTurnoOca(PartidaOca partida) {
 		switch (partida.getColorJugadorActual()) {
 			case ROJO:
 				partida.setColorJugadorActual(Color.AMARILLO);
@@ -307,7 +309,7 @@ public class PartidaService {
 			else
 				partida.addLog("Al jugador " + j.getColor() + " le quedan " + j.getNumTurnosBloqueadoRestantesOca()
 						+ " turnos bloqueados");
-			pasarTurno(partida);
+				pasarTurnoOca(partida);
 			return;
 		}
 
@@ -399,7 +401,7 @@ public class PartidaService {
 		}
 
 		if (!volverATirar) {
-			pasarTurno(partida);
+			pasarTurnoOca(partida);
 		}
 	}
 
@@ -422,7 +424,7 @@ public class PartidaService {
 
 	public int TirarNumDado() {
 		int numDado = (int) (Math.random() * 6 + 1);
-		numDado = 1;
+		//numDado = 1;
 		return numDado;
 	}
 
@@ -675,8 +677,8 @@ public class PartidaService {
 	@Transactional
 	public int tirarDado(PartidaParchis partida) {
 		if (partida.getDado() == null) {
-			// partida.setDado((int)(Math.random()*6 +1));
-			partida.setDado(6);
+			partida.setDado((int)(Math.random()*6 +1));
+			//partida.setDado(6);
 			partida.addLog("Ha sacado " + partida.getDado());
 		}
 
@@ -691,5 +693,54 @@ public class PartidaService {
 	@Transactional(readOnly = true)
 	public Optional<PartidaOca> findOcaByCodigo(Integer codigo) {
 		return this.partidaOcaRepository.findByCodigo(codigo);
+	}
+
+	@Transactional
+    public void checkIntegridadPartidaParchis(PartidaParchis partida) {
+		Long now = 	LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli();
+		Long ultimoMov = partida.getFechaHoraUltimoMovimiento();
+		if(ultimoMov == null){
+			ultimoMov = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli();
+		}
+		Long diferencia = now-ultimoMov;
+		if(diferencia>DURACION_TURNO_MILIS){
+			partida.setFechaHoraUltimoMovimiento(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
+			partida.addLog("Ha perdido el turno por inactividad");
+			partida.pasarTurno();
+			
+		}
+    	
+	}
+
+	@Transactional
+    public void checkIntegridadPartidaOca(PartidaOca partida) {
+		Long now = 	LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli();
+		Long ultimoMov = partida.getFechaHoraUltimoMovimiento();
+		if(ultimoMov == null){
+			ultimoMov = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli();
+		}
+		Long diferencia = now-ultimoMov;
+		if(diferencia>DURACION_TURNO_MILIS){
+			partida.setFechaHoraUltimoMovimiento(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
+			partida.addLog("Ha perdido el turno por inactividad");
+			pasarTurnoOca(partida);
+		}
+	}
+
+
+	@Transactional 
+	public void iniciarPartidaOca(PartidaOca partidaOca){
+		partidaOca.setEstado(TipoEstadoPartida.JUGANDO);
+		partidaOca.setFechaCreacion(LocalDateTime.now());
+		partidaOca.setFechaHoraUltimoMovimiento(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
+		this.saveOca(partidaOca);
+	}
+
+	@Transactional 
+	public void iniciarPartidaParchis(PartidaParchis partida){
+		partida.setEstado(TipoEstadoPartida.JUGANDO);
+		partida.setFechaCreacion(LocalDateTime.now());
+		partida.setFechaHoraUltimoMovimiento(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
+		this.saveParchis(partida);
 	}
 }

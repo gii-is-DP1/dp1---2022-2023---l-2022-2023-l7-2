@@ -358,10 +358,7 @@ public class PartidaController {
 	public String initEmpezarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model, HttpServletResponse response) {
 		PartidaOca partidaOca = partidaService.findPartidaOcaById(partidaOcaId);
 		if(partidaOca==null) throw new ResourceNotFoundException("La partida no existe");
-		
-		partidaOca.setEstado(TipoEstadoPartida.JUGANDO);
-		partidaOca.setFechaCreacion(LocalDateTime.now());
-		partidaService.saveOca(partidaOca);
+		this.partidaService.iniciarPartidaOca(partidaOca);
 		return "redirect:/partida/oca/" + partidaOcaId + "/jugar";
 	}
 	
@@ -369,11 +366,8 @@ public class PartidaController {
 	public String initEmpezarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model) {
 		PartidaParchis partidaParchis = partidaService.findPartidaParchisById(partidaParchisId);
 		if(partidaParchis==null) throw new ResourceNotFoundException("La partida no existe");
-
+		partidaService.iniciarPartidaParchis(partidaParchis);
 		model.put("partidaParchis", partidaParchis);
-		partidaParchis.setEstado(TipoEstadoPartida.JUGANDO);
-		partidaParchis.setFechaCreacion(LocalDateTime.now());
-		partidaService.saveParchis(partidaParchis);
 		return "redirect:/partida/parchis/{partidaParchisId}/jugar";
 	}
 
@@ -411,14 +405,13 @@ public class PartidaController {
 		
 		PartidaOca partida = partidaService.findPartidaOcaById(partidaOcaId);
 		if(partida==null) throw new ResourceNotFoundException("La partida no existe");
+		partidaService.checkIntegridadPartidaOca(partida);
 
 		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorOca(u.getId(), partida.getId());
-
 		if(mensaje!=null){
 			partida.addMensaje(mensaje,j);
 			this.partidaService.saveOca(partida);
-			
 		}
 
 
@@ -467,6 +460,9 @@ public class PartidaController {
 		
 		PartidaParchis partida = partidaService.findPartidaParchisById(partidaParchisId);
 		if(partida==null) throw new ResourceNotFoundException("La partida no existe");
+
+		partidaService.checkIntegridadPartidaParchis(partida);
+
 		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorParchis(u.getId(), partida.getId());
 

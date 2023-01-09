@@ -16,7 +16,7 @@
     <h1>Es el turno del jugador ${partidaParchis.colorJugadorActual}</h1>
    
     <c:if test="${jugadorAutenticado.color == partidaParchis.colorJugadorActual }"> 
-    <div id="divAlerta10SecRestantes" class="alert alert-danger" role="alert" style="display:none;"></div>
+        <div id="divAlerta10SecRestantes" class="alert alert-danger" role="alert" style="display:none;"></div>
     </c:if>
     
       <div style="display: flex; flex-wrap: wrap; width: 75vw;">
@@ -127,58 +127,46 @@
 
 <div id="fechaHoraUltimoMovimiento" data-fechaHoraUltimoMovimiento="${partidaParchis.getFechaHoraUltimoMovimiento()}"></div>
     
-<c:if test="${jugadorAutenticado.color == partidaParchis.colorJugadorActual}">
-        <form id="pasarTurnoForm" modelAttribute="MoverFichaParchisForm"
-                method="POST" action="/partida/parchis/${partidaParchis.id}/jugar">
-            <input type="hidden" name="jugadorId" value="${jugadorAutenticado.id}">
-            <input type="hidden" name="fichaId" value="-1">
-            <input type="hidden" name="dado" value="1">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-    </form>
 
-
-</c:if>
 
 <script>
 
 
-    function pasarTurno(){
-        let pasarTurnoFormDOM = document.getElementById("pasarTurnoForm");
-        pasarTurnoFormDOM.submit();
-    }
+  
     let fechaHoraUltimoMovimiento = parseInt(document.getElementById("fechaHoraUltimoMovimiento").getAttribute("data-fechaHoraUltimoMovimiento"));
     console.log(fechaHoraUltimoMovimiento);
     let now = Date.now();
     console.log(now);
     let tiempoDelTurnoPasado = (now-fechaHoraUltimoMovimiento)/1000 + 3600;
     let tiempoDelTurnoRestante = 30 - tiempoDelTurnoPasado;
-    console.log("tiempoRestante: " +tiempoDelTurnoRestante);
     let tiempoDelTurnoRestanteMillis = tiempoDelTurnoRestante*1000;
-    console.log("tiempoDelTurnoRestanteMillis: " + tiempoDelTurnoRestanteMillis);
-     if(tiempoDelTurnoRestanteMillis>0){
-        setTimeout(pasarTurno, tiempoDelTurnoRestanteMillis);   
-        
+    if(tiempoDelTurnoRestanteMillis>0){ 
+            setTimeout(function(){location.reload();},tiempoDelTurnoRestanteMillis);
         if(tiempoDelTurnoRestanteMillis>10000){
-        setTimeout(function(){
-                document.getElementById("divAlerta10SecRestantes").innerText="Le quedan 10 segundos. Si no juega se pasará su turno";
-                document.getElementById("divAlerta10SecRestantes").style.display="block";
+            try {
+                setTimeout(function(){
+                    document.getElementById("divAlerta10SecRestantes").innerText="Le quedan 10 segundos. Si no juega se pasará su turno";
+                    document.getElementById("divAlerta10SecRestantes").style.display="block";
+                }, tiempoDelTurnoRestanteMillis - 10000);    
+            } catch (error) {
+                    console.error(error);
+                }
+        }else{
+                try {
+                    document.getElementById("divAlerta10SecRestantes").innerText="Le quedan menos de 10 segundos. Si no juega se pasará su turno";
+                    document.getElementById("divAlerta10SecRestantes").style.display="block";
+                } catch (error) {
+                    console.error(error);
+                }
+        }
+    }
 
-            }, tiempoDelTurnoRestanteMillis - 10000);    
-     }else{
-        document.getElementById("divAlerta10SecRestantes").innerText="Le quedan menos de 10 segundos. Si no juega se pasará su turno";
-                document.getElementById("divAlerta10SecRestantes").style.display="block";
-     }
-
-
-     }
-
-     var totalTime = parseInt(tiempoDelTurnoRestante);
+    var totalTime = parseInt(tiempoDelTurnoRestante);
+    console.log("totalTime: " + totalTime);
     updateClock()
-
     function updateClock() {
-        document.getElementById('countdown').innerHTML = totalTime;
+        document.getElementById('countdown').innerText = totalTime;
         if (totalTime == 0) {
-            console.log('Final');
         } else {
             totalTime -= 1;
             setTimeout("updateClock()", 1000);
@@ -186,4 +174,4 @@
     }
      
 
-</script>
+</script> 
