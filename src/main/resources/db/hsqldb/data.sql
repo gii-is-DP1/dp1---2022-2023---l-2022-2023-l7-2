@@ -120,25 +120,25 @@ INSERT INTO users(username,password,enabled) VALUES ('Pablo','aaa',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (13,'Pablo','jugador');
 INSERT INTO usuarios(id,nombre,apellido,username) VALUES(4,'Pablo','Kratzer','Pablo');
 
-INSERT INTO users(username,password,enabled) VALUES ('usuario2','usuario2',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (14,'usuario2','jugador');
-INSERT INTO usuarios(id,nombre,apellido,username) VALUES (5,'Pepe','Gonzalez','usuario2');
+INSERT INTO users(username,password,enabled) VALUES ('Gonzalez','usuario2',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (14,'Gonzalez','jugador');
+INSERT INTO usuarios(id,nombre,apellido,username) VALUES (5,'Pepe','Gonzalez','Gonzalez');
 
-INSERT INTO users(username,password,enabled) VALUES ('usuario3','usuario3',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (15,'usuario3','jugador');
-INSERT INTO usuarios(id,nombre,apellido,username) VALUES (6,'Maria','Gonzalez','usuario3');
+INSERT INTO users(username,password,enabled) VALUES ('Maria','usuario3',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (15,'Maria','jugador');
+INSERT INTO usuarios(id,nombre,apellido,username) VALUES (6,'Maria','Gonzalez','Maria');
 
-INSERT INTO users(username,password,enabled) VALUES ('usuario4','usuario4',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (16,'usuario4','jugador');
-INSERT INTO usuarios(id,nombre,apellido,username) VALUES(7,'Juan','Mendoza','usuario4');
+INSERT INTO users(username,password,enabled) VALUES ('Juan','usuario4',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (16,'Juan','jugador');
+INSERT INTO usuarios(id,nombre,apellido,username) VALUES(7,'Juan','Mendoza','Juan');
 
-INSERT INTO users(username,password,enabled) VALUES ('usuario5','usuario5',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (17,'usuario5','jugador');
-INSERT INTO usuarios(id,nombre,apellido,username) VALUES(8,'Marina','Blanco','usuario5');
+INSERT INTO users(username,password,enabled) VALUES ('Marina','usuario5',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (17,'Marina','jugador');
+INSERT INTO usuarios(id,nombre,apellido,username) VALUES(8,'Marina','Blanco','Marina');
 
-INSERT INTO users(username,password,enabled) VALUES ('usuario6','usuario6',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (18,'usuario6','jugador');
-INSERT INTO usuarios(id,nombre,apellido,username) VALUES(9,'Miguel','Farnes','usuario6');
+INSERT INTO users(username,password,enabled) VALUES ('Miguel','usuario6',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (18,'Miguel','jugador');
+INSERT INTO usuarios(id,nombre,apellido,username) VALUES(9,'Miguel','Farnes','Miguel');
 
 INSERT INTO users(username,password,enabled) VALUES ('aaaaa','aaaaa',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (19,'aaaaa','jugador');
@@ -167,16 +167,21 @@ INSERT INTO logro(id,nombre,descripcion, parchis_partidas_jugadas) VALUES (3,'Tu
 INSERT INTO logro(id,nombre,descripcion, oca_partidas_jugadas) VALUES (4,'Tu primerita partida oca','Juega tu primera partida de la Oca',1);
 
 INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, color_jugador_actual) VALUES
-(1, 100, 3, 0, '2022-12-05', 3, 0),
-(2, 101, 4, 0, '2013-12-02', 2, 0),
-(3, 102, 4, 0, '2023-12-16', 4, 0);
+(1, 100, 3, 2, '2022-12-05', 3, 0),
+(2, 101, 4, 2, '2013-12-02', 2, 0),
+(3, 102, 4, 0, '2023-01-10', 4, 0),
+(4, 109, 4, 2, '2023-01-10', 2, 0),
+(5, 110, 4, 2, '2023-01-10', 2, 0),
+(6, 111, 4, 2, '2023-01-10', 2, 0);
 
 
 INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, color_jugador_actual, dado, tirada, veces_sacado6,	ULTIMO_SACADO6) VALUES
 (1, 103, 5, 1, '2022-12-25', 4, 1, null, 0, 0, 0),
 (2, 104, 5, 2, '2022-12-24', 4, 0, null, 0, 0, 0),
-(3, 105, 0, 0, '2022-12-23', 2, 0, null, 0, 0, 0),
-(4, 106, 0, 0, '2022-12-22', 2, 0, null, 0, 0, 0);
+(3, 105, 10, 2, '2022-12-23', 3, 0, null, 0, 0, 0),
+(4, 106, 20, 2, '2022-12-22', 2, 0, null, 0, 0, 0),
+(5, 107, 7, 2, '2022-12-22', 2, 0, null, 0, 0, 0),
+(6, 108, 8, 2, '2022-12-22', 2, 0, null, 0, 0, 0);
 
 
 
@@ -197,14 +202,46 @@ INSERT INTO ficha_oca(id, color, casilla_actual_id) VALUES (2, 1, 1);
 
 
 INSERT INTO jugador(id, color, es_ganador, fichas_comidas, veces_caido_en_muerte, ficha_oca_id, partida_oca_id, partida_parchis_id, usuario_id, num_turnos_bloqueado_restantes_oca) VALUES
+--JUGADORES OCA PARTIDA 3 (ACTUAL)
 ( 6, 0, FALSE, 0, 0, 1, 3, null, 3, 0),
 ( 7, 1, FALSE, 0, 0, 2, 3, null, 4, 0),
--- (12, 2, FALSE, 0, 0, 3, 3, null, 8,0),
--- (13, 3, FALSE, 0, 0, 4, 3, null, 9,0),
+--JUGADORES OCA PARTIDA 1
+( 24, 0, TRUE, 0, 0, null, 1, null, 3, 0),
+( 25, 1, FALSE, 0, 0, null, 1, null, 4, 0),
+( 26, 2, FALSE, 0, 0, null, 1, null, 7, 0),
+--JUGADORES OCA PARTIDA 2
+( 27, 0, TRUE, 0, 0, null, 2, null, 6, 0),
+( 28, 1, FALSE, 0, 0, null, 2, null, 9, 0),
+--JUGADORES OCA PARTIDA 4
+( 29, 0, TRUE, 0, 0, null, 4, null, 5, 0),
+( 30, 1, FALSE, 0, 0, null, 4, null, 8, 0),
+--JUGADORES OCA PARTIDA 5
+( 31, 0, TRUE, 0, 0, null, 5, null, 6, 0),
+( 32, 1, FALSE, 0, 0, null, 5, null, 2, 0),
+--JUGADORES OCA PARTIDA 6
+( 33, 0, TRUE, 0, 0, null, 6, null, 10, 0),
+( 34, 1, FALSE, 0, 0, null, 6, null, 7, 0),
+--JUGADORES PARCHIS PARTIDA 1 (ACTUAL)
 ( 8, 0, FALSE, 0, 0, null, null, 1, 1,0),
 ( 9, 1, FALSE, 0, 0, null, null, 1, 2,0),
--- (10, 2, FALSE, 0, 0, null, null, 1, 3,0),
-(11, 3, FALSE, 0, 0, null, null, 2, 4,0);
+--JUGADORES PARCHIS PARTIDA 2
+(11, 0, TRUE, 0, 0, null, null, 2, 4,0),
+(12, 1, FALSE, 0, 0, null, null, 2, 7,0),
+(13, 2, FALSE, 0, 0, null, null, 2, 8,0),
+(14, 3, FALSE, 0, 0, null, null, 2, 10,0),
+--JUGADORES PARCHIS PARTIDA 3
+(15, 0, FALSE, 0, 0, null, null, 3, 8,0),
+(16, 1, TRUE, 0, 0, null, null, 3, 7,0),
+(17, 2, FALSE, 0, 0, null, null, 3, 1,0),
+--JUGADORES PARCHIS PARTIDA 4
+(18, 0, FALSE, 0, 0, null, null, 4, 9,0),
+(19, 1, TRUE, 0, 0, null, null, 4, 6,0),
+--JUGADORES PARCHIS PARTIDA 5
+(20, 0, FALSE, 0, 0, null, null, 5, 5,0),
+(21, 1, TRUE, 0, 0, null, null, 5, 7,0),
+--JUGADORES PARCHIS PARTIDA 6
+(22, 0, FALSE, 0, 0, null, null, 6, 8,0),
+(23, 1, TRUE, 0, 0, null, null, 6, 4,0);
 
 -- usuario 1 espectea partida 3(oca)
 INSERT INTO PARTIDA_OCA_USUARIOS_OBSERVADORES VALUES(3,1);
@@ -390,6 +427,9 @@ PARCHIS_FICHAS_COMIDAS = 0,
 PARCHIS_PARTIDAS_GANADAS = 0, 
 PARCHIS_PARTIDAS_JUGADAS = 0;
 
+
+-- Updates para estadisticas globales usuario 3,4,10,7,8
+-- Update Pepe
 UPDATE usuarios 
 SET OCA_DURACION_MAXIMA = 10,
 OCA_DURACION_MEDIA = 6,
@@ -405,5 +445,73 @@ PARCHIS_DURACION_TOTAL = 250,
 PARCHIS_FICHAS_COMIDAS = 6, 
 PARCHIS_PARTIDAS_GANADAS = 1, 
 PARCHIS_PARTIDAS_JUGADAS = 10 WHERE id = 3;
+
+--Update Pablo
+UPDATE usuarios 
+SET OCA_DURACION_MAXIMA = 12,
+OCA_DURACION_MEDIA = 8,
+OCA_DURACION_MINIMA = 5,
+OCA_DURACION_TOTAL = 80, 
+OCA_PARTIDAS_GANADAS = 5,
+OCA_PARTIDAS_JUGADAS = 10,
+OCA_VECES_CAIDO_EN_MUERTE = 1,
+PARCHIS_DURACION_MAXIMA = 40, 
+PARCHIS_DURACION_MEDIA = 30, 
+PARCHIS_DURACION_MINIMA = 8,
+PARCHIS_DURACION_TOTAL = 300, 
+PARCHIS_FICHAS_COMIDAS = 10, 
+PARCHIS_PARTIDAS_GANADAS = 4, 
+PARCHIS_PARTIDAS_JUGADAS = 10 WHERE id = 4;
+
+--Update aaaaa
+UPDATE usuarios 
+SET OCA_DURACION_MAXIMA = 12,
+OCA_DURACION_MEDIA = 8,
+OCA_DURACION_MINIMA = 5,
+OCA_DURACION_TOTAL = 80, 
+OCA_PARTIDAS_GANADAS = 1,
+OCA_PARTIDAS_JUGADAS = 10,
+OCA_VECES_CAIDO_EN_MUERTE = 9,
+PARCHIS_DURACION_MAXIMA = 40, 
+PARCHIS_DURACION_MEDIA = 30, 
+PARCHIS_DURACION_MINIMA = 8,
+PARCHIS_DURACION_TOTAL = 300, 
+PARCHIS_FICHAS_COMIDAS = 2, 
+PARCHIS_PARTIDAS_GANADAS = 2, 
+PARCHIS_PARTIDAS_JUGADAS = 10 WHERE id = 10;
+
+--Update Juan
+UPDATE usuarios 
+SET OCA_DURACION_MAXIMA = 12,
+OCA_DURACION_MEDIA = 8,
+OCA_DURACION_MINIMA = 5,
+OCA_DURACION_TOTAL = 80, 
+OCA_PARTIDAS_GANADAS = 3,
+OCA_PARTIDAS_JUGADAS = 10,
+OCA_VECES_CAIDO_EN_MUERTE = 3,
+PARCHIS_DURACION_MAXIMA = 40, 
+PARCHIS_DURACION_MEDIA = 30, 
+PARCHIS_DURACION_MINIMA = 8,
+PARCHIS_DURACION_TOTAL = 300, 
+PARCHIS_FICHAS_COMIDAS = 5, 
+PARCHIS_PARTIDAS_GANADAS = 6, 
+PARCHIS_PARTIDAS_JUGADAS = 10 WHERE id = 7;
+
+--Update Marina
+UPDATE usuarios 
+SET OCA_DURACION_MAXIMA = 12,
+OCA_DURACION_MEDIA = 8,
+OCA_DURACION_MINIMA = 5,
+OCA_DURACION_TOTAL = 80, 
+OCA_PARTIDAS_GANADAS = 2,
+OCA_PARTIDAS_JUGADAS = 10,
+OCA_VECES_CAIDO_EN_MUERTE = 2,
+PARCHIS_DURACION_MAXIMA = 40, 
+PARCHIS_DURACION_MEDIA = 30, 
+PARCHIS_DURACION_MINIMA = 8,
+PARCHIS_DURACION_TOTAL = 300, 
+PARCHIS_FICHAS_COMIDAS = 17, 
+PARCHIS_PARTIDAS_GANADAS = 10, 
+PARCHIS_PARTIDAS_JUGADAS = 10 WHERE id = 8;
 
 INSERT INTO usuarios_logros(usuario_id,logros_id) VALUES (3,1),(3,3),(3,4)
