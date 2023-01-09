@@ -38,6 +38,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/session/**").permitAll()
 				.antMatchers("/noAccess").permitAll()
 
+				.antMatchers("/partida/redireccion").authenticated()
+
 				.antMatchers("/solicitud/**").permitAll()
 				.antMatchers("/usuarios/**/perfilAmigo").permitAll()
 				

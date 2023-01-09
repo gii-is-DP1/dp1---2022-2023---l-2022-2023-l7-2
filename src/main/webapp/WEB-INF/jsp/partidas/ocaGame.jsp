@@ -11,8 +11,8 @@
 
                                     <petclinic:layout pageName="game" title="Jugando a la Oca">
 
-                                        <h3>vista: ${modo}</h3>
-                                        <h1>Es el turno del jugador ${partidaOca.colorJugadorActual}</h1>
+                                        <h3>vista:<c:out value="${modo}"></c:out></h3>
+                                        <h1>Es el turno del jugador <c:out value="${partidaOca.colorJugadorActual}"></c:out></h1>
 
                                         <c:if test="${jugadorAutenticado.color == partidaOca.colorJugadorActual}">
                                             <div id="divAlerta10SecRestantes" class="alert alert-danger" role="alert" style="display:none;"></div>
@@ -85,7 +85,7 @@
                                                     </h1>
                                                     <div style="width: 35em;">
                                                         <div style="height:100px; overflow:auto">
-                                                            ${partidaOca.printChatOca()}
+                                                            ${partidaOca.printChatOca()} 
                                                         </div>
                                                         <spring:url value="/partida/oca/{partidaOcaId}/jugar"
                                                             var="chatOcaUrl">

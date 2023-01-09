@@ -25,6 +25,7 @@ import org.springframework.samples.petclinic.ocachis.ficha.FichaService;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.jugador.JugadorService;
 import org.springframework.samples.petclinic.ocachis.logro.LogroService;
+import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
@@ -743,6 +744,40 @@ public class PartidaService {
 		partida.setFechaHoraUltimoMovimiento(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
 		this.saveParchis(partida);
 	}
-
+	public String redirigirPartida(Usuario usuario){
+		Collection<Jugador> jugadoresUsuario = jugadorService.findAllJugadoresForUsuario(usuario.getId());
+		String redireccion = "";
+			for (Jugador jugador : jugadoresUsuario) {
+			if (jugador.getPartidaOca() != null && jugador.getPartidaOca().getEstado() == TipoEstadoPartida.JUGANDO) {
+				var partidaActual = jugador.getPartidaOca().getId();
+				
+				redireccion=  "redirect:/partida/oca/" + partidaActual + "/jugar";
+			} else if (jugador.getPartidaOca() != null && jugador.getPartidaOca().getEstado() == TipoEstadoPartida.CREADA) {
+				var partidaActual = jugador.getPartidaOca().getId();
+				
+				redireccion=  "redirect:/partida/oca/" + partidaActual + "/espera";
+			} else if (jugador.getPartidaParchis() != null && (jugador.getPartidaParchis().getEstado() == TipoEstadoPartida.JUGANDO)) {
+				var partidaActual = jugador.getPartidaParchis().getId();
+				
+				redireccion=  "redirect:/partida/parchis/" + partidaActual + "/jugar";
+			} else if (jugador.getPartidaParchis() != null && (jugador.getPartidaParchis().getEstado() == TipoEstadoPartida.CREADA)) {
+				var partidaActual = jugador.getPartidaParchis().getId();
+				
+				redireccion=  "redirect:/partida/parchis" + partidaActual + "/espera";
+			}}
+			return redireccion;
+	}
+	@Transactional
+	public String enviarMensajeOca (PartidaOca partida,String mensaje, Jugador jugador){
+		partida.addMensaje(mensaje,jugador);
+		this.saveOca(partida);
+		return "redirect:/partida/oca/"+partida.getId()+"/jugar";
+	}
+	@Transactional
+	public String enviarMensajeParchis(PartidaParchis partida,String mensaje, Jugador jugador){
+		partida.addMensaje(mensaje,jugador);
+		this.saveParchis(partida);
+		return "redirect:/partida/parchis/"+partida.getId()+"/jugar";
+	}
 	
 }

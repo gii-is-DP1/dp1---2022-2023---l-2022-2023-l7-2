@@ -78,7 +78,12 @@
         </spring:url>
         <a href="${fn:escapeXml(enlaceSiguiente)}" class="btn btn-default">Siguiente</a>
     </c:if>
-    
+    <c:if test="${enPartida}">
+        <spring:url value="/partida/redireccion" var="redireccionUrl">
+          
+            </spring:url>
+            <a href="${fn:escapeXml(redireccionUrl)}" class="btn btn-default">Volver Partida</a>
+        </c:if>
     
     
 </petclinic:layout>
