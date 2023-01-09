@@ -13,8 +13,8 @@ PetClinic :: a Spring Framework demonstration
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags --%>
 
-    <spring:url value="/resources/images/favicon2.png" var="favicon"/>
-    <link rel="shortcut icon" type="image/x-icon" href="${favicon}">
+    <spring:url value="/resources/images/favicon.ico" var="favicon"/>
+    <link rel="icon" type="image/x-icon" href="${favicon}">
 
 	<c:if test="${not empty title}"><title>${title}</title></c:if>
 	<c:if test="${empty title}"><title>Ocachis</title></c:if>
