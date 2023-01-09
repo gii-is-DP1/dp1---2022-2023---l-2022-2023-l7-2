@@ -743,4 +743,6 @@ public class PartidaService {
 		partida.setFechaHoraUltimoMovimiento(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
 		this.saveParchis(partida);
 	}
+
+	
 }

@@ -72,19 +72,7 @@ public class PartidaController {
 
 
 
-	private Boolean estaJugando(Integer usuarioId) {
-		Collection<Jugador> jugadores = jugadorService.findAllJugadoresForUsuario(usuarioId);
-		for (Jugador j : jugadores) {
-			if (j.getPartidaOca() != null && (j.getPartidaOca().getEstado() == TipoEstadoPartida.JUGANDO
-					|| j.getPartidaOca().getEstado() == TipoEstadoPartida.CREADA)) {
-					return true;
-			} else if (j.getPartidaParchis() != null && (j.getPartidaParchis().getEstado() == TipoEstadoPartida.CREADA
-					|| j.getPartidaParchis().getEstado() == TipoEstadoPartida.JUGANDO)) {
-					return true;
-			}
-		}
-		return false;
-	}
+	
 
 	
 	//lista de salas
@@ -164,7 +152,7 @@ public class PartidaController {
 		Usuario u = usuarioService.getLoggedUsuario();
 		Jugador jugador = null;
 		
-		if (estaJugando(u.getId())) {
+		if (this.jugadorService.estaJugando(u.getId())) {
 			model.put("message", "Estas jugando ya en una partida");
 			return CREATE_SALAS;
 		}
@@ -226,7 +214,7 @@ public class PartidaController {
 		Usuario u = usuarioService.getLoggedUsuario();
 		
 		// Detecta si el usuario está en una partida, y si lo está, al tratar de unirse a una sala lo redirigá a la sala o partida en el que ya se encuentra
-		if (estaJugando(u.getId())) {
+		if (jugadorService.estaJugando(u.getId())) {
 			Collection<Jugador> jugadoresUsuario = jugadorService.findAllJugadoresForUsuario(u.getId());
 			for (Jugador j : jugadoresUsuario) {
 			if (j.getPartidaOca() != null && j.getPartidaOca().getEstado() == TipoEstadoPartida.JUGANDO) {
@@ -292,7 +280,7 @@ public class PartidaController {
 		Boolean dentro = false;
 		// Crear jugador
 		Usuario u = usuarioService.getLoggedUsuario();
-		if (estaJugando(u.getId())) {
+		if (jugadorService.estaJugando(u.getId())) {
 			Collection<Jugador> jugadoresUsuario = jugadorService.findAllJugadoresForUsuario(u.getId());
 			for (Jugador j : jugadoresUsuario) {
 			if (j.getPartidaOca() != null && j.getPartidaOca().getEstado() == TipoEstadoPartida.JUGANDO) {
@@ -314,7 +302,7 @@ public class PartidaController {
 			}}
 		}
 
-		if(estaJugando(u.getId())) {
+		if(jugadorService.estaJugando(u.getId())) {
 			Pageable pageable = PageRequest.of(0,1);
 			model.put("message", "Estas jugando ya en una partida");
 			model.put("partidaOca", partidaService.findEsperaOca(pageable));

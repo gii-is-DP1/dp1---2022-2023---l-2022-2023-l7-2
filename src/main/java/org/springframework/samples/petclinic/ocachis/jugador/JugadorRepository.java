@@ -23,9 +23,12 @@ public interface JugadorRepository extends CrudRepository<Jugador, Integer>{
     @Query("SELECT j from Jugador j WHERE j.usuario.id=:usuarioId AND j.partidaOca.id=:ocaId")
     Jugador findJugadorOca(@Param("usuarioId") Integer usuarioId, @Param("ocaId") Integer OcaId);
 
-    @Query("SELECT count(j) FROM Jugador j JOIN PartidaParchis pp WHERE j.usuario.id = :id AND (pp.estado = 1 OR pp.estado = 0)")
+    @Query("SELECT COUNT(j) FROM Jugador j INNER JOIN j.partidaParchis pp WHERE j.usuario.id = :id AND (pp.estado = 1 OR pp.estado = 0)")
     Integer contarJugadoresParchisJugando(@Param ("id") int id);
 
-    @Query("SELECT count(j) FROM Jugador j JOIN PartidaOca po WHERE j.usuario.id = :id AND (po.estado = 1 OR po.estado = 0)")
+    @Query("SELECT COUNT(j) FROM Jugador j INNER JOIN j.partidaOca po WHERE j.usuario.id = :id AND (po.estado = 1 OR po.estado = 0)")
     Integer contarJugadoresOcaJugando(@Param ("id") int id);
+
+    // @Query("SELECT count(j) FROM Jugador j WHERE j.usuario.id = :id AND ((j.partidaOca != null AND (j.partidaOca.estado = 1 OR j.partidaOca.estado = 0)) OR (j.partidaParchis != null AND(j.partidaParchis.estado = 1 OR j.partidaParchis.estado = 0)))")
+    // Integer numPartidasJugando(@Param ("id") int id);
 }

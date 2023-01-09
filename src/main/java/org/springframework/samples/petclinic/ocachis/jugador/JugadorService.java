@@ -134,7 +134,6 @@ public class JugadorService {
       Collection<Jugador> jugadores = this.findAllJugadoresForUsuario(usuarioId);
       Map<String,Integer> partidaEspectar = new HashMap<String,Integer>();
       for (Jugador j : jugadores) {
-       
         if (j.getPartidaOca() != null && (j.getPartidaOca().getEstado() == TipoEstadoPartida.JUGANDO)) {
            partidaEspectar.put("oca", j.getPartidaOca().getId());
         } else if (j.getPartidaParchis() != null && (j.getPartidaParchis().getEstado() == TipoEstadoPartida.JUGANDO)) {
@@ -143,5 +142,13 @@ public class JugadorService {
       }
       return partidaEspectar;
     }
-    
+
+
+  @Transactional(readOnly = true)
+	public Boolean estaJugando(Integer usuarioId) {
+	  Integer numJugadoresOca = this.jugadorRepository.contarJugadoresOcaJugando(usuarioId);
+    Integer numJugadoresParchis = this.jugadorRepository.contarJugadoresParchisJugando(usuarioId);
+    if(numJugadoresOca + numJugadoresParchis ==0) return false;
+    return true;
+  }
 }
