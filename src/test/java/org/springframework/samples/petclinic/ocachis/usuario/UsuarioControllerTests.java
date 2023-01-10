@@ -17,6 +17,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
+import org.springframework.samples.petclinic.ocachis.partida.PartidaController;
+import org.springframework.samples.petclinic.ocachis.partida.PartidaService;
 import org.springframework.samples.petclinic.ocachis.user.AuthoritiesService;
 import org.springframework.samples.petclinic.ocachis.user.UserService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
@@ -28,6 +30,9 @@ class UsuarioControllerTests {
 	
 	private static final int TEST_USUARIO_ID = 100;
 	
+	@Autowired
+	private PartidaController partidaController;
+
 	@MockBean
 	private UsuarioService usuarioService;
 	

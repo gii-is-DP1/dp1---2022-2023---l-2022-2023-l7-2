@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,16 +19,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Color;
-import org.springframework.samples.petclinic.ocachis.casilla.CasillaService;
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
-import org.springframework.samples.petclinic.ocachis.ficha.FichaService;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.jugador.JugadorService;
-import org.springframework.samples.petclinic.ocachis.partida.PartidaController;
-import org.springframework.samples.petclinic.ocachis.partida.PartidaOca;
-import org.springframework.samples.petclinic.ocachis.partida.PartidaParchis;
-import org.springframework.samples.petclinic.ocachis.partida.PartidaService;
-import org.springframework.samples.petclinic.ocachis.partida.TipoEstadoPartida;
 import org.springframework.samples.petclinic.ocachis.user.AuthoritiesService;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.samples.petclinic.ocachis.usuario.UsuarioService;
@@ -47,9 +39,6 @@ class PartidaControllerTests {
 
 	private static final int TEST_PARTIDAOCA_ID = 41;
 	private static final int TEST_PARTIDAPARCHIS_ID = 42;
-
-	@Autowired
-	private PartidaController partidaController;
 
 	@MockBean
 	private PartidaService partidaService;
@@ -111,7 +100,12 @@ class PartidaControllerTests {
 	// 	mockMvc.perform(post("/partida/crear").param("tipo", "oca").param("maxJugadores", "3").with(csrf()))
 	// 	.andExpect(status().is3xxRedirection());
 	// }
-	
+	@WithMockUser(value = "spring")
+	@Test
+	void testProcessCrearPartidaSuccess() throws Exception {
+		mockMvc.perform(post("/sala/create").param("tipo", "parchis").param("maxJugadores", "3").with(csrf()))
+		.andExpect(status().is3xxRedirection());
+	}
 
     @WithMockUser(value = "spring")
 	@Test
