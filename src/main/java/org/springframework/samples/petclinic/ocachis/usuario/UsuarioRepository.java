@@ -8,11 +8,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
 
 public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
-
-	Usuario findById(int id);
 
     Collection<Usuario> findAll();
     

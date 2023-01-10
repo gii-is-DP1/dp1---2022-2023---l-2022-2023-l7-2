@@ -29,8 +29,8 @@ public class ExceptionHandlerConfiguration
         request.setAttribute("javax.servlet.error.status_code", 400);
         request.setAttribute("exception", ex);
         return "exception";
-    }
-
+   }
+   
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public String ResourceNotFoundExceptionHandler(HttpServletRequest request,  ResourceNotFoundException ex){

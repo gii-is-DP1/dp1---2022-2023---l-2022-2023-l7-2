@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Color;
+import org.springframework.samples.petclinic.model.exceptions.ResourceNotFoundException;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaService;
@@ -41,8 +42,10 @@ public class JugadorService {
     }
 
     @Transactional(readOnly=true)
-    public Optional<Jugador> findById(Integer id){
-		  return jugadorRepository.findById(id);
+    public Jugador findById(Integer id){
+      Optional<Jugador> optJugador = jugadorRepository.findById(id);
+      if(optJugador.isEmpty()) throw new ResourceNotFoundException("Jugador no encontrado");
+		  return optJugador.get();
     }
     @Transactional
     public void delete(Jugador j){

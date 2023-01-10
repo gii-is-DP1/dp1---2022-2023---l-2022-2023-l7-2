@@ -13,7 +13,6 @@ import javax.persistence.ManyToMany;
 
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.swing.ImageIcon;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.samples.petclinic.model.BaseEntity;

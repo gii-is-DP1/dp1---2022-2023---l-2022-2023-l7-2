@@ -48,5 +48,4 @@ public interface EstadisticasGlobalesRepository extends CrudRepository<Estadisti
     @Query("SELECT sum(u.estadisticas.ocaVecesCaidoEnMuerte) FROM Usuario u")
     Integer getSumaOcaVecesCaidoEnMuerte();
 
-    EstadisticasGlobales save(EstadisticasGlobales est);
 }

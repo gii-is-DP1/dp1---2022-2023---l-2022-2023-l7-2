@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.exceptions.ResourceNotFoundException;
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
 import org.springframework.samples.petclinic.ocachis.solicitud.Solicitud;
 import org.springframework.samples.petclinic.ocachis.solicitud.SolicitudRepository;
@@ -90,7 +91,9 @@ public class UsuarioService {
 
     @Transactional(readOnly = true)
     public Usuario findUsuarioById(int id){
-        return this.usuarioRepository.findById(id);
+        Optional<Usuario> optUsuario = this.usuarioRepository.findById(id);
+		if(optUsuario.isEmpty()) throw new ResourceNotFoundException("Usuario no encontrado");
+		return optUsuario.get();
     }
 
 	@Transactional(readOnly = true)

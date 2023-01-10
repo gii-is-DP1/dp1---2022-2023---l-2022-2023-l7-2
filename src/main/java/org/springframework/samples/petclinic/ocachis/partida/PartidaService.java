@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Color;
+import org.springframework.samples.petclinic.model.exceptions.ResourceNotFoundException;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaParchis;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaService;
@@ -28,9 +29,7 @@ import org.springframework.samples.petclinic.ocachis.logro.LogroService;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.webjars.NotFoundException;
 
-//import antlr.collections.List;
 @Service
 public class PartidaService {
 	private PartidaOcaRepository partidaOcaRepository;
@@ -169,13 +168,15 @@ public class PartidaService {
 
 	@Transactional(readOnly = true)
 	public PartidaOca findPartidaOcaById(int id) {
-		return this.partidaOcaRepository.findById(id);
+		Optional<PartidaOca> optPartida = this.partidaOcaRepository.findById(id);
+		if(optPartida.isEmpty()) throw new ResourceNotFoundException("Partida no encontrada");
+		return optPartida.get();
 	}
 
 	@Transactional(readOnly = true)
 	public PartidaParchis findPartidaParchisById(int id){
 		Optional<PartidaParchis> partida =this.partidaParchisRepository.findById(id);
-		if(!partida.isPresent()) return null;
+		if(partida.isEmpty()) throw new ResourceNotFoundException("Partida no encontrada");
 		return partida.get();
 	}
 
@@ -508,7 +509,8 @@ public class PartidaService {
 			return;
 		}
 		FichaParchis ficha = fichaService.findFichaParchis(fichaId);
-		Jugador jugador = jugadorService.findById(jugadorId).get();
+		Jugador jugador = jugadorService.findById(jugadorId);
+		
 		CasillaParchis casillaFinal = partida.getCasillaFinal(ficha, dado);
 		Boolean haComido = false;
 		Boolean haMetidoFicha = false;

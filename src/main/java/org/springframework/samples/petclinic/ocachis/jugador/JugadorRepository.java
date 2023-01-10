@@ -9,10 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface JugadorRepository extends CrudRepository<Jugador, Integer>{
-    Collection<Jugador> findAll();
-    Jugador findById(int id);
-    Jugador save(Jugador j);
-    void delete(Jugador j);
+    Collection<Jugador> findAll();  
 
     @Query("SELECT j from Jugador j WHERE j.usuario.id = :usuarioId")
     Collection<Jugador> findAllJugadoresForUsuario(@Param("usuarioId") Integer usuarioId);
@@ -28,7 +25,4 @@ public interface JugadorRepository extends CrudRepository<Jugador, Integer>{
 
     @Query("SELECT COUNT(j) FROM Jugador j INNER JOIN j.partidaOca po WHERE j.usuario.id = :id AND (po.estado = 1 OR po.estado = 0)")
     Integer contarJugadoresOcaJugando(@Param ("id") int id);
-
-    // @Query("SELECT count(j) FROM Jugador j WHERE j.usuario.id = :id AND ((j.partidaOca != null AND (j.partidaOca.estado = 1 OR j.partidaOca.estado = 0)) OR (j.partidaParchis != null AND(j.partidaParchis.estado = 1 OR j.partidaParchis.estado = 0)))")
-    // Integer numPartidasJugando(@Param ("id") int id);
 }

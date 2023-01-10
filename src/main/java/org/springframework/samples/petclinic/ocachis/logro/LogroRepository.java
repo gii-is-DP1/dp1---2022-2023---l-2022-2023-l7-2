@@ -16,8 +16,6 @@ public interface LogroRepository extends CrudRepository<Logro,Integer>{
     @Query("SELECT u.logros FROM Usuario u where u.id=:id")
     Collection<Logro> findAllLogrosForUsuario(@Param("id") Integer usuarioId);
 
-    // Collection<Logro> findByIdNotIn(Collection<Integer> ids);
     Collection<Logro> findAll();
-    Logro findById(int id);
-    Logro save (Logro l);
+
 }

@@ -2,8 +2,10 @@ package org.springframework.samples.petclinic.ocachis.ficha;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.exceptions.ResourceNotFoundException;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaParchis;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
@@ -42,7 +44,9 @@ public class FichaService {
 
 
     public FichaOca findFichaOca(Integer id){
-        return fichaOcaRepository.findById(id).get();
+        Optional<FichaOca> optFicha =  fichaOcaRepository.findById(id);
+        if(optFicha.isEmpty()) throw new ResourceNotFoundException("Ficha no encontrada");
+        return optFicha.get();
     }
 
 	public void removeFichaOca(FichaOca ficha) {
@@ -56,6 +60,9 @@ public class FichaService {
         ficha = saveFichaOca(ficha);
         return ficha;
     }
+
+
+    //*****************************************************PARCHIS******************************************
 
     public List<FichaParchis> createFichasParchis(Jugador jugador, PartidaParchis partida) {
         ArrayList<FichaParchis> fichas = new ArrayList<>();
@@ -91,7 +98,9 @@ public class FichaService {
 
     @Transactional(readOnly = true)
     public FichaParchis findFichaParchis(Integer id){
-        return fichaParchisRepository.findById(id).get();
+        Optional<FichaParchis> optFicha = fichaParchisRepository.findById(id);
+        if(optFicha.isEmpty()) throw new ResourceNotFoundException("Ficha no encontrada");
+        return optFicha.get();
     }
     
 

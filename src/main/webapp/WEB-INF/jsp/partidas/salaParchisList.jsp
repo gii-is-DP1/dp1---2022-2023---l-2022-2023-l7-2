@@ -52,14 +52,12 @@
                 </td>
 
                 <td>
-                    <c:choose>
-                        <c:when test="${partidaParchis.estado==TipoEstadoPartida.CREADA}">
+                    <c:if test="${not enPartida && partidaParchis.estado==TipoEstadoPartida.CREADA}">
                             <spring:url value="/partida/parchis/{partidaParchisId}/entrar" var="parchisJoinUrl">
                             <spring:param name="partidaParchisId" value="${partidaParchis.id}"/>
                             </spring:url>
                             <a href="${fn:escapeXml(parchisJoinUrl)}" class="btn btn-default">Unirse</a>
-                        </c:when>                   
-                    </c:choose>             
+                    </c:if>             
                 </td>
             </tr>
         </c:forEach>
@@ -82,7 +80,7 @@
         <spring:url value="/partida/redireccion" var="redireccionUrl">
           
             </spring:url>
-            <a href="${fn:escapeXml(redireccionUrl)}" class="btn btn-default">Volver Partida</a>
+            <a href="${fn:escapeXml(redireccionUrl)}" class="btn btn-default">Volver a la Partida</a>
         </c:if>
     
     

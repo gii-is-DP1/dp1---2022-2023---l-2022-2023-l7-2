@@ -3,8 +3,12 @@ package org.springframework.samples.petclinic.ocachis.logro;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
+
+import javax.swing.text.html.Option;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.exceptions.ResourceNotFoundException;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.logro.exceptions.MetaNegativaException;
 import org.springframework.samples.petclinic.ocachis.logro.exceptions.MultiplesMetasDefinidasException;
@@ -37,7 +41,9 @@ public class LogroService {
 
     @Transactional(readOnly=true)
     public Logro findById(int id){
-        return this.logroRepository.findById(id);
+        Optional<Logro> optLogro = this.logroRepository.findById(id);
+        if(optLogro.isEmpty()) throw new ResourceNotFoundException("Logro no encontrado");
+        return optLogro.get();
     }
     
     public void validarLogro(Logro l) throws IllegalAccessException, MultiplesMetasDefinidasException, MetaNegativaException{
