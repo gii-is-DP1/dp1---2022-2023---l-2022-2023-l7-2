@@ -480,8 +480,6 @@ INSERT INTO partida_parchis_casillas(partida_parchis_id, casillas_id) VALUES
 (1, 102),
 (1, 103),
 (1, 104);
-<<<<<<< HEAD
-=======
 
 
 INSERT INTO ficha_parchis(id, color, esta_en_casa, esta_en_la_meta, casilla_actual_id) VALUES 
