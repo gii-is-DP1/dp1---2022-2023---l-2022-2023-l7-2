@@ -1,5 +1,5 @@
 package org.springframework.samples.petclinic.ocachis.partida;
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -9,9 +9,10 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
@@ -25,7 +26,6 @@ public class Partida extends BaseEntity{
 
 	private Integer codigoPartida;
 	
-	//@NotEmpty
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private LocalDateTime fechaCreacion;
 
@@ -36,16 +36,18 @@ public class Partida extends BaseEntity{
 	private TipoEstadoPartida estado = TipoEstadoPartida.CREADA;
 	
 	/*
-	 * La duracion de la partida en mintuos. Se computa al final de la partida*/
+	 * La duracion de la partida en mintuos. Se computa al final de la partida
+	 * */
 	private Integer duracion;
 	
 	@OneToOne
 	private Usuario ganador;
 	
 	private Color ColorJugadorActual=Color.ROJO;
-	
-	@Min(value=2)
-	@Max(value=4)
+	@NotNull
+	@Range(min=2, max=4)
+	@Min(value= 2)
+	@Max(value= 4)
 	private Integer maxJugadores;
 
 	@ManyToMany
@@ -53,7 +55,7 @@ public class Partida extends BaseEntity{
 
 
 	private static Integer generadorCodigoPartida=115;
-	public static Integer getNuevoCodigoPartida(){
+	public static Integer getNuevoCodigoPartida(){ 
 		return generadorCodigoPartida++;
 	}
 

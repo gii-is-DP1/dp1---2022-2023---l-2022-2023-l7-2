@@ -33,7 +33,7 @@ public class LogroTest {
 
 
      void testConstraints(){
-        Logro  logro=new Logro();
+        Logro logro=new Logro();
         logro.setId(9);
         logro.setNombre("      ");
         logro.setDescripcion("Juega 50 partidas de parchís");
@@ -46,9 +46,11 @@ public class LogroTest {
         assertThrows(ConstraintViolationException.class,() ->lr.save(logro),
         "No se comprueba la longitud máxima del nombre"
         );
+
         logro.setDescripcion(" ");
         assertThrows(ConstraintViolationException.class,() -> lr.save(logro),
         "No se comprueba si la descripción es una cadena vacía");
+
         logro.setDescripcion("En un lugar de la mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor.");
         assertThrows(ConstraintViolationException.class, () -> lr.save(logro),
         "No se comprueba la longitud máxima de la descripción");

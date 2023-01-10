@@ -33,13 +33,11 @@ public class UsuarioController {
 	private static final String VIEWS_USUARIO_PROFILE ="usuarios/perfil";
  
 	private final UsuarioService usuarioService;
-	private final UserService userService;
 	private final SolicitudService solicitudService;
 
 	@Autowired
-	public UsuarioController(UsuarioService usuarioService, UserService userService, AuthoritiesService authoritiesService,SolicitudService solicitudService) {
+	public UsuarioController(UsuarioService usuarioService, AuthoritiesService authoritiesService, SolicitudService solicitudService) {
 		this.usuarioService = usuarioService;
-		this.userService = userService;
 		this.solicitudService = solicitudService;
 	}
 	

@@ -17,6 +17,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
@@ -39,6 +41,7 @@ class PartidaControllerTests {
 
 	private static final int TEST_PARTIDAOCA_ID = 41;
 	private static final int TEST_PARTIDAPARCHIS_ID = 42;
+	private static final String TEST_NUMEROPAGINA = "0";
 
 	@MockBean
 	private PartidaService partidaService;
@@ -84,6 +87,13 @@ class PartidaControllerTests {
 		u.setPartidasJugadas(new ArrayList<Jugador>());
 		given(this.usuarioService.getLoggedUsuario()).willReturn(u);
 
+		Page<PartidaOca> resultsOca = Page.empty();     
+		 given(this.partidaService.findEsperaOca(PageRequest.of(0,5))).willReturn(resultsOca);
+
+		 Page<PartidaParchis> resultsParchis = Page.empty();     
+		 given(this.partidaService.findEsperaParchis(PageRequest.of(0,5))).willReturn(resultsParchis);
+
+
 	}
 
 	
@@ -102,10 +112,10 @@ class PartidaControllerTests {
 	// }
 	@WithMockUser(value = "spring")
 	@Test
-	void testProcessCrearPartidaSuccess() throws Exception {
-		mockMvc.perform(post("/sala/create").param("tipo", "parchis").param("maxJugadores", "3").with(csrf()))
-		.andExpect(status().is3xxRedirection());
-	}
+	void testProcessCrearPartidaSuccess() throws Exception { 
+		mockMvc.perform(post("/partida/crear").param("tipo", "parchis").param("maxJugadores", "3").with(csrf()))
+		.andExpect(status().isOk());
+		}
 
     @WithMockUser(value = "spring")
 	@Test
@@ -116,9 +126,17 @@ class PartidaControllerTests {
 
 	@WithMockUser(value = "spring")
 	@Test
-	void testShowSalaListHtml() throws Exception {
-		mockMvc.perform(get("/partida/")).andExpect(status().isOk()).andExpect(model().attributeExists("partidaOca"))
-				.andExpect(view().name("partidas/salaList"));
+	void testShowSalaOcaListHtml() throws Exception {
+		mockMvc.perform(get("/partida/oca/listar/{numeroPagina}",TEST_NUMEROPAGINA)).andExpect(status().isOk()).andExpect(model().attributeExists("partidaOca"))
+				.andExpect(view().name("partidas/salaOcaList"));
+	}
+
+	@WithMockUser(value = "spring")
+	@Test
+	void testShowSalaParchisListHtml() throws Exception {
+
+		mockMvc.perform(get("/partida/parchis/listar/{numPagina}",TEST_NUMEROPAGINA)).andExpect(status().isOk()).andExpect(model().attributeExists("partidaParchis"))
+				.andExpect(view().name("partidas/salaParchisList"));
 	}
 	/*
 	@WithMockUser(value = "spring")
