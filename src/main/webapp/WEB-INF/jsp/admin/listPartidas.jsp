@@ -1,5 +1,5 @@
 <%@ page import="org.springframework.samples.petclinic.model.Color"%>
-
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -26,7 +26,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${parchis}" var="parchis">
+        <c:forEach items="${parchis.content}" var="parchis">
             <tr>
                 <td>
                   <c:out value="${parchis.codigoPartida}"></c:out>
@@ -65,7 +65,7 @@
                 </td>
             </tr>
         </c:forEach>
-        <c:forEach items="${oca}" var="oca">
+        <c:forEach items="${oca.content}" var="oca">
             <tr>
                 <td>
                   <c:out value="${oca.codigoPartida}"></c:out>
@@ -107,4 +107,41 @@
         </c:forEach>
         </tbody>
     </table>
+    <c:choose>
+        <c:when test="${not empty oca}">
+            <c:if test="${numPagina > 0}">
+                <spring:url value="/admin/listPartidas/oca/{numPagina}" var="enlaceAnterior">
+                    <spring:param name="numPagina" value="${numPagina-1}"/>
+                </spring:url>
+                <a href="${fn:escapeXml(enlaceAnterior)}" class="btn btn-default">Anterior</a>
+            </c:if>
+            <c:if test="${numTotalPaginas-1 > numPagina}">
+                <spring:url value="/admin/listPartidas/oca/{numPagina}" var="enlaceSiguiente">
+                    <spring:param name="numPagina" value="${numPagina+1}"/>
+                </spring:url>
+                <a href="${fn:escapeXml(enlaceSiguiente)}" class="btn btn-default">Siguiente</a>
+            </c:if>
+        </c:when>
+        <c:when test="${not empty parchis}">
+            <c:if test="${numPagina > 0}">
+                <spring:url value="/admin/listPartidas/parchis/{numPagina}" var="enlaceAnterior">
+                    <spring:param name="numPagina" value="${numPagina-1}"/>
+                </spring:url>
+                <a href="${fn:escapeXml(enlaceAnterior)}" class="btn btn-default">Anterior</a>
+            </c:if>
+            <c:if test="${numTotalPaginas-1 > numPagina}">
+                <spring:url value="/admin/listPartidas/parchis/{numPagina}" var="enlaceSiguiente">
+                    <spring:param name="numPagina" value="${numPagina+1}"/>
+                </spring:url>
+                <a href="${fn:escapeXml(enlaceSiguiente)}" class="btn btn-default">Siguiente</a>
+            </c:if>
+
+
+        </c:when>
+            
+            
+       
+    </c:choose>
+
+
 </petclinic:layout>

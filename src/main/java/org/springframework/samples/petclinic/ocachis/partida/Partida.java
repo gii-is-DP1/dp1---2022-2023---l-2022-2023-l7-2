@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.ocachis.partida;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.persistence.ManyToMany;
@@ -8,6 +9,9 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
@@ -22,8 +26,10 @@ public class Partida extends BaseEntity{
 	private Integer codigoPartida;
 	
 	//@NotEmpty
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private LocalDateTime fechaCreacion;
 
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private LocalDateTime fechaFinalizacion;
 	/* 
 	@NotEmpty*/
@@ -50,6 +56,17 @@ public class Partida extends BaseEntity{
 	public static Integer getNuevoCodigoPartida(){
 		return generadorCodigoPartida++;
 	}
-	
+
+	protected Long fechaHoraUltimoMovimiento;	
+
+
+
+	public String printFechaCreacion(){
+		return fechaCreacion.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm"));
+	}
+
+	public String printFechaFinalizacion(){
+		return fechaFinalizacion.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm"));
+	}
 }
 

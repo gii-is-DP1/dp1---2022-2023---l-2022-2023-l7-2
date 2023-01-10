@@ -16,27 +16,22 @@
         <!--${jugador}-->
         <c:choose>
             <c:when test="${jugador.color eq 'ROJO'}">
-                <img id="FichaRoja" src="/resources/images/FichaRoja.jpg" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:hidden">
-                rojo: ${jugador.fichaOca.getCoordenadas().getX()} - ${jugador.fichaOca.getCoordenadas().getY()}
+                <img id="FichaRoja" src="/resources/images/FichaRoja.jpg"           data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:none">    
             </c:when>
+
             <c:when test="${jugador.color eq 'AMARILLO'}">
-                <img id="FichaAmarilla" src="/resources/images/FichaAmarilla2.jpg" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:hidden">
-                amarillo: ${jugador.fichaOca.getCoordenadas().getX()} - ${jugador.fichaOca.getCoordenadas().getY()}
+                <img id="FichaAmarilla" src="/resources/images/FichaAmarilla2.jpg"  data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:none">
             </c:when>
+
             <c:when test="${jugador.color eq 'VERDE'}">
-            <img id="FichaVerde" src="/resources/images/FichaVerde.jpg" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:hidden">         
-                verde: ${jugador.fichaOca.getCoordenadas().getX()} - ${jugador.fichaOca.getCoordenadas().getY()}
+                <img id="FichaVerde" src="/resources/images/FichaVerde.jpg"                 data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:none">         
             </c:when>
+
             <c:when test="${jugador.color eq 'AZUL'}">
-            <img id="FichaAzul" src="/resources/images/FichaAzul.jpg" data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:hidden">
-                azul: ${jugador.fichaOca.getCoordenadas().getX()} - ${jugador.fichaOca.getCoordenadas().getY()}
+                <img id="FichaAzul" src="/resources/images/FichaAzul.jpg"               data-x="${jugador.fichaOca.getCoordenadas().getX()}" data-y="${jugador.fichaOca.getCoordenadas().getY()}" style="display:none">
             </c:when>
         </c:choose>
-   
     </c:forEach>
-
-
-    
 
 
     <script>
@@ -71,7 +66,6 @@
                             fichaAzul.getAttribute("data-y"),
                             24,24);   
         }
-
             
         window.onload =drawBoard();
         </script> 

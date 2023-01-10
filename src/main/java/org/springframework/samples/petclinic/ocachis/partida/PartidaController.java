@@ -2,15 +2,23 @@ package org.springframework.samples.petclinic.ocachis.partida;
 
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Collection;
 import java.util.Date;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Color;
+import org.springframework.samples.petclinic.model.exceptions.ResourceNotFoundException;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
@@ -24,14 +32,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
+
 @Controller
-@RequestMapping("/sala")
+@RequestMapping("/partida")
 public class PartidaController {
 
 	private String REFRESH_SEECONDS = "1";
@@ -51,50 +62,91 @@ public class PartidaController {
 		dataBinder.setDisallowedFields("id");
 	}
 
-	private static final String VIEWS_SALAS = "partidas/salaList";
+	private static final String VIEWS_OCA_SALAS = "partidas/salaOcaList";
+	private static final String VIEWS_PARCHIS_SALAS = "partidas/salaParchisList";
 	private static final String VIEWS_ESPERA = "partidas/espera";
 	private static final String CREATE_SALAS = "partidas/createPartidaForm";
 	private static final String VIEWS_JUGAR_OCA = "partidas/ocaGame";
 	private static final String VIEWS_JUGAR_PARCHIS = "partidas/parchisGame";
-	private static final String VIEWS_PARTIDAOCA_TERMINADA = "partidas/resumenPartidaOca";
+	private static final String VIEWS_PARTIDAOCA_TERMINADA = "partidas/resumenPartida";
 
 
 
-	private Boolean estaJugando(Integer usuarioId) {
-		Collection<Jugador> jugadores = jugadorService.findAllJugadoresForUsuario(usuarioId);
-		for (Jugador j : jugadores) {
-			if (j.getPartidaOca() != null && (j.getPartidaOca().getEstado() == TipoEstadoPartida.JUGANDO
-					|| j.getPartidaOca().getEstado() == TipoEstadoPartida.CREADA)) {
-					return true;
-			} else if (j.getPartidaParchis() != null && (j.getPartidaParchis().getEstado() == TipoEstadoPartida.CREADA
-					|| j.getPartidaParchis().getEstado() == TipoEstadoPartida.JUGANDO)) {
-					return true;
-			}
-		}
-		return false;
-	}
+	
 
 	
 	//lista de salas
 	
-	@GetMapping("/")
-	public ModelAndView showSalaList() {
-		ModelAndView mav = new ModelAndView(VIEWS_SALAS);
-		mav.addObject("partidaOca", partidaService.findEsperaOca());
-		mav.addObject("partidaParchis", partidaService.findEsperaParchis());
-		return mav;
+	@GetMapping("/oca/listar/{numPagina}")
+	public String showSalaOcaList(@Param("codigo") Integer codigo,ModelMap model,RedirectAttributes redirectAttributes,@PathVariable("numPagina") Integer numPagina) {
+		if(!(codigo==null)){
+			Optional<PartidaOca> partidaOca = this.partidaService.findOcaByCodigo(codigo);
+			if(partidaOca.isPresent()){
+				
+				Integer idPartidaOca = partidaOca.get().getId();
+				
+				return unirsePartidaOca(idPartidaOca,  model, redirectAttributes);
+			} else{
+				Pageable pageable = PageRequest.of(0,5);
+				Page<PartidaOca> partidasOca = partidaService.findEsperaOca(pageable);
+				Integer numPaginas = partidasOca.getTotalPages();
+				model.put("partidaOca", partidaService.findEsperaOca(pageable));
+				model.put("message","La partida a la que estás intentando unirte no existe.");
+				model.put("numTotalPaginas",numPaginas);
+				return VIEWS_OCA_SALAS;
+				
+			}
+		}
+		Usuario usuario = this.usuarioService.getLoggedUsuario();
+		Boolean enPartida = this.jugadorService.estaJugando(usuario.getId());
+		model.put("enPartida",enPartida);
+		Pageable pageable = PageRequest.of(numPagina,5);
+		Page<PartidaOca> partidasOca = partidaService.findEsperaOca(pageable);
+		model.put("partidaOca", partidaService.findEsperaOca(pageable));
+		Integer numPaginas = partidasOca.getTotalPages();
+		model.put("numTotalPaginas",numPaginas);
+		return VIEWS_OCA_SALAS;
+	}
+
+	@GetMapping("/parchis/listar/{numPagina}")
+	public String showSalaParchisList(@Param("codigo") Integer codigo,ModelMap model,RedirectAttributes redirectAttributes,@PathVariable("numPagina") Integer numPagina) {
+		if(!(codigo==null)){
+			Optional<PartidaParchis> partidaParchis = this.partidaService.findParchisByCodigo(codigo);
+			if(partidaParchis.isPresent()){
+				Integer idPartidaParchis = partidaParchis.get().getId();
+				
+				return unirsePartidaParchis(idPartidaParchis, model, redirectAttributes);
+			} else{
+				Pageable pageable = PageRequest.of(0,5);
+				Page<PartidaParchis> partidasParchis = partidaService.findEsperaParchis(pageable);
+				Integer numPaginas = partidasParchis.getTotalPages();
+				model.put("partidaParchis", partidaParchis);
+				model.put("message","La partida a la que estás intentando unirte no existe.");
+				model.put("numTotalPaginas",numPaginas);
+				return VIEWS_PARCHIS_SALAS;
+			}
+		}
+		Usuario usuario = this.usuarioService.getLoggedUsuario();
+		Boolean enPartida = this.jugadorService.estaJugando(usuario.getId());
+		model.put("enPartida",enPartida);
+		Pageable pageable = PageRequest.of(numPagina,5);
+		Page<PartidaParchis> partidasParchis = partidaService.findEsperaParchis(pageable);
+		Integer numPaginas = partidasParchis.getTotalPages();
+		model.put("partidaParchis", partidasParchis);
+		model.put("numTotalPaginas",numPaginas);
+		return VIEWS_PARCHIS_SALAS;
 	}
 
 	//create
 	
-	@GetMapping("/create")
+	@GetMapping("/crear")
 	public String crearPartida(ModelMap model) {
 		ProcesarPartidaForm proceso = new ProcesarPartidaForm();
 		model.put("procesarPartidaForm", proceso);
 		return CREATE_SALAS;
 	}
 
-	@PostMapping("/create")
+	@PostMapping("/crear")
 	public String processCrearPartida(@Valid ProcesarPartidaForm procesarPartidaForm, BindingResult result,
 			ModelMap model, RedirectAttributes redirectAttributes) throws IllegalAccessException {
 		String tipo = procesarPartidaForm.getTipo();
@@ -106,7 +158,7 @@ public class PartidaController {
 		Usuario u = usuarioService.getLoggedUsuario();
 		Jugador jugador = null;
 		
-		if (estaJugando(u.getId())) {
+		if (this.jugadorService.estaJugando(u.getId())) {
 			model.put("message", "Estas jugando ya en una partida");
 			return CREATE_SALAS;
 		}
@@ -119,9 +171,9 @@ public class PartidaController {
 			}
 			catch(PartidaLlenaException e){
 				redirectAttributes.addFlashAttribute("message", "La partida está llena");
-				return "redirect:/sala/";
+				return "redirect:/partida/oca/listar/0";
 			}
-			return "redirect:/sala/" + partida.getId() + "/showOca";
+			return "redirect:/partida/oca/" + partida.getId() + "/espera";
 		
 			// Caso Parchís
 		} else if (tipo.equals("parchis")) {
@@ -131,21 +183,23 @@ public class PartidaController {
 			}
 			catch(PartidaLlenaException e){
 				redirectAttributes.addFlashAttribute("message", "La partida está llena");
-				return "redirect:/sala/";
+				return "redirect:/partida/parchis/listar/0";
 			}
-			return "redirect:/sala/" + partida.getId() + "/showParchis";
+			return "redirect:/partida/parchis/" + partida.getId() + "/espera";
 		} else { // ni oca ni parchis
-			return "redirect:/sala/";
+			return "redirect:/";
 		}
 
 	}
 
 	
 	//oca
-	
-	@GetMapping("/{partidaOcaId}/ocaJoin")
+	@GetMapping("/oca/{partidaOcaId}/entrar")
 	public String unirsePartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model, RedirectAttributes redirectAttributes) {
-		PartidaOca partidaOca = partidaService.findByIdOca(partidaOcaId);
+		PartidaOca partidaOca = partidaService.findPartidaOcaById(partidaOcaId);
+
+		if(partidaOca==null) throw new ResourceNotFoundException("La partida no existe");
+
 		Jugador newJugador = new Jugador();
 		model.put("jugadores", partidaOca.getJugadores());
 		model.put("jugador", newJugador);
@@ -153,39 +207,22 @@ public class PartidaController {
 		return createEnJoinSalaOca(partidaOcaId, newJugador, model, redirectAttributes);
 	}
 
-	@PostMapping("/{partidaOcaId}/ocaJoin")
+	@PostMapping("/oca/{partidaOcaId}/entrar")
 	public String createEnJoinSalaOca(@PathVariable("partidaOcaId") int partidaOcaId, @Valid Jugador jugador,
 			ModelMap model, RedirectAttributes redirectAttributes) {
-		PartidaOca p = partidaService.findByIdOca(partidaOcaId);
+		PartidaOca p = partidaService.findPartidaOcaById(partidaOcaId);
+		if(p==null) throw new ResourceNotFoundException("La partida no existe");
+		
 		Collection<Jugador> jugadores = p.getJugadores();
 		Boolean dentro = false;
-		// Crear jugador
 		
-
-
+		
 		Usuario u = usuarioService.getLoggedUsuario();
-		Collection<Jugador> jugadores1 = jugadorService.findAllJugadoresForUsuario(u.getId());
-
+		 
 		// Detecta si el usuario está en una partida, y si lo está, al tratar de unirse a una sala lo redirigá a la sala o partida en el que ya se encuentra
-		if (estaJugando(u.getId())) {
-			for (Jugador j : jugadores1) {
-			if (j.getPartidaOca() != null && j.getPartidaOca().getEstado() == TipoEstadoPartida.JUGANDO) {
-				var partidaActual = j.getPartidaOca().getId();
-				redirectAttributes.addFlashAttribute("message", "Estas jugando ya en una partida. Se te ha redirigido a ella");
-				return "redirect:/sala/" + partidaActual + "/playOca";
-			} else if (j.getPartidaOca() != null && j.getPartidaOca().getEstado() == TipoEstadoPartida.CREADA) {
-				var partidaActual = j.getPartidaOca().getId();
-				redirectAttributes.addFlashAttribute("message", "Ya estas en una sala. Se te ha redirigido a ella");
-				return "redirect:/sala/" + partidaActual + "/showOca";
-			} else if (j.getPartidaParchis() != null && (j.getPartidaParchis().getEstado() == TipoEstadoPartida.JUGANDO)) {
-				var partidaActual = j.getPartidaParchis().getId();
-				redirectAttributes.addFlashAttribute("message", "Estas jugando ya en una partida. Se te ha redirigido a ella");
-				return "redirect:/sala/" + partidaActual + "/showOca";
-			} else if (j.getPartidaParchis() != null && (j.getPartidaParchis().getEstado() == TipoEstadoPartida.CREADA)) {
-				var partidaActual = j.getPartidaParchis().getId();
-				redirectAttributes.addFlashAttribute("message", "Ya estas en una sala. Se te ha redirigido a ella");
-				return "redirect:/sala/" + partidaActual + "/showOca";
-			}}
+		if (jugadorService.estaJugando(u.getId())) {
+			redirectAttributes.addFlashAttribute("message", "Estas jugando ya en una partida. Se te ha redirigido a ella");
+			return this.partidaService.redirigirPartida(u);
 		}
 
 		for (Jugador j : jugadores) {
@@ -195,7 +232,7 @@ public class PartidaController {
 		}
 
 		if(dentro) {
-			return "redirect:/sala/" + partidaOcaId + "/showOca";
+			return "redirect:/partida/oca/" + partidaOcaId + "/espera";
 
 		}else{
 			try{
@@ -203,15 +240,16 @@ public class PartidaController {
 			}
 			catch(PartidaLlenaException e){
 				redirectAttributes.addFlashAttribute("message", "La partida está llena");
-				return "redirect:/sala/";
+				return "redirect:/partida/oca/listar/0";
 			}
 		}
-		return "redirect:/sala/" + partidaOcaId + "/showOca";
+		return "redirect:/partida/oca/" + partidaOcaId + "/espera";
 	}
 
-	@GetMapping("/{partidaOcaId}/showOca")
+	@GetMapping("/oca/{partidaOcaId}/espera")
 	public String showPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model,  HttpServletResponse response) {
-		PartidaOca partidaOca = partidaService.findByIdOca(partidaOcaId);
+		PartidaOca partidaOca = partidaService.findPartidaOcaById(partidaOcaId);
+		if(partidaOca==null) throw new ResourceNotFoundException("La partida no existe");
 		response.addHeader("Refresh", REFRESH_SEECONDS);
 		model.put("jugadores", partidaOca.getJugadores());
 		model.put("usuarioAutenticado", usuarioService.getLoggedUsuario());
@@ -221,58 +259,51 @@ public class PartidaController {
 
 	
 	//parchis
-	
-	@GetMapping("/{partidaParchisId}/parchisJoin")
+	@GetMapping("/parchis/{partidaParchisId}/entrar")
 	public String unirsePartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model, RedirectAttributes redirectAttributes) {
-		PartidaParchis partidaParchis = partidaService.findByIdParchis(partidaParchisId);
-		Jugador newJugador = new Jugador();
-		model.put("jugadores", partidaParchis.getJugadores());
-		model.put("jugador", newJugador);
-		model.put("partidaParchisId", partidaParchisId);
-		// return VIEWS_ESPERA;
-		return createEnJoinSalaParchis(partidaParchisId, newJugador, model, redirectAttributes);
-	}
+		PartidaParchis partidaParchis = partidaService.findPartidaParchisById(partidaParchisId);
+		if(partidaParchis==null) throw new ResourceNotFoundException("La partida no existe");
 
-	@PostMapping("/{partidaParchisId}/parchisJoin")
-	public String createEnJoinSalaParchis(@PathVariable("partidaParchisId") int partidaParchisId,
-			@Valid Jugador jugador, ModelMap model, RedirectAttributes redirectAttributes) {
-		
-		PartidaParchis p = partidaService.findByIdParchis(partidaParchisId);
-		Collection<Jugador> jugadores = p.getJugadores();
+		Jugador jugador = new Jugador();
+		Collection<Jugador> jugadores = partidaParchis.getJugadores();
 		Boolean dentro = false;
 		// Crear jugador
-		
 		Usuario u = usuarioService.getLoggedUsuario();
-		
-		if(estaJugando(u.getId())) {
-			model.put("message", "Estas jugando ya en una partida");
-			model.put("partidaOca", partidaService.findEsperaOca());
-			model.put("partidaParchis", partidaService.findEsperaParchis());
-			return VIEWS_SALAS;
+		if (jugadorService.estaJugando(u.getId())) {
+			redirectAttributes.addFlashAttribute("message", "Estas jugando ya en una partida. Se te ha redirigido a ella");
+			return this.partidaService.redirigirPartida(u);
 		}
 
+		if(jugadorService.estaJugando(u.getId())) {
+			Pageable pageable = PageRequest.of(0,1);
+			model.put("message", "Estas jugando ya en una partida");
+			model.put("partidaOca", partidaService.findEsperaOca(pageable));
+			model.put("partidaParchis", partidaService.findEsperaParchis(pageable));
+			return VIEWS_PARCHIS_SALAS;
+		}
 		for (Jugador j : jugadores) {
 			if (j.getUsuario().getId().equals(u.getId())) {
 				dentro = true;
 			}
 		}
 		if (dentro) {
-			return "redirect:/sala/{partidaParchisId}/showParchis";
+			return "redirect:/partida/parchis/" +partidaParchisId + "/espera";
 		}  else {
 			try{
-				jugador = jugadorService.createJugadorParchis(p);
+				jugador = jugadorService.createJugadorParchis(partidaParchis);
 			}
 			catch(PartidaLlenaException e){
 				redirectAttributes.addFlashAttribute("message", "La partida está llena");
-				return "redirect:/sala/";
+				return "redirect:/partida/parchis/listar/0";
 			}
 		}
-		return "redirect:/sala/{partidaParchisId}/showParchis";
+		return "redirect:/partida/parchis/" +partidaParchisId + "/espera";
 	}
 
-	@GetMapping("/{partidaParchisId}/showParchis")
+	@GetMapping("/parchis/{partidaParchisId}/espera")
 	public String showPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model, HttpServletResponse response) {
-		PartidaParchis partidaParchis = partidaService.findByIdParchis(partidaParchisId);
+		PartidaParchis partidaParchis = partidaService.findPartidaParchisById(partidaParchisId);
+		if(partidaParchis==null) throw new ResourceNotFoundException("La partida no existe");
 		response.addHeader("Refresh", REFRESH_SEECONDS);
 		model.put("jugadores", partidaParchis.getJugadores());
 		model.put("usuarioAutenticado", usuarioService.getLoggedUsuario());
@@ -283,43 +314,27 @@ public class PartidaController {
 
 	
 	//empezarPartida
-	@GetMapping("/{partidaOcaId}/startOca")
+	@GetMapping("/oca/{partidaOcaId}/empezar")
 	public String initEmpezarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model, HttpServletResponse response) {
-		response.addHeader("Refresh", REFRESH_SEECONDS);
-		PartidaOca partidaOca = partidaService.findByIdOca(partidaOcaId);
-		model.put("partidaOca", partidaOca);
-		return processEmpezarPartidaOca(partidaOcaId, partidaOca, model);
-	}
-
-	@PostMapping("/{partidaOcaId}/startOca")
-	public String processEmpezarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, PartidaOca partida,
-			ModelMap model) {
-		partida.setEstado(TipoEstadoPartida.JUGANDO);
-		partida.setFechaCreacion(LocalDateTime.now());
-		partidaService.saveOca(partida);
-		return "redirect:/sala/{partidaOcaId}/playOca";
+		PartidaOca partidaOca = partidaService.findPartidaOcaById(partidaOcaId);
+		if(partidaOca==null) throw new ResourceNotFoundException("La partida no existe");
+		this.partidaService.iniciarPartidaOca(partidaOca);
+		return "redirect:/partida/oca/" + partidaOcaId + "/jugar";
 	}
 	
-	@GetMapping("/{partidaParchisId}/startParchis")
+	@GetMapping("/parchis/{partidaParchisId}/empezar")
 	public String initEmpezarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model) {
-		PartidaParchis partidaParchis = partidaService.findByIdParchis(partidaParchisId);
+		PartidaParchis partidaParchis = partidaService.findPartidaParchisById(partidaParchisId);
+		if(partidaParchis==null) throw new ResourceNotFoundException("La partida no existe");
+		partidaService.iniciarPartidaParchis(partidaParchis);
 		model.put("partidaParchis", partidaParchis);
-		return processEmpezarPartidaParchis(partidaParchisId, partidaParchis, model);
-	}
-
-	@PostMapping("/{partidaParchisId}/startParchis")
-	public String processEmpezarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId,
-			PartidaParchis partida, ModelMap model) {
-				partida.setEstado(TipoEstadoPartida.JUGANDO);
-				partida.setFechaCreacion(LocalDateTime.now());
-				partidaService.saveParchis(partida);
-				return "redirect:/sala/{partidaParchisId}/playParchis";
+		return "redirect:/partida/parchis/{partidaParchisId}/jugar";
 	}
 
 
 	//abandonar
 	
-	@GetMapping("/{partidaOcaId}/abandonarOca")
+	@GetMapping("/oca/{partidaOcaId}/abandonar")
 	public String abandonarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model) {
 		Usuario u = usuarioService.getLoggedUsuario();
 		Jugador jugadorAEliminar = jugadorService.findJugadorOca(u.getId(), partidaOcaId);
@@ -327,10 +342,10 @@ public class PartidaController {
 		if (jugadorAEliminar.getColor() == Color.ROJO) {
 			partidaService.borrarPartidaOca(partidaOcaId);
 		}
-		return "redirect:/sala/";
+		return "redirect:/partida/oca/listar/0";
 	}
 	
-	@GetMapping("/{partidaParchisId}/abandonarParchis")
+	@GetMapping("/parchis/{partidaParchisId}/abandonar")
 	public String abandonarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model) {	
 		Usuario u = usuarioService.getLoggedUsuario();
 		Jugador jugadorAEliminar = jugadorService.findJugadorParchis(u.getId(), partidaParchisId);
@@ -338,44 +353,54 @@ public class PartidaController {
 		if (jugadorAEliminar.getColor() == Color.ROJO) {
 			partidaService.borrarPartidaParchis(partidaParchisId);
 		}
-		return "redirect:/sala/";
+		return "redirect:/partida/parchis/listar/0";
 	}
 	
 
 
+
 	//jugar OCA
-	@GetMapping(value="/{partidaOcaId}/playOca")
-	public String jugarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model,HttpServletResponse response, RedirectAttributes redirectAttributes){
-		PartidaOca partida = partidaService.findByIdOca(partidaOcaId);
+	@GetMapping(value="/oca/{partidaOcaId}/jugar")
+	public String jugarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model,HttpServletResponse response, RedirectAttributes redirectAttributes,@Param("mensaje") String mensaje){
+		
+		PartidaOca partida = partidaService.findPartidaOcaById(partidaOcaId);
+		if(partida==null) throw new ResourceNotFoundException("La partida no existe");
+		partidaService.checkIntegridadPartidaOca(partida);
+
 		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorOca(u.getId(), partida.getId());
-		model.put("partidaOca", partida);
-
-		if(partida.getEstado()==TipoEstadoPartida.TERMINADA){
-			return "redirect:/sala/" + partidaOcaId + "/resumen";
-
-		}else if(partida.getEstado()==TipoEstadoPartida.CREADA){
-			redirectAttributes.addFlashAttribute("message", "La partida aun no ha empezado");
-			return "redirect:/sala/" + partidaOcaId + "/showOca";
+		if(mensaje!=null){
+			return this.partidaService.enviarMensajeOca(partida,mensaje,j);
 		}
 
+
+		if(partida.getEstado()==TipoEstadoPartida.TERMINADA){
+			redirectAttributes.addFlashAttribute("message", "La partida ya ha terminado");
+			return "redirect:/partida/oca/" + partidaOcaId + "/resumen";
+		}else if(partida.getEstado()==TipoEstadoPartida.CREADA){
+			redirectAttributes.addFlashAttribute("message", "La partida aun no ha empezado");
+			return "redirect:/partida/oca/" + partidaOcaId + "/espera";
+		}
+		response.addHeader("Refresh", REFRESH_SEECONDS);
 		if(j!=null){
 			model.put("modo","jugador");
 			model.put("jugadorAutenticado", j);
+			if(partida.getColorJugadorActual()==j.getColor()) response.setHeader("Refresh", "30000");
 		}else if(partida.getUsuariosObservadores().contains(u)){
 			model.put("modo","observador");
 		}
-		response.addHeader("Refresh", REFRESH_SEECONDS);
-		model.put("now", new Date());
+		model.put("partidaOca", partida);
+		model.put("now", LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
 		return VIEWS_JUGAR_OCA;
 	}
 
 
-	@PostMapping(value="/{partidaOcaId}/playOca")
+	@PostMapping(value="/oca/{partidaOcaId}/jugar")
 	public String tirarDadosPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId,
 					 ModelMap model, HttpServletResponse response){
-		
-		PartidaOca partida = partidaService.findByIdOca(partidaOcaId);
+		PartidaOca partida = partidaService.findPartidaOcaById(partidaOcaId);
+		if(partida==null) throw new ResourceNotFoundException("La partida no existe");
+
 		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorOca(u.getId(), partida.getId());
 		FichaOca ficha = j.getFichaOca();
@@ -384,73 +409,145 @@ public class PartidaController {
 				return "redirect:/noAccess";
 		}		
 		partidaService.jugarOca(partida, ficha, j);
-		return "redirect:/sala/" + partidaOcaId + "/playOca";
+		return "redirect:/partida/oca/" + partidaOcaId + "/jugar";
 	}
 
 	
 	//jugar PARCHIS
-	@GetMapping("/{partidaParchisId}/playParchis")
-	public String jugarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model,HttpServletResponse response,RedirectAttributes redirectAttributes){
-		PartidaParchis partida = partidaService.findByIdParchis(partidaParchisId);
+	@GetMapping("/parchis/{partidaParchisId}/jugar")
+	public String jugarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model,HttpServletResponse response,RedirectAttributes redirectAttributes,@Param("mensaje") String mensaje){
+		
+		PartidaParchis partida = partidaService.findPartidaParchisById(partidaParchisId);
+		if(partida==null) throw new ResourceNotFoundException("La partida no existe");
+
+		partidaService.checkIntegridadPartidaParchis(partida);
+
 		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorParchis(u.getId(), partida.getId());
-		model.put("partidaParchis", partida);
 
+		if(mensaje!=null){
+			return this.partidaService.enviarMensajeParchis(partida,mensaje,j);
+			
+		}
+		
 		if(partida.getEstado()==TipoEstadoPartida.TERMINADA){
-			return "redirect:/sala/" + partidaParchisId + "/resumen";
+			redirectAttributes.addFlashAttribute("message", "La partida ya ha terminado");
+			return "redirect:/partida/parchis/" + partidaParchisId + "/resumen";
 
 		}else if(partida.getEstado()==TipoEstadoPartida.CREADA){
 			redirectAttributes.addFlashAttribute("message", "La partida aun no ha empezado");
-			return "redirect:/sala/" + partidaParchisId + "/showParchis";
+			return "redirect:/partida/parchis/" + partidaParchisId + "/espera";
 		}
 
+		response.addHeader("Refresh", REFRESH_SEECONDS);
+		
 		if(j!=null){
 			model.put("modo","jugador");
 			model.put("jugadorAutenticado", j);
-			if(partida.getColorJugadorActual()!=j.getColor()) response.addHeader("Refresh", REFRESH_SEECONDS);
+			if(partida.getColorJugadorActual()==j.getColor()) response.setHeader("Refresh", "30000");
 		}else if(partida.getUsuariosObservadores().contains(u)){
 			model.put("modo","observador");
-			response.addHeader("Refresh", REFRESH_SEECONDS);
 		}
-		model.put("now", new Date());
-		model.put("modo", "Parchis");
+		model.put("partidaParchis", partida);
+		//model.put("now", new Date());	
 		return VIEWS_JUGAR_PARCHIS;
-
-
 	}
 	
-	@PostMapping(value="/{partidaParchisId}/playParchis")
-	public String tirarDadosPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId,
+	@PostMapping(value="/parchis/{partidaParchisId}/jugar")
+	public String tirarDadosPartidaParchis(@ModelAttribute("MoverFichaParchisForm") MoverFichaParchisForm mfpf, @PathVariable("partidaParchisId") int partidaParchisId,
 					 ModelMap model, HttpServletResponse response,  RedirectAttributes redirectAttributes){
 		
+						
 
-		PartidaParchis partida = partidaService.findByIdParchis(partidaParchisId);
+		PartidaParchis partida = partidaService.findPartidaParchisById(partidaParchisId);
+		if(partida==null) throw new ResourceNotFoundException("La partida no existe");
+		
 		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorParchis(u.getId(), partida.getId());
 		model.put("partidaParchis", partida);
+		model.put("now", LocalDateTime.now());
+		model.put("modo","jugador");
+		model.put("jugadorAutenticado", j);
+		model.put("debug", "raro");
 		if(j.getColor() != partida.getColorJugadorActual()){
 				return "redirect:/noAccess";
 		}
 
-		Collection<FichaParchis> fichas = j.getFichasParchis();
-		int dado = partidaService.TirarNumDado();
-		List<FichaParchis> fichasQuePuedenMoverse = j.getFichasQuePuedenMoverse(dado);
 
-		model.put("fichasQueSePuedenMover", fichasQuePuedenMoverse);
-		model.put("now", new Date());
-		model.put("dado", dado);
-		model.put("modo", "Parchis");
-		model.put("modo","jugador");
-		model.put("jugadorAutenticado", j);
-		//partidaService.jugarParchis(partida, fichas, j);
-		return VIEWS_JUGAR_PARCHIS;
+		//El dado tiene un valor y se ha movido ficha --> procesar movimiento de ficha
+		if(mfpf.getJugadorId() != null && mfpf.getFichaId() != null){
+			partidaService.jugarParchis(partida, mfpf.getFichaId(), mfpf.getJugadorId(),mfpf.getDado());	
+			redirectAttributes.addFlashAttribute("debug", "fichaMovida");
+			if(partida.getDado()!=null){//El dado tiene valor despues de mover --> el jugador tiene que volver a mover por que ha comido, sacado 6 o metido ficha
+				int dado = partidaService.tirarDado(partida);
+				List<FichaParchis> fichasQuePuedenMoverse = j.getFichasQuePuedenMoverse(dado);
+				model.put("fichasQueSePuedenMover", fichasQuePuedenMoverse);
+				model.put("dado", dado);
+				model.put("debug", "volverATirar");
+				return VIEWS_JUGAR_PARCHIS;
+			}
+			return "redirect:/partida/parchis/{partidaParchisId}/jugar";
+		}
+
+
+		//El dado no tiene valor --> El jugador tira el dado para ver que saca
+		if(partida.getDado()==null){ 
+			int dado = partidaService.tirarDado(partida);
+			List<FichaParchis> fichasQuePuedenMoverse = j.getFichasQuePuedenMoverse(dado);
+			model.put("fichasQueSePuedenMover", fichasQuePuedenMoverse);
+			model.put("dado", dado);
+			model.put("debug", "dadoNull");
+			return VIEWS_JUGAR_PARCHIS;
+		}
+		return "redirect:/partida/parchis/{partidaParchisId}/jugar";
+	}
+	
+	
+
+	@GetMapping("/oca/{partidaOcaId}/resumen")
+	public String terminadaPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model, HttpServletResponse response,  
+	RedirectAttributes redirectAttributes){
+		PartidaOca partida = partidaService.findPartidaOcaById(partidaOcaId);
+		if(partida==null) throw new ResourceNotFoundException("La partida no existe");
+		
+		if(partida.getEstado()==TipoEstadoPartida.TERMINADA){
+			redirectAttributes.addFlashAttribute("message", "La partida ya ha terminado");
+			return "redirect:/partida/oca/" + partidaOcaId + "/resumen";
+
+		}else if(partida.getEstado()==TipoEstadoPartida.CREADA){
+			redirectAttributes.addFlashAttribute("message", "La partida aun no ha empezado");
+			return "redirect:/partida/oca/" + partidaOcaId + "/espera";
+		}
+
+
+		model.put("partida", partida);
+		return VIEWS_PARTIDAOCA_TERMINADA;
 	}
 
-	@GetMapping("/{partidaOcaId}/resumen")
-	public String terminadaPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model, HttpServletResponse response){
-		PartidaOca partida = partidaService.findByIdOca(partidaOcaId);
-		
+	@GetMapping("/parchis/{partidaParchisId}/resumen")
+	public String terminadaPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model, HttpServletResponse response, 
+	RedirectAttributes redirectAttributes){
+		PartidaParchis partida = partidaService.findPartidaParchisById(partidaParchisId);
+
+	if(partida.getEstado()==TipoEstadoPartida.CREADA){
+			redirectAttributes.addFlashAttribute("message", "La partida todavia no ha empezado");
+			return "redirect:/parchis/"+partida.getId()+"/espera";
+		}
+		else if(partida.getEstado()==TipoEstadoPartida.JUGANDO){
+			redirectAttributes.addFlashAttribute("message", "La partida se está jugando");
+			return "redirect:/parchis/"+partida.getId()+"/jugar";
+		}
+
+
 		model.put("partidaOca", partida);
 		return VIEWS_PARTIDAOCA_TERMINADA;
+	}
+	
+
+	@GetMapping("/redireccion")
+	public String volverPartida(Map<String,Object> model){
+		Usuario usuario = this.usuarioService.getLoggedUsuario();
+
+		return this.partidaService.redirigirPartida(usuario);
 	}
 }

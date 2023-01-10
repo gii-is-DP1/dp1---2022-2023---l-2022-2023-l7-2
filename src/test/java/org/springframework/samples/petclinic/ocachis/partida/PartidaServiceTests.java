@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.partida;
+package org.springframework.samples.petclinic.ocachis.partida;
 import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
@@ -26,11 +26,11 @@ public class PartidaServiceTests {
 
     @Test
 	void shouldFindPartidatWithCorrectId() {
-		PartidaOca po = this.ls.findByIdOca(1);
+		PartidaOca po = this.ls.findPartidaOcaById(1);
 		assertThat(po.getCodigoPartida()).isEqualTo(100);
 		assertThat(po.getMaxJugadores()).isEqualTo(3);
 
-		PartidaParchis pp = this.ls.findByIdParchis(1);
+		PartidaParchis pp = this.ls.findPartidaParchisById(1);
 		assertThat(pp.getCodigoPartida()).isEqualTo(103);
 		assertThat(pp.getMaxJugadores()).isEqualTo(4);
 	}

@@ -1,12 +1,7 @@
-package org.springframework.samples.petclinic.Logro;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+package org.springframework.samples.petclinic.ocachis.Logro;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Collection;
-
-import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +9,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
 import org.springframework.samples.petclinic.ocachis.logro.Logro;
-import org.springframework.samples.petclinic.ocachis.logro.LogroRepository;
 import org.springframework.stereotype.Service;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.junit.jupiter.api.Assertions;
 import org.springframework.samples.petclinic.ocachis.logro.LogroService;
 import org.springframework.samples.petclinic.ocachis.logro.exceptions.MetaNegativaException;
 import org.springframework.samples.petclinic.ocachis.logro.exceptions.MultiplesMetasDefinidasException;
 import org.springframework.samples.petclinic.util.EntityUtils;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -36,14 +26,14 @@ public class LogroServiceTest {
 	void shouldFindLogroWithCorrectId() {
 		Logro logro1 = this.ls.findById(1);
 		assertThat(logro1.getNombre()).isEqualTo("Jugador Oca Junior");
-		assertThat(logro1.getDescripcion()).isEqualTo("Juega 10 partidas de la Oca");
+		assertThat(logro1.getDescripcion()).isEqualTo("Juega 5 partidas de la Oca");
 	}
     @Test
 	void shouldFindAllLogros() {
 		Collection<Logro> logros = this.ls.findAllLogros();
         Logro logro = EntityUtils.getById(logros, Logro.class, 1);
 		assertThat(logro.getNombre()).isEqualTo("Jugador Oca Junior");
-		assertThat(logro.getDescripcion()).isEqualTo("Juega 10 partidas de la Oca");
+		assertThat(logro.getDescripcion()).isEqualTo("Juega 5 partidas de la Oca");
 	}
     @Test 
     void shouldSaveLogro() {

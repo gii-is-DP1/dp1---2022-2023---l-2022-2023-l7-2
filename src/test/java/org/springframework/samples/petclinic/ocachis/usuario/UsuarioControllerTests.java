@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.ocachis;
+package org.springframework.samples.petclinic.ocachis.usuario;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -19,9 +19,6 @@ import org.springframework.samples.petclinic.configuration.SecurityConfiguration
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
 import org.springframework.samples.petclinic.ocachis.user.AuthoritiesService;
 import org.springframework.samples.petclinic.ocachis.user.UserService;
-import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
-import org.springframework.samples.petclinic.ocachis.usuario.UsuarioController;
-import org.springframework.samples.petclinic.ocachis.usuario.UsuarioService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;

@@ -5,7 +5,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
 <%@ attribute name="name" required="true" rtexprvalue="true"
-	description="Name of the active menu: home, owners, vets or error"%>
+	description="Name of the active menu"%>
 
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container">
@@ -27,6 +27,7 @@
 					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 					<span>Inicio</span>
 				</petclinic:menuItem>
+
 			<sec:authorize access="isAuthenticated()">
 				<petclinic:menuItem active="${name eq 'salas'}" url="/sala/"
 					title="Salas de Juego">
@@ -44,16 +45,11 @@
 				</petclinic:menuItem>
 >>>>>>> master
 
-				<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
-					title="veterinarians">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Veterinarians</span>
-				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
-					title="trigger a RuntimeException to see how it is handled">
-					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-					<span>Error</span>
+				<sec:authorize access="isAuthenticated()">
+				<petclinic:menuItem active="${name eq 'partida'}"
+						url="/sala/create" title="Crear Partida">
+						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+						<span>Crear Partida</span>
 				</petclinic:menuItem>
 			</sec:authorize>
 
@@ -61,28 +57,12 @@
 					<petclinic:menuItem active="${name eq 'admin'}"
 						url="/admin/listPartidas" title="Panel de admin" dropdown="${true}">
 						<ul class="dropdown-menu">
-							<li><a href="<c:url value="/admin/listPartidas/" />">Listado
-									Partidas</a></li>
+							<li><a href="<c:url value="/admin/listPartidas/parchis/0" />">Listado Parchis</a></li>
+							
+							<li><a href="<c:url value="/admin/listPartidas/oca/0" />">Listado Oca</a></li>
+							
 							<li class="divider"></li>
-							<li><a href="<c:url value="/admin/listUsuarios" />">Listado
-									Usuarios
-									
-							</a></li>
-						</ul>
-					</petclinic:menuItem>
-			</sec:authorize>
-
-			<sec:authorize access="hasAuthority('admin')">
-					<petclinic:menuItem active="${name eq 'admin'}"
-						url="/admin/listPartidas" title="Panel de admin" dropdown="${true}">
-						<ul class="dropdown-menu">
-							<li><a href="<c:url value="/admin/listPartidas/" />">Listado
-									Partidas</a></li>
-							<li class="divider"></li>
-							<li><a href="<c:url value="/admin/listUsuarios" />">Listado
-									Usuarios
-									
-							</a></li>
+							<li><a href="<c:url value="/admin/listUsuarios" />">Listado Usuarios</a></li>
 						</ul>
 					</petclinic:menuItem>
 			</sec:authorize>
@@ -131,6 +111,7 @@
 >>>>>>> master
 							<li class="divider"></li>
 							<li><a href="<c:url value="/logout" />">Logout</a></li>
+							
 						</ul>
 					
 						</li>

@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.Logro;
+package org.springframework.samples.petclinic.ocachis.Logro;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
