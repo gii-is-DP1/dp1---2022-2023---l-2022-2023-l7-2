@@ -70,32 +70,15 @@ public class PartidaTests {
         pp.setMaxJugadores(1);
         pp.setEstado(TipoEstadoPartida.CREADA);
         
-        // assertThrows(ConstraintViolationException.class,() -> pr.save(pp),
-        // "El mínimo de jugadores es 2");
+        assertThrows(ConstraintViolationException.class,() -> pr.save(pp),
+        "El mínimo de jugadores es 2");
 
         pp.setMaxJugadores(5);
         assertThrows(ConstraintViolationException.class,() -> pr.save(pp),
         "El máximo de jugadores es 4");
     }
-/*
-    void testConstraints(){
-        RecoveryRoom room=new RecoveryRoom();
-        room.setId(7);
-        room.setName("Comfy open bed");
-        room.setSize(-10.50);
-        assertThrows(ConstraintViolationException.class,() -> rr.save(room),
-        "You are not constraining "+
-        "room size to positive values");
-        room.setSize(10.0);
-        room.setName("ja");
-        assertThrows(ConstraintViolationException.class,() -> rr.save(room),
-        "You are not constraining name size to at least 3 characters"
-        );
-        room.setName("En un lugar de la mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor.");
-        assertThrows(ConstraintViolationException.class,() -> rr.save(room),
-        "you are not constraining name size to less than 51 characters");
-    }
-*/
+
+    
     void testPasarTurnoRojoAmarillo(){
         PartidaParchis pp = new PartidaParchis();
         pp.setColorJugadorActual(Color.ROJO);
