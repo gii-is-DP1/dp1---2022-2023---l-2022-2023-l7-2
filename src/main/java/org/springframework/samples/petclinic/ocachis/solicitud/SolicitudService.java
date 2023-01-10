@@ -38,8 +38,15 @@ public class SolicitudService {
             return this.solicitudRepository.save(s);
         }
 
+        @Transactional(readOnly = true)
+        public Solicitud findById(Integer solicitudId){
+            Optional<Solicitud> optSolicitud = this.solicitudRepository.findById(solicitudId);
+            if(optSolicitud.isEmpty()) throw new ResourceNotFoundException("Solicitud no encontrada");
+            return optSolicitud.get();
+        }
+
         @Transactional(readOnly=true)
-        public Collection<Solicitud> findAllLogros(){
+        public Collection<Solicitud> findAllSolicitudes(){
             return this.solicitudRepository.findAll();
         }
 
@@ -70,18 +77,15 @@ public class SolicitudService {
         
         @Transactional
         public void aceptarSolicitud(int id){
-            Optional<Solicitud> optSolicitud = this.solicitudRepository.findById(id);
-            if(optSolicitud.isEmpty()) throw new ResourceNotFoundException("Solicitud no encontrada");
-            Solicitud solicitud = optSolicitud.get();
+            
+            Solicitud solicitud = findById(id);
             solicitud.setTipoEstado(TipoEstadoSolicitud.ACEPTADA);
             save(solicitud);
         }
 
         @Transactional
         public void rechazarSolicitud(int id){
-            Optional<Solicitud> optSolicitud = this.solicitudRepository.findById(id);
-            if(optSolicitud.isEmpty()) throw new ResourceNotFoundException("Solicitud no encontrada");
-            Solicitud solicitud = optSolicitud.get();
+            Solicitud solicitud = findById(id);
             solicitud.setTipoEstado(TipoEstadoSolicitud.RECHAZADA);
             save(solicitud);
         }
