@@ -38,7 +38,10 @@ public class PartidaOca extends Partida{
 	@CollectionTable(name="chatOca")
 	protected List<String> chatOca;
 
-	
+	@ElementCollection
+	@CollectionTable(name="log")
+	protected List<String> log = inicializarLog();
+
 	public void addMensaje(String mensaje,Jugador jugador){
 		String mensajeFinal ="";
 		String username = jugador.getUsuario().getUser().getUsername();
@@ -55,9 +58,7 @@ public class PartidaOca extends Partida{
 		}  
 		return chat;
 	}
-	@ElementCollection
-	@CollectionTable(name="log")
-	protected List<String> log = inicializarLog();
+	
 
 	private List<String> inicializarLog(){
 		List<String> result = new ArrayList<>();

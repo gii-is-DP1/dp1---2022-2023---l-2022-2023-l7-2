@@ -1,6 +1,5 @@
 package org.springframework.samples.petclinic.ocachis.solicitud;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 
@@ -11,10 +10,8 @@ import org.springframework.samples.petclinic.ocachis.jugador.JugadorService;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.samples.petclinic.ocachis.usuario.UsuarioService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -36,18 +33,21 @@ public class SolicitudController {
         this.usuarioService = usuarioService;
         this.jugadorService = jugadorService;
     }
+    
     @GetMapping(value="/amigos")
     public String listarAmigos(@Param("apodoFiltro") String apodoFiltro,Map<String,Object> model){
         Usuario usuario = usuarioService.getLoggedUsuario();
         if(apodoFiltro!=null){
         
-        Collection<Usuario> usuariosFiltrado = this.usuarioService.findFiltroApodo(apodoFiltro,usuario.getId());
+        Collection<Usuario> usuariosFiltrado = this.usuarioService.findFiltroApodo(apodoFiltro, usuario.getId());
         model.put("filtrados", usuariosFiltrado);
         }
-       Map<Usuario,Boolean> amigos = solicitudService.findAllAmigos(usuario.getId());
+        Map<Usuario,Boolean> amigos = solicitudService.findAllAmigos(usuario.getId());
 		model.put("amigos", amigos);
 		return VIEWS_AMIGOS;
     }
+
+
     @GetMapping(value="/pendientes")
     public String listarSolicitudesPendientes(Map<String,Object> model){
         Usuario usuario = usuarioService.getLoggedUsuario();
@@ -77,13 +77,14 @@ public class SolicitudController {
         this.solicitudService.agregarUsuario(usuarioSolicitud.getId(), usuarioInvitadoId);
         return  "redirect:/solicitud/amigos";
     }
+
+
     @GetMapping(value="/amigos/{usuarioId}/espectar")
     public String espectarPartida(@PathVariable("usuarioId") int usuarioId,Map<String,Object> model){
 
         Map<String,Integer> partidaAEspectar = this.jugadorService.findIdPartidaEspectar(usuarioId);
         Boolean sePuedeEspectar = this.solicitudService.sePuedeEspectar(usuarioId, partidaAEspectar);
         if(sePuedeEspectar){
-
            String espectarUrl= this.solicitudService.obtenerUrlEspectar(partidaAEspectar);
         return "redirect:"+espectarUrl;
     }

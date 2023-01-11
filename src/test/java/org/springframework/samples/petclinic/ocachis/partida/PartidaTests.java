@@ -1,7 +1,5 @@
 package org.springframework.samples.petclinic.ocachis.partida;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,23 +8,17 @@ import javax.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
-import org.springframework.samples.petclinic.ocachis.partida.PartidaOca;
-import org.springframework.samples.petclinic.ocachis.partida.PartidaOcaRepository;
-import org.springframework.samples.petclinic.ocachis.partida.PartidaParchis;
-import org.springframework.samples.petclinic.ocachis.partida.PartidaParchisRepository;
-import org.springframework.samples.petclinic.ocachis.partida.TipoEstadoPartida;
 import org.springframework.stereotype.Service;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
-
-
 public class PartidaTests {
     @Autowired
     PartidaOcaRepository or;
@@ -59,7 +51,7 @@ public class PartidaTests {
         po.setMaxJugadores(1);
         po.setEstado(TipoEstadoPartida.CREADA);
         
-        assertThrows(ConstraintViolationException.class,() -> or.save(po),
+        assertThrows(ConstraintViolationException.class,() -> or.save( po),
         "El mínimo de jugadores es 2");
         
         po.setMaxJugadores(5);

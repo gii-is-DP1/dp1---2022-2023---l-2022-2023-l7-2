@@ -10,6 +10,7 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -44,10 +45,10 @@ public class Partida extends BaseEntity{
 	private Usuario ganador;
 	
 	private Color ColorJugadorActual=Color.ROJO;
+	
 	@NotNull
-	@Range(min=2, max=4)
-	@Min(value= 2)
-	@Max(value= 4)
+	@Min(2)
+	@Max(4)
 	private Integer maxJugadores;
 
 	@ManyToMany
