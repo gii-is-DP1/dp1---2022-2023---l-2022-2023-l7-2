@@ -121,7 +121,7 @@ public class PartidaService {
 	}
 
 	@Transactional(readOnly = true)
-	public Collection<PartidaOca> findAllOca() {
+	public Collection<PartidaOca> findAllOca() { 
 		return this.partidaOcaRepository.findAll();
 	}
 

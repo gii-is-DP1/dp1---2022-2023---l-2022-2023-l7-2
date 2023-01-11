@@ -11,8 +11,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+
 import org.springframework.stereotype.Service;
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.model.exceptions.ResourceNotFoundException;
@@ -143,8 +147,27 @@ public class PartidaServiceTests {
 		this.ps.iniciarPartidaParchis(partidaParchis);
 		assertThat(partidaParchis.getEstado().equals(TipoEstadoPartida.JUGANDO));
 	}
+
+	@Test
+	void testRedirigirPartida(){
+		List<Jugador> jugadores = (List<Jugador>) partidaOca.getJugadores();
+		Jugador j = jugadores.get(0);
+		String res = "redirect:/partida/oca/" + 3 + "/jugar";
+		String redireccion = ps.redirigirPartida(j.getUsuario());
+		assertThat(res==redireccion);
+	}
 	
 // ************************************************************************OCA************************************************************************
+
+
+	@Test
+	void testfindAllPageableOca(){
+		Pageable pageable = PageRequest.of(0,5);
+		Page<PartidaOca> partidasOca =ps.findAllPageableOca(pageable);
+		assertThat(partidasOca.getSize()==1);
+	}
+	
+
 
 	@Test 
 	void shouldReturnFalseHayAlguienEnElPozo(){
@@ -283,7 +306,12 @@ public class PartidaServiceTests {
 
 
 	// ************************************************************************PARCHIS************************************************************************
-
+	@Test
+	void testfindAllPageableParchis(){
+		Pageable pageable = PageRequest.of(0,5);
+		Page<PartidaParchis> partidasParchis =ps.findAllPageableParchis(pageable);
+		assertThat(partidasParchis.getSize()==2);
+	}
 	@Test
 	void testFinalizarPartidaParchis(){
 		TipoEstadoPartida estadoInicial = partidaParchis.getEstado();

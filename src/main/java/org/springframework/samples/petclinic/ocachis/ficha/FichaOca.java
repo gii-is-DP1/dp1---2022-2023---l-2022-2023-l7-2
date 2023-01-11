@@ -11,7 +11,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
+@Entity 
 
 public class FichaOca extends Ficha {
 	private static final Coordenadas TRANSFORMACION_VERTICAL_1 = new Coordenadas(18,18);

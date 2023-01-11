@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class FichaService {
     private FichaOcaRepository fichaOcaRepository;
     private FichaParchisRepository fichaParchisRepository;
-
+ 
     @Autowired
     public FichaService(FichaOcaRepository fichaOcaRepository, FichaParchisRepository fichaParchisRepository){
         this.fichaOcaRepository = fichaOcaRepository;
@@ -120,7 +120,7 @@ public class FichaService {
     }
 
     @Transactional
-    private void removeFichaParchis(FichaParchis ficha) {
+    public void removeFichaParchis(FichaParchis ficha) {
         fichaParchisRepository.delete(ficha);
     }
 

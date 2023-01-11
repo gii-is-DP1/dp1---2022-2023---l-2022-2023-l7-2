@@ -124,7 +124,7 @@ class PartidaControllerTests {
 				).andExpect(status().isOk()).andExpect(model().attributeHasFieldErrors("procesarPartidaForm", "tipo"))			.andExpect(view().name("partidas/createPartidaForm"));
 	}
 
-	@WithMockUser(value = "spring")
+	@WithMockUser(value = "spring") 
 	@Test
 	void testShowSalaOcaListHtml() throws Exception {
 		mockMvc.perform(get("/partida/oca/listar/{numeroPagina}",TEST_NUMEROPAGINA)).andExpect(status().isOk()).andExpect(model().attributeExists("partidaOca"))
