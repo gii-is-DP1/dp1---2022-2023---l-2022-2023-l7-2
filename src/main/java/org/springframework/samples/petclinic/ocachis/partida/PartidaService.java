@@ -273,30 +273,7 @@ public class PartidaService {
 
 	}
 
-	public void pasarTurnoOca(PartidaOca partida) {
-		switch (partida.getColorJugadorActual()) {
-			case ROJO:
-				partida.setColorJugadorActual(Color.AMARILLO);
-
-				break;
-			case AMARILLO:
-				if (partida.getJugadores().size() == 2)
-					partida.setColorJugadorActual(Color.ROJO);
-				else
-					partida.setColorJugadorActual(Color.VERDE);
-				break;
-			case VERDE:
-				if (partida.getJugadores().size() == 3)
-					partida.setColorJugadorActual(Color.ROJO);
-				else
-					partida.setColorJugadorActual(Color.AZUL);
-				break;
-			case AZUL:
-				partida.setColorJugadorActual(Color.ROJO);
-				break;
-		}
-		partida.addLog("TURNO DEL JUGADOR " + partida.getColorJugadorActual());
-	}
+	
 
 	@Transactional
 	public void jugarOca(PartidaOca partida, FichaOca ficha, Jugador j) {
@@ -311,7 +288,7 @@ public class PartidaService {
 			else
 				partida.addLog("Al jugador " + j.getColor() + " le quedan " + j.getNumTurnosBloqueadoRestantesOca()
 						+ " turnos bloqueados");
-				pasarTurnoOca(partida);
+				partida.pasarTurno();
 			return;
 		}
 
@@ -403,7 +380,7 @@ public class PartidaService {
 		}
 
 		if (!volverATirar) {
-			pasarTurnoOca(partida);
+			partida.pasarTurno();
 		}
 	}
 
@@ -684,18 +661,21 @@ public class PartidaService {
 			//partida.setDado(6);
 			partida.addLog("Ha sacado " + partida.getDado());
 		}
-
 		return partida.getDado();
 	}
 
 	@Transactional(readOnly = true)
-	public Optional<PartidaParchis> findParchisByCodigo(Integer codigo) {
-		return this.partidaParchisRepository.findByCodigo(codigo);
+	public PartidaParchis findParchisByCodigo(Integer codigo) {
+		Optional<PartidaParchis> partida =this.partidaParchisRepository.findByCodigo(codigo);
+		if(partida.isEmpty()) throw new ResourceNotFoundException("Partida no encontrada");
+		return partida.get();
 	}
 
 	@Transactional(readOnly = true)
-	public Optional<PartidaOca> findOcaByCodigo(Integer codigo) {
-		return this.partidaOcaRepository.findByCodigo(codigo);
+	public PartidaOca findOcaByCodigo(Integer codigo) {
+		Optional<PartidaOca> partida =this.partidaOcaRepository.findByCodigo(codigo);
+		if(partida.isEmpty()) throw new ResourceNotFoundException("Partida no encontrada");
+		return partida.get();
 	}
 
 	@Transactional
@@ -726,10 +706,9 @@ public class PartidaService {
 		if(diferencia>DURACION_TURNO_MILIS){
 			partida.setFechaHoraUltimoMovimiento(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
 			partida.addLog("Ha perdido el turno por inactividad");
-			pasarTurnoOca(partida);
+			partida.pasarTurno();
 		}
 	}
-
 
 	@Transactional 
 	public void iniciarPartidaOca(PartidaOca partidaOca){
@@ -746,6 +725,7 @@ public class PartidaService {
 		partida.setFechaHoraUltimoMovimiento(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
 		this.saveParchis(partida);
 	}
+	
 	public String redirigirPartida(Usuario usuario){
 		Collection<Jugador> jugadoresUsuario = jugadorService.findAllJugadoresForUsuario(usuario.getId());
 		String redireccion = "";
@@ -769,17 +749,18 @@ public class PartidaService {
 			}}
 			return redireccion;
 	}
+	
 	@Transactional
-	public String enviarMensajeOca (PartidaOca partida,String mensaje, Jugador jugador){
+	public void enviarMensajeOca (PartidaOca partida,String mensaje, Jugador jugador){
 		partida.addMensaje(mensaje,jugador);
 		this.saveOca(partida);
-		return "redirect:/partida/oca/"+partida.getId()+"/jugar";
 	}
+
 	@Transactional
-	public String enviarMensajeParchis(PartidaParchis partida,String mensaje, Jugador jugador){
+	public void enviarMensajeParchis(PartidaParchis partida,String mensaje, Jugador jugador){
 		partida.addMensaje(mensaje,jugador);
 		this.saveParchis(partida);
-		return "redirect:/partida/parchis/"+partida.getId()+"/jugar";
+		
 	}
 	
 }

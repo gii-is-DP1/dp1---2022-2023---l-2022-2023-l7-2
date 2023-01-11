@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Color;
+import org.springframework.samples.petclinic.model.exceptions.ResourceNotFoundException;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
@@ -77,13 +78,12 @@ public class PartidaController {
 	@GetMapping("/oca/listar/{numPagina}")
 	public String showSalaOcaList(@Param("codigo") Integer codigo,ModelMap model,RedirectAttributes redirectAttributes,@PathVariable("numPagina") Integer numPagina) {
 		if(!(codigo==null)){
-			Optional<PartidaOca> partidaOca = this.partidaService.findOcaByCodigo(codigo);
-			if(partidaOca.isPresent()){
-				
-				Integer idPartidaOca = partidaOca.get().getId();
-				
+			try{
+				PartidaOca partidaOca = this.partidaService.findOcaByCodigo(codigo);
+				Integer idPartidaOca = partidaOca.getId();
+	
 				return unirsePartidaOca(idPartidaOca,  model, redirectAttributes);
-			} else{
+			}catch(ResourceNotFoundException e){
 				Pageable pageable = PageRequest.of(0,5);
 				Page<PartidaOca> partidasOca = partidaService.findEsperaOca(pageable);
 				Integer numPaginas = partidasOca.getTotalPages();
@@ -91,7 +91,6 @@ public class PartidaController {
 				model.put("message","La partida a la que estás intentando unirte no existe.");
 				model.put("numTotalPaginas",numPaginas);
 				return VIEWS_OCA_SALAS;
-				
 			}
 		}
 		Usuario usuario = this.usuarioService.getLoggedUsuario();
@@ -108,12 +107,13 @@ public class PartidaController {
 	@GetMapping("/parchis/listar/{numPagina}")
 	public String showSalaParchisList(@Param("codigo") Integer codigo,ModelMap model,RedirectAttributes redirectAttributes,@PathVariable("numPagina") Integer numPagina) {
 		if(!(codigo==null)){
-			Optional<PartidaParchis> partidaParchis = this.partidaService.findParchisByCodigo(codigo);
-			if(partidaParchis.isPresent()){
-				Integer idPartidaParchis = partidaParchis.get().getId();
-				
+			PartidaParchis partidaParchis = null;
+			try{
+				partidaParchis = this.partidaService.findParchisByCodigo(codigo);
+				Integer idPartidaParchis = partidaParchis.getId();
 				return unirsePartidaParchis(idPartidaParchis, model, redirectAttributes);
-			} else{
+				
+			}catch(ResourceNotFoundException e){
 				Pageable pageable = PageRequest.of(0,5);
 				Page<PartidaParchis> partidasParchis = partidaService.findEsperaParchis(pageable);
 				Integer numPaginas = partidasParchis.getTotalPages();
@@ -135,7 +135,7 @@ public class PartidaController {
 	}
 
 	//create
-	
+
 	@GetMapping("/crear")
 	public String crearPartida(ModelMap model) {
 		ProcesarPartidaForm proceso = new ProcesarPartidaForm();
@@ -359,7 +359,8 @@ public class PartidaController {
 		Usuario u = this.usuarioService.getLoggedUsuario();
 		Jugador j = this.jugadorService.findJugadorOca(u.getId(), partida.getId());
 		if(mensaje!=null){
-			return this.partidaService.enviarMensajeOca(partida,mensaje,j);
+			this.partidaService.enviarMensajeOca(partida,mensaje,j);
+			return "redirect:/partida/oca/"+partida.getId()+"/jugar";
 		}
 
 
@@ -413,8 +414,8 @@ public class PartidaController {
 		Jugador j = this.jugadorService.findJugadorParchis(u.getId(), partida.getId());
 
 		if(mensaje!=null){
-			return this.partidaService.enviarMensajeParchis(partida,mensaje,j);
-			
+			this.partidaService.enviarMensajeParchis(partida,mensaje,j);
+			return "redirect:/partida/parchis/"+partida.getId()+"/jugar";
 		}
 		
 		if(partida.getEstado()==TipoEstadoPartida.TERMINADA){

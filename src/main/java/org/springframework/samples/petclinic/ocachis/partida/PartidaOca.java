@@ -92,5 +92,30 @@ public class PartidaOca extends Partida{
 		return null;
 	}
 
+	public void pasarTurno() {
+		switch (this.getColorJugadorActual()) {
+			case ROJO:
+				this.setColorJugadorActual(Color.AMARILLO);
+
+				break;
+			case AMARILLO:
+				if (this.getJugadores().size() == 2)
+					this.setColorJugadorActual(Color.ROJO);
+				else
+					this.setColorJugadorActual(Color.VERDE);
+				break;
+			case VERDE:
+				if (this.getJugadores().size() == 3)
+					this.setColorJugadorActual(Color.ROJO);
+				else
+					this.setColorJugadorActual(Color.AZUL);
+				break;
+			case AZUL:
+				this.setColorJugadorActual(Color.ROJO);
+				break;
+		}
+		this.addLog("TURNO DEL JUGADOR " + this.getColorJugadorActual());
+	}
+
 	 
 }
