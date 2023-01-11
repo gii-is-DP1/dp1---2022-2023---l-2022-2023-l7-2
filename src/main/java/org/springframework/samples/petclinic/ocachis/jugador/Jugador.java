@@ -5,7 +5,7 @@ package  org.springframework.samples.petclinic.ocachis.jugador;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Collectors;
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -53,6 +53,7 @@ private Integer numTurnosBloqueadoRestantesOca = 0;
 private FichaOca fichaOca;
 
 @OneToMany(cascade = CascadeType.ALL)
+
 private Collection<FichaParchis> fichasParchis;
 
 
@@ -95,22 +96,6 @@ public String toString(){
                 if(partidaParchis.sePuedeMover(fp,dado)) result.add(fp);
             }
         }
-        return result;
-    }
-
-    public List<FichaParchis> getFichasQuePuedenMoverseAntiguo(Integer dado){
-        ArrayList<FichaParchis> result = new ArrayList<>();
-        if(dado == 5 && fichasParchis.stream().anyMatch(fp->fp.isEstaEnCasa())){
-            return fichasParchis.stream().filter(fp->fp.isEstaEnCasa()).collect(Collectors.toList());
-
-        }else if(dado == 6 && fichasParchis.stream().anyMatch(fp->fp.getCasillaActual().getBloqueada())) {
-            return fichasParchis.stream().filter(fp->fp.getCasillaActual().getBloqueada()).collect(Collectors.toList());
-        }else{
-            for(FichaParchis fp: fichasParchis){
-                if(partidaParchis.sePuedeMover(fp,dado)) result.add(fp);
-            }
-        }
-
         return result;
     }
 

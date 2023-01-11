@@ -109,6 +109,7 @@ public class PartidaServiceTests {
 		assertThat(po.getCasillas().size() == 63);
 	}
 
+    
 	@Test
 	void shouldInitializePartidaParchis(){
 		PartidaParchis pp = this.ps.crearPartidaParchis(2);
@@ -167,25 +168,10 @@ public class PartidaServiceTests {
 		this.ps.enviarMensajeOca(partidaOca, "Prueba", j);
 		assertThat(partidaOca.getChatOca().get(0).equals("Pepe(ROJO): Prueba"));
 	}
+
+
 	
-	// @Test 
-	// void shouldEnviarMensajeOc2a(){
-	// 	PartidaOca po = this.ps.crearPartidaOca(2);
-	// 	Jugador j = new Jugador();
-	// 	j.setColor(Color.ROJO);
-	// 	j.setNumTurnosBloqueadoRestantesOca(100);
-	// 	j.setUsuario(usuario);
-	// 	FichaOca f = new FichaOca();
-	// 	f.setColor(Color.ROJO);
-	// 	po.getCasillaConNumero(31).añadirFicha(f);
-	// 	String mensaje = "mensaje prueba";
-	// 	po.addMensaje(mensaje, j);
-	// 	String mensajeFinal ="";
-	// 	String username = j.getUsuario().getUser().getUsername();
-	// 	Color color = j.getColor();
-	// 	mensajeFinal = mensajeFinal + username +"("+color.toString()+"): " + mensaje;
-	// 	assertThat(po.printChatOca() == mensajeFinal);
-	// }
+	
 	
 	@Test 
 	void shouldEnviarMensajeParchis(){

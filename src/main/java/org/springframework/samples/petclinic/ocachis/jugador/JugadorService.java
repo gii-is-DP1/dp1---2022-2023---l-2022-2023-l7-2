@@ -36,10 +36,7 @@ public class JugadorService {
       this.fichaService = fichaService;
 	  }
     
-    @Transactional(readOnly=true)
-	  public Collection<Jugador> findAll(){
-  		return jugadorRepository.findAll();
-    }
+    
 
     @Transactional(readOnly=true)
     public Jugador findById(Integer id){
@@ -145,7 +142,7 @@ public class JugadorService {
       }
       return partidaEspectar;
     }
-
+ 
 
   @Transactional(readOnly = true)
 	public Boolean estaJugando(Integer usuarioId) {

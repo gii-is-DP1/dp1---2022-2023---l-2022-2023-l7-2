@@ -7,11 +7,14 @@ import java.util.List;
 
 import javax.validation.ConstraintViolationException;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.Color;
+import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
+import org.springframework.samples.petclinic.ocachis.casilla.CasillaParchis;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +39,12 @@ public class PartidaTests {
 
     PartidaOca partidaOca;
     PartidaParchis partidaParchis;
-
+	@BeforeEach
+	public void setup(){
+		partidaOca = this.ps.findPartidaOcaById(3);
+		partidaOca.setEstado(TipoEstadoPartida.JUGANDO);
+		partidaParchis = this.ps.findPartidaParchisById(1);
+	}
     @Test
     public void partidaTest(){
         ocarepositoryExists();
@@ -184,8 +192,28 @@ public class PartidaTests {
 		Integer tamañoInicial = pp.getChatParchis().size();
 		
 		pp.addMensaje("prueba", j);
-		Integer tamañoFinal = pp.getChatParchis().size();
-		assertThat(tamañoFinal == tamañoInicial+1);
+		assertThat(pp.printChatParchis().equals("usuario(ROJO): prueba"));
 	}
+    @Test
+    void testLogOca(){
+        PartidaOca po = this.ps.findPartidaOcaById(3);
+		List<Jugador> jugadores = (List<Jugador>) partidaParchis.getJugadores();
+		Jugador j = jugadores.get(0);
+        CasillaOca casillaFinal = po.getCasillaConNumero(8);
+        po.addLog("Mueve una ficha hasta la casilla " + casillaFinal.getNumero());
+        assertThat(po.printLog().equals("Mueve una ficha hasta la casilla " + casillaFinal.getNumero()));
+
+    }
+
+    @Test
+    void testLogParchis(){
+        PartidaParchis pp = this.ps.findPartidaParchisById(1);
+		List<Jugador> jugadores = (List<Jugador>) partidaParchis.getJugadores();
+		Jugador j = jugadores.get(0);
+        CasillaParchis casillaFinal = pp.getCasillaConNumero(8);
+        pp.addLog("Mueve una ficha hasta la casilla " + casillaFinal.getNumero());
+        assertThat(pp.printLog().equals("Mueve una ficha hasta la casilla " + casillaFinal.getNumero()));
+
+    }
 
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface JugadorRepository extends CrudRepository<Jugador, Integer>{
-    Collection<Jugador> findAll();  
+   
 
     @Query("SELECT j from Jugador j WHERE j.usuario.id = :usuarioId")
     Collection<Jugador> findAllJugadoresForUsuario(@Param("usuarioId") Integer usuarioId);

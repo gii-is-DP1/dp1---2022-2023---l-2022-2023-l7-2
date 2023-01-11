@@ -74,7 +74,7 @@ public class PartidaParchis extends Partida{
 		result.add("TURNO DEL JUGADOR ROJO");
 		return result;
 	}
-	
+	 
 	public void addLog(String newLog){
 
 		if(newLog.startsWith("TURNO DEL JUGADOR")){
