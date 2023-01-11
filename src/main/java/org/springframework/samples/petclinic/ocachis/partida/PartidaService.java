@@ -180,7 +180,7 @@ public class PartidaService {
 		return partida.get();
 	}
 
-	private CasillaOca funcionOca(PartidaOca partida, CasillaOca casillaInicial, Jugador j) {
+	public CasillaOca funcionOca(PartidaOca partida, CasillaOca casillaInicial, Jugador j) {
 
 		CasillaOca casillaFinal = null;
 		switch (casillaInicial.getNumero()) {
@@ -385,6 +385,7 @@ public class PartidaService {
 	}
 
 	public void finalizarPartidaOca(PartidaOca partida, Jugador jugadorGanador) {
+		partida.setEstado(TipoEstadoPartida.TERMINADA);
 		partida.setGanador(jugadorGanador.getUsuario());
 		jugadorGanador.setEsGanador(true);
 		partida.setFechaFinalizacion(LocalDateTime.now());
@@ -422,7 +423,7 @@ public class PartidaService {
 		return partida;
 	}
 
-	private void inicializarCasillasParchis(PartidaParchis partida) {
+	public void inicializarCasillasParchis(PartidaParchis partida) {
 		ArrayList<CasillaParchis> casillas = new ArrayList<>();
 		for (int i = 1; i <= 104; i++) {
 			CasillaParchis casilla = new CasillaParchis();
@@ -540,7 +541,7 @@ public class PartidaService {
 
 	}
 
-	private void finalizarPartidaParchis(PartidaParchis partida, Jugador jugadorGanador) {
+	public void finalizarPartidaParchis(PartidaParchis partida, Jugador jugadorGanador) {
 		partida.addLog("El jugador " +jugadorGanador.getColor() + " ha ganado la partida! ENHORABUENA!!");
 		partida.setEstado(TipoEstadoPartida.TERMINADA);
 		partida.setGanador(jugadorGanador.getUsuario());
@@ -561,7 +562,7 @@ public class PartidaService {
 
 	}
 
-	private boolean verificarFinalPartida(Jugador jugador) {
+	public boolean verificarFinalPartida(Jugador jugador) {
 		for (FichaParchis ficha : jugador.getFichasParchis()) {
 			if (!ficha.isEstaEnLaMeta())
 				return false;
@@ -617,7 +618,7 @@ public class PartidaService {
 	}
 
 	@Transactional
-	private void comerFicha(CasillaParchis casilla, FichaParchis ficha, PartidaParchis partida) {
+	public void comerFicha(CasillaParchis casilla, FichaParchis ficha, PartidaParchis partida) {
 		for (FichaParchis f : casilla.getFichas()) {
 			if (f.getColor() != ficha.getColor()) {
 				mandarFichaACasa(partida, f);

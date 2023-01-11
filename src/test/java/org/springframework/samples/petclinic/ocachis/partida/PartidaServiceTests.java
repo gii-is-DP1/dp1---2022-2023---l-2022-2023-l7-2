@@ -1,17 +1,25 @@
 package org.springframework.samples.petclinic.ocachis.partida;
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 import org.springframework.samples.petclinic.model.Color;
+import org.springframework.samples.petclinic.model.exceptions.ResourceNotFoundException;
+import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaParchis;
+import org.springframework.samples.petclinic.ocachis.casilla.TipoCasillaOca;
+import org.springframework.samples.petclinic.ocachis.casilla.TipoCasillaParchis;
 import org.springframework.samples.petclinic.ocachis.ficha.Ficha;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
@@ -24,6 +32,9 @@ import org.springframework.samples.petclinic.util.EntityUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -215,8 +226,83 @@ public class PartidaServiceTests {
 	
 		}
 
+		@Test 
+		void testInicializarCasillasOca(){
+			PartidaOca partida = new PartidaOca();
+			ps.inicializarCasillasOca(partida);
+			assertNotNull(partida.getCasillas());
+			assertTrue(partida.getCasillas().size()==63);
+			assertTrue(partida.getCasillaConNumero(6).getTipoCasillaOca()==TipoCasillaOca.PUENTE);
+			assertTrue(partida.getCasillaConNumero(12).getTipoCasillaOca()==TipoCasillaOca.PUENTE);
+			assertTrue(partida.getCasillaConNumero(19).getTipoCasillaOca()==TipoCasillaOca.POSADA);
+			assertTrue(partida.getCasillaConNumero(26).getTipoCasillaOca()==TipoCasillaOca.DADOS);
+			assertTrue(partida.getCasillaConNumero(53).getTipoCasillaOca()==TipoCasillaOca.DADOS);
+			assertTrue(partida.getCasillaConNumero(31).getTipoCasillaOca()==TipoCasillaOca.POZO);
+			assertTrue(partida.getCasillaConNumero(42).getTipoCasillaOca()==TipoCasillaOca.LABERINTO);
+			assertTrue(partida.getCasillaConNumero(52).getTipoCasillaOca()==TipoCasillaOca.CARCEL);
+			assertTrue(partida.getCasillaConNumero(58).getTipoCasillaOca()==TipoCasillaOca.MUERTE);
+			assertTrue(partida.getCasillaConNumero(63).getTipoCasillaOca()==TipoCasillaOca.FINAL);
+		}
+
+		@Test
+
+		void testFuncionOca(){
+			ArrayList<Integer> numeros = new ArrayList<>();
+			numeros.add(5);numeros.add(9);numeros.add(14);	numeros.add(18);	numeros.add(23);	numeros.add(27);	numeros.add(32);	numeros.add(36);
+			numeros.add(41);	numeros.add(45);	numeros.add(50);	numeros.add(54);	numeros.add(59);
+			Jugador jugador = partidaOca.getJugadores().stream().filter(j->j.getColor()==Color.ROJO).findFirst().get();
+			
+			for(Integer num: numeros){
+				CasillaOca casillaInicial = partidaOca.getCasillaConNumero(num);
+				CasillaOca casillaFinal = this.ps.funcionOca(partidaOca, casillaInicial, jugador);
+				assertTrue(casillaFinal.getTipoCasillaOca()==TipoCasillaOca.OCA);
+			}
+		}
+
+		@Test
+		void testBorrarOca(){
+			Integer partidaId = 3;
+			PartidaOca partida = ps.findPartidaOcaById(partidaId);
+			assertNotNull(partida.getId());
+
+			ps.borrarPartidaOca(partida.getId());
+			assertThrows(ResourceNotFoundException.class,() -> ps.findPartidaOcaById(partidaId));
+		}
+
+
+		@Test
+		void testFinalizarPartidaOca(){
+			partidaOca.setEstado(TipoEstadoPartida.JUGANDO);
+			Jugador jugador = partidaOca.getJugadores().stream().filter(j->j.getColor()==Color.ROJO).findFirst().get();
+			ps.finalizarPartidaOca(partidaOca, jugador);
+			assertTrue(partidaOca.getEstado() == TipoEstadoPartida.TERMINADA, "No actualiza las estadisticas");
+			assertTrue(partidaOca.getGanador()==jugador.getUsuario());
+			assertNotNull(partidaOca.getDuracion());
+		}
+
+
 
 	// ************************************************************************PARCHIS************************************************************************
+
+	@Test
+	void testFinalizarPartidaParchis(){
+		TipoEstadoPartida estadoInicial = partidaParchis.getEstado();
+		Jugador jugador = partidaParchis.getJugadores().stream().filter(j->j.getColor()==Color.ROJO).findFirst().get();
+		ps.finalizarPartidaParchis(partidaParchis, jugador);
+		assertTrue(partidaParchis.getEstado()==TipoEstadoPartida.TERMINADA && partidaParchis.getEstado()!=estadoInicial,"No actualiza las estadisticas");
+		assertTrue(partidaParchis.getGanador()==jugador.getUsuario());
+		assertNotNull(partidaParchis.getDuracion());
+	}
+
+	@Test
+	void testBorrarParchis(){
+		Integer partidaId = 1;
+		PartidaParchis partida = ps.findPartidaParchisById(partidaId);
+		assertNotNull(partida.getId());
+
+		ps.borrarPartidaParchis(partida.getId());
+		assertThrows(ResourceNotFoundException.class,() -> ps.findPartidaParchisById(partidaId));
+	}
 
 	@Test
 	void shouldTirarDadoParchis(){
@@ -304,10 +390,78 @@ public class PartidaServiceTests {
 		}
 		assertTrue(numFichasEnCasillaInicialFinal == numFichasEnCasillaInicialInicial -1 , "No ha eliminado la ficha de la casillaInicial");
 		assertTrue(numFichasEnCasaFinal == numFichasEnCasaInicial+1, "No manda la ficha a casa");
-
-
-		
-		
 	}
 
+	@Test 
+		void testInicializarCasillasParchis(){
+			PartidaParchis partida = new PartidaParchis();
+			ps.inicializarCasillasParchis(partida);
+			assertNotNull(partida.getCasillas());
+			assertTrue(partida.getCasillas().size()==104);
+			assertTrue(partida.getCasillaConNumero(101).getTipoCasillaParchis()==TipoCasillaParchis.CASAAMARILLO);
+			assertTrue(partida.getCasillaConNumero(102).getTipoCasillaParchis()==TipoCasillaParchis.CASAAZUL);
+			assertTrue(partida.getCasillaConNumero(103).getTipoCasillaParchis()==TipoCasillaParchis.CASAROJO);
+			assertTrue(partida.getCasillaConNumero(104).getTipoCasillaParchis()==TipoCasillaParchis.CASAVERDE);
+			assertTrue(partida.getCasillaConNumero(5).getTipoCasillaParchis()==TipoCasillaParchis.INCIOAMARILLO);
+			assertTrue(partida.getCasillaConNumero(22).getTipoCasillaParchis()==TipoCasillaParchis.INCIOAZUL);
+			assertTrue(partida.getCasillaConNumero(39).getTipoCasillaParchis()==TipoCasillaParchis.INCIOROJO);
+			assertTrue(partida.getCasillaConNumero(56).getTipoCasillaParchis()==TipoCasillaParchis.INCIOVERDE);
+			assertTrue(partida.getCasillaConNumero(76).getTipoCasillaParchis()==TipoCasillaParchis.FINALAMARILLO);
+			assertTrue(partida.getCasillaConNumero(84).getTipoCasillaParchis()==TipoCasillaParchis.FINALAZUL);
+			assertTrue(partida.getCasillaConNumero(92).getTipoCasillaParchis()==TipoCasillaParchis.FINALROJO);
+			assertTrue(partida.getCasillaConNumero(100).getTipoCasillaParchis()==TipoCasillaParchis.FINALVERDE);
+		}
+
+		@Test
+		void testVerificarFinalPartida(){
+			Jugador jugador = partidaParchis.getJugadores().stream().filter(j->j.getColor()==Color.ROJO).findFirst().get();
+			jugador.getFichasParchis().stream().findAny().get().setEstaEnLaMeta(false);
+			assertFalse(ps.verificarFinalPartida(jugador));
+
+			jugador.getFichasParchis().stream().forEach(f->f.setEstaEnLaMeta(true));
+			assertTrue(ps.verificarFinalPartida(jugador));
+		}
+
+
+		@Test
+		void testPuedeComerFicha(){
+			CasillaParchis casilla = new CasillaParchis();
+			casilla.setFichas(new ArrayList<>());
+			casilla.setTipoCasillaParchis(TipoCasillaParchis.NORMAL);
+
+			FichaParchis ficha = new FichaParchis();
+			ficha.setColor(Color.ROJO);
+
+			FichaParchis ficha1 = new FichaParchis();
+			ficha1.setColor(Color.VERDE);
+			casilla.añadirFicha(ficha1);
+			assertTrue(ps.puedeComerFicha(casilla, ficha));
+
+			FichaParchis ficha2 = new FichaParchis();
+			ficha2.setColor(Color.VERDE);
+			casilla.añadirFicha(ficha2);
+			assertFalse(ps.puedeComerFicha(casilla, ficha));
+
+			FichaParchis ficha3 = new FichaParchis();
+			ficha3.setColor(Color.ROJO);
+			casilla.setFichas(new ArrayList<>());
+			casilla.añadirFicha(ficha3);
+			assertFalse(ps.puedeComerFicha(casilla, ficha));
+		}
+
+
+		@Test
+		void testComerFicha(){
+			CasillaParchis casilla6 = partidaParchis.getCasillaConNumero(6);
+			assertTrue(casilla6.getFichas().size()==1);
+			Jugador jugador = partidaParchis.getJugadores().stream().filter(j->j.getColor()==Color.ROJO).findFirst().get();
+			
+			FichaParchis fichaRoja = jugador.getFichasParchis().stream().filter(f->f.getCasillaActual().getNumero()==3).findAny().get();
+
+			
+			ps.comerFicha(casilla6, fichaRoja, partidaParchis);
+
+			assertTrue(casilla6.getFichas().size()==0);
+
+		}
 }
