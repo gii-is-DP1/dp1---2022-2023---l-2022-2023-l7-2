@@ -427,15 +427,29 @@ public class PartidaController {
 		}
 
 		response.addHeader("Refresh", REFRESH_SEECONDS);
-		
+		model.put("partidaParchis", partida);
+
 		if(j!=null){
 			model.put("modo","jugador");
 			model.put("jugadorAutenticado", j);
-			if(partida.getColorJugadorActual()==j.getColor()) response.setHeader("Refresh", "30000");
+			
+			if(partida.getColorJugadorActual()==j.getColor()){
+				if(partida.getDado()!=null){
+					int dado = partidaService.tirarDado(partida);
+					List<FichaParchis> fichasQuePuedenMoverse = j.getFichasQuePuedenMoverse(dado);
+					if(fichasQuePuedenMoverse.size()>0) model.put("fichasQueSePuedenMover", fichasQuePuedenMoverse);
+					model.put("dado", dado);
+					model.put("MoverFichaParchisForm" ,new MoverFichaParchisForm());
+				}
+
+				response.setHeader("Refresh", "30000");
+			} 
 		}else if(partida.getUsuariosObservadores().contains(u)){
 			model.put("modo","observador");
+		}else{
+			return "redirect:/noAccess";
 		}
-		model.put("partidaParchis", partida);
+		
 		return VIEWS_JUGAR_PARCHIS;
 	}
 	
@@ -453,22 +467,18 @@ public class PartidaController {
 		model.put("now", LocalDateTime.now());
 		model.put("modo","jugador");
 		model.put("jugadorAutenticado", j);
-		model.put("debug", "raro");
 		if(j.getColor() != partida.getColorJugadorActual()){
 				return "redirect:/noAccess";
 		}
 
-
 		//El dado tiene un valor y se ha movido ficha --> procesar movimiento de ficha
 		if(mfpf.getJugadorId() != null && mfpf.getFichaId() != null){
 			partidaService.jugarParchis(partida, mfpf.getFichaId(), mfpf.getJugadorId(),mfpf.getDado());	
-			redirectAttributes.addFlashAttribute("debug", "fichaMovida");
 			if(partida.getDado()!=null){//El dado tiene valor despues de mover --> el jugador tiene que volver a mover por que ha comido, sacado 6 o metido ficha
 				int dado = partidaService.tirarDado(partida);
 				List<FichaParchis> fichasQuePuedenMoverse = j.getFichasQuePuedenMoverse(dado);
 				model.put("fichasQueSePuedenMover", fichasQuePuedenMoverse);
 				model.put("dado", dado);
-				model.put("debug", "volverATirar");
 				return VIEWS_JUGAR_PARCHIS;
 			}
 			return "redirect:/partida/parchis/{partidaParchisId}/jugar";
@@ -481,7 +491,6 @@ public class PartidaController {
 			List<FichaParchis> fichasQuePuedenMoverse = j.getFichasQuePuedenMoverse(dado);
 			model.put("fichasQueSePuedenMover", fichasQuePuedenMoverse);
 			model.put("dado", dado);
-			model.put("debug", "dadoNull");
 			return VIEWS_JUGAR_PARCHIS;
 		}
 		return "redirect:/partida/parchis/{partidaParchisId}/jugar";
