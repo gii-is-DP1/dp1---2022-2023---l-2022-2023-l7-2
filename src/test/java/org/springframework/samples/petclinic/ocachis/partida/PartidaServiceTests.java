@@ -230,7 +230,7 @@ public class PartidaServiceTests {
 	}
 
 	@Test
-	public void shouldchekIntegridadPartidaOcaPasaTurno(){
+	public void shouldCheckIntegridadPartidaOcaPasaTurno(){
 		partidaOca.setFechaHoraUltimoMovimiento(40000L);
 		Color colorInicial = partidaOca.getColorJugadorActual();
 		Long ultimoMovInicial = partidaOca.getFechaHoraUltimoMovimiento();
@@ -242,7 +242,7 @@ public class PartidaServiceTests {
 	}
 
 	@Test
-	public void shouldchekIntegridadPartidaOcaNoPasaTurno(){
+	public void shouldCheckIntegridadPartidaOcaNoPasaTurno(){
 			partidaOca.setFechaHoraUltimoMovimiento(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
 			Color colorInicial = partidaOca.getColorJugadorActual();
 			Long ultimoMovInicial = partidaOca.getFechaHoraUltimoMovimiento();
@@ -447,7 +447,7 @@ public class PartidaServiceTests {
 	}
 	
 	@Test
-	public void shouldchekIntegridadPartidaParchisPasaTurno(){
+	public void shouldCheckIntegridadPartidaParchisPasaTurno(){
 		partidaParchis.setFechaHoraUltimoMovimiento(40000L);
 		Color colorInicial = partidaParchis.getColorJugadorActual();
 		Long ultimoMovInicial = partidaParchis.getFechaHoraUltimoMovimiento();
@@ -459,7 +459,7 @@ public class PartidaServiceTests {
 	}
 
 	@Test
-	public void shouldchekIntegridadPartidaParchisNoPasaTurno(){
+	public void shouldCheckIntegridadPartidaParchisNoPasaTurno(){
 			partidaParchis.setFechaHoraUltimoMovimiento(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
 			Color colorInicial = partidaParchis.getColorJugadorActual();
 			Long ultimoMovInicial = partidaParchis.getFechaHoraUltimoMovimiento();
@@ -702,4 +702,6 @@ public class PartidaServiceTests {
 			assertTrue(fichaAmarilla3.isEstaEnCasa());
 			assertTrue(numFichasAmarillasEnCasaNuevo == numFichasAmarillasEnCasaAntiguo +1);
 		}
+
+
 }
