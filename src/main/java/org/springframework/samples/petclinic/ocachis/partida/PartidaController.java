@@ -433,6 +433,7 @@ public class PartidaController {
 			model.put("modo","jugador");
 			model.put("jugadorAutenticado", j);
 			
+			
 			if(partida.getColorJugadorActual()==j.getColor()){
 				if(partida.getDado()!=null){
 					int dado = partidaService.tirarDado(partida);

@@ -68,13 +68,13 @@ INSERT INTO partida_oca(id, codigo_partida, duracion, estado, fecha_creacion, ma
 (6, 111, 4, 2, '2023-01-10', 2, 0);
 
 
-INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, color_jugador_actual, dado, tirada, veces_sacado6,	ULTIMO_SACADO6) VALUES
-(1, 103, 5, 1, '2022-12-25', 4, 1, null, 0, 0, 0),
-(2, 104, 5, 2, '2022-12-24', 4, 0, null, 0, 0, 0),
-(3, 105, 10, 2, '2022-12-23', 3, 0, null, 0, 0, 0),
-(4, 106, 20, 2, '2022-12-22', 2, 0, null, 0, 0, 0),
-(5, 107, 7, 2, '2022-12-22', 2, 0, null, 0, 0, 0),
-(6, 108, 8, 2, '2022-12-22', 2, 0, null, 0, 0, 0);
+INSERT INTO partida_parchis(id, codigo_partida, duracion, estado, fecha_creacion, max_jugadores, color_jugador_actual, dado, tirada, veces_sacado6,	ULTIMO_SACADO6, FECHA_HORA_ULTIMO_MOVIMIENTO) VALUES
+(1, 103, 5, 1, '2022-12-25', 4, 1, null, 0, 0, 0,1673568359696L),
+(2, 104, 5, 2, '2022-12-24', 4, 0, null, 0, 0, 0, 0L),
+(3, 105, 10, 2, '2022-12-23', 3, 0, null, 0, 0, 0, 0L),
+(4, 106, 20, 2, '2022-12-22', 2, 0, null, 0, 0, 0, 0L),
+(5, 107, 7, 2, '2022-12-22', 2, 0, null, 0, 0, 0, 0L),
+(6, 108, 8, 2, '2022-12-22', 2, 0, null, 0, 0, 0, 0L);
 
 
 
