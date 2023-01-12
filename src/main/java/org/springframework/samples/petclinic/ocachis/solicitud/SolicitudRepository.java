@@ -18,6 +18,9 @@ public interface SolicitudRepository extends CrudRepository<Solicitud,Integer>{
     @Query("SELECT solicitud FROM Solicitud solicitud WHERE solicitud.usuarioInvitado.id=:usuarioId  AND solicitud.tipoEstado=0")
     Collection<Solicitud> findAllSolicitudesPendientes(@Param("usuarioId") Integer usuarioId);
 
+    @Query("SELECT solicitud From Solicitud solicitud WHERE (solicitud.usuarioInvitado.id=:usuarioId OR solicitud.usuarioSolicitud.id=:usuarioId)")
+    Collection<Solicitud> findAllSolicitudesUsuario(@Param("usuarioId") Integer usuarioId);
+
    
 
    

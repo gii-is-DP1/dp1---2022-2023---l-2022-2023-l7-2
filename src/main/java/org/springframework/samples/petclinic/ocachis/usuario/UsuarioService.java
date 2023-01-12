@@ -12,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.exceptions.ResourceNotFoundException;
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
+import org.springframework.samples.petclinic.ocachis.partida.PartidaOca;
+import org.springframework.samples.petclinic.ocachis.partida.PartidaOcaRepository;
+import org.springframework.samples.petclinic.ocachis.partida.PartidaParchis;
+import org.springframework.samples.petclinic.ocachis.partida.PartidaParchisRepository;
 import org.springframework.samples.petclinic.ocachis.solicitud.Solicitud;
 import org.springframework.samples.petclinic.ocachis.solicitud.SolicitudRepository;
 import org.springframework.samples.petclinic.ocachis.user.AuthoritiesService;
@@ -32,10 +36,13 @@ public class UsuarioService {
 	
 	private UsuarioRepository usuarioRepository;
 	private SolicitudRepository solicitudRepository;
+	private PartidaOcaRepository partidaOcaRepository;
+	private PartidaParchisRepository partidaParchisRepository;
 
 	private UserService userService;
 	
 	private AuthoritiesService authoritiesService;
+	
 
 	
 	@Autowired
@@ -44,6 +51,7 @@ public class UsuarioService {
 		this.userService = userService;
 		this.authoritiesService = authoritiesService;
 		this.solicitudRepository = solicitudRepository;
+	
 	}
 
 	@Transactional(rollbackFor = {DuplicateUsernameException.class, InvalidPasswordException.class, InvalidUsernameException.class})
@@ -86,6 +94,32 @@ public class UsuarioService {
     
 	@Transactional
     public void deleteUsuarioById(int id){
+		Optional<Usuario> usuario = usuarioRepository.findById(id);
+		Collection<Solicitud> solicitudes = solicitudRepository.findAllSolicitudesUsuario(id);
+		if(solicitudes != null){
+			for(Solicitud s: solicitudes){
+				this.solicitudRepository.delete(s);
+			}
+		}
+		
+		Collection<PartidaOca> partidasOcaObservando = this.partidaOcaRepository.findPartidaUsuarioObservada(usuario.get());
+		Collection<PartidaParchis> partidasParchisObservando = this.partidaParchisRepository.findPartidaUsuarioObservada(usuario.get());
+		if(partidasOcaObservando != null){
+			for(PartidaOca p : partidasOcaObservando){
+				List<Usuario> l = p.getUsuariosObservadores();
+				l.remove(usuario.get());
+				p.setUsuariosObservadores(l);
+			}
+		}else if(partidasParchisObservando !=null){
+			for (PartidaParchis p : partidasParchisObservando){
+				
+				List<Usuario> observadores = p.getUsuariosObservadores();
+				observadores.remove(usuario.get());
+				p.setUsuariosObservadores(observadores);
+				
+			}
+		}
+
         usuarioRepository.deleteById(id);
     }
 

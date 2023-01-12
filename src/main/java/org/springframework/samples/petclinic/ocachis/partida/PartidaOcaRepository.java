@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -23,5 +24,8 @@ public interface PartidaOcaRepository extends CrudRepository<PartidaOca, Integer
 
     @Query("SELECT oca FROM PartidaOca oca")
     Page<PartidaOca> findAllPageable(Pageable p);
+    
+    @Query("Select oca From PartidaOca oca WHERE  :usuario MEMBER OF oca.usuariosObservadores")
+    Collection<PartidaOca> findPartidaUsuarioObservada(@Param("usuario") Usuario usuario);
 
 }

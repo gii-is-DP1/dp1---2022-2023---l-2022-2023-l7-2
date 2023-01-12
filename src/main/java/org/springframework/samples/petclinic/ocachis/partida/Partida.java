@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
@@ -30,8 +31,7 @@ public class Partida extends BaseEntity{
 
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private LocalDateTime fechaFinalizacion;
-	/* 
-	@NotEmpty*/
+	
 	private TipoEstadoPartida estado = TipoEstadoPartida.CREADA;
 	
 	/*
@@ -44,7 +44,6 @@ public class Partida extends BaseEntity{
 	
 	private Color ColorJugadorActual=Color.ROJO;
 	
-	@NotNull
 	@Min(2)
 	@Max(4)
 	private Integer maxJugadores;

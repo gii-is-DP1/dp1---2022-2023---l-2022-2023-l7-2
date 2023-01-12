@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -24,4 +25,7 @@ public interface PartidaParchisRepository extends CrudRepository<PartidaParchis,
 
     @Query("SELECT parchis FROM PartidaParchis parchis")
     Page<PartidaParchis> findAllPageable(Pageable p);    
+
+    @Query("SELECT parchis FROM PartidaParchis parchis WHERE :usuario MEMBER OF parchis.usuariosObservadores")
+    Collection<PartidaParchis> findPartidaUsuarioObservada(@Param("usuario") Usuario usuario);
 }

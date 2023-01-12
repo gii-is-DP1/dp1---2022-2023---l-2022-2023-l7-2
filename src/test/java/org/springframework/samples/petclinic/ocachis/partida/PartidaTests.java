@@ -33,17 +33,17 @@ public class PartidaTests {
     @Autowired
     PartidaParchisRepository pr;
 
-    // @Autowired
-    // PartidaService ps;
+    @Autowired
+    PartidaService ps;
 
     PartidaOca partidaOca;
     PartidaParchis partidaParchis;
-	// @BeforeEach
-	// public void setup(){
-	// 	partidaOca = this.ps.findPartidaOcaById(3);
-	// 	partidaOca.setEstado(TipoEstadoPartida.JUGANDO);
-	// 	partidaParchis = this.ps.findPartidaParchisById(1);
-	// }
+	@BeforeEach
+	public void setup(){
+		partidaOca = this.ps.findPartidaOcaById(3);
+		partidaOca.setEstado(TipoEstadoPartida.JUGANDO);
+		partidaParchis = this.ps.findPartidaParchisById(1);
+	}
     @Test
     public void partidaTest(){
         ocarepositoryExists();
@@ -56,18 +56,6 @@ public class PartidaTests {
         testPasarTurnoOcaAmarilloVerde();
         testPasarTurnoOcaVerdeAzul();
     }
-    
-    @Test
-    public void pruebaMinTest(){
-        PartidaOca po=new PartidaOca();
-        po.setId(4);
-        po.setEstado(TipoEstadoPartida.CREADA);
-        po.setMaxJugadores(1);
-        
-    
-        assertThrows(ConstraintViolationException.class,() -> or.save(po));
-
-    }
 
     public void ocarepositoryExists(){
         assertNotNull(or,"The repository was not injected into the tests, its autowired value was null");
@@ -78,9 +66,8 @@ public class PartidaTests {
 
     void testConstraints(){
         PartidaOca po=new PartidaOca();
-        PartidaParchis pp=new PartidaParchis();
         
-        po.setId(4);
+        po.setId(400);
         po.setEstado(TipoEstadoPartida.CREADA);
         po.setMaxJugadores(1);
         po.setCasillas(new ArrayList<>());
@@ -94,25 +81,26 @@ public class PartidaTests {
         po.setGanador(null);
         po.setJugadores(new ArrayList<Jugador>());
         
-        
-
         assertThrows(ConstraintViolationException.class,() -> or.save( po),
         "El mínimo de jugadores es 2");
         
         po.setMaxJugadores(5);
         assertThrows(ConstraintViolationException.class,() -> or.save(po),
         "El máximo de jugadores es 4");
-        
-        pp.setId(4);
+
+
+
+        PartidaParchis pp = new PartidaParchis();
+        pp.setId(400);
         pp.setMaxJugadores(1);
-        pp.setEstado(TipoEstadoPartida.CREADA);
-        
+
         assertThrows(ConstraintViolationException.class,() -> pr.save(pp),
         "El mínimo de jugadores es 2");
 
         pp.setMaxJugadores(5);
         assertThrows(ConstraintViolationException.class,() -> pr.save(pp),
         "El máximo de jugadores es 4");
+        
     }
 
     
@@ -180,48 +168,48 @@ public class PartidaTests {
         assertEquals(Color.AZUL,pp.getColorJugadorActual());
     }
 
-    // @Test 
-	// void testEnviarMensajeOca(){
-	// 	PartidaOca po = this.ps.findPartidaOcaById(3);
-	// 	List<Jugador> jugadores = (List<Jugador>) partidaOca.getJugadores();
-	// 	Jugador j = jugadores.get(0);
+    @Test 
+	void testEnviarMensajeOca(){
+		PartidaOca po = this.ps.findPartidaOcaById(3);
+		List<Jugador> jugadores = (List<Jugador>) partidaOca.getJugadores();
+		Jugador j = jugadores.get(0);
 		
 		
-	// 	po.addMensaje("prueba", j);
+		po.addMensaje("prueba", j);
 		
-	// 	assertThat(po.printChatOca().equals("Pepe(ROJO): prueba"));
-	// }
+		assertThat(po.printChatOca().equals("Pepe(ROJO): prueba"));
+	}
     
-    // @Test 
-	// void testEnviarMensajeParchis(){
-	// 	PartidaParchis pp = this.ps.findPartidaParchisById(1);
-	// 	List<Jugador> jugadores = (List<Jugador>) partidaParchis.getJugadores();
-	// 	Jugador j = jugadores.get(0);
-	// 	Integer tamañoInicial = pp.getChatParchis().size();
+    @Test 
+	void testEnviarMensajeParchis(){
+		PartidaParchis pp = this.ps.findPartidaParchisById(1);
+		List<Jugador> jugadores = (List<Jugador>) partidaParchis.getJugadores();
+		Jugador j = jugadores.get(0);
+		Integer tamañoInicial = pp.getChatParchis().size();
 		
-	// 	pp.addMensaje("prueba", j);
-	// 	assertThat(pp.printChatParchis().equals("usuario(ROJO): prueba"));
-	// }
-    // @Test
-    // void testLogOca(){
-    //     PartidaOca po = this.ps.findPartidaOcaById(3);
-	// 	List<Jugador> jugadores = (List<Jugador>) partidaParchis.getJugadores();
-	// 	Jugador j = jugadores.get(0);
-    //     CasillaOca casillaFinal = po.getCasillaConNumero(8);
-    //     po.addLog("Mueve una ficha hasta la casilla " + casillaFinal.getNumero());
-    //     assertThat(po.printLog().equals("Mueve una ficha hasta la casilla " + casillaFinal.getNumero()));
+		pp.addMensaje("prueba", j);
+		assertThat(pp.printChatParchis().equals("usuario(ROJO): prueba"));
+	}
+    @Test
+    void testLogOca(){
+        PartidaOca po = this.ps.findPartidaOcaById(3);
+		List<Jugador> jugadores = (List<Jugador>) partidaParchis.getJugadores();
+		Jugador j = jugadores.get(0);
+        CasillaOca casillaFinal = po.getCasillaConNumero(8);
+        po.addLog("Mueve una ficha hasta la casilla " + casillaFinal.getNumero());
+        assertThat(po.printLog().equals("Mueve una ficha hasta la casilla " + casillaFinal.getNumero()));
 
-    // }
+    }
 
-    // @Test
-    // void testLogParchis(){
-    //     PartidaParchis pp = this.ps.findPartidaParchisById(1);
-	// 	List<Jugador> jugadores = (List<Jugador>) partidaParchis.getJugadores();
-	// 	Jugador j = jugadores.get(0);
-    //     CasillaParchis casillaFinal = pp.getCasillaConNumero(8);
-    //     pp.addLog("Mueve una ficha hasta la casilla " + casillaFinal.getNumero());
-    //     assertThat(pp.printLog().equals("Mueve una ficha hasta la casilla " + casillaFinal.getNumero()));
+    @Test
+    void testLogParchis(){
+        PartidaParchis pp = this.ps.findPartidaParchisById(1);
+		List<Jugador> jugadores = (List<Jugador>) partidaParchis.getJugadores();
+		Jugador j = jugadores.get(0);
+        CasillaParchis casillaFinal = pp.getCasillaConNumero(8);
+        pp.addLog("Mueve una ficha hasta la casilla " + casillaFinal.getNumero());
+        assertThat(pp.printLog().equals("Mueve una ficha hasta la casilla " + casillaFinal.getNumero()));
 
-    // }
+    }
 
 }
