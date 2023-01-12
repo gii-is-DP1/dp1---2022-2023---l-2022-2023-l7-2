@@ -6,7 +6,9 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
+
 import java.util.List;
+
 
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
@@ -31,7 +33,7 @@ public class EstadisticasGlobales extends BaseEntity{
 	@OneToMany
 	@Size(min=0, max=5)
 	private List<Usuario> ocaVecesCaidoEnMuerte;
-
+ 
 	@Column(name = "rankingJugadoresParchis")
 	@OneToMany
 	@Size(min=0, max=5)

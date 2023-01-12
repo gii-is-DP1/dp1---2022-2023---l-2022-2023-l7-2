@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 public class EstadisticasGlobalesController {
     private static final String VIEW_ESTADISTICAS_GLOBALES = "estadisticas/estadisticasGlobales";
-
+ 
 
     private EstadisticasGlobalesService estadisticasGlobalesService;
     @Autowired

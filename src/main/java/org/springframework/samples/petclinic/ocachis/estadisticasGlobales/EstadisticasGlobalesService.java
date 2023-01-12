@@ -52,7 +52,7 @@ public class EstadisticasGlobalesService {
             eg.setOcaVecesCaidoEnMuerte(usuarioService.Top5OcaVecesCaidoEnMuerte());
             eg.setParchisRankingJugadores(usuarioService.Top5ParchisPartidasGanadas());
             eg.setParchisFichasComidas(usuarioService.Top5ParchisFichasComidas());
-            eg = this.save(eg);
+            eg = this.save(eg); 
         }
         return eg;
     }

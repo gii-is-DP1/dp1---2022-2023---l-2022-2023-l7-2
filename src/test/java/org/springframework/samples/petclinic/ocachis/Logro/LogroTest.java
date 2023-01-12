@@ -33,7 +33,7 @@ public class LogroTest {
 
      void testConstraints(){
         Logro logro=new Logro();
-        logro.setId(9);
+        logro.setId(9); 
         logro.setNombre("      ");
         logro.setDescripcion("Juega 50 partidas de parchís");
         logro.setEstadisticasACumplir(null);

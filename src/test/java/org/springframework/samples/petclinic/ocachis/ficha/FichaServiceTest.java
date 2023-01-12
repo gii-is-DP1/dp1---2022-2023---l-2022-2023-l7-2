@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -155,27 +156,22 @@ public class FichaServiceTest {
             
         }
     }
+
     @Test
     void testMoverFichaParchis(){
-        FichaParchis ficha = new FichaParchis();
-        CasillaParchis casillaInicial = new CasillaParchis();
-        casillaInicial.setNumero(28);
-        cs.saveCasillaParchis(casillaInicial);
-        ficha.setCasillaActual(casillaInicial);
-
-        CasillaParchis casillaFinal = new CasillaParchis();   
-        casillaFinal.setNumero(30);
-        cs.saveCasillaParchis(casillaFinal);
-
         List<Jugador> jugadores = (List<Jugador>) partidaParchis.getJugadores();
 		Jugador j = jugadores.get(0);
+        List<FichaParchis> fichasIniciales = new ArrayList<>((List<FichaParchis>) j.getFichasParchis());
+        FichaParchis ficha = fichasIniciales.get(0);
+        CasillaParchis casillaFinal = partidaParchis.getCasillaConNumero(30);   
         fs.moverFichaParchis(ficha, casillaFinal, j);
-        assertThat(ficha.getCasillaActual()==casillaFinal);
+        List<FichaParchis> fichasFinales = (List<FichaParchis>)j.getFichasParchis();
+        FichaParchis fichaNueva = fichasFinales.get(3); 
+        assertFalse(j.getFichasParchis().contains(ficha));
+        assertThat(fichaNueva.getCasillaActual()==casillaFinal);
         
     }
-
-
-    }
+}
 
 
    

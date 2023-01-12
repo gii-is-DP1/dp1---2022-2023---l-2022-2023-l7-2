@@ -49,7 +49,7 @@ public class PartidaTests {
     public void partidaTest(){
         ocarepositoryExists();
         parchisrepositoryExists();
-        // testConstraints();
+        testConstraints();
         testPasarTurnoParchisRojoAmarillo();
         testPasarTurnoParchisAmarilloVerde();
         testPasarTurnoParchisVerdeAzul();
