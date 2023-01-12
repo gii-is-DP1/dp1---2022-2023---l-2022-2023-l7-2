@@ -20,15 +20,10 @@ public class CasillaService {
         this.casillaParchisRepository =  casillaParchisRepository;
     }
 
-    @Transactional(readOnly = true)
-    public Iterable<CasillaOca> findAllForPartidaOca(Integer partidaOcaId){
-        return casillaOcaRepository.findAll();
-    }
 
     @Transactional
     public CasillaOca saveCasillaOca(CasillaOca casilla){
         return casillaOcaRepository.save(casilla);
-        
     }
 
     @Transactional
