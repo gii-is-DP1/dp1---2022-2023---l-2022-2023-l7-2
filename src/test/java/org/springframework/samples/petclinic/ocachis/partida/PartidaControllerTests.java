@@ -116,6 +116,7 @@ class PartidaControllerTests {
 		given(this.jugadorService.findJugadorParchis(500, TEST_PARTIDAPARCHIS_ID)).willReturn(j);
         doNothing().when(this.jugadorService).delete(any(Jugador.class));
 
+		given(this.partidaService.redirigirPartida(u)).willReturn("redirect:/partida/oca/" + 3 + "/jugar");
 		
 		Page<PartidaOca> resultsOca = Page.empty();     
 		 given(this.partidaService.findEsperaOca(PageRequest.of(0,5))).willReturn(resultsOca);
@@ -254,4 +255,44 @@ class PartidaControllerTests {
 		mockMvc.perform(get("/partida/parchis/{partidaParchisId}/resumen", TEST_PARTIDAPARCHIS_ID)).andExpect(status().is3xxRedirection())
 		.andExpect(redirectedUrl("/partida/parchis/"+TEST_PARTIDAPARCHIS_ID+"/espera"));
 	}
+
+	@WithMockUser("spring")
+	@Test
+	void testRedireccion() throws Exception{
+		mockMvc.perform(get("/partida/redireccion")).andExpect(status().is3xxRedirection())
+		.andExpect(redirectedUrl("/partida/oca/" + 3 + "/jugar"));
+	}
+
+	@WithMockUser
+	@Test
+	void testJugarOcaTerminada() throws Exception{
+		mockMvc.perform(get("/partida/oca/{partidaOcaId}/jugar",TEST_PARTIDAOCA_ID_TERMINADA)).andExpect(status().is3xxRedirection())
+		.andExpect(redirectedUrl("/partida/oca/" + TEST_PARTIDAOCA_ID_TERMINADA + "/resumen"));
+
+	}
+
+	@WithMockUser
+	@Test
+	void testJugarParchisTerminada() throws Exception{
+		mockMvc.perform(get("/partida/parchis/{partidaParchisId}/jugar",TEST_PARTIDAPARCHIS_ID_TERMINADA)).andExpect(status().is3xxRedirection())
+		.andExpect(redirectedUrl("/partida/parchis/" + TEST_PARTIDAPARCHIS_ID_TERMINADA + "/resumen"));
+
+	}
+
+	@WithMockUser
+	@Test
+	void testJugarOcaCreada() throws Exception{
+		mockMvc.perform(get("/partida/oca/{partidaOcaId}/jugar",TEST_PARTIDAOCA_ID)).andExpect(status().is3xxRedirection())
+		.andExpect(redirectedUrl("/partida/oca/" + TEST_PARTIDAOCA_ID+ "/espera"));
+
+	}
+
+	@WithMockUser
+	@Test
+	void testJugarParchisCreada() throws Exception{
+		mockMvc.perform(get("/partida/parchis/{partidaParchisId}/jugar",TEST_PARTIDAPARCHIS_ID)).andExpect(status().is3xxRedirection())
+		.andExpect(redirectedUrl("/partida/parchis/" + TEST_PARTIDAPARCHIS_ID + "/espera"));
+
+	}
+
 }

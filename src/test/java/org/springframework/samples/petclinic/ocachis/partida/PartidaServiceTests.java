@@ -313,8 +313,8 @@ public class PartidaServiceTests {
 			Jugador jugador = partidaOca.getJugadores().stream().filter(j->j.getColor()==Color.ROJO).findFirst().get();
 			Integer casillaInicial = jugador.getFichaOca().getCasillaActual().getNumero();
 			ps.jugarOca(partidaOca, jugador.getFichaOca(), jugador);
-
 			assertThat(jugador.getFichaOca().getCasillaActual().getNumero().equals(casillaInicial+1));
+			Mockito.reset(spy);
 			
 		}
 
@@ -327,6 +327,7 @@ public class PartidaServiceTests {
 
 			assertThat(jugador.getFichaOca().getCasillaActual().getNumero().equals(19));
 			assertThat(jugador.getNumTurnosBloqueadoRestantesOca().equals(1));
+			Mockito.reset(spy);
 
 			
 		}
@@ -340,6 +341,7 @@ public class PartidaServiceTests {
 
 			assertThat(jugador.getFichaOca().getCasillaActual().getNumero().equals(19));
 			assertThat(jugador.getNumTurnosBloqueadoRestantesOca().equals(1));
+			Mockito.reset(spy);
 			
 		}
 
@@ -352,6 +354,7 @@ public class PartidaServiceTests {
 
 			assertThat(jugador.getFichaOca().getCasillaActual().getNumero().equals(9));
 			assertThat(partidaOca.getColorJugadorActual().equals(Color.ROJO));
+			Mockito.reset(spy);
 			
 		}
 
@@ -363,6 +366,7 @@ public class PartidaServiceTests {
 			ps.jugarOca(partidaOca, jugador.getFichaOca(), jugador);
 
 			assertThat(jugador.getFichaOca().getCasillaActual().getNumero().equals(33));
+			Mockito.reset(spy);
 			
 		}
 
@@ -374,6 +378,7 @@ public class PartidaServiceTests {
 			ps.jugarOca(partidaOca, jugador.getFichaOca(), jugador);
 
 			assertThat(jugador.getNumTurnosBloqueadoRestantesOca().equals(4));
+			Mockito.reset(spy);
 			
 		}
 
@@ -395,17 +400,19 @@ public class PartidaServiceTests {
 			ps.jugarOca(partidaOca, jugador.getFichaOca(), jugador);
 
 			assertThat(jugador.getFichaOca().getCasillaActual().getNumero()==1);
+			Mockito.reset(spy);
 			
 			
 		}
 		@Test
 		void testOcaEntrarEnMeta(){
-			PartidaService spy = Mockito.spy(ps);
-			Mockito.doReturn(61).when(spy).TirarNumDado();
+			PartidaService spy = Mockito.spy(new PartidaService());
+			Mockito.doReturn(62).when(spy).TirarNumDado();
 			Jugador jugador = partidaOca.getJugadores().stream().filter(j->j.getColor()==Color.ROJO).findFirst().get();
 			ps.jugarOca(partidaOca, jugador.getFichaOca(), jugador);
 
-			assertThat(partidaOca.getEstado()==TipoEstadoPartida.TERMINADA);
+			assertThat(partidaOca.getEstado().equals(TipoEstadoPartida.TERMINADA));
+			Mockito.reset(spy);
 		}
 
 	// ************************************************************************PARCHIS************************************************************************

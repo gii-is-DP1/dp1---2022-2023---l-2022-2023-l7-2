@@ -28,7 +28,24 @@
            <c:if test="${usuario['new']}">
            <petclinic:inputField label="Username" name="user.username"/>
 
-            <petclinic:inputField label="Contraseña" name="user.password"/>
+
+           <spring:bind path="user.username">
+                <c:set var="cssGroup" value="form-group ${status.error ? 'has-error' : '' }"/>
+                <c:set var="valid" value="${not status.error and not empty status.actualValue}"/>
+                <div class="${cssGroup}">
+                    <label class="col-sm-2 control-label">Contraseña</label>
+                    <div class="col-sm-10">
+                        <form:password class="form-control" path="user.password"/>
+                        <c:if test="${valid}">
+                            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                        </c:if>
+                        <c:if test="${status.error}">
+                            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                            <span class="help-inline">${status.errorMessage}</span>
+                        </c:if>
+                    </div>
+                </div>
+            </spring:bind>
            </c:if>            
         </div>
         <div class="form-group">

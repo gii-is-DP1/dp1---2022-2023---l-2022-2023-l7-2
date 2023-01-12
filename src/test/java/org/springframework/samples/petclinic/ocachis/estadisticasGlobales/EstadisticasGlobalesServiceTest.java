@@ -8,10 +8,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaParchis;
+import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaOca;
 import org.springframework.stereotype.Service;
 import org.springframework.test.annotation.DirtiesContext;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -33,12 +35,19 @@ public class EstadisticasGlobalesServiceTest {
     @Test
     void testSaveEstadisticasGlobales(){
         EstadisticasGlobales eg = new EstadisticasGlobales();
-        eg.setEstadisticasGlobales(new Estadisticas());
+        Estadisticas e = new Estadisticas();
+        e.setOcaDuracionMaxima(100);
+        eg.setEstadisticasGlobales(e);
+        eg.setOcaRankingJugadores(new ArrayList<Usuario>());
+        eg.setOcaVecesCaidoEnMuerte(new ArrayList<Usuario>());
+        eg.setParchisRankingJugadores(new ArrayList<Usuario>());
+        eg.setParchisFichasComidas(new ArrayList<Usuario>());
         eg.setId(1);
         egs.save(eg);
         EstadisticasGlobales eg2 = egs.getEstadisticasGlobales();
-        assertNull(eg2.getOcaRankingJugadores());
-        assertTrue(eg2.getId()==1);
+        assertNotNull(eg2.getOcaRankingJugadores());
+        assertThat(eg2.getId().equals(1));
+        assertThat(eg2.getEstadisticasGlobales().getOcaDuracionMaxima().equals(100));
 
     }
 
