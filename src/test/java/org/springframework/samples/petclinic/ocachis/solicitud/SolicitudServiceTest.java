@@ -1,25 +1,17 @@
 package org.springframework.samples.petclinic.ocachis.solicitud;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.samples.petclinic.ocachis.logro.Logro;
-import org.springframework.samples.petclinic.ocachis.logro.LogroService;
-import org.springframework.samples.petclinic.ocachis.partida.PartidaService;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.stereotype.Service;
@@ -92,7 +84,6 @@ public class SolicitudServiceTest {
         assertThat(estadoInicial==TipoEstadoSolicitud.ENVIADA);
 
         this.solicitudService.aceptarSolicitud(SOLICITUD_ID);
-        TipoEstadoSolicitud estadoFinal = s.getTipoEstado();
         assertThat(estadoInicial==TipoEstadoSolicitud.ACEPTADA);     
 
     }
@@ -104,7 +95,6 @@ public class SolicitudServiceTest {
         assertThat(estadoInicial==TipoEstadoSolicitud.ENVIADA);
 
         this.solicitudService.rechazarSolicitud(SOLICITUD_ID);
-        TipoEstadoSolicitud estadoFinal = s.getTipoEstado();
         assertThat(estadoInicial==TipoEstadoSolicitud.RECHAZADA);     
 
     }

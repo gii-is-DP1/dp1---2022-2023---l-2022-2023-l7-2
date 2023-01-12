@@ -18,13 +18,11 @@ import org.springframework.samples.petclinic.ocachis.casilla.CasillaParchis;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.stereotype.Service;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 public class PartidaTests {

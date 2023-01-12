@@ -7,12 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 
-import static org.mockito.BDDMockito.given;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,24 +18,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaParchis;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaService;
-import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
-import org.springframework.samples.petclinic.ocachis.logro.Logro;
 import org.springframework.stereotype.Service;
-import org.springframework.samples.petclinic.ocachis.logro.LogroService;
-import org.springframework.samples.petclinic.ocachis.logro.exceptions.MetaNegativaException;
-import org.springframework.samples.petclinic.ocachis.logro.exceptions.MultiplesMetasDefinidasException;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaOca;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaParchis;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaService;
-import org.springframework.samples.petclinic.ocachis.partida.TipoEstadoPartida;
-import org.springframework.samples.petclinic.ocachis.partida.exceptions.PartidaLlenaException;
-import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.model.exceptions.ResourceNotFoundException;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.samples.petclinic.ocachis.usuario.UsuarioService;
 
 

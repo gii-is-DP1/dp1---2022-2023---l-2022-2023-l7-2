@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotEmpty;
 
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 import lombok.Getter;

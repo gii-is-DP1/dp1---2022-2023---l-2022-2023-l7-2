@@ -1,6 +1,5 @@
 package org.springframework.samples.petclinic.ocachis.estadisticasGlobales;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

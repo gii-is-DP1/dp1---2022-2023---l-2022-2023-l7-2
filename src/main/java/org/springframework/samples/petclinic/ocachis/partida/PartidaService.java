@@ -56,6 +56,8 @@ public class PartidaService {
 		this.estadisticasGlobalesService = estadisticasGlobalesService;
 	}
 
+	public PartidaService(){}
+
 	public void inicializarCasillasOca(PartidaOca partida) {
 		List<Integer> numerosCasillasOca = new ArrayList<>();
 		numerosCasillasOca.add(5);

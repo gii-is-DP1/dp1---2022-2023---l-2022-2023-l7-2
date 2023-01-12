@@ -1,12 +1,8 @@
 package org.springframework.samples.petclinic.ocachis.jugador;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-
-import javax.validation.ConstraintViolationException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,10 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaParchis;
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
-import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
-import org.springframework.samples.petclinic.ocachis.logro.Logro;
-import org.springframework.samples.petclinic.ocachis.logro.LogroRepository;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaOca;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaParchis;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaService;
