@@ -5,7 +5,7 @@
 
 <petclinic:layout pageName="error" title="No tiene accesso">
 
-    <spring:url value="/resources/images/pets.png" var="petsImage"/>
+    <spring:url value="/resources/images/pets.jpg" var="petsImage"/>
     <img src="${petsImage}"/>
 
     <h2>Access has been denied</h2>

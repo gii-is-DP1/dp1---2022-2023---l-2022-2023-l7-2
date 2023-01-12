@@ -6,7 +6,7 @@
 
 <petclinic:layout pageName="error">
 
-    <spring:url value="/resources/images/pets.png" var="petsImage"/>
+    <spring:url value="/resources/images/pets.jpg" var="petsImage"/>
     <img src="${petsImage}"/>
     <H1>ERROR 404</H1>
     <h2>La página que busca no existe</h2>

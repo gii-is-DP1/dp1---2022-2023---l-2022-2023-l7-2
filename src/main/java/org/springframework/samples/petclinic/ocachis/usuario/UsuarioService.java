@@ -46,11 +46,13 @@ public class UsuarioService {
 
 	
 	@Autowired
-	public UsuarioService(UsuarioRepository usuarioRepository, UserService userService, AuthoritiesService authoritiesService,SolicitudRepository solicitudRepository) {
+	public UsuarioService(UsuarioRepository usuarioRepository, UserService userService, AuthoritiesService authoritiesService,SolicitudRepository solicitudRepository, PartidaOcaRepository partidaOcaRepository, PartidaParchisRepository partidaParchisRepository) {
 		this.usuarioRepository = usuarioRepository;
 		this.userService = userService;
 		this.authoritiesService = authoritiesService;
 		this.solicitudRepository = solicitudRepository;
+		this.partidaOcaRepository = partidaOcaRepository;
+		this.partidaParchisRepository = partidaParchisRepository;
 	
 	}
 
@@ -95,6 +97,7 @@ public class UsuarioService {
 	@Transactional
     public void deleteUsuarioById(int id){
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
+		Usuario u = usuario.get();
 		Collection<Solicitud> solicitudes = solicitudRepository.findAllSolicitudesUsuario(id);
 		if(solicitudes != null){
 			for(Solicitud s: solicitudes){

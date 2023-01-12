@@ -25,7 +25,7 @@ public interface PartidaOcaRepository extends CrudRepository<PartidaOca, Integer
     @Query("SELECT oca FROM PartidaOca oca")
     Page<PartidaOca> findAllPageable(Pageable p);
     
-    @Query("Select oca From PartidaOca oca WHERE  :usuario MEMBER OF oca.usuariosObservadores")
+    @Query("Select oca From PartidaOca oca WHERE :usuario MEMBER OF oca.usuariosObservadores")
     Collection<PartidaOca> findPartidaUsuarioObservada(@Param("usuario") Usuario usuario);
 
 }

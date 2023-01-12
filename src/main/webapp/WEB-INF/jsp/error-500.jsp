@@ -6,7 +6,7 @@
 
 <petclinic:layout pageName="error">
 
-    <spring:url value="/resources/images/pets.png" var="petsImage"/>
+    <spring:url value="/resources/images/pets.jpg" var="petsImage"/>
     <img src="${petsImage}"/>
     <H1>ERROR</H1>
     <h2>Error interno del servidor, disculpe las molestias</h2>

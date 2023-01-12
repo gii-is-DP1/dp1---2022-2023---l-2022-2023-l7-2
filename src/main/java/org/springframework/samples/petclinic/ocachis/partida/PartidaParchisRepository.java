@@ -26,6 +26,6 @@ public interface PartidaParchisRepository extends CrudRepository<PartidaParchis,
     @Query("SELECT parchis FROM PartidaParchis parchis")
     Page<PartidaParchis> findAllPageable(Pageable p);    
 
-    @Query("SELECT parchis FROM PartidaParchis parchis WHERE :usuario MEMBER OF parchis.usuariosObservadores")
+    @Query("Select parchis From PartidaParchis parchis WHERE :usuario MEMBER OF parchis.usuariosObservadores")
     Collection<PartidaParchis> findPartidaUsuarioObservada(@Param("usuario") Usuario usuario);
 }
