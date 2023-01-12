@@ -1,5 +1,4 @@
 package org.springframework.samples.petclinic.ocachis.partida;
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -8,8 +7,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,18 +22,12 @@ import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaParchis;
 import org.springframework.samples.petclinic.ocachis.casilla.TipoCasillaOca;
 import org.springframework.samples.petclinic.ocachis.casilla.TipoCasillaParchis;
-import org.springframework.samples.petclinic.ocachis.ficha.Ficha;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
-import org.springframework.samples.petclinic.ocachis.partida.PartidaOca;
-import org.springframework.samples.petclinic.ocachis.partida.PartidaParchis;
-import org.springframework.samples.petclinic.ocachis.partida.PartidaService;
-import org.springframework.samples.petclinic.ocachis.partida.TipoEstadoPartida;
 import org.springframework.samples.petclinic.util.EntityUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -224,7 +216,7 @@ public class PartidaServiceTests {
 
 
 	@Test
-	public void shouldchekIntegridadPartidaOcaPasaTurno(){
+	public void shouldCheckIntegridadPartidaOcaPasaTurno(){
 		partidaOca.setFechaHoraUltimoMovimiento(40000L);
 		Color colorInicial = partidaOca.getColorJugadorActual();
 		Long ultimoMovInicial = partidaOca.getFechaHoraUltimoMovimiento();
@@ -237,7 +229,7 @@ public class PartidaServiceTests {
 
 
 	@Test
-	public void shouldchekIntegridadPartidaOcaNoPasaTurno(){
+	public void shouldCheckIntegridadPartidaOcaNoPasaTurno(){
 			partidaOca.setFechaHoraUltimoMovimiento(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
 			Color colorInicial = partidaOca.getColorJugadorActual();
 			Long ultimoMovInicial = partidaOca.getFechaHoraUltimoMovimiento();
@@ -304,6 +296,12 @@ public class PartidaServiceTests {
 		}
 
 
+		@Test
+		void testJugarOca(){
+
+
+			
+		}
 
 	// ************************************************************************PARCHIS************************************************************************
 	@Test
@@ -346,7 +344,7 @@ public class PartidaServiceTests {
 	}
 	
 	@Test
-	public void shouldchekIntegridadPartidaParchisPasaTurno(){
+	public void shouldCheckIntegridadPartidaParchisPasaTurno(){
 		partidaParchis.setFechaHoraUltimoMovimiento(40000L);
 		Color colorInicial = partidaParchis.getColorJugadorActual();
 		Long ultimoMovInicial = partidaParchis.getFechaHoraUltimoMovimiento();
@@ -359,7 +357,7 @@ public class PartidaServiceTests {
 
 
 	@Test
-	public void shouldchekIntegridadPartidaParchisNoPasaTurno(){
+	public void shouldCheckIntegridadPartidaParchisNoPasaTurno(){
 			partidaParchis.setFechaHoraUltimoMovimiento(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
 			Color colorInicial = partidaParchis.getColorJugadorActual();
 			Long ultimoMovInicial = partidaParchis.getFechaHoraUltimoMovimiento();
@@ -492,4 +490,72 @@ public class PartidaServiceTests {
 			assertTrue(casilla6.getFichas().size()==0);
 
 		}
+
+		
+		@Test
+		void testJugarParchisMoverFicha(){
+			Jugador jugador = partidaParchis.getJugadores().stream().filter(j->j.getColor()==Color.ROJO).findFirst().get();
+			FichaParchis fichaRoja = jugador.getFichasParchis().stream().filter(f->f.getCasillaActual().getNumero()==3).findAny().get();
+			
+			Integer casillaInicialNum = 3;
+			
+			CasillaParchis casillaInicial = partidaParchis.getCasillaConNumero(3); 
+			CasillaParchis casillaFinal = partidaParchis.getCasillaConNumero(7); 
+
+			Integer numFichasCasillaInicialAntiguo = casillaInicial.getNumeroFichas();
+			Integer numFichasCasillaFinalAntiguo = casillaFinal.getNumeroFichas();
+			ps.jugarParchis(partidaParchis, fichaRoja.getId() ,jugador.getId() ,4 );
+
+			FichaParchis fichaRojaNueva = ((List<FichaParchis>) jugador.getFichasParchis()).get(3);
+			
+			assertTrue(casillaInicialNum + 4 == fichaRojaNueva.getCasillaActual().getNumero());
+			assertTrue(numFichasCasillaInicialAntiguo == casillaInicial.getNumeroFichas()-1);
+			assertTrue(numFichasCasillaFinalAntiguo == casillaFinal.getNumeroFichas()+1);
+		}
+
+		@Test
+		void testJugarParchisPasarTurno(){
+			Jugador jugador = partidaParchis.getJugadores().stream().filter(j->j.getColor()==Color.ROJO).findFirst().get();
+			FichaParchis fichaRoja = jugador.getFichasParchis().stream().filter(f->f.getCasillaActual().getNumero()==3).findAny().get();
+			Integer casillaInicialNum = fichaRoja.getId();
+			
+			CasillaParchis casillaInicial = partidaParchis.getCasillaConNumero(3); 
+			CasillaParchis casillaFinal = partidaParchis.getCasillaConNumero(7); 
+
+			Integer numFichasCasillaInicialAntiguo = casillaInicial.getNumeroFichas();
+			Integer numFichasCasillaFinalAntiguo = casillaFinal.getNumeroFichas();
+			ps.jugarParchis(partidaParchis, fichaRoja.getId() ,jugador.getId() ,4 );
+
+			FichaParchis fichaRojaNueva = ((List<FichaParchis>) jugador.getFichasParchis()).get(3);
+			assertTrue(casillaInicialNum + 4 == fichaRojaNueva.getCasillaActual().getNumero());
+			assertTrue(numFichasCasillaInicialAntiguo==casillaFinal.getNumeroFichas()-1);
+			assertTrue(numFichasCasillaFinalAntiguo==casillaFinal.getNumeroFichas()+1);
+		}
+
+		@Test
+		void testJugarParchisComerFicha(){
+
+		}
+
+		@Test
+		void testJugarParchisMeterFichaEnCasa(){
+
+		}
+
+		@Test
+		void testJugarParchisTriple6(){
+
+		}
+
+
+		@Test
+		void testJugarOca(){
+			PartidaService spy = Mockito.spy(ps);
+			Mockito.when(spy.TirarNumDado()).thenReturn(1);
+			Jugador jugador = partidaOca.getJugadores().stream().filter(j->j.getColor()==Color.ROJO).findFirst().get();
+
+			ps.jugarOca(partidaOca, jugador, jugador.getFicha);
+		}
+
+
 }
