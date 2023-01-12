@@ -5,7 +5,7 @@
                 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
                     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                         <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
-
+                        <%@ page contentType="text/html; charset=UTF-8" %>
 
                             <petclinic:layout pageName="espera" title="Sala de espera">
 
@@ -49,15 +49,15 @@
                                 </table>
 
 
+                                
                                 <c:choose>
-                                  
-                                    <c:when test="${partidaParchis != null}">
+                                    
+                                    <c:when test="${partidaParchis != null}">                 
                                         <c:choose>
-                                   
-                                            <c:when test="&{partidaParchis.estado==TipoEstadoPartida.CREADA}">
+                                            <c:when test="${partidaParchis.estado==TipoEstadoPartida.CREADA}">
                                                 <c:if
                                                     test="${partidaParchis.jugadores.size()>=2 && usuarioAutenticado.id == partidaParchis.jugadores.get(0).getUsuario().getId()}">
-                                                    <spring:url value="/sala/{partidaParchisId}/startParchis"
+                                                    <spring:url value="/partida/parchis/{partidaParchisId}/empezar"
                                                         var="parchisStartUrl">
                                                         <spring:param name="partidaParchisId"
                                                             value="${partidaParchis.id}" />
@@ -65,7 +65,8 @@
                                                     <a href="${fn:escapeXml(parchisStartUrl)}"
                                                         class="btn btn-default">Empezar Partida</a>
                                                 </c:if>
-                                                <spring:url value="/sala/{partidaParchisId}/abandonarParchis"
+
+                                                <spring:url value="/partida/parchis/{partidaParchisId}/abandonar"
                                                     var="parchisAbandonarUrl">
                                                     <spring:param name="partidaParchisId"
                                                         value="${partidaParchis.id}" />
@@ -74,8 +75,8 @@
                                                     class="btn btn-default">Abandonar Partida</a>
                                             </c:when>
 
-                                            <c:when test="&{partidaParchis.estado==TipoEstadoPartida.JUGANDO}">
-                                                <spring:url value="/sala/{partidaParchisId}/playParchis"
+                                            <c:when test="${partidaParchis.estado==TipoEstadoPartida.JUGANDO}">
+                                                <spring:url value="/partida/parchis/{partidaParchisId}/jugar"
                                                     var="parchisJugarUrl">
                                                     <spring:param name="partidaParchisId"
                                                         value="${partidaParchis.id}" />
@@ -85,15 +86,13 @@
                                             </c:when>
                                         </c:choose>
                                     </c:when>
-
-                                
+    
                                     <c:when test="${partidaOca != null}">
                                         <c:choose>
-                       
                                             <c:when test="${partidaOca.estado==TipoEstadoPartida.CREADA}">
                                                 <c:if
                                                     test="${partidaOca.jugadores.size()>=2 && usuarioAutenticado.id == partidaOca.jugadores.get(0).getUsuario().getId()}">
-                                                    <spring:url value="/sala/{partidaOcaId}/startOca" var="ocaStartUrl">
+                                                    <spring:url value="/partida/oca/{partidaOcaId}/empezar" var="ocaStartUrl">
                                                         <spring:param name="partidaOcaId" value="${partidaOca.id}" />
                                                     </spring:url>
                                                     <a href="${fn:escapeXml(ocaStartUrl)}"
@@ -101,7 +100,7 @@
                                                         Partida</a>
                                                 </c:if>
 
-                                                <spring:url value="/sala/{partidaOcaId}/abandonarOca"
+                                                <spring:url value="/partida/oca/{partidaOcaId}/abandonar"
                                                     var="ocaAbandonarUrl">
                                                     <spring:param name="partidaOcaId" value="${partidaOca.id}" />
                                                 </spring:url>
@@ -112,7 +111,7 @@
 
                                   
                                             <c:when test="${partidaOca.estado == TipoEstadoPartida.JUGANDO}">
-                                                <spring:url value="/sala/{partidaOcaId}/playOca" var="ocaJugarUrl">
+                                                <spring:url value="/partida/oca/{partidaOcaId}/jugar" var="ocaJugarUrl">
                                                     <spring:param name="partidaOcaId" value="${partidaOca.id}" />
                                                 </spring:url>
                                                 <a href="${fn:escapeXml(ocaJugarUrl)}" class="btn btn-default"> Ir a la
@@ -121,5 +120,8 @@
                                             </c:when>
                                         </c:choose>
                                     </c:when>
+                              
                                 </c:choose>
+                             
+
                             </petclinic:layout>

@@ -13,6 +13,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 
@@ -33,10 +34,31 @@ public class PartidaOca extends Partida{
 	@OneToMany(mappedBy="partidaOca", cascade = CascadeType.ALL)
 	private Collection<Jugador> jugadores;
 
+	@ElementCollection
+	@CollectionTable(name="chatOca")
+	protected List<String> chatOca;
 
 	@ElementCollection
 	@CollectionTable(name="log")
 	protected List<String> log = inicializarLog();
+
+	public void addMensaje(String mensaje,Jugador jugador){
+		String mensajeFinal ="";
+		String username = jugador.getUsuario().getUser().getUsername();
+		Color color = jugador.getColor();
+		mensajeFinal = mensajeFinal + username +"("+color.toString()+"): " + mensaje;
+		chatOca.add(mensajeFinal);
+	}
+	public String printChatOca(){
+		String chat = "";
+		List<String> aux = new ArrayList<>(chatOca);
+		
+		for(String s: aux){
+			chat += s + "<br>";
+		}  
+		return chat;
+	}
+	
 
 	private List<String> inicializarLog(){
 		List<String> result = new ArrayList<>();
@@ -68,6 +90,31 @@ public class PartidaOca extends Partida{
 		Optional<CasillaOca> opt = this.getCasillas().stream().filter(c->c.getNumero().equals(numero)).findFirst();
 		if(opt.isPresent()) return opt.get();
 		return null;
+	}
+
+	public void pasarTurno() {
+		switch (this.getColorJugadorActual()) {
+			case ROJO:
+				this.setColorJugadorActual(Color.AMARILLO);
+
+				break;
+			case AMARILLO:
+				if (this.getJugadores().size() == 2)
+					this.setColorJugadorActual(Color.ROJO);
+				else
+					this.setColorJugadorActual(Color.VERDE);
+				break;
+			case VERDE:
+				if (this.getJugadores().size() == 3)
+					this.setColorJugadorActual(Color.ROJO);
+				else
+					this.setColorJugadorActual(Color.AZUL);
+				break;
+			case AZUL:
+				this.setColorJugadorActual(Color.ROJO);
+				break;
+		}
+		this.addLog("TURNO DEL JUGADOR " + this.getColorJugadorActual());
 	}
 
 	 

@@ -2,9 +2,12 @@ package org.springframework.samples.petclinic.ocachis.ficha;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.exceptions.ResourceNotFoundException;
 import org.springframework.samples.petclinic.ocachis.casilla.CasillaOca;
+import org.springframework.samples.petclinic.ocachis.casilla.CasillaParchis;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaOca;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaParchis;
@@ -15,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class FichaService {
     private FichaOcaRepository fichaOcaRepository;
     private FichaParchisRepository fichaParchisRepository;
-
+ 
     @Autowired
     public FichaService(FichaOcaRepository fichaOcaRepository, FichaParchisRepository fichaParchisRepository){
         this.fichaOcaRepository = fichaOcaRepository;
@@ -41,7 +44,9 @@ public class FichaService {
 
 
     public FichaOca findFichaOca(Integer id){
-        return fichaOcaRepository.findById(id).get();
+        Optional<FichaOca> optFicha =  fichaOcaRepository.findById(id);
+        if(optFicha.isEmpty()) throw new ResourceNotFoundException("Ficha no encontrada");
+        return optFicha.get();
     }
 
 	public void removeFichaOca(FichaOca ficha) {
@@ -55,6 +60,9 @@ public class FichaService {
         ficha = saveFichaOca(ficha);
         return ficha;
     }
+
+
+    //*****************************************************PARCHIS******************************************
 
     public List<FichaParchis> createFichasParchis(Jugador jugador, PartidaParchis partida) {
         ArrayList<FichaParchis> fichas = new ArrayList<>();
@@ -83,7 +91,38 @@ public class FichaService {
         return fichas;
     }
 
-    private FichaParchis saveFichaParchis(FichaParchis ficha) {
+    @Transactional
+    public FichaParchis saveFichaParchis(FichaParchis ficha) {
         return fichaParchisRepository.save(ficha);
     }
+
+    @Transactional(readOnly = true)
+    public FichaParchis findFichaParchis(Integer id){
+        Optional<FichaParchis> optFicha = fichaParchisRepository.findById(id);
+        if(optFicha.isEmpty()) throw new ResourceNotFoundException("Ficha no encontrada");
+        return optFicha.get();
+    }
+    
+
+    @Transactional
+    public void moverFichaParchis(FichaParchis ficha, CasillaParchis casillaFinal, Jugador jugador) {
+        
+        //Borramos ficha antigua
+		jugador.deleteFichaParchis(ficha);
+        jugador.getPartidaParchis().setUltimaFichaMovida(null);
+		removeFichaParchis(ficha);
+
+		//Creamos ficha nueva
+		FichaParchis f = new FichaParchis(jugador.getColor(), casillaFinal);
+		f = saveFichaParchis(f);
+		jugador.addFichaParchis(f);	
+        jugador.getPartidaParchis().setUltimaFichaMovida(f);
+    }
+
+    @Transactional
+    public void removeFichaParchis(FichaParchis ficha) {
+        fichaParchisRepository.delete(ficha);
+    }
+
+
 }

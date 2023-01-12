@@ -6,17 +6,18 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ page import="org.springframework.samples.petclinic.ocachis.usuario.Usuario"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <petclinic:layout pageName="usuarios" title="Mi perfil - ${usuario.getUser().getUsername()}">
        <h1><center>${usuario.getUser().getUsername()}</center></h1>
     <table id="partidasTable" class="table table-striped">
         <tr>
             <th>Nombre</th>
-            <td>${usuario.getNombre()}</td>
+            <td><c:out value="${usuario.getNombre()}"></c:out></td>
         </tr>
         <tr>
             <th>Apellido</th>
-            <td>${usuario.getApellido()}</td>
+            <td><c:out value="${usuario.getApellido()}"></c:out></td>
         </tr>
     </table>
 
@@ -32,43 +33,43 @@
         <tbody>
             <tr>
                 <th>Partidas Ganadas</th>
-                <td>${usuario.getEstadisticas().getOcaPartidasGanadas()}</td>
-                <td>${usuario.getEstadisticas().getParchisPartidasGanadas()}</td>
+                <td><c:out value="${usuario.getEstadisticas().getOcaPartidasGanadas()}"></c:out></td>
+                <td><c:out value="${usuario.getEstadisticas().getParchisPartidasGanadas()}"></c:out></td>
             </tr>
             <tr>
                 <th>Partidas Jugadas</th>
-                <td>${usuario.getEstadisticas().getOcaPartidasJugadas()}</td>
-                <td>${usuario.getEstadisticas().getParchisPartidasJugadas()}</td>
+                <td><c:out value="${usuario.getEstadisticas().getOcaPartidasJugadas()}"></c:out></td>
+                <td><c:out value="${usuario.getEstadisticas().getParchisPartidasJugadas()}"></c:out></td>
             </tr>
             <tr>
                 <th>Duracion total</th>
-                <td>${usuario.getEstadisticas().getOcaDuracionTotal()}</td>
-                <td>${usuario.getEstadisticas().getParchisDuracionTotal()}</td>
+                <td><c:out value="${usuario.getEstadisticas().getOcaDuracionTotal()}"></c:out></td>
+                <td><c:out value="${usuario.getEstadisticas().getParchisDuracionTotal()}"></c:out></td>
             </tr>
             <tr>
                 <th>Duracion maxima</th>
-                <td>${usuario.getEstadisticas().getOcaDuracionMaxima()}</td>
-                <td>${usuario.getEstadisticas().getParchisDuracionMaxima()}</td>
+                <td><c:out value="${usuario.getEstadisticas().getOcaDuracionMaxima()}"></c:out></td>
+                <td><c:out value="${usuario.getEstadisticas().getParchisDuracionMaxima()}"></c:out></td>
             </tr>
             <tr>
                 <th>Duracion minima</th>
-                <td>${usuario.getEstadisticas().getOcaDuracionMinima()}</td>
-                <td>${usuario.getEstadisticas().getParchisDuracionMinima()}</td>
+                <td><c:out value="${usuario.getEstadisticas().getOcaDuracionMinima()}"></c:out></td>
+                <td><c:out value="${usuario.getEstadisticas().getParchisDuracionMinima()}"></c:out></td>
             </tr>
             <tr>
                 <th>Duracion media</th>
-                <td>${usuario.getEstadisticas().getOcaDuracionMedia()}</td>
-                <td>${usuario.getEstadisticas().getParchisDuracionMedia()}</td>
+                <td><c:out value="${usuario.getEstadisticas().getOcaDuracionMedia()}"></c:out></td>
+                <td><c:out value="${usuario.getEstadisticas().getParchisDuracionMedia()}"></c:out></td>
             </tr>
             <tr>
                 <th>Caido en Muerte</th>
-                <td>${usuario.getEstadisticas().getOcaVecesCaidoEnMuerte()}</td>
+                <td><c:out value="${usuario.getEstadisticas().getOcaVecesCaidoEnMuerte()}"></c:out></td>
                 <td> - </td>
             </tr>
             <tr>
                 <th>Fichas comidas</th>
                 <td> - </td>
-                <td>${usuario.getEstadisticas().getParchisFichasComidas()}</td>
+                <td><c:out value="${usuario.getEstadisticas().getParchisFichasComidas()}"></c:out></td>
             </tr>
 
 
@@ -76,4 +77,29 @@
     </table>
 
 
+    <br>
+    <br>
+
+    <h3>Mis logros</h3>
+
+    <table id="logrosTable" class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 50px;">Nombre</th>
+            <th style="width: 200px">Descripción</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${usuario.logros}" var="logro">
+            <tr>
+                <td>
+                    <c:out value="${logro.nombre}"></c:out>
+                </td>
+                <td>
+                    <c:out value="${logro.descripcion}"></c:out>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 </petclinic:layout>

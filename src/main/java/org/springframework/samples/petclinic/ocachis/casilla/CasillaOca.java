@@ -17,12 +17,10 @@ import lombok.Setter;
 
 public class CasillaOca extends Casilla{
     public static Map<Integer,Coordenadas> coordenadas = inicializarMapa();
-
     private TipoCasillaOca tipoCasillaOca;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="casillaActual")
     private List<FichaOca> fichas;    
-
 
     public String getOrientacion(){
         if( (this.getNumero() >= 2 && this.numero <=8) || (numero >= 19 && numero <=28)

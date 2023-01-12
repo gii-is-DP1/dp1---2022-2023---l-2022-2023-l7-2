@@ -6,6 +6,7 @@ package org.springframework.samples.petclinic.web;
  * @author Colin But
  */
 //Waiting https://github.com/spring-projects/spring-boot/issues/5574
+
 /*@WebMvcTest(CrashController.class)
 class CrashControllerTests {
 

@@ -2,10 +2,16 @@ package org.springframework.samples.petclinic.ocachis.logro;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.exceptions.ResourceNotFoundException;
+import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.logro.exceptions.MetaNegativaException;
 import org.springframework.samples.petclinic.ocachis.logro.exceptions.MultiplesMetasDefinidasException;
+import org.springframework.samples.petclinic.ocachis.partida.PartidaOca;
+import org.springframework.samples.petclinic.ocachis.partida.PartidaParchis;
+import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,11 +38,12 @@ public class LogroService {
 
     @Transactional(readOnly=true)
     public Logro findById(int id){
-        return this.logroRepository.findById(id);
+        Optional<Logro> optLogro = this.logroRepository.findById(id);
+        if(optLogro.isEmpty()) throw new ResourceNotFoundException("Logro no encontrado");
+        return optLogro.get();
     }
     
     public void validarLogro(Logro l) throws IllegalAccessException, MultiplesMetasDefinidasException, MetaNegativaException{
-        //Boolean result = false;
         int cont = 0;
         Field[] campos = l.getEstadisticasACumplir().getClass().getDeclaredFields();
         for(Field c : campos){
@@ -52,12 +59,37 @@ public class LogroService {
         }
         if(cont != 1){
             throw new MultiplesMetasDefinidasException();
-        }/*else{
-            result = true;
-            return result;
-        }*/
+        }
     }
 
+    public void actualizarLogrosOca(PartidaOca partida) throws IllegalAccessException{
+        Collection<Jugador> jugadores = partida.getJugadores();
+        for(Jugador j: jugadores){
+            Usuario usuario = j.getUsuario();
+            Collection<Logro> logrosCompletados = logroRepository.findAllLogrosForUsuario(usuario.getId());
+            Collection<Logro> logrosACompletar = logroRepository.findLogrosNoCompletados(logrosCompletados);
+            for(Logro l: logrosACompletar){
+                if(usuario.cumpleLogro(l)){
+                    usuario.addLogro(l);
+                }
+            }
+        }        
+    }
+    
+    
 
-
+    @Transactional
+    public void actualizarLogrosParchis(PartidaParchis partida) throws IllegalAccessException{
+        Collection<Jugador> jugadores = partida.getJugadores();
+        for(Jugador j: jugadores){
+            Usuario usuario = j.getUsuario();
+            Collection<Logro> logrosCompletados = logroRepository.findAllLogrosForUsuario(usuario.getId());
+            Collection<Logro> logrosACompletar = logroRepository.findLogrosNoCompletados(logrosCompletados);
+            for(Logro l: logrosACompletar){
+                if(usuario.cumpleLogro(l)){
+                    usuario.addLogro(l);
+                }
+            }
+        }        
+    }
 }

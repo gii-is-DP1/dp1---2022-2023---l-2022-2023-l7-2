@@ -27,6 +27,8 @@ public class Estadisticas{
 		this.ocaDuracionMedia = 0;
 	}
 
+	
+
 	public Integer parchisPartidasJugadas;
 
 	public Integer parchisPartidasGanadas;
@@ -64,7 +66,38 @@ public class Estadisticas{
 		this.ocaDuracionMedia = this.ocaDuracionTotal / this.ocaPartidasJugadas;
 		this.ocaVecesCaidoEnMuerte += vecesCaidoEnMuerte;
 	}
+
+	public void resetEstadisticas(){
+		this.parchisPartidasJugadas = 0;
+		this.parchisPartidasGanadas = 0;
+		this.parchisFichasComidas = 0;
+		this.ocaPartidasJugadas = 0;
+		this.ocaPartidasGanadas = 0;
+		this.ocaVecesCaidoEnMuerte = 0;
+		this.parchisDuracionTotal = 0;
+		this.parchisDuracionMinima = 0;
+		this.parchisDuracionMaxima = 0;
+		this.parchisDuracionMedia = 0;
+		this.ocaDuracionTotal = 0;
+		this.ocaDuracionMinima = 0;
+		this.ocaDuracionMaxima = 0;
+		this.ocaDuracionMedia = 0;
+	}
 	
+	
+
+    public void updateEstadisticasParchis(Integer duracion, Boolean esGanador, Integer fichasComidas) {
+		this.parchisPartidasJugadas++;
+		if(esGanador) this.parchisPartidasGanadas++;
+		this.parchisDuracionTotal += duracion;
+		if(duracion > this.parchisDuracionMaxima) this.parchisDuracionMaxima = duracion;
+		if(duracion < this.parchisDuracionMinima || this.parchisDuracionMinima == 0) this.parchisDuracionMinima = duracion;
+		this.parchisDuracionMedia = this.parchisDuracionTotal / this.parchisPartidasJugadas;
+		this.parchisFichasComidas += fichasComidas;
+    }
+
+
+
 	@Override
 	public String toString() {
 		return "Estadisticas [parchisPartidasJugadas=" + parchisPartidasJugadas + ", parchisPartidasGanadas="

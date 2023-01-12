@@ -4,8 +4,7 @@ package  org.springframework.samples.petclinic.ocachis.jugador;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
-import java.util.stream.Collectors;
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -29,7 +28,6 @@ import lombok.Setter;
 @Entity
 public class Jugador  extends BaseEntity{ 
     
-//@NotBlank
 private Color color;
 
 
@@ -52,6 +50,7 @@ private Integer numTurnosBloqueadoRestantesOca = 0;
 private FichaOca fichaOca;
 
 @OneToMany(cascade = CascadeType.ALL)
+
 private Collection<FichaParchis> fichasParchis;
 
 
@@ -68,25 +67,38 @@ public String toString(){
     return "usuarioId: " + usuario.getId() + " color: " + color.toString();
 }
 
+    public void addFichaParchis(FichaParchis f){
+        this.fichasParchis.add(f);
+    }
+
+    public void deleteFichaParchis(FichaParchis f){
+        this.fichasParchis.remove(f);
+        f.getCasillaActual().quitarFicha(f);
+    }
+
     public void finalizarPartidaOca(Integer duracion) {
         this.usuario.actualizarEstadisticasOca(duracion, this.esGanador, this.vecesCaidoEnMuerte);
     }
 
-
     public List<FichaParchis> getFichasQuePuedenMoverse(Integer dado){
-        ArrayList<FichaParchis> result = new ArrayList<>();
-        if(dado == 5 && fichasParchis.stream().anyMatch(fp->fp.isEstaEnCasa())){
-            return fichasParchis.stream().filter(fp->fp.isEstaEnCasa()).collect(Collectors.toList());
-        }else if(dado == 6 && fichasParchis.stream().anyMatch(fp->fp.getCasillaActual().getBloqueada())) {
-            return fichasParchis.stream().filter(fp->fp.getCasillaActual().getBloqueada()).collect(Collectors.toList());
-        }else{
+        List<FichaParchis> result = new ArrayList<>();
+        if(dado == 5 && fichasParchis.stream().anyMatch(fp->fp.isEstaEnCasa() && partidaParchis.sePuedeMover(fp,dado))){
+            result = fichasParchis.stream().filter(fp->fp.isEstaEnCasa() && partidaParchis.sePuedeMover(fp,dado)).collect(Collectors.toList());
+        }else if(dado == 6 && fichasParchis.stream().anyMatch(fp->fp.getCasillaActual().getBloqueada() && partidaParchis.sePuedeMover(fp,dado))){
+            result = fichasParchis.stream().filter(fp->fp.getCasillaActual().getBloqueada() && partidaParchis.sePuedeMover(fp,dado)).collect(Collectors.toList());
+        }
+
+        if(result.size()==0){//no se puede sacar ficha ni mover bloqueo
             for(FichaParchis fp: fichasParchis){
                 if(partidaParchis.sePuedeMover(fp,dado)) result.add(fp);
             }
         }
-
         return result;
     }
+
+    public void finalizarPartidaParchis(Integer duracion) {
+        this.usuario.actualizarEstadisticasParchis(duracion, this.esGanador, this.fichasComidas);
+    }                           
 }   
 
 

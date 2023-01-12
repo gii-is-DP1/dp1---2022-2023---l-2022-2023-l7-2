@@ -2,16 +2,21 @@ package org.springframework.samples.petclinic.ocachis.jugador;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Color;
+import org.springframework.samples.petclinic.model.exceptions.ResourceNotFoundException;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaService;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaOca;
 import org.springframework.samples.petclinic.ocachis.partida.PartidaParchis;
+import org.springframework.samples.petclinic.ocachis.partida.TipoEstadoPartida;
 import org.springframework.samples.petclinic.ocachis.partida.exceptions.PartidaLlenaException;
 import org.springframework.samples.petclinic.ocachis.usuario.UsuarioService;
 import org.springframework.stereotype.Service;
@@ -31,14 +36,13 @@ public class JugadorService {
       this.fichaService = fichaService;
 	  }
     
-    @Transactional(readOnly=true)
-	  public Collection<Jugador> findAll(){
-  		return jugadorRepository.findAll();
-    }
+    
 
     @Transactional(readOnly=true)
-    public Optional<Jugador> findById(Integer id){
-		  return jugadorRepository.findById(id);
+    public Jugador findById(Integer id){
+      Optional<Jugador> optJugador = jugadorRepository.findById(id);
+      if(optJugador.isEmpty()) throw new ResourceNotFoundException("Jugador no encontrado");
+		  return optJugador.get();
     }
     @Transactional
     public void delete(Jugador j){
@@ -113,4 +117,39 @@ public class JugadorService {
 			jugador = save(jugador);
       return jugador;
     }
+
+    public Boolean estaDentroPartida(Integer usuarioId) {
+      Collection<Jugador> jugadores = this.findAllJugadoresForUsuario(usuarioId);
+      for (Jugador j : jugadores) {
+        if (j.getPartidaOca() != null && (j.getPartidaOca().getEstado() == TipoEstadoPartida.JUGANDO)) {
+            return true;
+        } else if (j.getPartidaParchis() != null && (j.getPartidaParchis().getEstado() == TipoEstadoPartida.JUGANDO)) {
+            return true;
+        }
+      }
+      return false;
+    }
+
+    public Map<String,Integer> findIdPartidaEspectar(Integer usuarioId) {
+      Collection<Jugador> jugadores = this.findAllJugadoresForUsuario(usuarioId);
+      Map<String,Integer> partidaEspectar = new HashMap<String,Integer>();
+      for (Jugador j : jugadores) {
+        if (j.getPartidaOca() != null && (j.getPartidaOca().getEstado() == TipoEstadoPartida.JUGANDO)) {
+           partidaEspectar.put("oca", j.getPartidaOca().getId());
+        } else if (j.getPartidaParchis() != null && (j.getPartidaParchis().getEstado() == TipoEstadoPartida.JUGANDO)) {
+           partidaEspectar.put("parchis", j.getPartidaParchis().getId());
+        }
+      }
+      return partidaEspectar;
+    }
+ 
+
+  @Transactional(readOnly = true)
+	public Boolean estaJugando(Integer usuarioId) {
+	  Integer numJugadoresOca = this.jugadorRepository.contarJugadoresOcaJugando(usuarioId);
+    Integer numJugadoresParchis = this.jugadorRepository.contarJugadoresParchisJugando(usuarioId);
+    if(numJugadoresOca + numJugadoresParchis ==0) return false;
+    return true;
+  }
 }
+

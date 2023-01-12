@@ -1,20 +1,15 @@
 package org.springframework.samples.petclinic.ocachis.usuario;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.ocachis.solicitud.SolicitudService;
 import org.springframework.samples.petclinic.ocachis.user.AuthoritiesService;
 import org.springframework.samples.petclinic.ocachis.user.User;
-import org.springframework.samples.petclinic.ocachis.user.UserService;
 import org.springframework.samples.petclinic.ocachis.usuario.exceptions.*;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -32,12 +27,12 @@ public class UsuarioController {
 	private static final String VIEWS_USUARIO_PROFILE ="usuarios/perfil";
  
 	private final UsuarioService usuarioService;
-	private final UserService userService;
+	private final SolicitudService solicitudService;
 
 	@Autowired
-	public UsuarioController(UsuarioService usuarioService, UserService userService, AuthoritiesService authoritiesService) {
+	public UsuarioController(UsuarioService usuarioService, AuthoritiesService authoritiesService, SolicitudService solicitudService) {
 		this.usuarioService = usuarioService;
-		this.userService = userService;
+		this.solicitudService = solicitudService;
 	}
 	
 	@InitBinder
@@ -122,8 +117,19 @@ public class UsuarioController {
 	@GetMapping(value="/{usuarioId}/perfil")
 	public String mostrarPerfil(@PathVariable("usuarioId") int usuarioId, Map<String, Object> model){
 		Usuario u = usuarioService.findUsuarioById(usuarioId);
+		Usuario usuarioLogeado = this.usuarioService.getLoggedUsuario();
+		if(!(usuarioId==usuarioLogeado.getId() || this.solicitudService.sonAmigos(usuarioId, usuarioLogeado.getId())))
+		return "redirect:/noAccess";
+
+
+
 		model.put("usuario",u);
 		model.put("now",LocalDateTime.now());
+	
 		return VIEWS_USUARIO_PROFILE;
+			
+			
 	}
+
+
 }

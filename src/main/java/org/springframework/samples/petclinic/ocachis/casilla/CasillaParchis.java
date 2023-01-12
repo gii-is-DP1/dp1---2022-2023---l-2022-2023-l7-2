@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotEmpty;
 
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 import lombok.Getter;
@@ -122,7 +121,6 @@ public class CasillaParchis extends Casilla{
         posiciones.put(66, new Coordenadas(248, 630));
         posiciones.put(67, new Coordenadas(248, 662));
         
-        //No funciona en los pasillos el tema de horizontal y vertical?!
         //pasillo amarillo
         posiciones.put(68, new Coordenadas(324, 662));
         posiciones.put(69, new Coordenadas(324, 630));
@@ -174,16 +172,54 @@ public class CasillaParchis extends Casilla{
 
 
      public String getOrientacion(){
-        if(  (numero>= 1 && numero <=8) || (numero>= 26 && numero <=42) || (numero>= 60 && numero <=68))
+        if((numero>= 1 && numero <=8) || (numero>= 26 && numero <=42) || (numero>= 60 && numero <=75) || (numero>= 85 && numero <=91)) 
             return "horizontal";
         else return "vertical";
     }
     public Boolean esMeta(){
-       if(tipoCasillaParchis == TipoCasillaParchis.CASAROJO || 
-       tipoCasillaParchis == TipoCasillaParchis.CASAAMARILLO || 
-       tipoCasillaParchis == TipoCasillaParchis.CASAVERDE || 
-       tipoCasillaParchis == TipoCasillaParchis.CASAAZUL)
-        return true;
-        return false;
+        if(tipoCasillaParchis == TipoCasillaParchis.FINALROJO || 
+        tipoCasillaParchis == TipoCasillaParchis.FINALAMARILLO || 
+        tipoCasillaParchis == TipoCasillaParchis.FINALVERDE || 
+        tipoCasillaParchis == TipoCasillaParchis.FINALAZUL)
+         return true;
+         return false;
+     }
+     public Boolean esCasa(){
+        if(tipoCasillaParchis == TipoCasillaParchis.CASAROJO || 
+        tipoCasillaParchis == TipoCasillaParchis.CASAAMARILLO || 
+        tipoCasillaParchis == TipoCasillaParchis.CASAVERDE || 
+        tipoCasillaParchis == TipoCasillaParchis.CASAAZUL)
+         return true;
+         return false;
+     }
+
+     public Boolean esPasillo(){
+         if(tipoCasillaParchis == TipoCasillaParchis.PASILLOROJO || 
+        tipoCasillaParchis == TipoCasillaParchis.PASILLOAMARILLO || 
+        tipoCasillaParchis == TipoCasillaParchis.PASILLOVERDE || 
+        tipoCasillaParchis == TipoCasillaParchis.PASILLOAZUL)
+         return true;
+         return false; 
+     }
+
+    public void actualizarBloqueado() {
+        if(!esMeta() && !esCasa() && fichas.size()==2){
+            bloqueada=true;
+        }
+        else bloqueada=false;
     }
+
+    public void añadirFicha(FichaParchis f){
+        this.fichas.add(f);
+        actualizarBloqueado();
+    }
+    public void quitarFicha(FichaParchis f){
+        this.fichas.remove(f);
+        actualizarBloqueado();
+    }
+
+    public Integer getNumeroFichas(){
+        return this.fichas.size();
+    }
+
 }

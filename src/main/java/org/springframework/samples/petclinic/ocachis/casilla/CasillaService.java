@@ -1,13 +1,15 @@
 package org.springframework.samples.petclinic.ocachis.casilla;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
 public class CasillaService {
-    
 
     private CasillaOcaRepository casillaOcaRepository;
     private CasillaParchisRepository casillaParchisRepository;
@@ -18,30 +20,21 @@ public class CasillaService {
         this.casillaParchisRepository =  casillaParchisRepository;
     }
 
-    @Transactional(readOnly = true)
-    public Iterable<CasillaOca> findAllForPartidaOca(Integer partidaOcaId){
-        // return casillaOcaRepository.findAllForPartidaOca(partidaOcaId);
-        return casillaOcaRepository.findAll();
-    }
 
     @Transactional
     public CasillaOca saveCasillaOca(CasillaOca casilla){
-        CasillaOca c = casillaOcaRepository.save(casilla);
-        return c;
+        return casillaOcaRepository.save(casilla);
     }
 
     @Transactional
     public CasillaParchis saveCasillaParchis(CasillaParchis casilla){
-        CasillaParchis c = casillaParchisRepository.save(casilla);
-        return c;
+        return casillaParchisRepository.save(casilla);
     }
 
     @Transactional(readOnly = true)
     public CasillaOca findCasillaOcaById(Integer casillaOcaId) {
-        CasillaOca c = casillaOcaRepository.findById(casillaOcaId).get();
-        return c;
+        Optional<CasillaOca> optCasilla = casillaOcaRepository.findById(casillaOcaId);
+        if(optCasilla.isEmpty()) throw new ResourceNotFoundException("Casilla no encontrada");
+        return optCasilla.get();
     }
-
-
-    
 }
