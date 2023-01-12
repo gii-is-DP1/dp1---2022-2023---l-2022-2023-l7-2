@@ -494,15 +494,13 @@ public class PartidaController {
 	public String terminadaPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model, HttpServletResponse response,  
 	RedirectAttributes redirectAttributes){
 		PartidaOca partida = partidaService.findPartidaOcaById(partidaOcaId);
-		
-		if(partida.getEstado()==TipoEstadoPartida.TERMINADA){
-			redirectAttributes.addFlashAttribute("message", "La partida ya ha terminado");
-			return "redirect:/partida/oca/" + partidaOcaId + "/resumen";
-
-		}else if(partida.getEstado()==TipoEstadoPartida.CREADA){
-			redirectAttributes.addFlashAttribute("message", "La partida aun no ha empezado");
-			return "redirect:/partida/oca/" + partidaOcaId + "/espera";
-		}
+		if(partida.getEstado()==TipoEstadoPartida.CREADA){
+				redirectAttributes.addFlashAttribute("message", "La partida todavia no ha empezado");
+				return "redirect:/partida/oca/"+partidaOcaId+"/espera";
+			}else if(partida.getEstado()==TipoEstadoPartida.JUGANDO){
+				redirectAttributes.addFlashAttribute("message", "La partida se está jugando");
+				return "redirect:/partida/oca/"+partidaOcaId+"/jugar";
+			}
 
 
 		model.put("partida", partida);
@@ -513,18 +511,17 @@ public class PartidaController {
 	public String terminadaPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model, HttpServletResponse response, 
 	RedirectAttributes redirectAttributes){
 		PartidaParchis partida = partidaService.findPartidaParchisById(partidaParchisId);
+		if(partida.getEstado()==TipoEstadoPartida.CREADA){
+				redirectAttributes.addFlashAttribute("message", "La partida todavia no ha empezado");
+				return "redirect:/partida/parchis/"+partidaParchisId+"/espera";
+			}
+			else if(partida.getEstado()==TipoEstadoPartida.JUGANDO){
+				redirectAttributes.addFlashAttribute("message", "La partida se está jugando");
+				return "redirect:/partida/parchis/"+partidaParchisId+"/jugar";
+			}
 
-	if(partida.getEstado()==TipoEstadoPartida.CREADA){
-			redirectAttributes.addFlashAttribute("message", "La partida todavia no ha empezado");
-			return "redirect:/parchis/"+partida.getId()+"/espera";
-		}
-		else if(partida.getEstado()==TipoEstadoPartida.JUGANDO){
-			redirectAttributes.addFlashAttribute("message", "La partida se está jugando");
-			return "redirect:/parchis/"+partida.getId()+"/jugar";
-		}
 
-
-		model.put("partidaOca", partida);
+		model.put("partida", partida);
 		return VIEWS_PARTIDAOCA_TERMINADA;
 	}
 	

@@ -13,7 +13,7 @@
 
 <petclinic:layout pageName="resumen" title="Final Partida Oca">
     
-    <h2>EL GANADOR HA SIDO: ${partidaOca.ganador.user.username}</h2>
+    <h2>EL GANADOR HA SIDO: ${partida.ganador.user.username}</h2>
     <h1> La partida ha durado: <c:out value="${partida.duracion}"></c:out> minutos.</h1>
     
     <h1>
