@@ -2,7 +2,6 @@ package org.springframework.samples.petclinic.ocachis.solicitud;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.springframework.samples.petclinic.model.BaseEntity;

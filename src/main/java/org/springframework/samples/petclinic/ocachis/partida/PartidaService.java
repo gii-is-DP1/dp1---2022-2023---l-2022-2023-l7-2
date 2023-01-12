@@ -406,7 +406,6 @@ public class PartidaService {
 
 	public int TirarNumDado() {
 		int numDado = (int) (Math.random() * 6 + 1);
-		//numDado = 1;
 		return numDado;
 	}
 
@@ -471,7 +470,6 @@ public class PartidaService {
 				casilla.setTipoCasillaParchis(TipoCasillaParchis.CASAROJO);
 			else if (i == 104)
 				casilla.setTipoCasillaParchis(TipoCasillaParchis.CASAVERDE);
-			// this.casillaService.saveCasillaParchis(casilla);
 			casillas.add(casilla);
 		}
 		partida.setCasillas(casillas);
@@ -661,7 +659,6 @@ public class PartidaService {
 	public int tirarDado(PartidaParchis partida) {
 		if (partida.getDado() == null) {
 			partida.setDado((int)(Math.random()*6 +1));
-			//partida.setDado(6);
 			partida.addLog("Ha sacado " + partida.getDado());
 		}
 		return partida.getDado();

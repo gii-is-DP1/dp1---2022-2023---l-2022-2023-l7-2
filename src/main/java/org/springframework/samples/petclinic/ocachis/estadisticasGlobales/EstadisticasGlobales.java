@@ -1,6 +1,4 @@
 package org.springframework.samples.petclinic.ocachis.estadisticasGlobales;
-import java.util.ArrayList;
-import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;

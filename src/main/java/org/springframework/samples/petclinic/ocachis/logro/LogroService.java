@@ -1,11 +1,8 @@
 package org.springframework.samples.petclinic.ocachis.logro;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
-
-import javax.swing.text.html.Option;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.exceptions.ResourceNotFoundException;
@@ -47,7 +44,6 @@ public class LogroService {
     }
     
     public void validarLogro(Logro l) throws IllegalAccessException, MultiplesMetasDefinidasException, MetaNegativaException{
-        //Boolean result = false;
         int cont = 0;
         Field[] campos = l.getEstadisticasACumplir().getClass().getDeclaredFields();
         for(Field c : campos){

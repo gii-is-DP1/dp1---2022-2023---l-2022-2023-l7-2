@@ -28,7 +28,6 @@ import lombok.Setter;
 @Entity
 public class Jugador  extends BaseEntity{ 
     
-//@NotBlank
 private Color color;
 
 

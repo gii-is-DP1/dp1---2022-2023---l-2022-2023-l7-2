@@ -3,21 +3,12 @@ package org.springframework.samples.petclinic.web;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class MyErrorController{
-
-    // @Override
-    // public String getErrorPath() {
-    //     // TODO Auto-generated method stub
-    //     return "exception";
-    // }
 
     @GetMapping("/error")
     public String handleError(HttpServletRequest request) {

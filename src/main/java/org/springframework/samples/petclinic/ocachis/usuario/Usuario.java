@@ -35,7 +35,6 @@ public class Usuario extends BaseEntity {
 	@NotEmpty
     private String nombre;
 
-//  @NotEmpty
     private String apellido;
 
 	@Embedded

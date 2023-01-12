@@ -121,7 +121,6 @@ public class CasillaParchis extends Casilla{
         posiciones.put(66, new Coordenadas(248, 630));
         posiciones.put(67, new Coordenadas(248, 662));
         
-        //No funciona en los pasillos el tema de horizontal y vertical?!
         //pasillo amarillo
         posiciones.put(68, new Coordenadas(324, 662));
         posiciones.put(69, new Coordenadas(324, 630));

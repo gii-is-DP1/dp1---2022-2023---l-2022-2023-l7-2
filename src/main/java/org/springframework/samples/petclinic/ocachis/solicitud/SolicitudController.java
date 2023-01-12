@@ -20,7 +20,6 @@ public class SolicitudController {
     
     private static final String VIEWS_AMIGOS = "solicitud/amigos";
 	private static final String VIEWS_PENDIENTES = "solicitud/pendientes";
-    private static final String VIEWS_USUARIO_PROFILE ="usuarios/perfil";
  
 
     private SolicitudService solicitudService;

@@ -28,7 +28,7 @@
 					<span>Inicio</span>
 				</petclinic:menuItem>
 
-			<sec:authorize access="isAuthenticated()">
+			<sec:authorize access="hasAuthority('jugador')">
 				<petclinic:menuItem active="${name eq 'salas'}"
 						url="/partida/" title="Salas" dropdown="${true}">
 						<ul class="dropdown-menu">
@@ -45,21 +45,22 @@
 						<span>Logros</span>
 				</petclinic:menuItem>
 
-				<sec:authorize access="isAuthenticated()">
+				<sec:authorize access="hasAuthority('jugador')">
 				<petclinic:menuItem active="${name eq 'partida'}"
 						url="/partida/crear" title="Crear Partida">
 						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 						<span>Crear Partida</span>
 				</petclinic:menuItem>
 			</sec:authorize>
-
+				
 				<petclinic:menuItem active="${name eq 'estadisticas'}"
 						url="/estadisticasGlobales" title="Estadisticas">
 						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 						<span>Estadisticas</span>
 				</petclinic:menuItem>
+				
 
-				<sec:authorize access="isAuthenticated()">
+				<sec:authorize access="hasAuthority('jugador')">
 					<petclinic:menuItem active="${name eq 'amigos'}"
 						url="/solicitud" title="Amigos" dropdown="${true}">
 						<ul class="dropdown-menu">
@@ -95,7 +96,7 @@
 					<li><a href="<c:url value="/usuarios/nuevo" />">Registrarse</a></li>
 				</sec:authorize>			
 				
-				<sec:authorize access="isAuthenticated()">						
+				<sec:authorize access="hasAuthority('jugador')">						
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>
 							<strong><sec:authentication property="name" /></strong> <span
@@ -104,8 +105,27 @@
 						<ul class="dropdown-menu">
 							<li><a href="<c:url value="/usuarios/editProfile" />">Editar usuario</a></li>
 							<li class="divider"></li>
+				
 							<li><a href="<c:url value="/usuarios/perfil" />">Mi perfil</a></li>
 							<li class="divider"></li>
+
+							<li><a href="<c:url value="/logout" />">Logout</a></li>
+							
+						</ul>
+					
+						</li>
+				</sec:authorize>
+
+
+				<sec:authorize access="hasAuthority('admin')">						
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>
+							<strong><sec:authentication property="name" /></strong> <span
+							class="glyphicon glyphicon-chevron-down"></span>
+					</a>
+						<ul class="dropdown-menu">
+							
+
 							<li><a href="<c:url value="/logout" />">Logout</a></li>
 							
 						</ul>

@@ -436,7 +436,6 @@ public class PartidaController {
 			model.put("modo","observador");
 		}
 		model.put("partidaParchis", partida);
-		//model.put("now", new Date());	
 		return VIEWS_JUGAR_PARCHIS;
 	}
 	

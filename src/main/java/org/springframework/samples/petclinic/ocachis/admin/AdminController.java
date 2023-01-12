@@ -35,30 +35,6 @@ public class AdminController {
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-    
-    
-    /* 
-    @GetMapping("/partidaEnCurso")
-    public ModelAndView partidaEnCurso(){
-        ModelAndView mav = new ModelAndView("admin/listPartidas");
-        mav.addObject(this.partidaService.findPartidasEnJuego());
-        return mav;
-    }
-
-     @GetMapping("/partidaTerminada")
-    public ModelAndView partidaTerminadas(){
-        ModelAndView mav = new ModelAndView("admin/listPartidas");
-        mav.addObject(this.partidaService.findPartidasJugadas());
-        return mav;
-    }
-
-    @GetMapping("/partidas")
-    public ModelAndView partidas(){
-        ModelAndView mav = new ModelAndView("admin/listPartidas");
-        mav.addObject(this.partidaService.findAll());
-        return mav;
-    }
-    */
   
     @GetMapping(value="/listUsuarios")
     public String listarUsuarios(Map<String,Object> model){

@@ -177,56 +177,6 @@ public class PartidaParchis extends Partida{
 		this.setUltimoSacado6(false);
 	}
 
-	public List<CasillaParchis> METODORANDOM(FichaParchis ficha, Integer dado){
-		Color color = ficha.getColor();
-		ArrayList<CasillaParchis> result = new ArrayList<>();
-		Integer numeroCasillaInicial = ficha.getCasillaActual().getNumero();
-		Integer numeroCasillaInicialMasDado = numeroCasillaInicial + dado;
-		Integer numeroCasillaFinal = null;
-		
-		// if(numeroCasillaInicialMasDado>68){
-		// 	numeroCasillaFinal = numeroCasillaInicialMasDado%68;
-		// }
-		
-		switch(color){
-			case ROJO:
-				if(numeroCasillaInicial<=34 && numeroCasillaInicialMasDado>34){
-					Integer diferencia  = numeroCasillaInicialMasDado-34;
-					numeroCasillaFinal = 85 + diferencia;
-				}
-				else if(numeroCasillaInicial<=68 && numeroCasillaInicialMasDado>68){
-					numeroCasillaFinal = numeroCasillaInicialMasDado - 68;
-				}
-					break;
-			case AMARILLO: //el pasillo empieza en el 69, por lo que no hay que moverla a ningun lado
-				numeroCasillaFinal = numeroCasillaInicialMasDado;
-				break;
-			case VERDE:
-				if(numeroCasillaInicial<=51 && numeroCasillaInicialMasDado>51){
-					Integer diferencia  = numeroCasillaInicialMasDado - 51;
-					numeroCasillaFinal = 93 + diferencia;
-					break;
-				}else if(numeroCasillaInicial<=68 && numeroCasillaInicialMasDado>68){
-					numeroCasillaFinal = numeroCasillaInicialMasDado - 68;
-				}
-
-			case AZUL: 
-				if(numeroCasillaInicial<=17 && numeroCasillaInicialMasDado>17){
-					Integer diferencia  = numeroCasillaInicialMasDado - 34;
-					numeroCasillaFinal = 77 + diferencia;
-					break;
-				}else if(numeroCasillaInicial<=68 && numeroCasillaInicialMasDado>68){
-					numeroCasillaFinal = numeroCasillaInicialMasDado - 68;
-				}
-		}
-
-		
-
-
-		return null;
-	}
-
-
     public CasillaParchis getCasillaFinal(FichaParchis ficha, Integer dado) {
 		CasillaParchis result = null;
 		
