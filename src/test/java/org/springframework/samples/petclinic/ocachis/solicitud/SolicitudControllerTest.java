@@ -11,6 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -164,8 +166,8 @@ public class SolicitudControllerTest {
     public void testNoEspectarUsuario() throws Exception{
         given(this.solicitudService.sePuedeEspectar(any(Integer.class), any(Map.class))).willReturn(false);
         mockMvc.perform(get("/solicitud/amigos/"+ TEST_USUARIO_SOLICITADO_ID +"/espectar"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("solicitud/amigos"))
-            .andExpect(model().attribute("message", "No eres amigo de todos los jugadores de la partida"));            
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/solicitud/amigos"))
+            .andExpect(status().isFound());            
     }
 }
