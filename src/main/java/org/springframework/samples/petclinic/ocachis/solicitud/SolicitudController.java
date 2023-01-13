@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/solicitud")
@@ -79,7 +80,7 @@ public class SolicitudController {
 
 
     @GetMapping(value="/amigos/{usuarioId}/espectar")
-    public String espectarPartida(@PathVariable("usuarioId") int usuarioId, Map<String,Object> model){
+    public String espectarPartida(@PathVariable("usuarioId") int usuarioId, Map<String,Object> model, RedirectAttributes redirectAttributes){
         
         Usuario usuarioLoggeado = usuarioService.getLoggedUsuario();
         Map<String,Integer> partidaAEspectar = this.jugadorService.findIdPartidaEspectar(usuarioId);
@@ -88,8 +89,8 @@ public class SolicitudController {
             String espectarUrl= this.solicitudService.obtenerUrlEspectar(partidaAEspectar);
         return "redirect:"+espectarUrl;
     }   
-    model.put("message", "No eres amigo de todos los jugadores de la partida");
-    return listarAmigos(null,model);
+    redirectAttributes.addFlashAttribute("message", "No eres amigo de todos los jugadores de la partida");
+    return "redirect:/solicitud/amigos";
 
     }
     
