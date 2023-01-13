@@ -26,6 +26,7 @@ import org.springframework.samples.petclinic.model.Color;
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.jugador.JugadorService;
+import org.springframework.samples.petclinic.ocachis.solicitud.SolicitudService;
 import org.springframework.samples.petclinic.ocachis.user.AuthoritiesService;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.samples.petclinic.ocachis.usuario.UsuarioService;
@@ -55,6 +56,8 @@ class PartidaControllerTests {
 	
 	@MockBean
 	private JugadorService jugadorService;
+	@MockBean
+	private SolicitudService solicitudService;
 
 	@MockBean
 	private AuthoritiesService authoritiesService;

@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -155,22 +156,9 @@ public class PartidaParchis extends Partida{
 	}
 
 	public void pasarTurno(){
-		switch(this.getColorJugadorActual()){
-			case ROJO:
-				this.setColorJugadorActual(Color.AMARILLO);
-				break;
-			case AMARILLO:
-				if(this.getJugadores().size()==2) this.setColorJugadorActual(Color.ROJO);
-				else this.setColorJugadorActual(Color.VERDE);
-				break;
-			case VERDE:
-				if(this.getJugadores().size()==3) this.setColorJugadorActual(Color.ROJO);
-				else this.setColorJugadorActual(Color.AZUL);
-				break;
-			case AZUL:
-				this.setColorJugadorActual(Color.ROJO);
-				break;
-		}
+		List<Color> colores = this.getJugadores().stream().map(j->j.getColor()).collect(Collectors.toList());
+		Integer indexColorActual = colores.indexOf(this.getColorJugadorActual());
+		this.setColorJugadorActual(colores.get((indexColorActual + 1) % colores.size()));
 		this.addLog("TURNO DEL JUGADOR " + this.getColorJugadorActual());
 		this.setDado(null);
 		this.setVecesSacado6(0);

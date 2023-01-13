@@ -11,12 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.ocachis.estadisticas.Estadisticas;
-import org.springframework.samples.petclinic.ocachis.logro.Logro;
-import org.springframework.samples.petclinic.ocachis.logro.LogroRepository;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.stereotype.Service;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 public class EstadisticasGlobalesTest {

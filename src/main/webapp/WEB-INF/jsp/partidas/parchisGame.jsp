@@ -11,7 +11,7 @@
 
 
 <petclinic:layout pageName="game" title="Jugando al parchis">
-    <h1>vista: ${modo}</h1>
+    <h3>vista: <c:out value="${modo}"></c:out></h3>
     <c:if test="${not empty dado}"><h1> El dado ha sacado el numero: ${dado}</h1></c:if>
     <h1>Es el turno del jugador ${partidaParchis.colorJugadorActual}</h1>
    
@@ -112,10 +112,12 @@
                          value="${partidaParchis.id}" />
                         </spring:url>
                     </div>
-                   <form class="form-inline" th:action="@{${fn:escapeXml(chatParchisUrl)}}">
+                    <c:if test="${not empty jugadorAutenticado}">
+                        <form class="form-inline" th:action="@{${fn:escapeXml(chatParchisUrl)}}">
                             <input type="text" name="mensaje" id="mensaje" th:value="${mensaje}" placeholder="Introduzca mensaje" required>
-                         <input type="submit" class="btn btn-primary mb-2" value="Enviar">
+                            <input type="submit" class="btn btn-primary mb-2" value="Enviar">
                         </form>
+                    </c:if>                   
                    
                 </div>
             </td>

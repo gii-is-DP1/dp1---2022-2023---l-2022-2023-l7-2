@@ -26,6 +26,7 @@ import org.springframework.samples.petclinic.ocachis.ficha.FichaService;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.jugador.JugadorService;
 import org.springframework.samples.petclinic.ocachis.logro.LogroService;
+import org.springframework.samples.petclinic.ocachis.partida.exceptions.MinimoDeJugadoresNoAlcanzadoException;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -711,7 +712,8 @@ public class PartidaService {
 	}
 
 	@Transactional 
-	public void iniciarPartidaOca(PartidaOca partidaOca){
+	public void iniciarPartidaOca(PartidaOca partidaOca) throws MinimoDeJugadoresNoAlcanzadoException{
+		if(partidaOca.getJugadores().size()<2) throw new MinimoDeJugadoresNoAlcanzadoException("No hay jugadores suficientes para empezar la partida");
 		partidaOca.setEstado(TipoEstadoPartida.JUGANDO);
 		partidaOca.setFechaCreacion(LocalDateTime.now());
 		partidaOca.setFechaHoraUltimoMovimiento(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
@@ -719,7 +721,8 @@ public class PartidaService {
 	}
 
 	@Transactional 
-	public void iniciarPartidaParchis(PartidaParchis partida){
+	public void iniciarPartidaParchis(PartidaParchis partida) throws MinimoDeJugadoresNoAlcanzadoException{
+		if(partida.getJugadores().size()<2) throw new MinimoDeJugadoresNoAlcanzadoException("No hay jugadores suficientes para empezar la partida");
 		partida.setEstado(TipoEstadoPartida.JUGANDO);
 		partida.setFechaCreacion(LocalDateTime.now());
 		partida.setFechaHoraUltimoMovimiento(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());

@@ -23,6 +23,7 @@ import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.jugador.JugadorService;
+import org.springframework.samples.petclinic.ocachis.partida.exceptions.MinimoDeJugadoresNoAlcanzadoException;
 import org.springframework.samples.petclinic.ocachis.partida.exceptions.PartidaLlenaException;
 import org.springframework.samples.petclinic.ocachis.solicitud.SolicitudService;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
@@ -311,15 +312,22 @@ public class PartidaController {
 
 	
 	//empezarPartida
+	/**
+	 * @param partidaOcaId
+	 * @param model
+	 * @param response
+	 * @return
+	 * @throws MinimoDeJugadoresNoAlcanzadoException
+	 */
 	@GetMapping("/oca/{partidaOcaId}/empezar")
-	public String initEmpezarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model, HttpServletResponse response) {
+	public String initEmpezarPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model, HttpServletResponse response) throws MinimoDeJugadoresNoAlcanzadoException {
 		PartidaOca partidaOca = partidaService.findPartidaOcaById(partidaOcaId);
 		this.partidaService.iniciarPartidaOca(partidaOca);
 		return "redirect:/partida/oca/" + partidaOcaId + "/jugar";
 	}
 	
 	@GetMapping("/parchis/{partidaParchisId}/empezar")
-	public String initEmpezarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model) {
+	public String initEmpezarPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model) throws MinimoDeJugadoresNoAlcanzadoException {
 		PartidaParchis partidaParchis = partidaService.findPartidaParchisById(partidaParchisId);
 		partidaService.iniciarPartidaParchis(partidaParchis);
 		model.put("partidaParchis", partidaParchis);
@@ -447,7 +455,7 @@ public class PartidaController {
 		Map<String,Integer> partidaAEspectar = new HashMap<>();
 		partidaAEspectar.put("parchis",partidaParchisId);
 		Boolean sePuedeEspectear = this.solicitudService.sePuedeEspectar(u.getId(), partidaAEspectar);
-		
+			
 		if(j!=null){
 			model.put("modo","jugador");
 			model.put("jugadorAutenticado", j);

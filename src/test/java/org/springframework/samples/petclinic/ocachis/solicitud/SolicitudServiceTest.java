@@ -62,7 +62,7 @@ public class SolicitudServiceTest {
     @Test
 	public void shouldFindAllSolicitudes() {
 		Collection<Solicitud> solicitudes = this.solicitudService.findAllSolicitudes();
-        assertTrue(solicitudes.size()==6, "No encuentra todas las solicitudes de la base de datos");
+        assertTrue(solicitudes.size()==7, "No encuentra todas las solicitudes de la base de datos");
         Solicitud s = EntityUtils.getById(solicitudes, Solicitud.class, 1);
 		assertTrue(s.getUsuarioInvitado().getId()==3 && s.getUsuarioSolicitud().getId()==4, "No encuentra las solicitudes de la base de datos");
 	}
@@ -113,7 +113,7 @@ public class SolicitudServiceTest {
     public void testSonAmigos(){
         Integer usuarioAmigo1Id = 1;
         Integer usuarioAmigo2Id = 3;
-        Integer usuarioNoAmigo = 4;
+        Integer usuarioNoAmigo = 5;
         assertTrue(solicitudService.sonAmigos(usuarioAmigo1Id, usuarioAmigo2Id));
         assertFalse(solicitudService.sonAmigos(usuarioAmigo1Id, usuarioNoAmigo));
     }

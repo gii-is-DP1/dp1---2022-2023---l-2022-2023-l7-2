@@ -47,24 +47,35 @@
                             fichaRoja.getAttribute("data-x"),
                             fichaRoja.getAttribute("data-y"),
                             24,24);
-
+            try{
             var fichaAmarilla = document.getElementById("FichaAmarilla");
             ctx.drawImage(fichaAmarilla,
                             fichaAmarilla.getAttribute("data-x"),
                             fichaAmarilla.getAttribute("data-y"),
                             24,24);
 
+            }catch(err){
+
+            }
+            try{
             var fichaVerde = document.getElementById("FichaVerde");
             ctx.drawImage(fichaVerde,
                             fichaVerde.getAttribute("data-x"),
                             fichaVerde.getAttribute("data-y"),
                             24,24);
+             }catch(err){
 
+            }
+            
+            try{
             var fichaAzul = document.getElementById("FichaAzul");
             ctx.drawImage(fichaAzul,
                             fichaAzul.getAttribute("data-x"),
                             fichaAzul.getAttribute("data-y"),
-                            24,24);   
+                            24,24); 
+            }catch(err){
+
+            }  
         }
             
         window.onload =drawBoard();

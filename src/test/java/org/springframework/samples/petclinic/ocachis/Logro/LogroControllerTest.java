@@ -34,8 +34,6 @@ class LogroControllerTest {
 
 	private static final int TEST_LOGRO_ID = 41;
 
-	@Autowired
-	private LogroController logroController;
 
 	@MockBean
 	private LogroService logroService;

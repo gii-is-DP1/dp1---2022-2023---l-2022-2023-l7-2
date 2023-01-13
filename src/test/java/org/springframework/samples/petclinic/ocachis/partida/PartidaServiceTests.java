@@ -8,19 +8,13 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
-import org.mockito.Spy;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 
 
@@ -34,6 +28,7 @@ import org.springframework.samples.petclinic.ocachis.casilla.TipoCasillaParchis;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaOca;
 import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
+import org.springframework.samples.petclinic.ocachis.partida.exceptions.MinimoDeJugadoresNoAlcanzadoException;
 import org.springframework.samples.petclinic.util.EntityUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,15 +47,12 @@ public class PartidaServiceTests {
 	PartidaOca partidaOca;
 	PartidaParchis partidaParchis;
 
-	//PartidaService spy;
+	;
 
 	private static final Integer CODIGO_OCA = 102;
 	private static final Integer CODIGO_PARCHIS = 103;
 
-	// @BeforeEach
-	// public  void setupGeneral(){
-	// 	spy = Mockito.spy(ps);
-	// }
+	
 
 	@AfterEach
 	public void dropDown(){
@@ -149,14 +141,14 @@ public class PartidaServiceTests {
 	}
 
 	@Test
-	void shouldStartPartidaOca(){
+	void shouldStartPartidaOca() throws MinimoDeJugadoresNoAlcanzadoException{
 		partidaOca.setEstado(TipoEstadoPartida.CREADA);
 		this.ps.iniciarPartidaOca(partidaOca);
 		assertThat(partidaOca.getEstado().equals(TipoEstadoPartida.JUGANDO));
 	}
 
 	@Test
-	void shouldStartPartidaParchis(){
+	void shouldStartPartidaParchis() throws MinimoDeJugadoresNoAlcanzadoException{
 		partidaParchis.setEstado(TipoEstadoPartida.CREADA);
 		this.ps.iniciarPartidaParchis(partidaParchis);
 		assertThat(partidaParchis.getEstado().equals(TipoEstadoPartida.JUGANDO));

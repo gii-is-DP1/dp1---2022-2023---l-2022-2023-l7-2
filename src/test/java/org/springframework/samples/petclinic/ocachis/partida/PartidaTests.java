@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.ocachis.partida;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.validation.ConstraintViolationException;
@@ -106,6 +107,17 @@ public class PartidaTests {
     
     void testPasarTurnoParchisRojoAmarillo(){
         PartidaParchis pp = new PartidaParchis();
+
+        List<Jugador> js = new ArrayList<Jugador>();
+        Jugador j1 = new Jugador();
+        j1.setColor(Color.ROJO);
+        js.add(j1);
+
+        Jugador j2 = new Jugador();
+        j2.setColor(Color.AMARILLO);
+        js.add(j2);
+
+        pp.setJugadores(js);
         pp.setColorJugadorActual(Color.ROJO);
         pp.pasarTurno();
         assertEquals(Color.AMARILLO,pp.getColorJugadorActual());
@@ -114,22 +126,46 @@ public class PartidaTests {
     void testPasarTurnoParchisAmarilloVerde(){
         PartidaParchis pp = new PartidaParchis();
         List<Jugador> js = new ArrayList<Jugador>();
-        js.add(new Jugador());
-        js.add(new Jugador());
-        js.add(new Jugador());
+        
+        Jugador j1 = new Jugador();
+        j1.setColor(Color.ROJO);
+        js.add(j1);
+
+        Jugador j2 = new Jugador();
+        j2.setColor(Color.AMARILLO);
+        js.add(j2);
+
+        Jugador j3 = new Jugador();
+        j3.setColor(Color.VERDE);
+        js.add(j3);
+
         pp.setJugadores(js);
         pp.setColorJugadorActual(Color.AMARILLO);
         pp.pasarTurno();
         assertEquals(Color.VERDE,pp.getColorJugadorActual());
     }
 
+
     void testPasarTurnoParchisVerdeAzul(){
         PartidaParchis pp = new PartidaParchis();
         List<Jugador> js = new ArrayList<Jugador>();
-        js.add(new Jugador());
-        js.add(new Jugador());
-        js.add(new Jugador());
-        js.add(new Jugador());
+        
+        Jugador j1 = new Jugador();
+        j1.setColor(Color.ROJO);
+        js.add(j1);
+
+        Jugador j2 = new Jugador();
+        j2.setColor(Color.AMARILLO);
+        js.add(j2);
+
+        Jugador j3 = new Jugador();
+        j3.setColor(Color.VERDE);
+        js.add(j3);
+
+        Jugador j4 = new Jugador();
+        j4.setColor(Color.AZUL);
+        js.add(j4);
+
         pp.setJugadores(js);
         pp.setColorJugadorActual(Color.VERDE);
         pp.pasarTurno();
@@ -139,6 +175,19 @@ public class PartidaTests {
     void testPasarTurnoOcaRojoAmarillo(){
         PartidaOca po = new PartidaOca();
         po.setColorJugadorActual(Color.ROJO);
+       
+        List<Jugador> js = new ArrayList<Jugador>();
+        Jugador j1 = new Jugador();
+        j1.setColor(Color.ROJO);
+        js.add(j1);
+
+        Jugador j2 = new Jugador();
+        j2.setColor(Color.AMARILLO);
+        js.add(j2);
+
+        po.setJugadores(js);
+
+
         po.pasarTurno();
         assertEquals(Color.AMARILLO,po.getColorJugadorActual());
     }
@@ -146,9 +195,19 @@ public class PartidaTests {
     void testPasarTurnoOcaAmarilloVerde(){
         PartidaOca pp = new PartidaOca();
         List<Jugador> js = new ArrayList<Jugador>();
-        js.add(new Jugador());
-        js.add(new Jugador());
-        js.add(new Jugador());
+        
+        Jugador j1 = new Jugador();
+        j1.setColor(Color.ROJO);
+        js.add(j1);
+
+        Jugador j2 = new Jugador();
+        j2.setColor(Color.AMARILLO);
+        js.add(j2);
+
+        Jugador j3 = new Jugador();
+        j3.setColor(Color.VERDE);
+        js.add(j3);
+
         pp.setJugadores(js);
         pp.setColorJugadorActual(Color.AMARILLO);
         pp.pasarTurno();
@@ -158,10 +217,23 @@ public class PartidaTests {
     void testPasarTurnoOcaVerdeAzul(){
         PartidaOca pp = new PartidaOca();
         List<Jugador> js = new ArrayList<Jugador>();
-        js.add(new Jugador());
-        js.add(new Jugador());
-        js.add(new Jugador());
-        js.add(new Jugador());
+        
+        Jugador j1 = new Jugador();
+        j1.setColor(Color.ROJO);
+        js.add(j1);
+
+        Jugador j2 = new Jugador();
+        j2.setColor(Color.AMARILLO);
+        js.add(j2);
+
+        Jugador j3 = new Jugador();
+        j3.setColor(Color.VERDE);
+        js.add(j3);
+
+        Jugador j4 = new Jugador();
+        j4.setColor(Color.AZUL);
+        js.add(j4);
+
         pp.setJugadores(js);
         pp.setColorJugadorActual(Color.VERDE);
         pp.pasarTurno();
@@ -185,7 +257,6 @@ public class PartidaTests {
 		PartidaParchis pp = this.ps.findPartidaParchisById(1);
 		List<Jugador> jugadores = (List<Jugador>) partidaParchis.getJugadores();
 		Jugador j = jugadores.get(0);
-		Integer tamañoInicial = pp.getChatParchis().size();
 		
 		pp.addMensaje("prueba", j);
 		assertThat(pp.printChatParchis().equals("usuario(ROJO): prueba"));

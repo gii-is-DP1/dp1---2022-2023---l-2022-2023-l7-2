@@ -11,7 +11,7 @@
 
                                     <petclinic:layout pageName="game" title="Jugando a la Oca">
 
-                                        <h3>vista:<c:out value="${modo}"></c:out></h3>
+                                        <h3>vista: <c:out value="${modo}"></c:out></h3>
                                         <h1>Es el turno del jugador <c:out value="${partidaOca.colorJugadorActual}"></c:out></h1>
 
                                         <c:if test="${jugadorAutenticado.color == partidaOca.colorJugadorActual}">
@@ -94,6 +94,7 @@
 
 
                                                         </spring:url>
+                                                        <c:if test="${not empty jugadorAutenticado}">
                                                         <form class="form-inline"
                                                             th:action="@{${fn:escapeXml(chatOcaUrl)}}">
                                                             <center><input type="text" name="mensaje" id="mensaje"
@@ -103,6 +104,7 @@
                                                                     value="Enviar">
                                                             </center>
                                                         </form>
+                                                        </c:if>
                                                     </div>
                                                 </td>
                                             </tr>

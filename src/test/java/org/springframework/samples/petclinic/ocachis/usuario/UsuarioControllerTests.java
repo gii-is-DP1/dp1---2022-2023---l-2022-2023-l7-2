@@ -29,8 +29,6 @@ class UsuarioControllerTests {
 	
 	private static final int TEST_USUARIO_ID = 100;
 	
-	@Autowired
-	private UsuarioController usuarioController;
 
 	@MockBean
 	private UsuarioService usuarioService;

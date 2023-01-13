@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -93,27 +94,10 @@ public class PartidaOca extends Partida{
 	}
 
 	public void pasarTurno() {
-		switch (this.getColorJugadorActual()) {
-			case ROJO:
-				this.setColorJugadorActual(Color.AMARILLO);
+		List<Color> colores = this.getJugadores().stream().map(j->j.getColor()).collect(Collectors.toList());
+		Integer indexColorActual = colores.indexOf(this.getColorJugadorActual());
+		this.setColorJugadorActual(colores.get((indexColorActual + 1) % colores.size()));
 
-				break;
-			case AMARILLO:
-				if (this.getJugadores().size() == 2)
-					this.setColorJugadorActual(Color.ROJO);
-				else
-					this.setColorJugadorActual(Color.VERDE);
-				break;
-			case VERDE:
-				if (this.getJugadores().size() == 3)
-					this.setColorJugadorActual(Color.ROJO);
-				else
-					this.setColorJugadorActual(Color.AZUL);
-				break;
-			case AZUL:
-				this.setColorJugadorActual(Color.ROJO);
-				break;
-		}
 		this.addLog("TURNO DEL JUGADOR " + this.getColorJugadorActual());
 	}
 
