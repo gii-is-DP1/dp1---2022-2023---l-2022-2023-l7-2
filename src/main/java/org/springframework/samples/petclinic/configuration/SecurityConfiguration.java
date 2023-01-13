@@ -40,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 				.antMatchers("/partida/redireccion").authenticated()
 
-				.antMatchers("/solicitud/**").permitAll()
+				.antMatchers("/solicitud/**").hasAnyAuthority("jugador")	
 				.antMatchers("/usuarios/**/perfilAmigo").permitAll()
 				
 				

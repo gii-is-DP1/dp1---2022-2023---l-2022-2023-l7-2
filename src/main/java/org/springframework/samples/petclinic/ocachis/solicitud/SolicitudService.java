@@ -114,7 +114,11 @@ public class SolicitudService {
                     if(!(amigos.contains(jugador.getUsuario()))){
                         sePuedeEspectar = false;
                     }
-                }    
+                }   
+                if(sePuedeEspectar){
+                    Usuario usuario = usuarioService.findUsuarioById(usuarioId);
+                    partidaParchis.getUsuariosObservadores().add(usuario);
+                } 
             }else{
                 Integer idPartidaOca = partidaAEspectar.get("oca");
                 PartidaOca partidaOca = this.partidaService.findPartidaOcaById(idPartidaOca);
@@ -124,6 +128,10 @@ public class SolicitudService {
                         sePuedeEspectar = false;
                     }
                 }    
+                if(sePuedeEspectar){
+                    Usuario usuario = usuarioService.findUsuarioById(usuarioId);
+                    partidaOca.getUsuariosObservadores().add(usuario);
+                } 
             }
             return sePuedeEspectar;
         }

@@ -79,14 +79,15 @@ public class SolicitudController {
 
 
     @GetMapping(value="/amigos/{usuarioId}/espectar")
-    public String espectarPartida(@PathVariable("usuarioId") int usuarioId,Map<String,Object> model){
-
+    public String espectarPartida(@PathVariable("usuarioId") int usuarioId, Map<String,Object> model){
+        
+        Usuario usuarioLoggeado = usuarioService.getLoggedUsuario();
         Map<String,Integer> partidaAEspectar = this.jugadorService.findIdPartidaEspectar(usuarioId);
-        Boolean sePuedeEspectar = this.solicitudService.sePuedeEspectar(usuarioId, partidaAEspectar);
+        Boolean sePuedeEspectar = this.solicitudService.sePuedeEspectar(usuarioLoggeado.getId(), partidaAEspectar);
         if(sePuedeEspectar){
-           String espectarUrl= this.solicitudService.obtenerUrlEspectar(partidaAEspectar);
+            String espectarUrl= this.solicitudService.obtenerUrlEspectar(partidaAEspectar);
         return "redirect:"+espectarUrl;
-    }
+    }   
     model.put("message", "No eres amigo de todos los jugadores de la partida");
     return listarAmigos(null,model);
 

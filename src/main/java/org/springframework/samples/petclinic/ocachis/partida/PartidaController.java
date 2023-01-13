@@ -6,6 +6,8 @@ import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Map;
 import java.util.Collection;
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
  
@@ -22,6 +24,7 @@ import org.springframework.samples.petclinic.ocachis.ficha.FichaParchis;
 import org.springframework.samples.petclinic.ocachis.jugador.Jugador;
 import org.springframework.samples.petclinic.ocachis.jugador.JugadorService;
 import org.springframework.samples.petclinic.ocachis.partida.exceptions.PartidaLlenaException;
+import org.springframework.samples.petclinic.ocachis.solicitud.SolicitudService;
 import org.springframework.samples.petclinic.ocachis.usuario.Usuario;
 import org.springframework.samples.petclinic.ocachis.usuario.UsuarioService;
 import org.springframework.stereotype.Controller;
@@ -42,16 +45,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/partida")
 public class PartidaController {
 
-	private String REFRESH_SEECONDS = "1";
+	private String REFRESH_SECONDS = "1";
 	private PartidaService partidaService;
 	private UsuarioService usuarioService;
 	private JugadorService jugadorService;
+	private SolicitudService solicitudService;
+
 	@Autowired
 	public PartidaController(PartidaService partidaService, UsuarioService usuarioService,
-			JugadorService jugadorService) {
+			JugadorService jugadorService, SolicitudService solicitudService) {
 		this.partidaService = partidaService;
 		this.usuarioService = usuarioService;
 		this.jugadorService = jugadorService;
+		this.solicitudService = solicitudService;
 	}
 
 	@InitBinder
@@ -243,7 +249,7 @@ public class PartidaController {
 	@GetMapping("/oca/{partidaOcaId}/espera")
 	public String showPartidaOca(@PathVariable("partidaOcaId") int partidaOcaId, ModelMap model,  HttpServletResponse response) {
 		PartidaOca partidaOca = partidaService.findPartidaOcaById(partidaOcaId);
-		response.addHeader("Refresh", REFRESH_SEECONDS);
+		response.addHeader("Refresh", REFRESH_SECONDS);
 		model.put("jugadores", partidaOca.getJugadores());
 		model.put("usuarioAutenticado", usuarioService.getLoggedUsuario());
 		model.put("partidaOca", partidaOca);
@@ -295,7 +301,7 @@ public class PartidaController {
 	@GetMapping("/parchis/{partidaParchisId}/espera")
 	public String showPartidaParchis(@PathVariable("partidaParchisId") int partidaParchisId, ModelMap model, HttpServletResponse response) {
 		PartidaParchis partidaParchis = partidaService.findPartidaParchisById(partidaParchisId);
-		response.addHeader("Refresh", REFRESH_SEECONDS);
+		response.addHeader("Refresh", REFRESH_SECONDS);
 		model.put("jugadores", partidaParchis.getJugadores());
 		model.put("usuarioAutenticado", usuarioService.getLoggedUsuario());
 		model.put("partidaParchis", partidaParchis);
@@ -370,13 +376,20 @@ public class PartidaController {
 			redirectAttributes.addFlashAttribute("message", "La partida aun no ha empezado");
 			return "redirect:/partida/oca/" + partidaOcaId + "/espera";
 		}
-		response.addHeader("Refresh", REFRESH_SEECONDS);
+		response.addHeader("Refresh", REFRESH_SECONDS);
+		
+		Map<String,Integer> partidaAEspectar = new HashMap<>();
+		partidaAEspectar.put("oca",partidaOcaId);
+		Boolean sePuedeEspectear = this.solicitudService.sePuedeEspectar(u.getId(), partidaAEspectar);
+		
 		if(j!=null){
 			model.put("modo","jugador");
 			model.put("jugadorAutenticado", j);
 			if(partida.getColorJugadorActual()==j.getColor()) response.setHeader("Refresh", "30000");
-		}else if(partida.getUsuariosObservadores().contains(u)){
+		}else if(sePuedeEspectear){
 			model.put("modo","observador");
+		}else{
+			return "redirect:/noAccess";
 		}
 		model.put("partidaOca", partida);
 		model.put("now", LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli());
@@ -393,9 +406,11 @@ public class PartidaController {
 		Jugador j = this.jugadorService.findJugadorOca(u.getId(), partida.getId());
 		FichaOca ficha = j.getFichaOca();
 
-		if(j.getColor() != partida.getColorJugadorActual()){
+		if(j == null){
 				return "redirect:/noAccess";
-		}		
+		}else if(j.getColor()!=partida.getColorJugadorActual()){
+			return "redirect:/partida/oca/" + partidaOcaId + "/jugar";
+		}
 		partidaService.jugarOca(partida, ficha, j);
 		return "redirect:/partida/oca/" + partidaOcaId + "/jugar";
 	}
@@ -414,7 +429,7 @@ public class PartidaController {
 
 		if(mensaje!=null){
 			this.partidaService.enviarMensajeParchis(partida,mensaje,j);
-			return "redirect:/partida/parchis/"+partida.getId()+"/jugar";
+			return "redirect:/partida/parchis/" + partidaParchisId + "/jugar";
 		}
 		
 		if(partida.getEstado()==TipoEstadoPartida.TERMINADA){
@@ -426,14 +441,18 @@ public class PartidaController {
 			return "redirect:/partida/parchis/" + partidaParchisId + "/espera";
 		}
 
-		response.addHeader("Refresh", REFRESH_SEECONDS);
+		response.addHeader("Refresh", REFRESH_SECONDS);
 		model.put("partidaParchis", partida);
 
+		Map<String,Integer> partidaAEspectar = new HashMap<>();
+		partidaAEspectar.put("parchis",partidaParchisId);
+		Boolean sePuedeEspectear = this.solicitudService.sePuedeEspectar(u.getId(), partidaAEspectar);
+		
 		if(j!=null){
 			model.put("modo","jugador");
 			model.put("jugadorAutenticado", j);
 			
-			
+
 			if(partida.getColorJugadorActual()==j.getColor()){
 				if(partida.getDado()!=null){
 					int dado = partidaService.tirarDado(partida);
@@ -445,7 +464,8 @@ public class PartidaController {
 
 				response.setHeader("Refresh", "30000");
 			} 
-		}else if(partida.getUsuariosObservadores().contains(u)){
+			if(partida.getColorJugadorActual()==j.getColor()) response.setHeader("Refresh", "30000");
+		}else if(sePuedeEspectear){
 			model.put("modo","observador");
 		}else{
 			return "redirect:/noAccess";
@@ -468,8 +488,10 @@ public class PartidaController {
 		model.put("now", LocalDateTime.now());
 		model.put("modo","jugador");
 		model.put("jugadorAutenticado", j);
-		if(j.getColor() != partida.getColorJugadorActual()){
-				return "redirect:/noAccess";
+		if(j==null){
+			return "redirect:/noAccess";
+		}else if(j.getColor() != partida.getColorJugadorActual()){
+			return "redirect:/partida/parchis/" + partidaParchisId + "/jugar";
 		}
 
 		//El dado tiene un valor y se ha movido ficha --> procesar movimiento de ficha
@@ -482,7 +504,7 @@ public class PartidaController {
 				model.put("dado", dado);
 				return VIEWS_JUGAR_PARCHIS;
 			}
-			return "redirect:/partida/parchis/{partidaParchisId}/jugar";
+			return "redirect:/partida/parchis/" + partidaParchisId + "/jugar";
 		}
 
 
@@ -494,7 +516,7 @@ public class PartidaController {
 			model.put("dado", dado);
 			return VIEWS_JUGAR_PARCHIS;
 		}
-		return "redirect:/partida/parchis/{partidaParchisId}/jugar";
+		return "redirect:/partida/parchis/" + partidaParchisId + "/jugar";
 	}
 	
 	
