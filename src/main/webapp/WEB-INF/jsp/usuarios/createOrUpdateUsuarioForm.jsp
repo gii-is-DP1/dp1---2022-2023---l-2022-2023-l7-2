@@ -29,7 +29,7 @@
            <petclinic:inputField label="Username" name="user.username"/>
 
 
-           <spring:bind path="user.username">
+           <spring:bind path="user.password">
                 <c:set var="cssGroup" value="form-group ${status.error ? 'has-error' : '' }"/>
                 <c:set var="valid" value="${not status.error and not empty status.actualValue}"/>
                 <div class="${cssGroup}">
